@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <style>
+    div{
+      width:200px;
+      height:200px;
+      line-height:200px;
+      text-align:center;
+      color:#fff;
+      background:green;
+      margin:20px auto;
+    }
+    div:hover{
+      animation-name:toradius;
+      animation-duration:10s;
+      animation-timing-function:ease-in-out;
+      animation-delay: .1s;
+    }
+    @-webkit-keyframes toradius{
+      from{
+        border-radius:0%;
+      }
+      to{
+        border-radius:100%
+      }
+    }
+  </style>
+</head>
+<body>
+<div>Hover Me</div>
+</body>
+</html>

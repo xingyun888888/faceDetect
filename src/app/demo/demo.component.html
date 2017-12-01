@@ -1,0 +1,99 @@
+<nz-layout>
+  <nz-sider>
+    <div  style="width:100%;">
+      <ul nz-menu [nzMode]="'inline'" nzTheme='dark' [nzInlineCollapsed]="isCollapsed">
+        <li nz-menu-item>
+          <span title>
+            <i class="anticon anticon-mail"></i>
+            <span>导航1</span>
+          </span>
+        </li>
+        <li nz-submenu>
+          <span title>
+            <i class="anticon anticon-appstore"></i>
+            <span>导航2</span>
+          </span>
+          <ul>
+            <li nz-menu-item>选项5</li>
+            <li nz-menu-item>选项6</li>
+            <li nz-submenu>
+              <span title>子菜单</span>
+              <ul>
+                <li nz-menu-item>选项7</li>
+                <li nz-menu-item>选项8</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li nz-submenu>
+          <span title>
+            <i class="anticon anticon-setting"></i>
+            <span>导航3</span>
+          </span>
+          <ul>
+            <li nz-menu-item>选项9</li>
+            <li nz-menu-item>选项10</li>
+            <li nz-menu-item>选项11</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <ul nz-menu [nzMode]="'horizontal'">
+        <li nz-menu-item><i class="anticon anticon-mail"></i> 菜单 One</li>
+        <li nz-menu-item [nzDisable]="true"><i class="anticon anticon-appstore"></i> 菜单 Two</li>
+        <li nz-submenu>
+          <span title><i class="anticon anticon-setting"></i> 菜单 Three - 子菜单</span>
+          <ul>
+            <li nz-menu-group>
+              <span title>Item 1</span>
+              <ul>
+                <li nz-menu-item>Option 1</li>
+                <li nz-menu-item>Option 2</li>
+              </ul>
+            </li>
+            <li nz-menu-group>
+              <span title>Item 2</span>
+              <ul>
+                <li nz-menu-item>Option 3</li>
+                <li nz-menu-item>Option 4</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li nz-menu-item><a href="https://ng.ant.design" target="_blank" rel="noopener noreferrer">菜单 Four - 链接</a></li>
+      </ul>
+    </nz-header>
+    <nz-content>
+      <nz-table #nzTable [nzDataSource]="_dataSet" [nzPageSize]="10" (nzDataChange)="_displayDataChange($event)" (nzPageIndexChange)="_refreshStatus()" (nzPageSizeChange)="_refreshStatus()">
+        <thead nz-thead>
+        <tr>
+          <th nz-th [nzCheckbox]="true">
+            <label nz-checkbox [(ngModel)]="_allChecked" [nzIndeterminate]="_indeterminate" (ngModelChange)="_checkAll($event)">
+            </label>
+          </th>
+          <th nz-th><span>Name</span></th>
+          <th nz-th><span>Age</span></th>
+          <th nz-th><span>Address</span></th>
+        </tr>
+        </thead>
+        <tbody nz-tbody>
+        <tr nz-tbody-tr *ngFor="let data of nzTable.data">
+          <td nz-td [nzCheckbox]="true">
+            <label nz-checkbox [(ngModel)]="data.checked" (ngModelChange)="_refreshStatus($event)">
+            </label>
+          </td>
+          <td nz-td>{{data.name}}</td>
+          <td nz-td>{{data.age}}</td>
+          <td nz-td>{{data.address}}</td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </nz-content>
+    <nz-footer>
+
+    </nz-footer>
+  </nz-layout>
+</nz-layout>
