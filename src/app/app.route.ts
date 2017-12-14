@@ -5,19 +5,10 @@ import {Routes,RouterModule} from '@angular/router';
 
 import {DemoComponent} from './demo/demo.component'
 import {HelloComponent} from "./hello/hello.component";
-import {ChatComponent} from "./chat/chat.component";
-import {UnsavedGuard} from "./guard/UnsavedGuard";
+import {NavComponent} from "./nav/nav.component";
+import {HomeComponent} from "./home/home.component";
 
 export const appRoutes:Routes = [
-  {
-    path:"",
-    component:HelloComponent
-  },
-  {
-    path:"chat",
-    component:ChatComponent,
-    outlet:"aux"
-  },
   {
     path:"hello",
     component:HelloComponent
@@ -25,9 +16,17 @@ export const appRoutes:Routes = [
   {
     path:"demo",
     component:DemoComponent,
-    canDeactivate:[UnsavedGuard],
-    children:[
-      {path:"hello",component:HelloComponent}
-    ]
+    // canDeactivate:[UnsavedGuard],
+    // children:[
+    //   {path:"hello",component:HelloComponent}
+    // ]
+  },
+  {
+    path:'nav',
+    component:NavComponent,
+  },
+  {
+    path:'home',
+    component:HomeComponent,
   }
 ]

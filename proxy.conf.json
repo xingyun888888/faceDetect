@@ -1,0 +1,7 @@
+{
+  "/api":{
+    "target":"http://www.adding360.com:8080",
+    "secure":false,
+    "pathRewrite":{"^/api":""}
+  }
+}

@@ -1,37 +1,18 @@
-<p>
-  hello works!
-</p>
-<img [src]="imgUrl" alt="">
-<!--在多数情况下 从技术较多说没有说那种更好 插值表达式和属性绑定一个东西-->
-<img src="{{imgUrl}}" alt="">
-
-<input type="text" value="sfdsdfsdf" (input)="getValue($event)" />
-
-<input type="text" [(ngModel)]="name">
-
-{{name}}
-
-<span>{{birthday | date:"yyyy-MM-dd HH:mm:ss" | uppercase | lowercase}}</span>
-
-<p>圆周率是{{pi | number:'1.1-4'}}</p>
-
-<app-gaochao>
-  sgdfgjdfgjdflgjfdlghj ljfgl j我是父组件的投影
-</app-gaochao>
-
-如何自定义管道 首先我还是要用到angular的命令行工具
-
-<p>{{234234|multiple:"2"}}</p>
-
-
-
-<table border="1">
-  <tr>
-    <td [attr.colspan]="size">g</td>
-    <td>d</td>
-    <td>f</td>
-  </tr>
-
-</table>
+<ul nz-menu [nzMode]="'horizontal'">
+  <li nz-menu-item>首页</li>
+  <li nz-menu-item nzDisabled>工作台</li>
+  <li nz-submenu>
+    <span title>登记拟稿</span>
+    <ul>
+      <li nz-menu-group>
+        <ul>
+          <li nz-menu-item>来文登记</li>
+          <li nz-menu-item>通知公告</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li nz-menu-item><a href="https://ng.ant.design" target="_blank" rel="noopener noreferrer">Navigation Four - Link</a></li>
+</ul>
 
 
