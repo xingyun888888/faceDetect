@@ -20,6 +20,7 @@ import { NavComponent } from './nav/nav.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import {NavserviceService} from "./nav/navservice.service";
+import { TableComponent } from './components/table/table.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {NavserviceService} from "./nav/navservice.service";
     HelloComponent,
     NavComponent,
     HeaderComponent,
-    HomeComponent
+    HomeComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,
