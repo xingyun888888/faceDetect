@@ -20,7 +20,7 @@ export class TableComponent implements OnInit {
   _dataSet:Array<any> = [];
 
 
-  //配置表格字段
+  //配置表格字段  
   @Input()
   _titles:Array<any> = [];
 
@@ -55,6 +55,21 @@ export class TableComponent implements OnInit {
     }
     this._dataSet = data;
   }
+
+  singleDelete(e,data){
+    console.log(data);
+    let arr = this._dataSet.concat();
+    let index = arr.indexOf(data);
+    console.log(index);  
+    arr.splice(index,1);
+    this._dataSet = arr;
+   
+
+  }
+
+
+
+
   // edit(data){
   //   this.editRow = [];
   //   this.tempEditObject=this._dataSet.concat();
@@ -69,23 +84,18 @@ export class TableComponent implements OnInit {
   //   })
   //   this.editRow = [];
   // }
-  cancel(data){
-    console.log(this.tempEditObject[data.key]);
-    console.log(this._dataSet[data.key])
-    this.editRow.splice(this.editRow.indexOf(data.key),1);
-    console.dir(this.editRow);
-  }
+
   _displayDataChange($event) {
     this._displayData = $event;
     console.log($event);
   }
 
 
-
-
   _refreshStatus() {
     const allChecked = this._displayData.every(value => value.checked === true);
+
     const allUnChecked = this._displayData.every(value => !value.checked);
+
     this._allChecked = allChecked;
     this._indeterminate = (!allChecked) && (!allUnChecked);
     this._disabledButton = !this._dataSet.some(value => value.checked);
@@ -93,6 +103,8 @@ export class TableComponent implements OnInit {
   }
 
   _checkAll(value) {
+    console.log(value);
+    console.dir(this._displayData);
     if (value) {
       this._displayData.forEach(data => data.checked = true);
     } else {
@@ -101,14 +113,14 @@ export class TableComponent implements OnInit {
     this._refreshStatus();
   }
 
-  _operateData() {
-    this._operating = true;
-    setTimeout(_ => {
-      this._dataSet.forEach(value => value.checked = false);
-      this._refreshStatus();
-      this._operating = false;
-    }, 1000);
-  }
+  // _operateData() {
+  //   this._operating = true;
+  //   setTimeout(_ => {
+  //     this._dataSet.forEach(value => value.checked = false);
+  //     this._refreshStatus();
+  //     this._operating = false;
+  //   }, 1000);
+  // }
 
   _pageSizeChange(visible){
     console.log(visible);

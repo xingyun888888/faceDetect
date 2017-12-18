@@ -33,14 +33,35 @@ export class DemoComponent implements OnInit {
     sex:"dd",
     aaa:"dfd"
   },{
-    key:1,
+    key:0,
     name:"dsfdf",
     age:"d",
     code:"dsf",
     sex:"dd",
     aaa:"dfd"
   },{
-    key:2,
+    key:0,
+    name:"dsfdf",
+    age:"d",
+    code:"dsf",
+    sex:"dd",
+    aaa:"dfd"
+  },{
+    key:0,
+    name:"dsfdf",
+    age:"d",
+    code:"dsf",
+    sex:"dd",
+    aaa:"dfd"
+  },{
+    key:0,
+    name:"dsfdf",
+    age:"d",
+    code:"dsf",
+    sex:"dd",
+    aaa:"dfd"
+  },{
+    key:0,
     name:"dsfdf",
     age:"d",
     code:"dsf",

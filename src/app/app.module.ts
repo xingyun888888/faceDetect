@@ -21,6 +21,8 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import {NavserviceService} from "./nav/navservice.service";
 import { TableComponent } from './components/table/table.component';
+import { DetailComponent } from './detail/detail.component';
+import { CommonTableComponent } from './components/table/common-table/common-table.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { TableComponent } from './components/table/table.component';
     NavComponent,
     HeaderComponent,
     HomeComponent,
-    TableComponent
+    TableComponent,
+    DetailComponent,
+    CommonTableComponent
   ],
   imports: [
     BrowserModule,

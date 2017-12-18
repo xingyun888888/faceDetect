@@ -24,15 +24,13 @@
         <label nz-checkbox [(ngModel)]="data.checked" (ngModelChange)="_refreshStatus($event)">
         </label>
       </td>
-      <td nz-td >
-        <span>{{data.name}}</span>
+      <td nz-td *ngFor="let item of _titles">
+        <span>{{data[item.key]}}</span>
       </td>
-      <td nz-td>
-        <span *ngIf="editRow.indexOf(data[item.key])==-1" (click)="edit(data)">编辑</span>
-        <span *ngIf="editRow.indexOf(data[item.key])!=-1">
-          <span (click)="save(data)" >保存</span> |
-          <span (click)="cancel(data)">取消</span>
-        </span>
+      <td nz-td class="action">
+        <span >查看</span>|
+        <span >修改</span>|
+        <span  (click)="singleDelete($event,data)">删除</span>
       </td>
     </tr>
     </tbody>
