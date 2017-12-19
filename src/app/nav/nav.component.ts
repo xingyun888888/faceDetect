@@ -17,7 +17,7 @@ export class NavComponent implements OnInit {
 
   currentIndex:number = -1;
 
-  navList:any= [{name:"首页",children:[{name:"首页",routeName:"/detail"},{name:"首页",routeName:"/hello"},{name:"首页"},{name:"首页"},{name:"首页"}]},{name:"工作台"},{name:"登记拟稿"},{name:"通知公告"},{name:"登记拟稿",children:[{name:'来问登记',routeName:"/demo"},{name:"发文拟稿"},{name:"一般申请"}]},{name:"通知公告"},{name:"工作台"},{name:"登记拟稿"},{name:"通知公告"},];
+  navList:any= [{name:"首页",children:[{name:"首页",routeName:"/detail"},{name:"首页",routeName:"/hello"},{name:"首页",routeName:"/table-detail"},{name:"首页"},{name:"首页"}]},{name:"工作台"},{name:"登记拟稿"},{name:"通知公告"},{name:"登记拟稿",children:[{name:'来问登记',routeName:"/demo"},{name:"发文拟稿"},{name:"一般申请"}]},{name:"通知公告"},{name:"工作台"},{name:"登记拟稿"},{name:"通知公告"},];
 
   showList(e,curIndex){
     this.currentIndex = curIndex;
