@@ -24,7 +24,6 @@ export class UserinfoModelComponent implements OnInit {
     role:"aa",
     isUse:"0",
     nowStatus:"aa"
-
   };
 
   @Input()

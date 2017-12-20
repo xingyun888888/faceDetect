@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-
+import api from "./../api.js";
 
 @Component({
   selector: 'app-userinfo',
@@ -53,7 +53,7 @@ export class UserinfoComponent implements OnInit {
 
   getRowData(value){
     debugger;
-    this._formData = value;
+    this._formData = Object.assign({},value);
     this.isEdit = true;
   }
 
@@ -72,7 +72,7 @@ export class UserinfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.get('/api/bioauth/test').subscribe((res)=>{
+    this.http.get(api.queryUserInfo).subscribe((res)=>{
       console.dir(res);
       let list = <any>res;
       console.dir(res);
