@@ -22,7 +22,7 @@ export class UserinfoModelComponent implements OnInit {
     password:"aa",
     moduleName:"aa",
     role:"aa",
-    isUse:"aa",
+    isUse:"0",
     nowStatus:"aa"
 
   };
@@ -39,6 +39,7 @@ export class UserinfoModelComponent implements OnInit {
   validateForm: FormGroup;
 
   handleCancel = (e) => {
+    this.resetForm(e);
     this.closeModel.emit();
   };
 
@@ -92,7 +93,7 @@ export class UserinfoModelComponent implements OnInit {
       password            : [ this._formData.password||"", [ Validators.required ] ],
       moduleName: [ this._formData.moduleName||"" ],
       role             : [ this._formData.role||"", [ Validators.required ] ],
-      isUse:[this._formData.isUse||""],
+      isUse:[this._formData.isUse||"0"],
       nowStatus:[this._formData.nowStatus||""]
     });
   }
