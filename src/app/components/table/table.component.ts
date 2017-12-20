@@ -1,4 +1,4 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit,Input ,Output,EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'app-table',
@@ -13,16 +13,18 @@ export class TableComponent implements OnInit {
   _displayData: Array<any> = [];
   _operating = false;
 
-
-
   //接收表格数据
   @Input()
   _dataSet:Array<any> = [];
 
-
-  //配置表格字段  
+  //配置表格字段
   @Input()
   _titles:Array<any> = [];
+
+
+  @Output()
+  editData: EventEmitter<any> = new EventEmitter()
+
 
 
 
@@ -60,13 +62,16 @@ export class TableComponent implements OnInit {
     console.log(data);
     let arr = this._dataSet.concat();
     let index = arr.indexOf(data);
-    console.log(index);  
+    console.log(index);
     arr.splice(index,1);
     this._dataSet = arr;
-   
+
 
   }
-
+  singleEdit(e,data){
+    debugger;
+    this.editData.emit(data);
+  }
 
 
 

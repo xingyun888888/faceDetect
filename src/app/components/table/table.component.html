@@ -29,7 +29,7 @@
       </td>
       <td nz-td class="action">
         <span >查看</span>|
-        <span >修改</span>|
+        <span (click)="singleEdit($event,data)">修改</span>|
         <span  (click)="singleDelete($event,data)">删除</span>
       </td>
     </tr>

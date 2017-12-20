@@ -24,6 +24,8 @@ import { TableComponent } from './components/table/table.component';
 import { DetailComponent } from './detail/detail.component';
 import { CommonTableComponent } from './components/table/common-table/common-table.component';
 import { TableDetailComponent } from './components/table-detail/table-detail.component';
+import { UserinfoComponent } from './userinfo/userinfo.component';
+import { UserinfoModelComponent } from './components/model/userinfo-model/userinfo-model.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { TableDetailComponent } from './components/table-detail/table-detail.com
     TableComponent,
     DetailComponent,
     CommonTableComponent,
-    TableDetailComponent
+    TableDetailComponent,
+    UserinfoComponent,
+    UserinfoModelComponent
   ],
   imports: [
     BrowserModule,

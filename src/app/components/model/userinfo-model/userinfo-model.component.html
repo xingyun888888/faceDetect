@@ -1,0 +1,83 @@
+<nz-modal [nzVisible]="isVisible" [nzTitle]="'用户信息编辑'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)" [nzConfirmLoading]="isConfirmLoading" nzFooter="">
+  <ng-template #modalContent>
+    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">
+      <div nz-form-item nz-row>
+        <div nz-form-label nz-col [nzSpan]="7">
+          <label nz-form-item-required>用户名</label>
+        </div>
+        <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+          <nz-input formControlName="userName" [nzType]="'text'" [nzPlaceHolder]="'请输入用户名'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-form-label nz-col [nzSpan]="7">
+          <label nz-form-item-required>显示名</label>
+        </div>
+        <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+          <nz-input formControlName="showName" [nzPlaceHolder]="'显示名'" [nzType]="'text'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="7" nz-form-label>
+          <label nz-form-item-required>密码</label>
+        </div>
+        <div>
+          <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+            <nz-input formControlName="password" [nzPlaceHolder]="'密码'" [nzType]="'password'" [nzSize]="'large'">
+            </nz-input>
+          </div>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="7" nz-form-label>
+          <label nz-form-item-required>模块名</label>
+        </div>
+        <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+          <nz-input formControlName="moduleName" [nzType]="'text'" [nzPlaceHolder]="'模块名'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="7" nz-form-label>
+          <label nz-form-item-required>角色</label>
+        </div>
+        <div nz-col [nzSpan]="12" nz-form-control>
+          <nz-input formControlName="role" [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'角色'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="7" nz-form-label>
+          <label nz-form-item-required>是否使用</label>
+        </div>
+        <div nz-form-control nz-col [nzSpan]="14">
+          <nz-radio-group formControlName="isUse">
+            <label nz-radio [nzValue]="yes">
+              <span>是</span>
+            </label>
+            <label nz-radio [nzValue]="no">
+              <span>否</span>
+            </label>
+          </nz-radio-group>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="7" nz-form-label>
+          <label nz-form-item-required>目前状态</label>
+        </div>
+        <div nz-col [nzSpan]="12" nz-form-control>
+          <nz-input formControlName="nowStatus" [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'目前状态'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzOffset]="7" [nzSpan]="12" nz-form-control>
+          <button nz-button [nzType]="'primary'" [nzSize]="'large'" [disabled]="!validateForm.valid">提交</button>
+          <button nz-button [nzSize]="'large'" (click)="resetForm($event)">重置</button>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+</nz-modal>
