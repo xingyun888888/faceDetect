@@ -69,26 +69,9 @@ export class TableComponent implements OnInit {
 
   }
   singleEdit(e,data){
-    debugger;
     this.editData.emit(data);
   }
 
-
-
-  // edit(data){
-  //   this.editRow = [];
-  //   this.tempEditObject=this._dataSet.concat();
-  //   this.editRow.push(data.key);
-  // }
-  // save(data){
-  //   this.editRow = [];
-  //   this._dataSet.forEach((item,index)=>{
-  //     if(item.key==data.key){
-  //       Object.assign(item,data);
-  //     }
-  //   })
-  //   this.editRow = [];
-  // }
 
   _displayDataChange($event) {
     this._displayData = $event;
@@ -136,3 +119,4 @@ export class TableComponent implements OnInit {
   }
 
 }
+

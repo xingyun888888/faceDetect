@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
@@ -28,6 +28,9 @@ import { UserinfoComponent } from './userinfo/userinfo.component';
 import { UserinfoModelComponent } from './components/model/userinfo-model/userinfo-model.component';
 
 @NgModule({
+  schemas:[
+    CUSTOM_ELEMENTS_SCHEMA,
+  ],
   declarations: [
     AppComponent,
     DemoComponent,

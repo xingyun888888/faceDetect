@@ -1,12 +1,21 @@
-<nz-modal [nzVisible]="isVisible" [nzTitle]="'用户信息编辑'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)" [nzConfirmLoading]="isConfirmLoading" nzFooter="">
+<nz-modal [nzVisible]="isVisible" [nzTitle]="'用户信息编辑'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)" [nzConfirmLoading]="isConfirmLoading" nzFooter="" >
   <ng-template #modalContent>
     <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">
+      <div nz-form-item nz-row>
+        <div nz-form-label nz-col [nzSpan]="7">
+          <label nz-form-item-required>Id</label>
+        </div>
+        <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+          <nz-input formControlName="id" [(ngModel)]="_formData.id"  [nzType]="'text'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+      </div>
       <div nz-form-item nz-row>
         <div nz-form-label nz-col [nzSpan]="7">
           <label nz-form-item-required>用户名</label>
         </div>
         <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
-          <nz-input formControlName="userName" [nzType]="'text'" [nzPlaceHolder]="'请输入用户名'" [nzSize]="'large'">
+          <nz-input formControlName="name" [(ngModel)]="_formData.name"  [nzType]="'text'" [nzPlaceHolder]="'请输入用户名'" [nzSize]="'large'">
           </nz-input>
         </div>
       </div>
@@ -15,7 +24,7 @@
           <label nz-form-item-required>显示名</label>
         </div>
         <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
-          <nz-input formControlName="showName" [nzPlaceHolder]="'显示名'" [nzType]="'text'" [nzSize]="'large'">
+          <nz-input formControlName="displayName" [(ngModel)]="_formData.displayName"  [nzPlaceHolder]="'显示名'" [nzType]="'text'" [nzSize]="'large'">
           </nz-input>
         </div>
       </div>
@@ -25,7 +34,7 @@
         </div>
         <div>
           <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
-            <nz-input formControlName="password" [nzPlaceHolder]="'密码'" [nzType]="'password'" [nzSize]="'large'">
+            <nz-input formControlName="pwd" [(ngModel)]="_formData.pwd" [nzPlaceHolder]="'密码'" [nzType]="'password'" [nzSize]="'large'">
             </nz-input>
           </div>
         </div>
@@ -35,7 +44,7 @@
           <label nz-form-item-required>模块名</label>
         </div>
         <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
-          <nz-input formControlName="moduleName" [nzType]="'text'" [nzPlaceHolder]="'模块名'" [nzSize]="'large'">
+          <nz-input formControlName="module" [(ngModel)]="_formData.module"  [nzType]="'text'" [nzPlaceHolder]="'模块名'" [nzSize]="'large'">
           </nz-input>
         </div>
       </div>
@@ -44,7 +53,7 @@
           <label nz-form-item-required>角色</label>
         </div>
         <div nz-col [nzSpan]="12" nz-form-control>
-          <nz-input formControlName="role" [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'角色'" [nzSize]="'large'">
+          <nz-input formControlName="role"  [(ngModel)]="_formData.role"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'角色'" [nzSize]="'large'">
           </nz-input>
         </div>
       </div>
@@ -53,7 +62,7 @@
           <label nz-form-item-required>是否使用</label>
         </div>
         <div nz-form-control nz-col [nzSpan]="14">
-          <nz-radio-group formControlName="isUse">
+          <nz-radio-group formControlName="isEnable" [(ngModel)]="_formData.isEnable" >
             <label nz-radio [nzValue]="1">
               <span>是</span>
             </label>
@@ -68,7 +77,7 @@
           <label nz-form-item-required>目前状态</label>
         </div>
         <div nz-col [nzSpan]="12" nz-form-control>
-          <nz-input formControlName="nowStatus" [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'目前状态'" [nzSize]="'large'">
+          <nz-input formControlName="state" [(ngModel)]="_formData.state"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'目前状态'" [nzSize]="'large'">
           </nz-input>
         </div>
       </div>
@@ -81,3 +90,4 @@
     </form>
   </ng-template>
 </nz-modal>
+

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import api from "./../api.js";
+import api from "../api";
 
 @Component({
   selector: 'app-userinfo',
@@ -48,21 +48,23 @@ export class UserinfoComponent implements OnInit {
   isEdit = false;
   _dataSet = [];
 
-  _formData = {}
+  formData = {}
 
 
   getRowData(value){
-    debugger;
-    this._formData = Object.assign({},value);
+    this.formData = {};
+    this.formData  = Object.assign({},value);
     this.isEdit = true;
   }
 
 
   sendData(data){
-    debugger;
     console.log(data);
-
     //在这里做请求操作
+    this.http.get(api.editUserInfo,data).subscribe((res)=>{
+      console.log(res);
+      this.getUserInfo();
+    })
 
 
     this.isEdit = false;
@@ -71,14 +73,20 @@ export class UserinfoComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  getUserInfo(){
     this.http.get(api.queryUserInfo).subscribe((res)=>{
       console.dir(res);
       let list = <any>res;
-      console.dir(res);
       this._dataSet = list;
     })
   }
 
+
+
+  ngOnInit() {
+    this.getUserInfo();
+  }
+
 }
+
 

@@ -14,24 +14,34 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./userinfo-model.component.css']
 })
 export class UserinfoModelComponent implements OnInit {
-
   @Input()
   _formData = {
-    userName:"aa",
-    showName:"aa",
-    password:"aa",
-    moduleName:"aa",
-    role:"aa",
-    isUse:"0",
-    nowStatus:"aa"
-  };
+    id:"",
+    name:"",
+    displayName:"",
+    pwd:"",
+    module:"",
+    role:"",
+    isEnable:0,
+    state:""
+  }
+
+
+  @Input()
+  set formData(value){
+    this._formData = Object.assign({},value);
+  }
+
+  get formData(){
+    return this._formData;
+  }
 
   @Input()
   isVisible;
 
 
   @Output()
-   requestData = new EventEmitter();
+  requestData = new EventEmitter();
 
   @Output() closeModel = new EventEmitter();
 
@@ -86,18 +96,21 @@ export class UserinfoModelComponent implements OnInit {
 
 
   constructor(private fb: FormBuilder) {
-    this.validateForm = this.fb.group({
-      userName            : [this._formData.userName||"", [ Validators.required ] ],
-      showName               : [this._formData.showName||"",],
-      password            : [ this._formData.password||"", [ Validators.required ] ],
-      moduleName: [ this._formData.moduleName||"" ],
-      role             : [ this._formData.role||"", [ Validators.required ] ],
-      isUse:[this._formData.isUse||"0"],
-      nowStatus:[this._formData.nowStatus||""]
-    });
+
   }
 
   ngOnInit() {
+    this.validateForm = this.fb.group({
+      id:[""],
+      name : ["", [ Validators.required ] ],
+      displayName: [""],
+      pwd : ["", [ Validators.required ] ],
+      module:[""],
+      role: ["",[Validators.required ] ],
+      isEnable:[0],
+      state:[""]
+    });
   }
 
 }
+
