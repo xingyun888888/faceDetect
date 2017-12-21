@@ -4,32 +4,83 @@
   <meta charset="UTF-8">
   <title></title>
   <style>
-    div{
-      width:200px;
-      height:200px;
-      line-height:200px;
-      text-align:center;
-      color:#fff;
-      background:green;
-      margin:20px auto;
-    }
-    div:hover{
-      animation-name:toradius;
-      animation-duration:10s;
-      animation-timing-function:ease-in-out;
-      animation-delay: .1s;
-    }
-    @-webkit-keyframes toradius{
+    /*div{*/
+      /*width:200px;*/
+      /*height:200px;*/
+      /*line-height:200px;*/
+      /*text-align:center;*/
+      /*color:#fff;*/
+      /*background:green;*/
+      /*margin:20px auto;*/
+    /*}*/
+    /*div:hover{*/
+      /*animation-name:toradius;*/
+      /*animation-duration:10s;*/
+      /*animation-timing-function:ease-in-out;*/
+      /*animation-delay: .1s;*/
+    /*}*/
+    /*@-webkit-keyframes toradius{*/
+      /*from{*/
+        /*border-radius:0%;*/
+      /*}*/
+      /*to{*/
+        /*border-radius:100%*/
+      /*}*/
+    /*}*/
+    @-webkit-keyframes show1{
       from{
-        border-radius:0%;
+        height:0;
       }
       to{
-        border-radius:100%
+        height:200px;
       }
     }
+    @-webkit-keyframes show2{
+    from{
+      height:0;
+    }
+      to{
+        height:400px;
+      }
+    }
+    @-webkit-keyframes show3{
+      from{
+        height:0;
+      }
+      to{
+        height:600px;
+      }
+    }
+    .parent{
+      height:600px;
+      display:flex;
+      align-items:flex-end;
+    }
+    div.child{
+      background:#666666;
+      width:30px;
+      margin:0 50px;
+    }
+    div.child1{
+      height:200px;
+      animation:show1 2s linear;
+    }
+    div.child2{
+      height:400px;
+      animation:show2 2s linear;
+    }
+    div.child3{
+      height:600px;
+      animation:show3 2s linear;
+    }
+
   </style>
 </head>
 <body>
-<div>Hover Me</div>
+<div class="parent">
+  <div class="child child1">Me 1</div>
+  <div class="child child2">Me 2</div>
+  <div class="child child3">Me 3</div>
+</div>
 </body>
 </html>

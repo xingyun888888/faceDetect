@@ -23,11 +23,6 @@ export class NavComponent implements OnInit {
     this.currentIndex = curIndex;
   }
   ngOnInit() {
-
-    // this.http.get("/api/bioauth/test").subscribe((res)=>{
-    //     console.dir(res);
-
-    // })
   }
 
 }

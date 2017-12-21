@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient,HttpHeaders} from "@angular/common/http";
 import api from "../api";
 
 @Component({
@@ -61,8 +61,12 @@ export class UserinfoComponent implements OnInit {
   sendData(data){
     console.log(data);
     //在这里做请求操作
-    this.http.get(api.editUserInfo,data).subscribe((res)=>{
+    this.http.post(api.editUserInfo,data,{headers:new HttpHeaders({
+      "Content-type":"application/json;charset=UTF-8"
+    })}).subscribe((res)=>{
       console.log(res);
+      this.getUserInfo();
+    },(error)=>{
       this.getUserInfo();
     })
 
@@ -88,5 +92,6 @@ export class UserinfoComponent implements OnInit {
   }
 
 }
+
 
 

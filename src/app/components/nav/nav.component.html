@@ -1,0 +1,13 @@
+<div class="nav-container">
+  <ul>
+    <li (mouseenter)="showList($event,liIndex)" (mouseleave)="currentIndex=-1"   [ngClass]="{'active':liIndex==currentIndex}" [id]="liIndex" *ngFor="let item of navList;let liIndex=index;">
+      <a [routerLink]="item.routeName">{{item.name}}</a>
+      <b class="pp-triangle" *ngIf="item.children"></b>
+      <ul class="pp-dropdown" *ngIf="liIndex==currentIndex">
+        <li *ngFor="let subItem of item.children;let i=index">
+          <a [routerLink]="subItem.routeName"  >{{subItem.name}}</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
