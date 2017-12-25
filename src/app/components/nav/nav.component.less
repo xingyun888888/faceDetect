@@ -1,6 +1,7 @@
 .nav-container{
   width:100%;
   &>ul{
+    min-width:1400px;
     display:flex;
     flex-direction:row;
     align-items:center;
@@ -22,6 +23,13 @@
       }
       &.active>a{
         border-bottom:2px solid #fb891a;
+      }
+      .icon{
+        display:inline-block;
+        width:24px;
+        height:24px;
+        vertical-align:middle;
+        margin-right:5px;
       }
     }
   }

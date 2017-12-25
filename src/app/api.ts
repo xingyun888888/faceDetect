@@ -1,6 +1,8 @@
 
 const devSeverAddress  = "http://localhost:8080/xface-int1.2.5/";
 
+//const devServerAddress = "http://www.adding360.com:8080/bioauth/"
+
 let api ={
   //个人信息查询
   queryUserInfo:devSeverAddress + "userinfo",
