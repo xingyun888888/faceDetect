@@ -17,6 +17,7 @@ import { UserinfoComponent } from './userinfo/userinfo.component';
 import { UserinfoModelComponent } from './components/model/userinfo-model/userinfo-model.component';
 import {NavComponent} from "./components/nav/nav.component";
 import {HeaderComponent} from "./components/header/header.component";
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   schemas:[
@@ -31,7 +32,8 @@ import {HeaderComponent} from "./components/header/header.component";
     TableComponent,
     CommonTableComponent,
     UserinfoComponent,
-    UserinfoModelComponent
+    UserinfoModelComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
