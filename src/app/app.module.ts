@@ -13,12 +13,13 @@ import {appRoutes} from './app.route';
 import { HomeComponent } from './home/home.component';
 import { TableComponent } from './components/table/table.component';
 import { CommonTableComponent } from './components/table/common-table/common-table.component';
-import { UserinfoComponent } from './userinfo/userinfo.component';
 import { UserinfoModelComponent } from './components/model/userinfo-model/userinfo-model.component';
 import {NavComponent} from "./components/nav/nav.component";
 import {HeaderComponent} from "./components/header/header.component";
 import { SearchComponent } from './components/search/search.component';
 import { CameraModelComponent } from './components/model/camera-model/camera-model.component';
+import { CameraComponent } from './pages/camera/camera.component';
+import {UserinfoComponent} from "./pages/userinfo/userinfo.component";
 
 @NgModule({
   schemas:[
@@ -35,7 +36,8 @@ import { CameraModelComponent } from './components/model/camera-model/camera-mod
     UserinfoComponent,
     UserinfoModelComponent,
     SearchComponent,
-    CameraModelComponent
+    CameraModelComponent,
+    CameraComponent
   ],
   imports: [
     BrowserModule,

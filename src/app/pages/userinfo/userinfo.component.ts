@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient,HttpHeaders} from "@angular/common/http";
-import api from "../api";
+import api from "../../api";
 
 @Component({
   selector: 'app-userinfo',
