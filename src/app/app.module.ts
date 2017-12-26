@@ -18,6 +18,7 @@ import { UserinfoModelComponent } from './components/model/userinfo-model/userin
 import {NavComponent} from "./components/nav/nav.component";
 import {HeaderComponent} from "./components/header/header.component";
 import { SearchComponent } from './components/search/search.component';
+import { CameraModelComponent } from './components/model/camera-model/camera-model.component';
 
 @NgModule({
   schemas:[
@@ -33,7 +34,8 @@ import { SearchComponent } from './components/search/search.component';
     CommonTableComponent,
     UserinfoComponent,
     UserinfoModelComponent,
-    SearchComponent
+    SearchComponent,
+    CameraModelComponent
   ],
   imports: [
     BrowserModule,
