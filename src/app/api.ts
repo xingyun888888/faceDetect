@@ -8,9 +8,14 @@ let api ={
   queryUserInfo:devSeverAddress + "userinfo",
   editUserInfo:devSeverAddress+"userinfo/update",
   deleteUserInfo:devSeverAddress+"userinfo/delete",
-  addUserInfo:devSeverAddress+"userinfo/add"
-
+  addUserInfo:devSeverAddress+"userinfo/add",
+  //相机信息查询
+  queryCamera:devSeverAddress + "camera/list",
+  editCamera:devSeverAddress+"camera/update",
+  deleteCamera:devSeverAddress+"camera/delete",
+  addCamera:devSeverAddress+"camera/add"
 }
 
 export default api;
+
 
