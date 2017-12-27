@@ -81,28 +81,85 @@ export class CameraComponent implements OnInit {
 
   ];
   isEdit = false;
+
+  isAdd = false;
+
   _dataSet = [];
 
   formData = {};
 
 
   getRowData(value){
+    /**
+     * 这里判断拿出的value是否是undefined
+     * 如果是就按新增处理  否则 就是编辑
+     *
+     */
+    console.log(value);
     this.formData = {};
     this.formData  = Object.assign({},value);
-    this.isEdit = true;
+    if(!value){
+      this.isAdd = true;
+    }else{
+      this.isEdit = true;
+    }
   };
-  sendData(data){
+
+  /**
+   * 这里是关模态框调用的方法
+   *
+   */
+  close() {
+
+    if (this.isEdit) {
+      this.isEdit = !this.isEdit;
+    } else if (this.isAdd) {
+      this.isAdd = !this.isAdd;
+    }
+  }
+
+  /**
+   *
+   * 删除功能处理  在这里调用删除的接口
+   * 删除要接收什么参数 ？？？给后台发送一个ID就好  应该用post  只有id查询 是get  其他操作都用post en
+   * @param data
+   */
+  deleteRow(data){
     console.log(data);
-    //在这里做请求操作
-    this.http.post(api.editCamera,data,{headers:new HttpHeaders({
-      'Content-type':'application/json;charset=UTF-8'
-    })}).subscribe((res)=>{
-      console.log(res);
+    this.http.get(api.deleteCamera+"?id="+data.id).subscribe((res)=>{
       this.getCamera();
     },(error)=>{
       this.getCamera();
     });
-    this.isEdit = false;
+  }
+  sendData(data){
+    /**
+     *
+     在这里做请求操作
+     请求的时候同样判断一下 当前是新增操作还是修改操作
+     根据 isEdit 和 isAdd的值判断
+     *
+     */
+    if(this.isAdd){
+      this.http.post(api.addCamera,data,{headers:new HttpHeaders({
+        'Content-type':'application/json;charset=UTF-8'
+      })}).subscribe((res)=>{
+        this.getCamera();
+      },(error)=>{
+        this.getCamera();
+      });
+      this.isAdd = false;
+    }else if(this.isEdit){
+      this.http.post(api.editCamera,data,{headers:new HttpHeaders({
+        'Content-type':'application/json;charset=UTF-8'
+      })}).subscribe((res)=>{
+        this.getCamera();
+      },(error)=>{
+        this.getCamera();
+      });
+      this.isEdit = false;
+    }
+
   }
   constructor(private http: HttpClient,){
 
@@ -121,4 +178,5 @@ export class CameraComponent implements OnInit {
   }
 
 }
+
 

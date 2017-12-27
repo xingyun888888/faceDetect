@@ -25,7 +25,13 @@ export class TableComponent implements OnInit {
   @Output()
   editData: EventEmitter<any> = new EventEmitter()
 
-
+  /**
+   * 子组件传给父组件  然后在父组件订阅子组件的事件
+   *
+   * @type {EventEmitter<any>}
+   */
+  @Output()
+  deleteData:EventEmitter<any> = new EventEmitter()
 
 
   _indeterminate = false;
@@ -59,17 +65,14 @@ export class TableComponent implements OnInit {
   }
 
   singleDelete(e,data){
-    console.log(data);
-    let arr = this._dataSet.concat();
-    let index = arr.indexOf(data);
-    console.log(index);
-    arr.splice(index,1);
-    this._dataSet = arr;
-
-
+    this.deleteData.emit(data);
   }
   singleEdit(e,data){
     this.editData.emit(data);
+  }
+
+  add(e){
+    this.editData.emit();
   }
 
 
@@ -119,4 +122,5 @@ export class TableComponent implements OnInit {
   }
 
 }
+
 

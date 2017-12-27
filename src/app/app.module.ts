@@ -20,6 +20,7 @@ import { SearchComponent } from './components/search/search.component';
 import { CameraModelComponent } from './components/model/camera-model/camera-model.component';
 import { CameraComponent } from './pages/camera/camera.component';
 import {UserinfoComponent} from "./pages/userinfo/userinfo.component";
+import { CameraEditComponent } from './components/model/camera-edit/camera-edit.component';
 
 @NgModule({
   schemas:[
@@ -38,6 +39,7 @@ import {UserinfoComponent} from "./pages/userinfo/userinfo.component";
     SearchComponent,
     CameraModelComponent,
     CameraComponent,
+    CameraEditComponent,
   ],
   imports: [
     BrowserModule,
