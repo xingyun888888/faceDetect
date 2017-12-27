@@ -21,6 +21,7 @@ import { CameraModelComponent } from './components/model/camera-model/camera-mod
 import { CameraComponent } from './pages/camera/camera.component';
 import {UserinfoComponent} from "./pages/userinfo/userinfo.component";
 import { CameraEditComponent } from './components/model/camera-edit/camera-edit.component';
+import { ServerComponent } from './pages/server/server.component';
 
 @NgModule({
   schemas:[
@@ -40,6 +41,7 @@ import { CameraEditComponent } from './components/model/camera-edit/camera-edit.
     CameraModelComponent,
     CameraComponent,
     CameraEditComponent,
+    ServerComponent,
   ],
   imports: [
     BrowserModule,
