@@ -7,8 +7,13 @@ import {DemoComponent} from './demo/demo.component'
 import {HomeComponent} from "./home/home.component";
 import {CameraComponent} from "./pages/camera/camera.component";
 import {UserinfoComponent} from "./pages/userinfo/userinfo.component";
+import {ServerComponent} from './pages/server/server.component';
 
 export const appRoutes:Routes = [
+  {
+    path:'server',
+    component:ServerComponent,
+  },
   {
     path:'userinfo',
     component:UserinfoComponent,
@@ -30,3 +35,4 @@ export const appRoutes:Routes = [
     component:HomeComponent,
   }
 ]
+

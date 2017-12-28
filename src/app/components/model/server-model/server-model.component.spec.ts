@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CameraModelComponent } from './camera-model.component';
+import { ServerModelComponent } from './server-model.component';
 
-describe('CameraModelComponent', () => {
-  let component: CameraModelComponent;
-  let fixture: ComponentFixture<CameraModelComponent>;
+describe('ServerModelComponent', () => {
+  let component: ServerModelComponent;
+  let fixture: ComponentFixture<ServerModelComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CameraModelComponent ]
+      declarations: [ ServerModelComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CameraModelComponent);
+    fixture = TestBed.createComponent(ServerModelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
