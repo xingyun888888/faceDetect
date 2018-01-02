@@ -3,7 +3,7 @@
     <nz-button-group>
       <button nz-button  [nzType]="'primary'" [nzSize]="'large'" (click)="add()"><span><i class="anticon anticon-file-add"></i> 新增</span></button>
       <button nz-button  [nzType]="'primary'" [nzSize]="'large'" (click)="_multiDelete()"><span><i class="anticon anticon-delete"></i> 删除</span></button>
-      <button nz-button  [nzType]="'primary'" [nzSize]="'large'" (click)="_multiUpdate()"><span><i class="anticon anticon-reload"></i> 刷新</span></button>
+      <button nz-button  [nzType]="'primary'" [nzSize]="'large'" (click)="_refreshData()"><span><i class="anticon anticon-reload"></i> 刷新</span></button>
     </nz-button-group>
     <!--<span style="margin-left: 8px;" *ngIf="_checkedNumber">Selected {{_checkedNumber}} items</span>-->
   </div>
@@ -28,15 +28,25 @@
         <span>{{data[item.key]}}</span>
       </td>
       <td nz-td class="action">
-        <button nz-button [nzType]="'primary'">
-          <span>查看</span>
-        </button>
-        <button nz-button [nzType]="'primary'">
-          <span (click)="singleEdit($event,data)">修改</span>
-        </button>
-        <button nz-button [nzType]="'primary'">
-          <span  (click)="singleDelete($event,data)">删除</span>
-        </button>
+        <div *ngIf="actionType=='type1'">
+          <button nz-button [nzType]="'primary'">
+            <span>查看</span>
+          </button>
+          <button nz-button [nzType]="'primary'">
+            <span (click)="singleEdit($event,data)">修改</span>
+          </button>
+          <button nz-button [nzType]="'primary'">
+            <span  (click)="singleDelete($event,data)">删除</span>
+          </button>
+        </div>
+        <div *ngIf="actionType=='type2'">
+          <button nz-button [nzType]="'primary'">
+            <span>冻结</span>
+          </button>
+          <button nz-button [nzType]="'primary'">
+            <span (click)="singleEdit($event,data)">解冻</span>
+          </button>
+        </div>
       </td>
     </tr>
     </tbody>

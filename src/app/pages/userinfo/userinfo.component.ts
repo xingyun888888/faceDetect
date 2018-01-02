@@ -77,10 +77,32 @@ export class UserinfoComponent implements OnInit {
 
   }
 
+  /**
+   * 刷新数据
+   */
+  refresh(e){
+    this.getUserInfo();
+  }
+
+
+
   getUserInfo(){
     this.http.get(api.queryUserInfo).subscribe((res)=>{
       console.dir(res);
       let list = <any>res;
+      this._dataSet = list;
+    },(error)=>{
+      let list = [{
+        id:1,
+        name:"默认数据",
+        dispalyName:"默认数据",
+        pwd:"默认数据",
+        module:"默认数据",
+        role:"1",
+        isEnable:1,
+        state:"1"
+      }]
+      debugger;
       this._dataSet = list;
     })
   }
