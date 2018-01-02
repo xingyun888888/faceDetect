@@ -112,6 +112,15 @@ export class MobileComponent implements OnInit {
 
   }
 
+
+  /**
+   * 在这里调用刷新
+   */
+  refresh(e){
+    this.getMobile();
+  }
+
+
   getMobile(){
     this.http.get(api.queryMobile).subscribe((res)=>{
       console.dir(res);
@@ -125,4 +134,5 @@ export class MobileComponent implements OnInit {
   }
 
 }
+
 
