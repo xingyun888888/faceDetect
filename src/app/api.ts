@@ -18,10 +18,16 @@ const api = {
   queryServer: devSeverAddress + 'server/list',
   editServer: devSeverAddress + 'server/update',
   deleteServer: devSeverAddress + 'server/delete',
-  addServer: devSeverAddress + 'server/add'
+  addServer: devSeverAddress + 'server/add',
+  //客户端信息查询
+  queryMobile: devSeverAddress + 'mobile/list',
+  editMobile: devSeverAddress + 'mobile/update',
+  deleteMobile: devSeverAddress + 'mobile/delete',
+  addMobile: devSeverAddress + 'mobile/add'
 };
 
 export default api;
+
 
 
 

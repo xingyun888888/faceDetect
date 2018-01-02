@@ -8,8 +8,13 @@ import {HomeComponent} from "./home/home.component";
 import {CameraComponent} from "./pages/camera/camera.component";
 import {UserinfoComponent} from "./pages/userinfo/userinfo.component";
 import {ServerComponent} from './pages/server/server.component';
+import {MobileComponent} from './pages/mobile/mobile.component';
 
 export const appRoutes:Routes = [
+  {
+    path:'mobile',
+    component:MobileComponent,
+  },
   {
     path:'server',
     component:ServerComponent,
@@ -35,4 +40,5 @@ export const appRoutes:Routes = [
     component:HomeComponent,
   }
 ]
+
 

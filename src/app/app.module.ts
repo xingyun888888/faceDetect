@@ -22,6 +22,7 @@ import {UserinfoComponent} from "./pages/userinfo/userinfo.component";
 import { CameraEditComponent } from './components/model/camera-edit/camera-edit.component';
 import { ServerComponent } from './pages/server/server.component';
 import { ServerModelComponent } from './components/model/server-model/server-model.component';
+import { MobileComponent } from './pages/mobile/mobile.component';
 
 @NgModule({
   schemas:[
@@ -42,6 +43,7 @@ import { ServerModelComponent } from './components/model/server-model/server-mod
     CameraEditComponent,
     ServerComponent,
     ServerModelComponent,
+    MobileComponent,
   ],
   imports: [
     BrowserModule,
