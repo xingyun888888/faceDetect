@@ -24,7 +24,6 @@ export class MobileComponent implements OnInit {
     {
       key:"state",
       name:"描述"
-
     },
   ];
   isEdit = false;
@@ -126,6 +125,14 @@ export class MobileComponent implements OnInit {
       console.dir(res);
       let list = <any>res;
       this._dataSet = list;
+    },(error)=>{
+      let list = [{
+        id:1,
+        ip:"192.168.1.1",
+        port:"80",
+        state:"1"
+      }];
+      this._dataSet = list;
     });
   }
 
@@ -134,5 +141,6 @@ export class MobileComponent implements OnInit {
   }
 
 }
+
 
 

@@ -1,9 +1,9 @@
 <div class="pp-table">
   <div style="margin-bottom: 16px;">
     <nz-button-group>
-      <button nz-button  [nzType]="'primary'" [nzSize]="'large'" (click)="add()"><span><i class="anticon anticon-file-add"></i> 新增</span></button>
-      <button nz-button  [nzType]="'primary'" [nzSize]="'large'" (click)="_multiDelete()"><span><i class="anticon anticon-delete"></i> 删除</span></button>
-      <button nz-button  [nzType]="'primary'" [nzSize]="'large'" (click)="_refreshData()"><span><i class="anticon anticon-reload"></i> 刷新</span></button>
+      <button nz-button  [nzType]="'default'" [nzSize]="'large'" (click)="add()"><span><i class="anticon anticon-file-add"></i> 新增</span></button>
+      <button nz-button  [nzType]="'default'" [nzSize]="'large'" (click)="_multiDelete()"><span><i class="anticon anticon-delete"></i> 删除</span></button>
+      <button nz-button  [nzType]="'default'" [nzSize]="'large'" (click)="_refreshData()"><span><i class="anticon anticon-reload"></i> 刷新</span></button>
     </nz-button-group>
     <!--<span style="margin-left: 8px;" *ngIf="_checkedNumber">Selected {{_checkedNumber}} items</span>-->
   </div>
@@ -27,16 +27,17 @@
       <td nz-td *ngFor="let item of _titles">
         <span>{{data[item.key]}}</span>
       </td>
-      <td nz-td class="action">
+      <td nz-td class="action" style="width:200px;">
         <div *ngIf="actionType=='type1'">
-          <button nz-button [nzType]="'primary'">
-            <span>查看</span>
+          <!--<button nz-button [nzType]="'primary'" nzGhost>
+            <span><p style="color: #2FC3C3">查看</p></span>
+          </button>-->
+          <button nz-button nzGhost style="background:#00CCCC;font-size:12px;text-align:center;" (click)="singleEdit($event,data)" >
+            <span>修改</span>
           </button>
-          <button nz-button [nzType]="'primary'">
-            <span (click)="singleEdit($event,data)">修改</span>
-          </button>
-          <button nz-button [nzType]="'primary'">
-            <span  (click)="singleDelete($event,data)">删除</span>
+          <button nz-button nzGhost style="background:#E75261;font-size:12px;text-align:center;" (click)="singleDelete($event,data)">
+            <!-- 标签嵌套错误  p标签应该放在外面-->
+            <span>删除</span>
           </button>
         </div>
         <div *ngIf="actionType=='type2'">
@@ -68,6 +69,7 @@
     <!--</ul>-->
     <!--</nz-dropdown>条记录</div>-->
   </div>
+
 
 
 

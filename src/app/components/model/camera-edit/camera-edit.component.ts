@@ -122,12 +122,19 @@ export class CameraEditComponent implements OnInit {
       doorID:[""],
       port:[""],
       user:[""],
-      pwd:["", [ Validators.required ] ],
+      pwd:["", [ Validators.required,this.numberValidator ] ],
       rtspPort:[""],
       rtspPath:[""],
       camInfo:[""]
     });
   }
+  numberValidator = (control: FormControl): any => {
+    const val = control.value;
+    const numberReg =  /^\d+$/g;
+    const result = numberReg.test(val);
+    return result?null:{pwd:{info:"密码必须是数字"}}
+  }
 
 }
+
 

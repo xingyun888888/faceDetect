@@ -6,6 +6,21 @@
   padding:10px;
   width:1200px;
   margin:0 auto;
+  .ant-btn-group > .ant-btn{
+    /**
+      !important的意思就是这个优先级最高
+     */
+    background:#e5e5e5 !important;
+  }
+  .ant-pagination{
+    .ant-pagination-item-active{
+      background:#e5e5e5;
+      a{
+        color:#666;
+      }
+    }
+
+  }
   .ant-spin-container{
     table{
       border:1px solid #ccc;;
@@ -16,18 +31,34 @@
       tr:nth-of-type(even){
         background:#f7f7f7;
       }
+      th{
+        background:#e5e5e5;
+      }
+      td{
+        span{
+          color:#666;
+        }
+      }
       td,th{
         box-sizing:border-box;
         border-radius:0;
         border:1px solid #ccc;
         size:16px;
         padding:10px 8px;
+        span{
+          font-size:12px !important;
+        }
       }
       tr td:last-child{
         border-right:0;
       }
       tr td:first-child{
         border-left:0;
+      }
+      .action{
+        button{
+          border:1px solid #e5e5e5;
+        }
       }
     }
   }
@@ -38,4 +69,5 @@
     font-size:14px;
   }
 }
+
 
