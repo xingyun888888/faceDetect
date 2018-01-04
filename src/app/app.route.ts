@@ -9,8 +9,13 @@ import {CameraComponent} from "./pages/camera/camera.component";
 import {UserinfoComponent} from "./pages/userinfo/userinfo.component";
 import {ServerComponent} from './pages/server/server.component';
 import {MobileComponent} from './pages/mobile/mobile.component';
+import {ReportDataAnalyzeComponent} from "./pages/report-data-analyze/report-data-analyze.component";
 
 export const appRoutes:Routes = [
+  {
+    path:'reportAnalyze',
+    component:ReportDataAnalyzeComponent,
+  },
   {
     path:'mobile',
     component:MobileComponent,

@@ -7,6 +7,13 @@ import { DemoComponent } from './demo/demo.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+
+/**
+ * 引入图表库
+ */
+import { NgxEchartsModule } from 'ngx-echarts';
+
+
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {appRoutes} from './app.route';
@@ -23,6 +30,7 @@ import { CameraEditComponent } from './components/model/camera-edit/camera-edit.
 import { ServerComponent } from './pages/server/server.component';
 import { ServerModelComponent } from './components/model/server-model/server-model.component';
 import { MobileComponent } from './pages/mobile/mobile.component';
+import { ReportDataAnalyzeComponent } from './pages/report-data-analyze/report-data-analyze.component';
 
 @NgModule({
   schemas:[
@@ -44,6 +52,7 @@ import { MobileComponent } from './pages/mobile/mobile.component';
     ServerComponent,
     ServerModelComponent,
     MobileComponent,
+    ReportDataAnalyzeComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,7 +61,8 @@ import { MobileComponent } from './pages/mobile/mobile.component';
     FormsModule,
     RouterModule.forRoot(appRoutes),
     NgZorroAntdModule.forRoot(),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxEchartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
