@@ -3,11 +3,11 @@ import api from '../../api';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Component({
-  selector: 'app-camera',
-  templateUrl: './camera.component.html',
-  styleUrls: ['./camera.component.css']
+  selector: 'app-recognize',
+  templateUrl: './recognize.component.html',
+  styleUrls: ['./recognize.component.css']
 })
-export class CameraComponent implements OnInit {
+export class RecognizeComponent implements OnInit {
   _titles: Array<any> = [
     {
       key:'id',
@@ -126,10 +126,10 @@ export class CameraComponent implements OnInit {
    */
   deleteRow(data){
     console.log(data);
-    this.http.get(api.deleteCamera+"?id="+data.id).subscribe((res)=>{
-      this.getCamera();
+    this.http.get(api.deleteRecognize+"?id="+data.id).subscribe((res)=>{
+      this.getRecognize();
     },(error)=>{
-      this.getCamera();
+      this.getRecognize();
     });
   }
   sendData(data){
@@ -141,21 +141,21 @@ export class CameraComponent implements OnInit {
      *
      */
     if(this.isAdd){
-      this.http.post(api.addCamera,data,{headers:new HttpHeaders({
+      this.http.post(api.addRecognize,data,{headers:new HttpHeaders({
         'Content-type':'application/json;charset=UTF-8'
       })}).subscribe((res)=>{
-        this.getCamera();
+        this.getRecognize();
       },(error)=>{
-        this.getCamera();
+        this.getRecognize();
       });
       this.isAdd = false;
     }else if(this.isEdit){
-      this.http.post(api.editCamera,data,{headers:new HttpHeaders({
+      this.http.post(api.editRecognize,data,{headers:new HttpHeaders({
         'Content-type':'application/json;charset=UTF-8'
       })}).subscribe((res)=>{
-        this.getCamera();
+        this.getRecognize();
       },(error)=>{
-        this.getCamera();
+        this.getRecognize();
       });
       this.isEdit = false;
     }
@@ -169,11 +169,11 @@ export class CameraComponent implements OnInit {
    * 在这里调用刷新
    */
   refresh(e){
-    this.getCamera();
+    this.getRecognize();
   }
 
-  getCamera(){
-    this.http.get(api.queryCamera).subscribe((res)=>{
+  getRecognize(){
+    this.http.get(api.queryRecognize).subscribe((res)=>{
       console.dir(res);
       let list = <any>res;
       this._dataSet = list;
@@ -181,10 +181,9 @@ export class CameraComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getCamera();
+    this.getRecognize();
   }
 
+
 }
-
-
 

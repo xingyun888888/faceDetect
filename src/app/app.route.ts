@@ -9,12 +9,17 @@ import {CameraComponent} from "./pages/camera/camera.component";
 import {UserinfoComponent} from "./pages/userinfo/userinfo.component";
 import {ServerComponent} from './pages/server/server.component';
 import {MobileComponent} from './pages/mobile/mobile.component';
-import {ReportDataAnalyzeComponent} from "./pages/report-data-analyze/report-data-analyze.component";
+import {FacelibComponent} from './pages/facelib/facelib.component';
+import {RecognizeComponent} from './pages/recognize/recognize.component';
 
 export const appRoutes:Routes = [
   {
-    path:'reportAnalyze',
-    component:ReportDataAnalyzeComponent,
+    path:'recognize',
+    component: RecognizeComponent,
+  },
+  {
+    path:'facelib',
+    component: FacelibComponent,
   },
   {
     path:'mobile',
@@ -45,5 +50,6 @@ export const appRoutes:Routes = [
     component:HomeComponent,
   }
 ]
+
 
 

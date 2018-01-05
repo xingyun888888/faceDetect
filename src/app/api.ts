@@ -23,10 +23,21 @@ const api = {
   queryMobile: devSeverAddress + 'mobile/list',
   editMobile: devSeverAddress + 'mobile/update',
   deleteMobile: devSeverAddress + 'mobile/delete',
-  addMobile: devSeverAddress + 'mobile/add'
+  addMobile: devSeverAddress + 'mobile/add',
+  //人脸库查询
+  queryFacelib: devSeverAddress + 'facelib/list',
+  editFacelib: devSeverAddress + 'facelib/update',
+  deleteFacelib: devSeverAddress + 'facelib/delete',
+  addFacelib: devSeverAddress + 'facelib/add',
+  //告警信息查询
+  queryRecognize: devSeverAddress + 'recognize/list',
+  editRecognize: devSeverAddress + 'recognize/update',
+  deleteRecognize: devSeverAddress + 'recognize/delete',
+  addRecognize: devSeverAddress + 'recognize/add'
 };
 
 export default api;
+
 
 
 

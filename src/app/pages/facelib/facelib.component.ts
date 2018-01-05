@@ -1,84 +1,38 @@
 import { Component, OnInit } from '@angular/core';
+import {HttpClient,HttpHeaders} from "@angular/common/http";
 import api from '../../api';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Component({
-  selector: 'app-camera',
-  templateUrl: './camera.component.html',
-  styleUrls: ['./camera.component.css']
+  selector: 'app-facelib',
+  templateUrl: './facelib.component.html',
+  styleUrls: ['./facelib.component.css']
 })
-export class CameraComponent implements OnInit {
+export class FacelibComponent implements OnInit {
   _titles: Array<any> = [
     {
       key:'id',
       name:'ID'
     },
-    // {
-    //   key:'type',
-    //   name:'摄像头类型'
-    // },
     {
       key:'name',
-      name:'摄像头名称'
-    },
-    /*{
-     key:'serialNum',
-     name:'序列号'
-     },*/
-    {
-      key:'ip',
-      name:'相机ip'
+      name:'数据库名称'
     },
     {
-      key:'direction',
-      name:'方向'
-
+      key:'path',
+      name: '库路径'
     },
     {
-      key:'analyserID',
-      name:'分析仪ID'
-    },
-    /*
-
-     {
-     key:'zoneID',
-     name:'角色'
-     },
-     {
-     key:'strategyID',
-     name:'策略ID'
-
-     },
-     {
-     key:'doorID',
-     name:'门禁ID'
-     },
-     {
-     key:'port',
-     name:'端口'
-     },
-
-     {
-     key:'user',
-     name:'用户名'
-     },
-     {
-     key:'pwd',
-     name:'密码'
-     },*/
-    {
-      key:'rtspPort',
-      name:'Rtsp端口'
+      key:'createTime',
+      name:'创建时间'
     },
     {
-      key:'rtspPath',
-      name:'resp路径'
+      key:'maxNum',
+      name:'人脸个数'
     },
     {
-      key:'camInfo',
-      name:'摄像头品牌'
+      key:'state',
+      name:'状态'
     }
-
   ];
   isEdit = false;
 
@@ -126,10 +80,10 @@ export class CameraComponent implements OnInit {
    */
   deleteRow(data){
     console.log(data);
-    this.http.get(api.deleteCamera+"?id="+data.id).subscribe((res)=>{
-      this.getCamera();
+    this.http.get(api.deleteFacelib+"?id="+data.id).subscribe((res)=>{
+      this.getFacelib();
     },(error)=>{
-      this.getCamera();
+      this.getFacelib();
     });
   }
   sendData(data){
@@ -141,21 +95,21 @@ export class CameraComponent implements OnInit {
      *
      */
     if(this.isAdd){
-      this.http.post(api.addCamera,data,{headers:new HttpHeaders({
+      this.http.post(api.addFacelib,data,{headers:new HttpHeaders({
         'Content-type':'application/json;charset=UTF-8'
       })}).subscribe((res)=>{
-        this.getCamera();
+        this.getFacelib();
       },(error)=>{
-        this.getCamera();
+        this.getFacelib();
       });
       this.isAdd = false;
     }else if(this.isEdit){
-      this.http.post(api.editCamera,data,{headers:new HttpHeaders({
+      this.http.post(api.editFacelib,data,{headers:new HttpHeaders({
         'Content-type':'application/json;charset=UTF-8'
       })}).subscribe((res)=>{
-        this.getCamera();
+        this.getFacelib();
       },(error)=>{
-        this.getCamera();
+        this.getFacelib();
       });
       this.isEdit = false;
     }
@@ -165,15 +119,8 @@ export class CameraComponent implements OnInit {
 
   }
 
-  /**
-   * 在这里调用刷新
-   */
-  refresh(e){
-    this.getCamera();
-  }
-
-  getCamera(){
-    this.http.get(api.queryCamera).subscribe((res)=>{
+  getFacelib(){
+    this.http.get(api.queryFacelib).subscribe((res)=>{
       console.dir(res);
       let list = <any>res;
       this._dataSet = list;
@@ -181,10 +128,8 @@ export class CameraComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getCamera();
+    this.getFacelib();
   }
 
 }
-
-
 

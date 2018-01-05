@@ -1,0 +1,8 @@
+<app-search></app-search>
+<app-table [_titles]="_titles" [_dataSet]="_dataSet" (editData)="getRowData($event)" (deleteData)="deleteRow($event)" actionType="type3"></app-table>
+<!--<app-userinfo-model (closeModel)="isEdit=!isEdit" [isVisible]="isEdit" [_formData]="formData" (requestData)="sendData($event)"></app-userinfo-model>-->
+<app-facelib-model (closeModel)="close()" [isVisible]="isEdit||isAdd" [_formData]="formData" (requestData)="sendData($event)"></app-facelib-model>
+
+
+
+

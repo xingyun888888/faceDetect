@@ -30,7 +30,12 @@ import { CameraEditComponent } from './components/model/camera-edit/camera-edit.
 import { ServerComponent } from './pages/server/server.component';
 import { ServerModelComponent } from './components/model/server-model/server-model.component';
 import { MobileComponent } from './pages/mobile/mobile.component';
-import { ReportDataAnalyzeComponent } from './pages/report-data-analyze/report-data-analyze.component';
+import { ReportDataAnalyzeComponent } from './pages/report-data-analyze/report-data-analyze.;
+import { FacelibComponent } from './pages/facelib/facelib.;
+import { FacelibModelComponent } from './components/model/facelib-model/facelib-model.;
+import { LogComponent } from './pages/log/log.;
+import { RecognizeComponent } from './pages/recognize/recognize.;
+import { UserComponent } from './pages/user/user.component'component'component'component'component'component';
 
 @NgModule({
   schemas:[
@@ -52,7 +57,12 @@ import { ReportDataAnalyzeComponent } from './pages/report-data-analyze/report-d
     ServerComponent,
     ServerModelComponent,
     MobileComponent,
-    ReportDataAnalyzeComponent,
+    ReportDataAnalyz,
+    FacelibComponent,
+    FacelibModelComponent,
+    LogComponent,
+    RecognizeComponent,
+    UserComponenteComponent,
   ],
   imports: [
     BrowserModule,
