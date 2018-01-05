@@ -11,8 +11,13 @@ import {ServerComponent} from './pages/server/server.component';
 import {MobileComponent} from './pages/mobile/mobile.component';
 import {FacelibComponent} from './pages/facelib/facelib.component';
 import {RecognizeComponent} from './pages/recognize/recognize.component';
+import {ReportDataAnalyzeComponent} from "./pages/report-data-analyze/report-data-analyze.component";
 
 export const appRoutes:Routes = [
+  {
+    path:'reportAnalyze',
+    component: ReportDataAnalyzeComponent,
+  },
   {
     path:'recognize',
     component: RecognizeComponent,
