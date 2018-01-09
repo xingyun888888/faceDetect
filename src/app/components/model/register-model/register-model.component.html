@@ -1,0 +1,122 @@
+<nz-modal [nzVisible]="isVisible" [nzTitle]="'注册信息'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)" [nzConfirmLoading]="isConfirmLoading" nzFooter="" >
+  <ng-template #modalContent>
+    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">
+      <div nz-form-item nz-row>
+        <div nz-form-label nz-col [nzSpan]="7">
+          <label nz-form-item-required>Id</label>
+        </div>
+        <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+          <nz-input formControlName="id" [(ngModel)]="_formData.id"  [nzType]="'text'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-form-label nz-col [nzSpan]="7">
+          <label nz-form-item-required>用户姓名</label>
+        </div>
+        <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+          <nz-input formControlName="name" [(ngModel)]="_formData.name"  [nzType]="'text'" [nzPlaceHolder]="'用户姓名'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-form-label nz-col [nzSpan]="7">
+          <label nz-form-item-required>编号</label>
+        </div>
+        <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+          <nz-input formControlName="seriernum" [(ngModel)]="_formData.seriernum"  [nzPlaceHolder]="'编号'" [nzType]="'text'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="7" nz-form-label>
+          <label nz-form-item-required>性别</label>
+        </div>
+        <div>
+          <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+            <nz-input formControlName="sex" [(ngModel)]="_formData.sex" [nzPlaceHolder]="'性别'" [nzType]="'text'" [nzSize]="'large'">
+            </nz-input>
+          </div>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="7" nz-form-label>
+          <label nz-form-item-required>证件类型</label>
+        </div>
+        <div>
+          <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+            <nz-input formControlName="type" [(ngModel)]="_formData.type" [nzPlaceHolder]="'证件类型'" [nzType]="'text'" [nzSize]="'large'">
+            </nz-input>
+          </div>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="7" nz-form-label>
+          <label nz-form-item-required>证件号码</label>
+        </div>
+        <div>
+          <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+            <nz-input formControlName="code" [(ngModel)]="_formData.code" [nzPlaceHolder]="'证件号码'" [nzType]="'text'" [nzSize]="'large'">
+            </nz-input>
+          </div>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="7" nz-form-label>
+          <label nz-form-item-required>路径</label>
+        </div>
+        <div>
+          <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+            <nz-input formControlName="path" [(ngModel)]="_formData.path" [nzPlaceHolder]="'路径'" [nzType]="'text'" [nzSize]="'large'">
+            </nz-input>
+          </div>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="7" nz-form-label>
+          <label nz-form-item-required>Fea文件路径</label>
+        </div>
+        <div>
+          <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+            <nz-input formControlName="feapath" [(ngModel)]="_formData.feapath" [nzPlaceHolder]="'Fea文件路径'" [nzType]="'text'" [nzSize]="'large'">
+            </nz-input>
+          </div>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="7" nz-form-label>
+          <label nz-form-item-required>人脸库id</label>
+        </div>
+        <div>
+          <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+            <nz-input formControlName="facelibid" [(ngModel)]="_formData.facelibid" [nzPlaceHolder]="'人脸库id'" [nzType]="'text'" [nzSize]="'large'">
+            </nz-input>
+          </div>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="7" nz-form-label>
+          <label nz-form-item-required>缩略图</label>
+        </div>
+        <div>
+          <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+            <img [src]="'../../../assets/images/upload.svg'" class="upload-icon" (click)="fileSelect($event)"/>
+            <!--<nz-input formControlName="imgPath" #imgSelect [(ngModel)]="_formData.imgPath" [nzPlaceHolder]="'缩略图'" [nzType]="'file'"   [nzSize]="'large'">-->
+            <!--</nz-input>-->
+            <input type="file" formControlName="imgPath" #imgSelect style="visibility:hidden;" (change)="fileChange($event)" >
+          </div>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzOffset]="7" [nzSpan]="12" nz-form-control>
+          <button nz-button [nzType]="'primary'" [nzSize]="'large'" [disabled]="!validateForm.valid">提交</button>
+          <button nz-button [nzSize]="'large'" (click)="resetForm($event)">重置</button>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+</nz-modal>
+
+
+
+

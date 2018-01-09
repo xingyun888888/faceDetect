@@ -5,18 +5,23 @@ import {Routes,RouterModule} from '@angular/router';
 
 import {DemoComponent} from './demo/demo.component'
 import {HomeComponent} from "./home/home.component";
-import {CameraComponent} from "./pages/camera/camera.component";
-import {UserinfoComponent} from "./pages/userinfo/userinfo.component";
-import {ServerComponent} from './pages/server/server.component';
-import {MobileComponent} from './pages/mobile/mobile.component';
-import {FacelibComponent} from './pages/facelib/facelib.component';
-import {RecognizeComponent} from './pages/recognize/recognize.component';
 import {ReportDataAnalyzeComponent} from "./pages/report-data-analyze/report-data-analyze.component";
+import {RegisterComponent} from "./pages/register/register.component";
+import {RecognizeComponent} from "./pages/recognize/recognize.component";
+import {FacelibComponent} from "./pages/facelib/facelib.component";
+import {MobileComponent} from "./pages/mobile/mobile.component";
+import {ServerComponent} from "./pages/server/server.component";
+import {UserinfoComponent} from "./pages/userinfo/userinfo.component";
+import {CameraComponent} from "./pages/camera/camera.component";
 
 export const appRoutes:Routes = [
   {
     path:'reportAnalyze',
     component: ReportDataAnalyzeComponent,
+  },
+  {
+    path:"register",
+    component:RegisterComponent,
   },
   {
     path:'recognize',

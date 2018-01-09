@@ -1,3 +1,4 @@
+<script src="../../pages/register/register.component.ts"></script>
 <div class="pp-table">
   <div style="margin-bottom: 16px;">
     <nz-button-group>
@@ -6,6 +7,10 @@
       <button nz-button  [nzType]="'default'" [nzSize]="'large'" (click)="_refreshData()"><span><i class="anticon anticon-reload"></i> 刷新</span></button>
     </nz-button-group>
     <!--<span style="margin-left: 8px;" *ngIf="_checkedNumber">Selected {{_checkedNumber}} items</span>-->
+    <div class="display-type">
+      <span class="anticon anticon-appstore"></span>
+      <span class="anticon anticon-appstore"></span>
+    </div>
   </div>
   <nz-table #nzTable [nzDataSource]="_dataSet" nzShowSizeChanger [(nzPageIndex)]="currentPageIndex" [nzPageSize]="pageSize" (nzDataChange)="_displayDataChange($event)" (nzPageIndexChange)="_refreshStatus()" (nzPageSizeChange)="_refreshStatus()">
     <thead nz-thead>
@@ -25,7 +30,8 @@
         </label>
       </td>
       <td nz-td *ngFor="let item of _titles">
-        <span>{{data[item.key]}}</span>
+        <span *ngIf="item.type!=='img'">{{data[item.key]}}</span>
+        <img [src]="'../../assets/images/ege.jpg'" alt="" *ngIf="item.type=='img'">
       </td>
       <td nz-td class="action" style="width:240px;">
         <div *ngIf="actionType=='type1'">
@@ -49,7 +55,7 @@
           </button>
         </div>
         <div *ngIf="actionType=='type3'">
-          <button nz-button nzGhost style="background:#00CCCC;font-size:12px;text-align:center;">
+          <button [routerLink]="['/register']"  [queryParams]="{id:data.id}" nz-button nzGhost style="background:#00CCCC;font-size:12px;text-align:center;"  >
             <span>入库</span>
           </button>
           <button nz-button nzGhost style="background:#00CCCC;font-size:12px;text-align:center;" (click)="singleEdit($event,data)" >
@@ -81,7 +87,7 @@
     <!--</ul>-->
     <!--</nz-dropdown>条记录</div>-->
   </div>
-
+</div>
 
 
 

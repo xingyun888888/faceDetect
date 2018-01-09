@@ -5,7 +5,7 @@
       <b class="pp-triangle" *ngIf="item.children"></b>
       <ul class="pp-dropdown" *ngIf="liIndex==currentIndex">
         <li *ngFor="let subItem of item.children;let i=index">
-          <a [routerLink]="subItem.routeName"  >{{subItem.name}}</a>
+          <a [routerLink]="subItem.routeName">{{subItem.name}}</a>
         </li>
       </ul>
     </li>

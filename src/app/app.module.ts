@@ -35,7 +35,8 @@ import {ReportDataAnalyzeComponent} from "./pages/report-data-analyze/report-dat
 import {FacelibModelComponent} from "./components/model/facelib-model/facelib-model.component";
 import {LogComponent} from "./pages/log/log.component";
 import {RecognizeComponent} from "./pages/recognize/recognize.component";
-import {UserComponent} from "./pages/user/user.component";
+import { RegisterComponent } from './pages/register/register.component';
+import { RegisterModelComponent } from './components/model/register-model/register-model.component';
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import {UserComponent} from "./pages/user/user.component";
     FacelibModelComponent,
     LogComponent,
     RecognizeComponent,
-    UserComponent,
+    RegisterModelComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

@@ -33,7 +33,12 @@ const api = {
   queryRecognize: devSeverAddress + 'recognize/list',
   editRecognize: devSeverAddress + 'recognize/update',
   deleteRecognize: devSeverAddress + 'recognize/delete',
-  addRecognize: devSeverAddress + 'recognize/add'
+  addRecognize: devSeverAddress + 'recognize/add',
+  //注册信息查询
+  queryRegister: devSeverAddress + 'register/listById',
+  editRegister: devSeverAddress + 'register/update',
+  deleteRegister: devSeverAddress + 'register/delete',
+  addRegister: devSeverAddress + 'register/add'
 };
 
 export default api;

@@ -107,7 +107,7 @@ export class MobileComponent implements OnInit {
     }
 
   }
-  constructor(private http: HttpClient,){
+  constructor(private http: HttpClient){
 
   }
 

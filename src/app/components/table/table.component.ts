@@ -1,4 +1,6 @@
-import { Component, OnInit,Input ,Output,EventEmitter} from '@angular/core';
+import { Component, OnInit, Input , Output, EventEmitter} from '@angular/core';
+
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-table',
@@ -6,7 +8,6 @@ import { Component, OnInit,Input ,Output,EventEmitter} from '@angular/core';
   styleUrls: ['./table.component.less']
 })
 export class TableComponent implements OnInit {
-
   _allChecked = false;
   _disabledButton = true;
   _checkedNumber = 0;
@@ -14,80 +15,55 @@ export class TableComponent implements OnInit {
 
   _operating = false;
 
-
   /**
    * 操作选项显示的内容
    * 接收父组件的传值
    * @type {{type1: string; type2: string}}
    */
   @Input()
-  actionType:String = "type1";
-
+  actionType: String = 'type1';
 
   //接收表格数据
   @Input()
-  _dataSet:Array<any> = [];
+  _dataSet: Array<any> = [];
 
   //配置表格字段
   @Input()
-  _titles:Array<any> = [];
+  _titles: Array<any> = [];
 
   @Output()
   editData: EventEmitter<any> = new EventEmitter();
 
-
   @Output()
-  refresh:EventEmitter<any> = new EventEmitter();
+  refresh: EventEmitter<any> = new EventEmitter();
 
   /**
    * 子组件传给父组件  然后在父组件订阅子组件的事件
    * @type {EventEmitter<any>}
    */
   @Output()
-  deleteData:EventEmitter<any> = new EventEmitter()
+  deleteData: EventEmitter<any> = new EventEmitter();
   _indeterminate = false;
   editRow = []; //可编辑的行
-  tempEditObject = [];//编辑暂存区
-  pageSize = 5;//每页多少条数据
+  tempEditObject = []; //编辑暂存区
+  pageSize = 5; //每页多少条数据
   total = 0; //总条数
-  currentPageIndex = 1;//当前页码
+  currentPageIndex = 1; //当前页码
 
 
-  /**
-   * 保留  暂时没有用到
-   * @private
-   */
-  _multiEdit() {
-    this.editRow = [];
-    this.tempEditObject = this._dataSet.concat();
-    this._displayData.forEach((item,index)=>{
-      if(item.checked){
-        this.editRow.push(item.key)
-      }
-    })
+  constructor(public router: Router){
+
   }
 
   /**
-   * 保留  暂时没有用到
-   * @private
-   */
-  _multiSave() {
-    this._dataSet = this.tempEditObject.concat();
-    this.editRow = [];
-  }
+   * 查询人脸库下的数据列表*/
 
-  /**
-   * 保留  暂时没有用到
-   * @private
-   */
-  _multiDelete(){
-    let data = this._dataSet.concat();
-    for(let i=this._displayData.length-1;i>=0;i--){
-      if(this._displayData[i].checked){
-        data.splice(i,1);
-      }
-    }
-    this._dataSet = data;
+  queryBaseData(e, data){
+    console.log(data);
+    /**
+     * 这里的id是动态的
+     */
+    //his.router.navigate(["/register",{queryParams:{id:34242}}]);
   }
 
   /**
@@ -95,7 +71,7 @@ export class TableComponent implements OnInit {
    * @param e
    * @param data
    */
-  singleDelete(e,data){
+  singleDelete(e, data){
     this.deleteData.emit(data);
   }
 
@@ -104,7 +80,7 @@ export class TableComponent implements OnInit {
    * @param e
    * @param data
    */
-  singleEdit(e,data){
+  singleEdit(e, data){
     this.editData.emit(data);
   }
 
@@ -145,7 +121,6 @@ export class TableComponent implements OnInit {
     this._checkedNumber = this._dataSet.filter(value => value.checked).length;
   }
 
-
   /**
    * 选中所有的方法
    * @param value
@@ -170,6 +145,43 @@ export class TableComponent implements OnInit {
    */
   _pageSizeChange(visible){
     console.log(visible);
+  }
+
+  /**
+   * 保留  暂时没有用到
+   * @private
+   */
+  _multiEdit() {
+    this.editRow = [];
+    this.tempEditObject = this._dataSet.concat();
+    this._displayData.forEach((item, index) => {
+      if (item.checked){
+        this.editRow.push(item.key);
+      }
+    });
+  }
+
+  /**
+   * 保留  暂时没有用到
+   * @private
+   */
+  _multiSave() {
+    this._dataSet = this.tempEditObject.concat();
+    this.editRow = [];
+  }
+
+  /**
+   * 保留  暂时没有用到
+   * @private
+   */
+  _multiDelete(){
+    const data = this._dataSet.concat();
+    for (let i = this._displayData.length - 1; i >= 0; i--){
+      if (this._displayData[i].checked){
+        data.splice(i, 1);
+      }
+    }
+    this._dataSet = data;
   }
 
   ngOnInit() {

@@ -39,7 +39,6 @@ export class CameraComponent implements OnInit {
       name:'分析仪ID'
     },
     /*
-
      {
      key:'zoneID',
      name:'角色'
@@ -57,7 +56,6 @@ export class CameraComponent implements OnInit {
      key:'port',
      name:'端口'
      },
-
      {
      key:'user',
      name:'用户名'
@@ -78,8 +76,8 @@ export class CameraComponent implements OnInit {
       key:'camInfo',
       name:'摄像头品牌'
     }
-
   ];
+
   isEdit = false;
 
   isAdd = false;
@@ -87,7 +85,6 @@ export class CameraComponent implements OnInit {
   _dataSet = [];
 
   formData = {};
-
 
   getRowData(value){
     /**
@@ -110,7 +107,6 @@ export class CameraComponent implements OnInit {
    *
    */
   close() {
-
     if (this.isEdit) {
       this.isEdit = !this.isEdit;
     } else if (this.isAdd) {
@@ -119,7 +115,6 @@ export class CameraComponent implements OnInit {
   }
 
   /**
-   *
    * 删除功能处理  在这里调用删除的接口
    * 删除要接收什么参数 ？？？给后台发送一个ID就好  应该用post  只有id查询 是get  其他操作都用post en
    * @param data
@@ -132,13 +127,12 @@ export class CameraComponent implements OnInit {
       this.getCamera();
     });
   }
+
   sendData(data){
     /**
-     *
      在这里做请求操作
      请求的时候同样判断一下 当前是新增操作还是修改操作
      根据 isEdit 和 isAdd的值判断
-     *
      */
     if(this.isAdd){
       this.http.post(api.addCamera,data,{headers:new HttpHeaders({
@@ -159,10 +153,8 @@ export class CameraComponent implements OnInit {
       });
       this.isEdit = false;
     }
-
   }
   constructor(private http: HttpClient,){
-
   }
 
   /**
@@ -183,7 +175,6 @@ export class CameraComponent implements OnInit {
   ngOnInit() {
     this.getCamera();
   }
-
 }
 
 
