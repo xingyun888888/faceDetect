@@ -103,6 +103,7 @@
             <img [src]="'../../../assets/images/upload.svg'" class="upload-icon" (click)="fileSelect($event)"/>
             <!--<nz-input formControlName="imgPath" #imgSelect [(ngModel)]="_formData.imgPath" [nzPlaceHolder]="'缩略图'" [nzType]="'file'"   [nzSize]="'large'">-->
             <!--</nz-input>-->
+            <img [src]="priviewImg" alt="" class="priview-img">
             <input type="file" formControlName="imgPath" #imgSelect style="visibility:hidden;" (change)="fileChange($event)" >
           </div>
         </div>

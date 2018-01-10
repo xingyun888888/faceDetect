@@ -2,6 +2,14 @@ import { Component, OnInit, Input, Output, EventEmitter,ViewChild,ElementRef} fr
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
 
+
+interface FileReaderEventTarget extends EventTarget {
+  result:string
+}
+interface FileReaderEvent extends Event {
+  target: FileReaderEventTarget;
+}
+
 @Component({
   selector: 'app-register-model',
   templateUrl: './register-model.component.html',
@@ -44,13 +52,29 @@ export class RegisterModelComponent implements OnInit {
   @ViewChild("imgSelect",{read:ElementRef}) imgSelect:ElementRef;
 
 
+  priviewImg:string="";
+
   fileSelect(e){
     this.imgSelect.nativeElement.click();
     console.log(this.imgSelect)
   }
 
+  /**
+   * 选了
+   * @param e
+   */
   fileChange(e){
     console.log(e);
+    let img = e.target.files[0];
+    if(!img){
+      return;
+    }
+    let reader = new FileReader();
+    reader.readAsDataURL(img);
+    reader.onload=(res:FileReaderEvent)=>{
+       console.log(res.target.result);
+       this.priviewImg = res.target.result;
+    }
   }
 
 

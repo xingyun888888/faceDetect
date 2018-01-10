@@ -31,7 +31,7 @@
       </td>
       <td nz-td *ngFor="let item of _titles">
         <span *ngIf="item.type!=='img'">{{data[item.key]}}</span>
-        <img [src]="'../../assets/images/ege.jpg'" alt="" *ngIf="item.type=='img'">
+        <img [src]="'../../assets/images/ege.jpg'"  class="photo" alt="" *ngIf="item.type=='img'">
       </td>
       <td nz-td class="action" style="width:240px;">
         <div *ngIf="actionType=='type1'">
