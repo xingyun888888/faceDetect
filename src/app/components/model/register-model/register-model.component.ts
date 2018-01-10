@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter,ViewChild,ElementRef} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import api from '../../../api';
 
 
 interface FileReaderEventTarget extends EventTarget {
@@ -19,7 +21,6 @@ export class RegisterModelComponent implements OnInit {
   @Input()
   _formData = {
     id:'',
-    imgPath:"",
     name:'',
     seriernum:'',
     sex:'',
@@ -59,6 +60,7 @@ export class RegisterModelComponent implements OnInit {
     console.log(this.imgSelect)
   }
 
+  defaultImg:string = "../../../assets/images/upload-icon.png";
   /**
    * 选了
    * @param e
@@ -66,14 +68,23 @@ export class RegisterModelComponent implements OnInit {
   fileChange(e){
     console.log(e);
     let img = e.target.files[0];
+    let formData = new FormData();
+    formData.append("uploadFile",img);
     if(!img){
       return;
     }
     let reader = new FileReader();
     reader.readAsDataURL(img);
     reader.onload=(res:FileReaderEvent)=>{
-       console.log(res.target.result);
-       this.priviewImg = res.target.result;
+      this.priviewImg = res.target.result;
+      this.http.post(api.uploadImg,formData).subscribe((res)=>{
+        const result = <any>res;
+        this._formData.path = result.path;
+        this.defaultImg = this.priviewImg;
+      },(error) =>{
+
+      });
+
     }
   }
 
@@ -120,14 +131,13 @@ export class RegisterModelComponent implements OnInit {
   }
 
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private http : HttpClient) {
 
   }
 
   ngOnInit() {
     this.validateForm = this.fb.group({
       id: [''],
-      imgPath:[''],
       name: [''],
       seriernum: [''],
       sex: [''],
@@ -140,3 +150,4 @@ export class RegisterModelComponent implements OnInit {
   }
 
 }
+

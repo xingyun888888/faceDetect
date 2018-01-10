@@ -63,17 +63,6 @@
       </div>
       <div nz-form-item nz-row>
         <div nz-col [nzSpan]="7" nz-form-label>
-          <label nz-form-item-required>路径</label>
-        </div>
-        <div>
-          <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
-            <nz-input formControlName="path" [(ngModel)]="_formData.path" [nzPlaceHolder]="'路径'" [nzType]="'text'" [nzSize]="'large'">
-            </nz-input>
-          </div>
-        </div>
-      </div>
-      <div nz-form-item nz-row>
-        <div nz-col [nzSpan]="7" nz-form-label>
           <label nz-form-item-required>Fea文件路径</label>
         </div>
         <div>
@@ -99,13 +88,15 @@
           <label nz-form-item-required>缩略图</label>
         </div>
         <div>
-          <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
-            <img [src]="'../../../assets/images/upload.svg'" class="upload-icon" (click)="fileSelect($event)"/>
+          <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback  >
+            <img [src]="defaultImg"  class="upload-icon" (click)="fileSelect($event)"/>
             <!--<nz-input formControlName="imgPath" #imgSelect [(ngModel)]="_formData.imgPath" [nzPlaceHolder]="'缩略图'" [nzType]="'file'"   [nzSize]="'large'">-->
             <!--</nz-input>-->
-            <img [src]="priviewImg" alt="" class="priview-img">
-            <input type="file" formControlName="imgPath" #imgSelect style="visibility:hidden;" (change)="fileChange($event)" >
+            <!--[src]="priviewImg" alt="" class="priview-img">-->
+            <input type="hidden" formControlName="path"  [(ngModel)]="_formData.path" >
+            <input type="file" #imgSelect style="visibility:hidden;"  (change)="fileChange($event)" >
           </div>
+
         </div>
       </div>
       <div nz-form-item nz-row>
@@ -117,6 +108,7 @@
     </form>
   </ng-template>
 </nz-modal>
+
 
 
 

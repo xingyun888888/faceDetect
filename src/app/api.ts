@@ -38,10 +38,12 @@ const api = {
   queryRegister: devSeverAddress + 'register/listById',
   editRegister: devSeverAddress + 'register/update',
   deleteRegister: devSeverAddress + 'register/delete',
-  addRegister: devSeverAddress + 'register/add'
+  addRegister: devSeverAddress + 'register/add',
+  uploadImg: devSeverAddress + 'register/upload'
 };
 
 export default api;
+
 
 
 

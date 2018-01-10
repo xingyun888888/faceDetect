@@ -16,11 +16,6 @@ export class RegisterComponent implements OnInit {
       name: 'ID'
     },
     {
-      key:"imgPath",
-      name:"缩略图",
-      type:"img"
-    },
-    {
       key: 'name',
       name: '用户姓名'
     },
@@ -43,6 +38,7 @@ export class RegisterComponent implements OnInit {
     {
       key: 'path',
       name: '路径'
+
     },
     {
       key: 'feapath',
@@ -54,6 +50,7 @@ export class RegisterComponent implements OnInit {
     }
   ];
   isEdit = false;
+
 
   isAdd = false;
 
@@ -107,6 +104,7 @@ export class RegisterComponent implements OnInit {
     });
   }
   sendData(data){
+    console.log(data);
     /**
      *
      在这里做请求操作
@@ -116,8 +114,8 @@ export class RegisterComponent implements OnInit {
      */
     if(this.isAdd){
       this.http.post(api.addRegister,data,{headers:new HttpHeaders({
-          'Content-type':'application/json;charset=UTF-8'
-        })}).subscribe((res)=>{
+        'Content-type':'application/json;charset=UTF-8'
+      })}).subscribe((res)=>{
         this.getRegister();
       },(error)=>{
         this.getRegister();
@@ -125,8 +123,8 @@ export class RegisterComponent implements OnInit {
       this.isAdd = false;
     }else if(this.isEdit){
       this.http.post(api.editRegister,data,{headers:new HttpHeaders({
-          'Content-type':'application/json;charset=UTF-8'
-        })}).subscribe((res)=>{
+        'Content-type':'application/json;charset=UTF-8'
+      })}).subscribe((res)=>{
         this.getRegister();
       },(error)=>{
         this.getRegister();
@@ -178,3 +176,4 @@ export class RegisterComponent implements OnInit {
     this.getRegister();
   }
 }
+
