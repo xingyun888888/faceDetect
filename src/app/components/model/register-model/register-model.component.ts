@@ -60,6 +60,8 @@ export class RegisterModelComponent implements OnInit {
     console.log(this.imgSelect)
   }
 
+  uploadImgList:string[] = [];
+
   defaultImg:string = "../../../assets/images/upload-icon.png";
   /**
    * 选了
@@ -68,6 +70,9 @@ export class RegisterModelComponent implements OnInit {
   fileChange(e){
     console.log(e);
     let img = e.target.files[0];
+    console.log(e.target.files[0].name);
+    this._formData.path = e.target.files[0].name;
+    this.uploadImgList.push(e.target.files[0].name);
     let formData = new FormData();
     formData.append("uploadFile",img);
     if(!img){
@@ -150,4 +155,3 @@ export class RegisterModelComponent implements OnInit {
   }
 
 }
-

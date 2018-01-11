@@ -114,17 +114,17 @@ export class RegisterComponent implements OnInit {
      */
     if(this.isAdd){
       this.http.post(api.addRegister,data,{headers:new HttpHeaders({
-        'Content-type':'application/json;charset=UTF-8'
-      })}).subscribe((res)=>{
-        this.getRegister();
+          'Content-type':'application/json;charset=UTF-8'
+        })}).subscribe((res)=>{
+        this.getRegisterAll();
       },(error)=>{
-        this.getRegister();
+        this.getRegisterAll();
       });
       this.isAdd = false;
     }else if(this.isEdit){
       this.http.post(api.editRegister,data,{headers:new HttpHeaders({
-        'Content-type':'application/json;charset=UTF-8'
-      })}).subscribe((res)=>{
+          'Content-type':'application/json;charset=UTF-8'
+        })}).subscribe((res)=>{
         this.getRegister();
       },(error)=>{
         this.getRegister();
@@ -144,10 +144,32 @@ export class RegisterComponent implements OnInit {
    * 在这里调用刷新
    */
   refresh(e){
-    this.getRegister();
+    this.getRegisterAll();
   }
 
-  getRegister(){
+  getRegisterAll(){
+    this.http.get(api.queryRegisterAll).subscribe((res) => {
+      console.dir(res);
+      const list = <any>res;
+      this._dataSet = list;
+    },(error)=>{
+      const list = [{
+        id:1,
+        imgPath:"",
+        name:"",
+        seriernum:"",
+        sex:"",
+        type:"",
+        code:"",
+        path:"",
+        feapath:"",
+        facelibid:""
+      }];
+      this._dataSet = list;
+
+    });
+  }
+  getRegister(){ //之前这个byid的接口是干嘛点击入库按钮发送的请求
     this.http.get(api.queryRegister + '?id=' + this.id).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
@@ -176,4 +198,3 @@ export class RegisterComponent implements OnInit {
     this.getRegister();
   }
 }
-

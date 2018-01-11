@@ -34,8 +34,14 @@ const api = {
   editRecognize: devSeverAddress + 'recognize/update',
   deleteRecognize: devSeverAddress + 'recognize/delete',
   addRecognize: devSeverAddress + 'recognize/add',
+  //user权限信息查询
+  queryUser: devSeverAddress + 'user/list',
+  editUser: devSeverAddress + 'user/update',
+  deleteUser: devSeverAddress + 'user/delete',
+  addUser: devSeverAddress + 'user/add',
   //注册信息查询
-  queryRegister: devSeverAddress + 'register/listById',
+  queryRegister: devSeverAddress + 'register/listById', //这里的接口对了没 不是查询所有的吗
+  queryRegisterAll:devSeverAddress+ 'register/list',
   editRegister: devSeverAddress + 'register/update',
   deleteRegister: devSeverAddress + 'register/delete',
   addRegister: devSeverAddress + 'register/add',
@@ -43,7 +49,6 @@ const api = {
 };
 
 export default api;
-
 
 
 

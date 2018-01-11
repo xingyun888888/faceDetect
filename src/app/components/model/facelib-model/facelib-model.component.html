@@ -6,7 +6,7 @@
           <label nz-form-item-required>Id</label>
         </div>
         <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
-          <nz-input formControlName="id" [(ngModel)]="_formData.id"  [nzType]="'text'" [nzSize]="'large'">
+          <nz-input formControlName="id" [nzPlaceHolder]="'自动获取'" [nzDisabled]="'true'" [nzType]="'text'" [nzSize]="'large'">
           </nz-input>
         </div>
       </div>

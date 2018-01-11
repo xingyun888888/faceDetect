@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {HttpClient,HttpHeaders} from "@angular/common/http";
 import api from '../../api';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Component({
   selector: 'app-recognize',
@@ -13,72 +13,51 @@ export class RecognizeComponent implements OnInit {
       key:'id',
       name:'ID'
     },
-    // {
-    //   key:'type',
-    //   name:'摄像头类型'
-    // },
     {
       key:'name',
-      name:'摄像头名称'
+      name:'用户姓名'
     },
-    /*{
+    {
      key:'serialNum',
-     name:'序列号'
-     },*/
+     name:'编号'
+     },
     {
-      key:'ip',
-      name:'相机ip'
+      key:'sex',
+      name:'性别'
     },
     {
-      key:'direction',
-      name:'方向'
+      key:'zoneNum',
+      name:'区域编码'
 
     },
     {
-      key:'analyserID',
-      name:'分析仪ID'
+      key:'camId',
+      name:'摄像头ID'
     },
-    /*
-
      {
-     key:'zoneID',
-     name:'角色'
+     key:'direction',
+     name:'方向'
      },
      {
-     key:'strategyID',
-     name:'策略ID'
-
+     key:'similarDegree',
+     name:'相似度'
      },
      {
-     key:'doorID',
-     name:'门禁ID'
+     key:'path',
+     name:'路径'
      },
      {
-     key:'port',
-     name:'端口'
-     },
-
-     {
-     key:'user',
-     name:'用户名'
+     key:'snapPath',
+     name:'抓拍路径'
      },
      {
-     key:'pwd',
-     name:'密码'
-     },*/
-    {
-      key:'rtspPort',
-      name:'Rtsp端口'
-    },
-    {
-      key:'rtspPath',
-      name:'resp路径'
-    },
-    {
-      key:'camInfo',
-      name:'摄像头品牌'
-    }
-
+     key:'time',
+     name:'时间'
+     },
+     {
+     key:'dc',
+     name:'危险等级'
+     }
   ];
   isEdit = false;
 
@@ -133,6 +112,7 @@ export class RecognizeComponent implements OnInit {
     });
   }
   sendData(data){
+    debugger;
     /**
      *
      在这里做请求操作

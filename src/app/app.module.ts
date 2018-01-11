@@ -21,22 +21,25 @@ import { HomeComponent } from './home/home.component';
 import { TableComponent } from './components/table/table.component';
 import { CommonTableComponent } from './components/table/common-table/common-table.component';
 import { UserinfoModelComponent } from './components/model/userinfo-model/userinfo-model.component';
-import {NavComponent} from "./components/nav/nav.component";
-import {HeaderComponent} from "./components/header/header.component";
+import {NavComponent} from './components/nav/nav.component';
+import {HeaderComponent} from './components/header/header.component';
 import { SearchComponent } from './components/search/search.component';
 import { CameraComponent } from './pages/camera/camera.component';
-import {UserinfoComponent} from "./pages/userinfo/userinfo.component";
+import {UserinfoComponent} from './pages/userinfo/userinfo.component';
 import { CameraEditComponent } from './components/model/camera-edit/camera-edit.component';
 import { ServerComponent } from './pages/server/server.component';
 import { ServerModelComponent } from './components/model/server-model/server-model.component';
 import { MobileComponent } from './pages/mobile/mobile.component';
-import {FacelibComponent} from "./pages/facelib/facelib.component";
-import {ReportDataAnalyzeComponent} from "./pages/report-data-analyze/report-data-analyze.component";
-import {FacelibModelComponent} from "./components/model/facelib-model/facelib-model.component";
-import {LogComponent} from "./pages/log/log.component";
-import {RecognizeComponent} from "./pages/recognize/recognize.component";
+import {FacelibComponent} from './pages/facelib/facelib.component';
+import {ReportDataAnalyzeComponent} from './pages/report-data-analyze/report-data-analyze.component';
+import {FacelibModelComponent} from './components/model/facelib-model/facelib-model.component';
+import {LogComponent} from './pages/log/log.component';
+import {RecognizeComponent} from './pages/recognize/recognize.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { RegisterModelComponent } from './components/model/register-model/register-model.component';
+import {UserComponent} from './pages/user/user.component';
+import { UserModelComponent } from './components/model/user-model/user-model.component';
+import { RecognizeModelComponent } from './components/model/recognize-model/recognize-model.component';
 
 
 @NgModule({
@@ -65,7 +68,10 @@ import { RegisterModelComponent } from './components/model/register-model/regist
     LogComponent,
     RecognizeComponent,
     RegisterModelComponent,
-    RegisterComponent
+    RegisterComponent,
+    UserComponent,
+    UserModelComponent,
+    RecognizeModelComponent
   ],
   imports: [
     BrowserModule,

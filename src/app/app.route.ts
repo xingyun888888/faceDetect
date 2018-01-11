@@ -1,65 +1,70 @@
 /**
  * Created by smileMAC on 11/20/17.
  */
-import {Routes,RouterModule} from '@angular/router';
+import {Routes, RouterModule} from '@angular/router';
 
-import {DemoComponent} from './demo/demo.component'
-import {HomeComponent} from "./home/home.component";
-import {ReportDataAnalyzeComponent} from "./pages/report-data-analyze/report-data-analyze.component";
-import {RegisterComponent} from "./pages/register/register.component";
-import {RecognizeComponent} from "./pages/recognize/recognize.component";
-import {FacelibComponent} from "./pages/facelib/facelib.component";
-import {MobileComponent} from "./pages/mobile/mobile.component";
-import {ServerComponent} from "./pages/server/server.component";
-import {UserinfoComponent} from "./pages/userinfo/userinfo.component";
-import {CameraComponent} from "./pages/camera/camera.component";
+import {DemoComponent} from './demo/demo.component';
+import {HomeComponent} from './home/home.component';
+import {ReportDataAnalyzeComponent} from './pages/report-data-analyze/report-data-analyze.component';
+import {RegisterComponent} from './pages/register/register.component';
+import {RecognizeComponent} from './pages/recognize/recognize.component';
+import {FacelibComponent} from './pages/facelib/facelib.component';
+import {MobileComponent} from './pages/mobile/mobile.component';
+import {ServerComponent} from './pages/server/server.component';
+import {UserinfoComponent} from './pages/userinfo/userinfo.component';
+import {CameraComponent} from './pages/camera/camera.component';
+import {UserComponent} from './pages/user/user.component';
 
-export const appRoutes:Routes = [
+export const appRoutes: Routes = [
   {
-    path:'reportAnalyze',
+    path: 'user',
+    component: UserComponent,
+  },
+  {
+    path: 'reportAnalyze',
     component: ReportDataAnalyzeComponent,
   },
   {
-    path:"register",
-    component:RegisterComponent,
+    path: 'register',
+    component: RegisterComponent,
   },
   {
-    path:'recognize',
+    path: 'recognize',
     component: RecognizeComponent,
   },
   {
-    path:'facelib',
+    path: 'facelib',
     component: FacelibComponent,
   },
   {
-    path:'mobile',
-    component:MobileComponent,
+    path: 'mobile',
+    component: MobileComponent,
   },
   {
-    path:'server',
-    component:ServerComponent,
+    path: 'server',
+    component: ServerComponent,
   },
   {
-    path:'userinfo',
-    component:UserinfoComponent,
+    path: 'userinfo',
+    component: UserinfoComponent,
   },
   {
-    path:'camera',
-    component:CameraComponent,
+    path: 'camera',
+    component: CameraComponent,
   },
   {
-    path:"demo",
-    component:DemoComponent,
+    path: 'demo',
+    component: DemoComponent,
     // canDeactivate:[UnsavedGuard],
     // children:[
     //   {path:"hello",component:HelloComponent}
     // ]
   },
   {
-    path:'home',
-    component:HomeComponent,
+    path: 'home',
+    component: HomeComponent,
   }
-]
+];
 
 
 
