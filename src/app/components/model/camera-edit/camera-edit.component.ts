@@ -7,6 +7,7 @@ import {
   Validators
 } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
+import {numberValidator} from '../../../validator/validators';
 
 @Component({
   selector: 'app-camera-edit',
@@ -15,30 +16,29 @@ import { Observable } from 'rxjs/Observable';
 })
 
 export class CameraEditComponent implements OnInit {
-
   @Input()
   _formData = {
-    id:"",
-    type:"",
-    name:"",
-    serialNum:"",
-    ip:"",
-    direction:"",
-    analyserID:"",
-    zoneID:"",
-    strategyID:"",
-    doorID:"",
-    port:"",
-    user:"",
-    pwd:"",
-    rtspPort:"",
-    rtspPath:"",
-    camInfo:""
+    id: '',
+    type: '',
+    name: '',
+    serialNum: '',
+    ip: '',
+    direction: '',
+    analyserID: '',
+    zoneID: '',
+    strategyID: '',
+    doorID: '',
+    port: '',
+    user: '',
+    pwd: '',
+    rtspPort: '',
+    rtspPath: '',
+    camInfo: ''
   };
 
   @Input()
   set formData(value){
-    this._formData = Object.assign({},value);
+    this._formData = Object.assign({}, value);
   }
 
   get formData(){
@@ -47,7 +47,6 @@ export class CameraEditComponent implements OnInit {
 
   @Input()
   isVisible;
-
 
   @Output()
   requestData = new EventEmitter();
@@ -59,23 +58,24 @@ export class CameraEditComponent implements OnInit {
   handleCancel = (e) => {
     this.resetForm(e);
     this.closeModel.emit();
-  };
-
-
+  }
 
   submitForm = ($event, value) => {
     $event.preventDefault();
+
+    /**
+     * 提交时校验
+     */
+    console.log(this.validateForm.valid);
+
+
     for (const key in this.validateForm.controls) {
       this.validateForm.controls[ key ].markAsDirty();
     }
     console.log(value);
-
     //在这里请求处理提交表单数据
-
     this.requestData.emit(value);
-
-
-  };
+  }
 
   resetForm($event: MouseEvent) {
     $event.preventDefault();
@@ -97,43 +97,37 @@ export class CameraEditComponent implements OnInit {
         observer.complete();
       }, 1000);
     });
-  };
+  }
 
   getFormControl(name) {
     return this.validateForm.controls[ name ];
   }
 
-
   constructor(private fb: FormBuilder) {
-
   }
 
   ngOnInit() {
+    /*响应式表单，Validators.required表示必填*/
     this.validateForm = this.fb.group({
-      id:[""],
-      name:[""],
-      type:[""],
-      serialNum:[""],
-      ip:[""],
-      direction:[""],
-      analyserID:[""],
-      zoneID:[""],
-      strategyID:[""],
-      doorID:[""],
-      port:[""],
-      user:[""],
-      pwd:["", [ Validators.required,this.numberValidator ] ],
-      rtspPort:[""],
-      rtspPath:[""],
-      camInfo:[""]
+      id: [''],
+      name: ['', [Validators.required, Validators.maxLength(10)]],
+      type: ['', Validators.required],
+      serialNum: ['', Validators.required],
+      ip: ['', Validators.required],
+      direction: ['', Validators.required],
+      analyserID: ['', Validators.required],
+      zoneID: ['', Validators.required],
+      strategyID: ['', Validators.required],
+      doorID: ['', Validators.required],
+      port: ['', Validators.required],
+      user: ['', Validators.required],
+      pwd: ['', [ Validators.required, Validators.maxLength(9), Validators.pattern('[0-9]+')]],
+      rtspPort: ['', Validators.required],
+      rtspPath: ['', Validators.required],
+      camInfo: ['', Validators.required]
     });
   }
-  numberValidator = (control: FormControl): any => {
-    const val = control.value;
-    const numberReg =  /^\d+$/g;
-    const result = numberReg.test(val);
-    return result?null:{pwd:{info:"密码必须是数字"}}
-  }
+
 
 }
 

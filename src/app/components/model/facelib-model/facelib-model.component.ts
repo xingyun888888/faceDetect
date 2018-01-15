@@ -14,12 +14,12 @@ import { Observable } from 'rxjs/Observable';
 export class FacelibModelComponent implements OnInit {
   @Input()
   _formData = {
-    id:"",
-    name:"",
-    path:"",
-    createTime:"",
-    maxNum:"",
-    state:""
+    id: "",
+    name: "",
+    path: "",
+    createTime: "",
+    maxNum: "",
+    state: ""
   };
 
   @Input()
@@ -38,16 +38,15 @@ export class FacelibModelComponent implements OnInit {
   @Output()
   requestData = new EventEmitter();
 
-  @Output() closeModel = new EventEmitter();
+  @Output()
+  closeModel = new EventEmitter();
 
   validateForm: FormGroup;
 
   handleCancel = (e) => {
     this.resetForm(e);
     this.closeModel.emit();
-  };
-
-
+  }
 
   submitForm = ($event, value) => {
     $event.preventDefault();
@@ -55,13 +54,9 @@ export class FacelibModelComponent implements OnInit {
       this.validateForm.controls[ key ].markAsDirty();
     }
     console.log(value);
-
     //在这里请求处理提交表单数据
-
     this.requestData.emit(value);
-
-
-  };
+  }
 
   resetForm($event: MouseEvent) {
     $event.preventDefault();
@@ -71,11 +66,10 @@ export class FacelibModelComponent implements OnInit {
     }
   }
 
-
   userNameAsyncValidator = (control: FormControl): any => {
     return Observable.create(function (observer) {
       setTimeout(() => {
-        if (control.value === 'JasonWood') {
+        if (control.value === 'JasonWood' ) {
           observer.next({ error: true, duplicated: true });
         } else {
           observer.next(null);
@@ -83,27 +77,24 @@ export class FacelibModelComponent implements OnInit {
         observer.complete();
       }, 1000);
     });
-  };
+  }
 
   getFormControl(name) {
     return this.validateForm.controls[ name ];
   }
 
-
   constructor(private fb: FormBuilder) {
-
   }
 
   ngOnInit() {
     this.validateForm = this.fb.group({
-      id:[""],
-      name:[""],
-      path:[""],
-      createTime:[""],
-      maxNum:[""],
-      state:[""]
+      id: [""],
+      name: [""],
+      path: [""],
+      createTime: [""],
+      maxNum: [""],
+      state: [""]
     });
   }
-
 }
 

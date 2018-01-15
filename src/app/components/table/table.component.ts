@@ -50,20 +50,7 @@ export class TableComponent implements OnInit {
   total = 0; //总条数
   currentPageIndex = 1; //当前页码
 
-
   constructor(public router: Router){
-
-  }
-
-  /**
-   * 查询人脸库下的数据列表*/
-
-  queryBaseData(e, data){
-    console.log(data);
-    /**
-     * 这里的id是动态的
-     */
-    //his.router.navigate(["/register",{queryParams:{id:34242}}]);
   }
 
   /**
@@ -190,4 +177,10 @@ export class TableComponent implements OnInit {
 
 }
 
-
+/**
+ * 无效代码：（不过这个是在控制器中调用router的navigate方法进行路由跳转的）
+ * 查询人脸库下的数据列表
+ queryBaseData(e, data){
+    console.log(data);
+    //his.router.navigate(["/register",{queryParams:{id:34242}}]);
+  }*/

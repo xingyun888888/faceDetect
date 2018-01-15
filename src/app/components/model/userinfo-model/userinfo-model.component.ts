@@ -39,7 +39,6 @@ export class UserinfoModelComponent implements OnInit {
   @Input()
   isVisible;
 
-
   @Output()
   requestData = new EventEmitter();
 
@@ -52,8 +51,6 @@ export class UserinfoModelComponent implements OnInit {
     this.closeModel.emit();
   };
 
-
-
   submitForm = ($event, value) => {
     $event.preventDefault();
     for (const key in this.validateForm.controls) {
@@ -62,10 +59,7 @@ export class UserinfoModelComponent implements OnInit {
     console.log(value);
 
     //在这里请求处理提交表单数据
-
     this.requestData.emit(value);
-
-
   };
 
   resetForm($event: MouseEvent) {
@@ -75,7 +69,6 @@ export class UserinfoModelComponent implements OnInit {
       this.validateForm.controls[ key ].markAsPristine();
     }
   }
-
 
   userNameAsyncValidator = (control: FormControl): any => {
     return Observable.create(function (observer) {
@@ -94,23 +87,20 @@ export class UserinfoModelComponent implements OnInit {
     return this.validateForm.controls[ name ];
   }
 
-
   constructor(private fb: FormBuilder) {
-
   }
 
   ngOnInit() {
     this.validateForm = this.fb.group({
-      id:[""],
-      name : ["", [ Validators.required ] ],
-      displayName: [""],
-      pwd : ["", [ Validators.required ] ],
-      module:[""],
-      role: ["",[Validators.required ] ],
-      isEnable:[0],
-      state:[""]
+      id: [''],
+      name : ['', [ Validators.required ] ],
+      displayName: [''],
+      pwd : [ '', [ Validators.required ] ],
+      module : [''],
+      role: [ '' , [Validators.required ] ],
+      isEnable: [0],
+      state: ['']
     });
   }
-
 }
 

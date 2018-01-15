@@ -51,7 +51,6 @@ export class RegisterComponent implements OnInit {
   ];
   isEdit = false;
 
-
   isAdd = false;
 
   _dataSet = [];
@@ -59,13 +58,10 @@ export class RegisterComponent implements OnInit {
   formData = {};
 
   id: any = '';
-
+  /**
+   * 判断拿出的value是否是undefined，如果是就按新增处理，否则就是编辑
+   */
   getRowData(value){
-    /**
-     * 这里判断拿出的value是否是undefined
-     * 如果是就按新增处理  否则 就是编辑
-     *
-     */
     console.log(value);
     this.formData = {};
     this.formData  = Object.assign({},value);
@@ -77,8 +73,7 @@ export class RegisterComponent implements OnInit {
   };
 
   /**
-   * 这里是关模态框调用的方法
-   *
+   * 关模态框调用的方法
    */
   close() {
 
@@ -90,10 +85,7 @@ export class RegisterComponent implements OnInit {
   }
 
   /**
-   *
-   * 删除功能处理  在这里调用删除的接口
-   * 删除要接收什么参数 ？？？给后台发送一个ID就好  应该用post  只有id查询 是get  其他操作都用post en
-   * @param data
+   * 在这里调用删除的接口，删除要给后台发送一个ID就好，应该用post，只有id查询是get，其他操作都用post
    */
   deleteRow(data){
     console.log(data);
@@ -107,10 +99,7 @@ export class RegisterComponent implements OnInit {
     console.log(data);
     /**
      *
-     在这里做请求操作
-     请求的时候同样判断一下 当前是新增操作还是修改操作
-     根据 isEdit 和 isAdd的值判断
-     *
+     在这里做请求操作，请求的时候同样判断一下 当前是新增操作还是修改操作，根据 isEdit 和 isAdd的值判断
      */
     if(this.isAdd){
       this.http.post(api.addRegister,data,{headers:new HttpHeaders({
@@ -147,6 +136,9 @@ export class RegisterComponent implements OnInit {
     this.getRegisterAll();
   }
 
+  /**
+   * 获取所有的注册信息
+   */
   getRegisterAll(){
     this.http.get(api.queryRegisterAll).subscribe((res) => {
       console.dir(res);
@@ -166,10 +158,13 @@ export class RegisterComponent implements OnInit {
         facelibid:""
       }];
       this._dataSet = list;
-
     });
   }
-  getRegister(){ //之前这个byid的接口是干嘛点击入库按钮发送的请求
+
+  /**
+   * 通过人脸库ID获取对应的注册信息
+   */
+  getRegister(){
     this.http.get(api.queryRegister + '?id=' + this.id).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
@@ -188,10 +183,8 @@ export class RegisterComponent implements OnInit {
         facelibid:""
       }];
       this._dataSet = list;
-
     });
   }
-
 
   ngOnInit() {
     this.id = this.routerInfo.snapshot.queryParams['id'];

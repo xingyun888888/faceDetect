@@ -1,6 +1,3 @@
-/**
- * Created by smileMAC on 11/20/17.
- */
 import {Routes, RouterModule} from '@angular/router';
 
 import {DemoComponent} from './demo/demo.component';
@@ -14,11 +11,16 @@ import {ServerComponent} from './pages/server/server.component';
 import {UserinfoComponent} from './pages/userinfo/userinfo.component';
 import {CameraComponent} from './pages/camera/camera.component';
 import {UserComponent} from './pages/user/user.component';
+import {LogComponent} from './pages/log/log.component';
 
 export const appRoutes: Routes = [
   {
+    path: "log",
+    component: LogComponent
+  },
+  {
     path: 'user',
-    component: UserComponent,
+    component: UserComponent
   },
   {
     path: 'reportAnalyze',

@@ -40,7 +40,7 @@ const api = {
   deleteUser: devSeverAddress + 'user/delete',
   addUser: devSeverAddress + 'user/add',
   //注册信息查询
-  queryRegister: devSeverAddress + 'register/listById', //这里的接口对了没 不是查询所有的吗
+  queryRegister: devSeverAddress + 'register/listById',
   queryRegisterAll:devSeverAddress+ 'register/list',
   editRegister: devSeverAddress + 'register/update',
   deleteRegister: devSeverAddress + 'register/delete',
