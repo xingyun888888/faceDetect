@@ -1,4 +1,4 @@
-import { Component, OnInit,Input,Output,EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -12,6 +12,9 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./facelib-model.component.css']
 })
 export class FacelibModelComponent implements OnInit {
+  /**
+   *该输入属性，里面包含着table中的所有字段
+   */
   @Input()
   _formData = {
     id: "",
@@ -22,32 +25,55 @@ export class FacelibModelComponent implements OnInit {
     state: ""
   };
 
+  /**
+   *这个是将table组件中传过来的值放入表单中
+   */
   @Input()
   set formData(value){
-    this._formData = Object.assign({},value);
+    this._formData = Object.assign({}, value);
   }
 
+  /**
+   *这个是获取表单的字段名
+   */
   get formData(){
     return this._formData;
   }
 
+  /**
+   *这个是控制模态框是否弹出的状态属性
+   */
   @Input()
   isVisible;
 
-
+  /**
+   *向父组件发送数据请求
+   */
   @Output()
   requestData = new EventEmitter();
 
+  /**
+   *向父组件发送关闭表单的请求
+   */
   @Output()
   closeModel = new EventEmitter();
 
+  /**
+   *定义表单
+   */
   validateForm: FormGroup;
 
+  /**
+   *这个是关闭表单的方法
+   */
   handleCancel = (e) => {
     this.resetForm(e);
     this.closeModel.emit();
   }
 
+  /**
+   *提交表单，提交时做校验操作
+   */
   submitForm = ($event, value) => {
     $event.preventDefault();
     for (const key in this.validateForm.controls) {
@@ -58,6 +84,9 @@ export class FacelibModelComponent implements OnInit {
     this.requestData.emit(value);
   }
 
+  /**
+   *重置表单
+   */
   resetForm($event: MouseEvent) {
     $event.preventDefault();
     this.validateForm.reset();
@@ -66,19 +95,9 @@ export class FacelibModelComponent implements OnInit {
     }
   }
 
-  userNameAsyncValidator = (control: FormControl): any => {
-    return Observable.create(function (observer) {
-      setTimeout(() => {
-        if (control.value === 'JasonWood' ) {
-          observer.next({ error: true, duplicated: true });
-        } else {
-          observer.next(null);
-        }
-        observer.complete();
-      }, 1000);
-    });
-  }
-
+  /**
+   *这个方法是获取当前表单元素绑定的值
+   */
   getFormControl(name) {
     return this.validateForm.controls[ name ];
   }
@@ -88,12 +107,12 @@ export class FacelibModelComponent implements OnInit {
 
   ngOnInit() {
     this.validateForm = this.fb.group({
-      id: [""],
-      name: [""],
-      path: [""],
-      createTime: [""],
-      maxNum: [""],
-      state: [""]
+      id: ["", [ Validators.required ]],
+      name: ["", [ Validators.required ]],
+      path: ["", [ Validators.required ]],
+      createTime: ["", [ Validators.required ]],
+      maxNum: ["", [ Validators.required ]],
+      state: ["", [ Validators.required ]]
     });
   }
 }

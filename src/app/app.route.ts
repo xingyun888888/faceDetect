@@ -12,8 +12,13 @@ import {UserinfoComponent} from './pages/userinfo/userinfo.component';
 import {CameraComponent} from './pages/camera/camera.component';
 import {UserComponent} from './pages/user/user.component';
 import {LogComponent} from './pages/log/log.component';
+import {ParamComponent} from './pages/param/param.component';
 
 export const appRoutes: Routes = [
+  {
+    path: "param",
+    component: ParamComponent
+  },
   {
     path: "log",
     component: LogComponent

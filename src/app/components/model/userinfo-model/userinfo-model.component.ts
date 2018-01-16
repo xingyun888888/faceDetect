@@ -94,12 +94,12 @@ export class UserinfoModelComponent implements OnInit {
     this.validateForm = this.fb.group({
       id: [''],
       name : ['', [ Validators.required ] ],
-      displayName: [''],
+      displayName: ['', Validators.required],
       pwd : [ '', [ Validators.required ] ],
-      module : [''],
+      module : ['', Validators.required],
       role: [ '' , [Validators.required ] ],
       isEnable: [0],
-      state: ['']
+      state: ['', Validators.required]
     });
   }
 }

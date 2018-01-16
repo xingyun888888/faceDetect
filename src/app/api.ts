@@ -1,5 +1,4 @@
-
-const devSeverAddress  = 'http://localhost:8080/xface-int1.2.5/';
+const devSeverAddress = 'http://localhost:8080/xface-int1.2.5/';
 
 //const devServerAddress = "http://www.adding360.com:8080/bioauth/"
 
@@ -39,9 +38,14 @@ const api = {
   editUser: devSeverAddress + 'user/update',
   deleteUser: devSeverAddress + 'user/delete',
   addUser: devSeverAddress + 'user/add',
+  //参数信息查询
+  queryParam: devSeverAddress + 'param/list',
+  editParam: devSeverAddress + 'param/update',
+  deleteParam: devSeverAddress + 'param/delete',
+  addParam: devSeverAddress + 'param/add',
   //注册信息查询
   queryRegister: devSeverAddress + 'register/listById',
-  queryRegisterAll:devSeverAddress+ 'register/list',
+  queryRegisterAll: devSeverAddress + 'register/list',
   editRegister: devSeverAddress + 'register/update',
   deleteRegister: devSeverAddress + 'register/delete',
   addRegister: devSeverAddress + 'register/add',

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import api from '../../api';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
@@ -14,7 +14,8 @@ export class CameraComponent implements OnInit {
   _titles: Array<any> = [
     {
       key: 'id',
-      name: 'ID'
+      name: 'ID',
+      type: 'text'
     },
     // {
     //   key:'type',
@@ -22,7 +23,8 @@ export class CameraComponent implements OnInit {
     // },
     {
       key: 'name',
-      name: '摄像头名称'
+      name: '摄像头名称',
+      type: 'text'
     },
     /*{
      key:'serialNum',
@@ -30,15 +32,18 @@ export class CameraComponent implements OnInit {
      },*/
     {
       key: 'ip',
-      name: '相机ip'
+      name: '相机ip',
+      type: 'text'
     },
     {
       key: 'direction',
-      name: '方向'
+      name: '方向',
+      type: 'text'
     },
     {
       key: 'analyserID',
-      name: '分析仪ID'
+      name: '分析仪ID',
+      type: 'text'
     },
     /*
      {
@@ -68,15 +73,18 @@ export class CameraComponent implements OnInit {
      },*/
     {
       key: 'rtspPort',
-      name: 'Rtsp端口'
+      name: 'Rtsp端口',
+      type: 'text'
     },
     {
       key: 'rtspPath',
-      name: 'resp路径'
+      name: 'resp路径',
+      type: 'text'
     },
     {
       key: 'camInfo',
-      name: '摄像头品牌'
+      name: '摄像头品牌',
+      type: 'text'
     }
   ];
 
@@ -97,27 +105,16 @@ export class CameraComponent implements OnInit {
   formData = {};
 
   /**
-   * 这个方法是订阅的子组件传进来的事件,当子组件触发的时候就会获取到值value
+   * 这个方法是订阅的子组件传进来的事件,当子组件触发的时候就会获取到值value,判断拿出的value是否是undefined,如果是新增处理,否则编辑处理，
+   * 首先要把formData的脏值清空，然后将拿到的最新值赋值到formData，如果value有值那就是表明当前是编辑状态，否则说明是新增
    */
   getRowData(value) {
-    /**
-     * 这里判断拿出的value是否是undefined，如果是就按新增处理，否则就是编辑
-     */
     console.log(value);
-    /**
-     * 首先要讲formData的脏值清空
-     */
     this.formData = {};
-    /**
-     * 然后将拿到的最新值赋值到formData
-     */
-    this.formData  = Object.assign({}, value );
-    /**
-     * 如果value有值那就是表明当前是编辑状态，否则说明是新增
-     */
+    this.formData = Object.assign({}, value);
     if (!value) {
       this.isAdd = true;
-    }else {
+    } else {
       this.isEdit = true;
     }
   }
@@ -134,45 +131,40 @@ export class CameraComponent implements OnInit {
   }
 
   /**
-   * 删除功能处理  在这里调用删除的接口，给后台发送一个ID，应该用post，只有id查询是get，其他操作都用post
+   * 删除功能处理，在这里调用删除的接口，给后台发送一个ID，应该用post，只有id查询是get，其他操作都用post
+   * 删除成功之后，调用查询方法，更新页面，删除失败之后，调用查询方法，更新页面
    */
   deleteRow(data) {
     console.log(data);
     this.http.get(api.deleteCamera + '?id=' + data.id).subscribe((res) => {
-      /**
-       * 删除成功之后，调用查询方法，更新页面
-       */
       this.getCamera();
     }, (error) => {
-      /**
-       * 删除失败之后，调用查询方法，更新页面
-       */
       this.getCamera();
     });
   }
 
   /**
-   * 增加或者编辑保存点击提交之后调用的方法
+   * 增加或者编辑操作后点击提交后调用的方法，请求的时候判断一下是新增还是修改，根据isEdit和isAdd的值判断
+   * 添加下面的headers头部说明，前端需要接收的是json数据
    */
   sendData(data) {
-    /**
-     在这里做请求操作，请求的时候判断一下是新增还是修改，根据isEdit和isAdd的值判断
-     */
     if (this.isAdd) {
-      this.http.post(api.addCamera, data , {headers: new HttpHeaders({
-          /**
-           * 添加这个头部说明，前端需要接收的是json数据
-           */
-        })}).subscribe((res) => {
+      this.http.post(api.addCamera, data, {
+        headers: new HttpHeaders({
+          'Content-type': 'application/json;charset=UTF-8'
+        })
+      }).subscribe((res) => {
         this.getCamera();
       }, (error) => {
         this.getCamera();
       });
       this.isAdd = false;
-    }else if (this.isEdit) {
-      this.http.post(api.editCamera, data , {headers: new HttpHeaders({
-          'Content-type' : 'application/json;charset=UTF-8'
-        })}).subscribe((res) => {
+    } else if (this.isEdit) {
+      this.http.post(api.editCamera, data, {
+        headers: new HttpHeaders({
+          'Content-type': 'application/json;charset=UTF-8'
+        })
+      }).subscribe((res) => {
         this.getCamera();
       }, (error) => {
         this.getCamera();
@@ -192,19 +184,15 @@ export class CameraComponent implements OnInit {
   }
 
   /**
-   *  查询数据,调用查询接口
+   *  调用查询接口，查询到结果之后将拿到的res赋值给_dataSet才能显示到table
    */
   getCamera() {
     this.http.get(api.queryCamera).subscribe((res) => {
       console.dir(res);
-      /**
-       * 查询到结果之后将拿到的res赋值给_dataSet才能显示到table
-       */
       let list = <any>res;
       this._dataSet = list;
     });
   }
-
 
   /**
    * 组件初始化的时候调用一次

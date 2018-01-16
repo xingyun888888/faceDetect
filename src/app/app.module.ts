@@ -7,7 +7,6 @@ import { DemoComponent } from './demo/demo.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
 /**
  * 引入图表库
  */
@@ -40,10 +39,12 @@ import { RegisterModelComponent } from './components/model/register-model/regist
 import {UserComponent} from './pages/user/user.component';
 import { UserModelComponent } from './components/model/user-model/user-model.component';
 import { RecognizeModelComponent } from './components/model/recognize-model/recognize-model.component';
+import { ParamComponent } from './pages/param/param.component';
+import { ParamModelComponent } from './components/model/param-model/param-model.component';
 
 
 @NgModule({
-  schemas:[
+  schemas: [
     CUSTOM_ELEMENTS_SCHEMA,
   ],
   declarations: [
@@ -71,7 +72,9 @@ import { RecognizeModelComponent } from './components/model/recognize-model/reco
     RegisterComponent,
     UserComponent,
     UserModelComponent,
-    RecognizeModelComponent
+    RecognizeModelComponent,
+    ParamComponent,
+    ParamModelComponent
   ],
   imports: [
     BrowserModule,

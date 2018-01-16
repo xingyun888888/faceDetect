@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {HttpClient,HttpHeaders} from "@angular/common/http";
+import {Component, OnInit} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../api';
 
 @Component({
@@ -13,28 +13,34 @@ export class FacelibComponent implements OnInit {
    */
   _titles: Array<any> = [
     {
-      key:'id',
-      name:'ID'
+      key: 'id',
+      name: 'ID',
+      type: 'text'
     },
     {
-      key:'name',
-      name:'数据库名称'
+      key: 'name',
+      name: '数据库名称',
+      type: 'text'
     },
     {
-      key:'path',
-      name: '库路径'
+      key: 'path',
+      name: '库路径',
+      type: 'text'
     },
     {
-      key:'createTime',
-      name:'创建时间'
+      key: 'createTime',
+      name: '创建时间',
+      type: "date"
     },
     {
-      key:'maxNum',
-      name:'人脸个数'
+      key: 'maxNum',
+      name: '人脸个数',
+      type: 'text'
     },
     {
-      key:'state',
-      name:'状态'
+      key: 'state',
+      name: '状态',
+      type: 'text'
     }
   ];
 
@@ -55,21 +61,22 @@ export class FacelibComponent implements OnInit {
   formData = {};
 
   /**
-   * 这个方法是订阅的子组件传进来的事件,当子组件触发的时候就会获取到值value,判断拿出的value是否是undefined,如果是新增处理,否则编辑处理
+   * 这个方法是订阅的子组件传进来的事件,当子组件触发的时候就会获取到值value,判断拿出的value是否是undefined,如果是新增处理,否则编辑处理，
+   * 首先要把formData的脏值清空，然后将拿到的最新值赋值到formData，如果value有值那就是表明当前是编辑状态，否则说明是新增
    */
-  getRowData(value){
+  getRowData(value) {
     console.log(value);
     this.formData = {};
-    this.formData  = Object.assign({},value);
-    if(!value){
+    this.formData = Object.assign({}, value);
+    if (!value) {
       this.isAdd = true;
-    }else{
+    } else {
       this.isEdit = true;
     }
   }
 
   /**
-   * 这里是关模态框调用的方法
+   * 这里是关模态框调用的方法,关闭也有两种状态,可能是编辑或者新增
    */
   close() {
     if (this.isEdit) {
@@ -80,38 +87,40 @@ export class FacelibComponent implements OnInit {
   }
 
   /**
-   *
-   * 删除功能处理  在这里调用删除的接口
-   * 删除要接收什么参数 ？？？给后台发送一个ID就好  应该用post  只有id查询 是get  其他操作都用post en
-   * @param data
+   * 删除功能处理，在这里调用删除的接口，给后台发送一个ID，应该用post，只有id查询是get，其他操作都用post
+   * 删除成功之后，调用查询方法，更新页面，删除失败之后，调用查询方法，更新页面
    */
-  deleteRow(data){
+  deleteRow(data) {
     console.log(data);
-    this.http.get(api.deleteFacelib+"?id="+data.id).subscribe((res)=>{
+    this.http.get(api.deleteFacelib + '?id=' + data.id).subscribe((res) => {
       this.getFacelib();
-    },(error)=>{
+    }, (error) => {
       this.getFacelib();
     });
   }
+
   /**
-   在这里做请求操作
-   请求的时候同样判断一下 当前是新增操作还是修改操作
-   根据 isEdit 和 isAdd的值判断
+   * 增加或者编辑操作后点击提交后调用的方法，请求的时候判断一下是新增还是修改，根据isEdit和isAdd的值判断
+   * 添加下面的headers头部说明，前端需要接收的是json数据
    */
   sendData(data) {
-    if(this.isAdd) {
-      this.http.post(api.addFacelib,data,{headers:new HttpHeaders({
-        'Content-type':'application/json;charset=UTF-8'
-      })}).subscribe((res) => {
+    if (this.isAdd) {
+      this.http.post(api.addFacelib, data, {
+        headers: new HttpHeaders({
+          'Content-type': 'application/json;charset=UTF-8'
+        })
+      }).subscribe((res) => {
         this.getFacelib();
       }, (error) => {
         this.getFacelib();
       });
       this.isAdd = false;
-    }else if (this.isEdit) {
-      this.http.post(api.editFacelib, data , {headers: new HttpHeaders({
-        'Content-type':'application/json;charset=UTF-8'
-      })}).subscribe((res) => {
+    } else if (this.isEdit) {
+      this.http.post(api.editFacelib, data, {
+        headers: new HttpHeaders({
+          'Content-type': 'application/json;charset=UTF-8'
+        })
+      }).subscribe((res) => {
         this.getFacelib();
       }, (error) => {
         this.getFacelib();
@@ -120,28 +129,31 @@ export class FacelibComponent implements OnInit {
     }
 
   }
-  constructor(private http: HttpClient,){
 
+  constructor(private http: HttpClient, ) {
   }
 
+  /**
+   * 在这里调用刷新,点击刷新按钮之后就会调用这个方法,刷新就是调用一次查询接口
+   */
+  refresh(e) {
+    this.getFacelib();
+  }
+
+  /**
+   *  调用查询接口，查询到结果之后将拿到的res赋值给_dataSet才能显示到table
+   */
   getFacelib() {
-    this.http.get(api.queryFacelib).subscribe((res)=>{
+    this.http.get(api.queryFacelib).subscribe((res) => {
       console.dir(res);
-      let list = <any>res;
-      this._dataSet = list
-    }, (error) => {
-       let list = [{
-          id: 1,
-          name: "",
-          path: "234",
-          createTime: "dsfds",
-          maxNum: 1,
-          state: 1
-       }]
-       this._dataSet = list;
+      const list = <any>res;
+      this._dataSet = list;
     });
   }
 
+  /**
+   * 组件初始化的时候调用一次
+   */
   ngOnInit() {
     this.getFacelib();
   }
