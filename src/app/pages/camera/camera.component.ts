@@ -191,6 +191,18 @@ export class CameraComponent implements OnInit {
       console.dir(res);
       let list = <any>res;
       this._dataSet = list;
+    },(error)=>{
+         let list = [{
+           id:1,
+           name:1,
+           ip:"1.2.2.3",
+           direction:"234",
+           analyserID:"23",
+           rtspPort:80,
+           rtspPath:80,
+           camInfo:"324"
+         }]
+         this._dataSet = list;
     });
   }
 

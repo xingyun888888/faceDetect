@@ -148,6 +148,16 @@ export class FacelibComponent implements OnInit {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list;
+    },(error)=>{
+       const list = [{
+         id:1,
+         name:"",
+         path:"",
+         createTime:"2107-2-2",
+         maxNum:2,
+         state:2
+       }];
+       this._dataSet = list;
     });
   }
 

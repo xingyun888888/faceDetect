@@ -12,7 +12,5 @@ export let numberValidator = (control: FormControl) => {
   const val = control.value;
   const numberReg =  /^\d+$/g;
   const result = numberReg.test(val);
-  return new Promise((res) => {
-    return result ? null : { type: true};
-  })
+  return result?null:{info:"信息错误"}
 }

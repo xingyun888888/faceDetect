@@ -34,7 +34,7 @@
         </div>
         <div>
           <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
-            <nz-input formControlName="createTime" [(ngModel)]="_formData.createTime" [nzPlaceHolder]="'创建时间'" [nzType]="'text'" [nzSize]="'large'">
+            <nz-input [appDateFormat]="_formData.createTime" formControlName="createTime" [(ngModel)]="_formData.createTime" [nzPlaceHolder]="'创建时间'" [nzType]="'text'" [nzSize]="'large'">
             </nz-input>
           </div>
         </div>

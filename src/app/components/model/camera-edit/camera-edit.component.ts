@@ -131,7 +131,7 @@ export class CameraEditComponent implements OnInit {
     this.validateForm = this.fb.group({
       id: [''],
       name: ['', [Validators.required, Validators.maxLength(10)]],
-      type: ['', [ Validators.required ]],
+      type: ['', [ Validators.required,numberValidator]],
       serialNum: ['', [ Validators.required ]],
       ip: ['', [ Validators.required ]],
       direction: ['', [ Validators.required ]],
