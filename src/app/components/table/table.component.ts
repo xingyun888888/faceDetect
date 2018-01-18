@@ -1,6 +1,6 @@
-import { Component, OnInit, Input , Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-table',
@@ -12,9 +12,11 @@ export class TableComponent implements OnInit {
   _disabledButton = true;
   _checkedNumber = 0;
   _displayData: Array<any> = [];
-
   _operating = false;
 
+
+  @Input()
+  isCanReback:boolean =  false;
   /**
    * 操作选项显示的内容
    * 接收父组件的传值
@@ -39,7 +41,6 @@ export class TableComponent implements OnInit {
 
   /**
    * 子组件传给父组件  然后在父组件订阅子组件的事件
-   * @type {EventEmitter<any>}
    */
   @Output()
   deleteData: EventEmitter<any> = new EventEmitter();
@@ -50,42 +51,35 @@ export class TableComponent implements OnInit {
   total = 0; //总条数
   currentPageIndex = 1; //当前页码
 
-  constructor(public router: Router){
+  constructor(public router: Router) {
   }
 
   /**
    * 单个删除按钮
-   * @param e
-   * @param data
    */
-  singleDelete(e, data){
+  singleDelete(e, data) {
     this.deleteData.emit(data);
   }
 
   /**
    * 单个编辑按钮
-   * @param e
-   * @param data
    */
-  singleEdit(e, data){
+  singleEdit(e, data) {
     this.editData.emit(data);
   }
 
   /**
    * 单个增加按钮
-   * @param e
    */
-  add(e){
+  add(e) {
     this.editData.emit();
   }
 
   /**
    * 刷新按钮
-   * @param e
-   * @private
    */
-  _refreshData(e){
-     this.refresh.emit();
+  _refreshData(e) {
+    this.refresh.emit();
   }
 
   _displayDataChange($event) {
@@ -95,13 +89,10 @@ export class TableComponent implements OnInit {
 
   /**
    * 刷新状态的方法 (暂没有用到--保留)
-   * @private
    */
   _refreshStatus() {
     const allChecked = this._displayData.every(value => value.checked === true);
-
     const allUnChecked = this._displayData.every(value => !value.checked);
-
     this._allChecked = allChecked;
     this._indeterminate = (!allChecked) && (!allUnChecked);
     this._disabledButton = !this._dataSet.some(value => value.checked);
@@ -110,8 +101,6 @@ export class TableComponent implements OnInit {
 
   /**
    * 选中所有的方法
-   * @param value
-   * @private
    */
   _checkAll(value) {
     console.log(value);
@@ -124,33 +113,28 @@ export class TableComponent implements OnInit {
     this._refreshStatus();
   }
 
-  /***
-   *
+  /**
    * 页码改变的回调函数
-   * @param visible
-   * @private
    */
-  _pageSizeChange(visible){
+  _pageSizeChange(visible) {
     console.log(visible);
   }
 
   /**
-   * 保留  暂时没有用到
-   * @private
+   * 保留,暂时没有用到
    */
   _multiEdit() {
     this.editRow = [];
     this.tempEditObject = this._dataSet.concat();
     this._displayData.forEach((item, index) => {
-      if (item.checked){
+      if (item.checked) {
         this.editRow.push(item.key);
       }
     });
   }
 
   /**
-   * 保留  暂时没有用到
-   * @private
+   * 保留,暂时没有用到
    */
   _multiSave() {
     this._dataSet = this.tempEditObject.concat();
@@ -158,23 +142,27 @@ export class TableComponent implements OnInit {
   }
 
   /**
-   * 保留  暂时没有用到
-   * @private
+   * 保留,暂时没有用到
    */
-  _multiDelete(){
+  _multiDelete() {
     const data = this._dataSet.concat();
-    for (let i = this._displayData.length - 1; i >= 0; i--){
-      if (this._displayData[i].checked){
+    let delId = [];
+    for (let i = this._displayData.length - 1; i >= 0; i--) {
+      if (this._displayData[i].checked) {
+        delId.push(this._displayData[i].id);
         data.splice(i, 1);
       }
     }
+    //这里获取到删除行的id 放在一个数组里面 然后传给服务端 将数据库删除
+    console.log(delId);
     this._dataSet = data;
+
+
   }
 
   ngOnInit() {
     this.total = this._dataSet.length;
   }
-
 }
 
 /**

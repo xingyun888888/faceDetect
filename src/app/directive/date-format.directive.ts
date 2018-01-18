@@ -1,26 +1,33 @@
-import { Directive,Renderer2,ElementRef,Input,OnInit,HostBinding,OnChanges,SimpleChanges,Attribute} from '@angular/core';
-import {TableComponent} from "../components/table/table.component";
+import {AfterContentInit, AfterViewInit, Directive, HostBinding, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 
 @Directive({
-  selector: '[appDateFormat][ngModel]'
+  selector: '[appDateFormat][formData][fieldName]'
 })
-export class DateFormatDirective implements OnInit,OnChanges{
+export class DateFormatDirective implements OnInit, OnChanges,AfterViewInit{
+  ngAfterViewInit(): void {
+  }
   ngOnInit(): void {
   }
+
   ngOnChanges(changes: SimpleChanges): void {
-     if(this.date){
-       this.date = this.date.replace(/(\d+)-(\d+)-(\d+)/g,function($1,$2,$3,$4):any{
-         if($2<10)$3="0"+$3;
-         if($3<10)$4="0"+$4;
-         return `${$2}-${$3}-${$4}`;
-       })
-     }
+
+    this.date +="";
+    if(this.date.indexOf("-")==-1){
+      return;
+    }
+    if(this.date){
+      this.date = this.date.replace(/(\d+)[-\/](\d+)[-\/](\d+)/g, function($1, $2, $3, $4): any{
+        if($3<10)$3="0"+$3;
+        if($4<10)$4="0"+$4;
+        return `${$2}-${$3}-${$4}`;
+      })
+    }
+    console.log(this.date);
+    console.log(this.formData);
   }
-  @HostBinding('ngModel') value;
   @Input("appDateFormat") date:any;
-
-  constructor(private ele:ElementRef,private renderer2:Renderer2) {
-
-  }
+  @Input("formData") formData:any;
+  @Input("fieldName") fieldName:string;
+  constructor() { }
 
 }

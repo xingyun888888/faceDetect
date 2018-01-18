@@ -172,15 +172,15 @@ export class RegisterComponent implements OnInit {
     }, (error) => {
       const list = [{
         id: 1,
-        imgPath: '',
+        imgPath: '3',
         name: '',
         seriernum: '',
-        sex: '',
+        sex: '4',
         type: '',
-        code: '',
-        path: '',
-        feapath: '',
-        facelibid: ''
+        code: '5',
+        path: '5',
+        feapath: '4',
+        facelibid: '3'
       }];
       this._dataSet = list;
     });

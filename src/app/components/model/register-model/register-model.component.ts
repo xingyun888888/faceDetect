@@ -94,9 +94,6 @@ export class RegisterModelComponent implements OnInit {
     this.uploadImgList.push(e.target.files[0].name);
     let formData = new FormData();
     formData.append('uploadFile', img);
-    if (!img) {
-      return;
-    }
     let reader = new FileReader();
     reader.readAsDataURL(img);
     reader.onload = (res: FileReaderEvent) => {

@@ -127,7 +127,6 @@ export class FacelibComponent implements OnInit {
       });
       this.isEdit = false;
     }
-
   }
 
   constructor(private http: HttpClient, ) {
@@ -149,14 +148,15 @@ export class FacelibComponent implements OnInit {
       const list = <any>res;
       this._dataSet = list;
     },(error)=>{
-       const list = [{
-         id:1,
-         name:"",
-         path:"",
-         createTime:"2107-2-2",
-         maxNum:2,
-         state:2
-       }];
+       const list = [
+         {id:1,name:"",path:"",createTime:"",maxNum:3,state:1},
+         {id:2,name:"",path:"",createTime:"",maxNum:3,state:1},
+         {id:3,name:"",path:"",createTime:"",maxNum:2,state:1},
+         {id:4,name:"",path:"",createTime:"",maxNum:3,state:1},
+         {id:5,name:"",path:"",createTime:"",maxNum:3,state:1},
+         {id:6,name:"",path:"",createTime:"",maxNum:3,state:1},
+         {id:7,name:"",path:"",createTime:"",maxNum:3,state:1}
+       ]
        this._dataSet = list;
     });
   }

@@ -5,8 +5,8 @@
         <div nz-form-label nz-col [nzSpan]="5">
           <label nz-form-item-required>Id</label>
         </div>
-        <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback >
-          <nz-input formControlName="id" [nzPlaceHolder]="'自动获取'" [nzDisabled]="'true'" [nzType]="'text'" [nzSize]="'large'">
+        <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+          <nz-input formControlName="id" [nzPlaceHolder]="'自动获取'" [nzDisabled]="'true'" [(ngModel)]="_formData.id" [nzType]="'text'" [nzSize]="'large'">
           </nz-input>
         </div>
         <!-- </div>
@@ -14,8 +14,8 @@
         <div nz-form-label nz-col [nzSpan]="5">
           <label nz-form-item-required>摄像头类型</label>
         </div>
-        <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback >
-          <nz-input formControlName="type" [(ngModel)]="_formData.type"  [nzType]="'text'" [nzPlaceHolder]="'请输入摄像头类型'" [nzSize]="'large'">
+        <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+          <nz-input formControlName="type" [(ngModel)]="_formData.type"  [nzType]="'text'" [nzPlaceHolder]="'摄像头类型'" [nzSize]="'large'">
           </nz-input>
         </div>
       </div>
@@ -23,15 +23,15 @@
         <div nz-form-label nz-col [nzSpan]="5">
           <label nz-form-item-required>摄像头名称</label>
         </div>
-        <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback >
-          <nz-input formControlName="name" [(ngModel)]="_formData.name"  [nzType]="'text'" [nzPlaceHolder]="'请输入摄像头名称'" [nzSize]="'large'">
+        <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+          <nz-input formControlName="name" [(ngModel)]="_formData.name"  [nzType]="'text'" [nzPlaceHolder]="'摄像头名称'" [nzSize]="'large'">
           </nz-input>
         </div>
         <div nz-form-label nz-col [nzSpan]="5">
           <label nz-form-item-required>序列号</label>
         </div>
-        <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback >
-          <nz-input formControlName="serialNum" [(ngModel)]="_formData.serialNum"  [nzType]="'text'" [nzPlaceHolder]="'请输入序列号'" [nzSize]="'large'">
+        <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+          <nz-input formControlName="serialNum" [(ngModel)]="_formData.serialNum"  [nzType]="'text'" [nzPlaceHolder]="'序列号'" [nzSize]="'large'">
           </nz-input>
         </div>
       </div>
@@ -55,12 +55,15 @@
       </div>
       <div nz-form-item nz-row>
         <div nz-col [nzSpan]="5" nz-form-label>
-          <label nz-form-item-required>分析仪ID</label>
+          <label nz-form-item-required>分析仪名称</label>
         </div>
         <div>
           <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-            <nz-input formControlName="analyserID" [(ngModel)]="_formData.analyserID" [nzPlaceHolder]="'分析仪ID'" [nzType]="'text'" [nzSize]="'large'">
-            </nz-input>
+            <nz-select formControlName="analyserID" [(ngModel)]="_formData.analyserID" [nzPlaceHolder]="'分析仪名称'" [nzSize]="'large'" nzAllowClear>
+              <nz-option *ngFor="let option of options" [nzLabel]="option.name" [nzValue]="option.id">
+                <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
+              </nz-option>
+            </nz-select>
           </div>
         </div>
         <div nz-col [nzSpan]="5" nz-form-label>

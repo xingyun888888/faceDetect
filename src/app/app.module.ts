@@ -39,11 +39,9 @@ import { RegisterModelComponent } from './components/model/register-model/regist
 import {UserComponent} from './pages/user/user.component';
 import { UserModelComponent } from './components/model/user-model/user-model.component';
 import { RecognizeModelComponent } from './components/model/recognize-model/recognize-model.component';
-import {ParamModelComponent} from './components/model/param-model/param-model.component';
 import { ParamComponent } from './pages/param/param.component';
-import { FormErrorDirective } from './directive/form-error.directive';
-import { DateFormatDirective } from './directive/date-format.directive';
-
+import {ParamModelComponent} from './components/model/param-model/param-model.component';
+import {DateFormatDirective} from './directive/date-format.directive'
 
 @NgModule({
   schemas: [
@@ -77,7 +75,6 @@ import { DateFormatDirective } from './directive/date-format.directive';
     RecognizeModelComponent,
     ParamComponent,
     ParamModelComponent,
-    FormErrorDirective,
     DateFormatDirective
   ],
   imports: [

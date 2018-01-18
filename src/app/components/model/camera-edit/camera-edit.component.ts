@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import api from '../../../api';
 
 import {
   FormBuilder,
@@ -6,8 +8,8 @@ import {
   FormControl,
   Validators
 } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
 import {numberValidator} from '../../../validator/validators';
+
 
 @Component({
   selector: 'app-camera-edit',
@@ -38,6 +40,9 @@ export class CameraEditComponent implements OnInit {
     rtspPath: '',
     camInfo: ''
   };
+
+  options = [];
+
   /**
    *这个是将table组件中传过来的值放入表单中
    */
@@ -69,6 +74,7 @@ export class CameraEditComponent implements OnInit {
    *定义表单
    */
   validateForm: FormGroup;
+  val: Validators;
   /**
    *这个是关闭表单的方法
    */
@@ -85,7 +91,7 @@ export class CameraEditComponent implements OnInit {
     for (const key in this.validateForm.controls) {
       this.validateForm.controls[ key ].markAsDirty();
     }
-    console.log(value);
+    //console.log(value);
     //在这里请求处理提交表单数据
     this.requestData.emit(value);
   }
@@ -99,20 +105,6 @@ export class CameraEditComponent implements OnInit {
       this.validateForm.controls[ key ].markAsPristine();
     }
   }
-  /**
-   * 表单字段的验证方法，暂没用到
-  userNameAsyncValidator = (control: FormControl): any => {
-    return Observable.create(function (observer) {
-      setTimeout(() => {
-        if (control.value === 'JasonWood') {
-          observer.next({ error: true, duplicated: true });
-        } else {
-          observer.next(null);
-        }
-        observer.complete();
-      }, 1000);
-    });
-  }  */
 
   /**
    *这个方法是获取当前表单元素绑定的值
@@ -121,7 +113,19 @@ export class CameraEditComponent implements OnInit {
     return this.validateForm.controls[ name ];
   }
 
-  constructor(private fb: FormBuilder) {
+  constructor(private http: HttpClient, private fb: FormBuilder) {
+    this.getAnalyserName();
+  }
+
+  /**
+   *获取分析仪的名称列表
+   */
+  getAnalyserName() {
+    this.http.get(api.queryAnalyserName).subscribe((res) => {
+      console.dir(res);
+      const list = <any>res;
+      this.options = list;
+    });
   }
 
   ngOnInit() {
@@ -131,11 +135,11 @@ export class CameraEditComponent implements OnInit {
     this.validateForm = this.fb.group({
       id: [''],
       name: ['', [Validators.required, Validators.maxLength(10)]],
-      type: ['', [ Validators.required,numberValidator]],
+      type: ['', [ Validators.required ]],
       serialNum: ['', [ Validators.required ]],
       ip: ['', [ Validators.required ]],
-      direction: ['', [ Validators.required ]],
-      analyserID: ['', [ Validators.required ]],
+      direction: ['', [ Validators.required , numberValidator]],
+      analyserID: ['',[Validators.required]],
       zoneID: ['', [ Validators.required ]],
       strategyID: ['', [ Validators.required ]],
       doorID: ['', [ Validators.required ]],

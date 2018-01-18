@@ -14,22 +14,23 @@ export class CameraComponent implements OnInit {
   _titles: Array<any> = [
     {
       key: 'id',
-      name: 'ID',
+      name: '摄像头编号',
       type: 'text'
     },
-    // {
-    //   key:'type',
-    //   name:'摄像头类型'
-    // },
-    {
-      key: 'name',
-      name: '摄像头名称',
-      type: 'text'
-    },
-    /*{
-     key:'serialNum',
-     name:'序列号'
-     },*/
+    /*
+   {
+     key: 'type',
+     name: '摄像头类型'
+   },
+   {
+     key: 'name',
+     name: '摄像头名称',
+     type: 'text'
+   },
+   {
+    key:'serialNum',
+    name:'序列号'
+    },*/
     {
       key: 'ip',
       name: '相机ip',
@@ -41,8 +42,8 @@ export class CameraComponent implements OnInit {
       type: 'text'
     },
     {
-      key: 'analyserID',
-      name: '分析仪ID',
+      key: 'a_name',
+      name: '分析仪名称',
       type: 'text'
     },
     /*
@@ -73,17 +74,12 @@ export class CameraComponent implements OnInit {
      },*/
     {
       key: 'rtspPort',
-      name: 'Rtsp端口',
+      name: 'rtsp端口',
       type: 'text'
     },
     {
       key: 'rtspPath',
       name: 'resp路径',
-      type: 'text'
-    },
-    {
-      key: 'camInfo',
-      name: '摄像头品牌',
       type: 'text'
     }
   ];
@@ -190,19 +186,13 @@ export class CameraComponent implements OnInit {
     this.http.get(api.queryCamera).subscribe((res) => {
       console.dir(res);
       let list = <any>res;
+      /**
+       * 拿到数据之后将analyser对象里的name拿出来，赋值给a_name，这样a_name就有值，就可以显示出来了
+       */
+      list.map((item, index) => {
+        Object.assign(item, {a_name: item.analyser.name});
+      });
       this._dataSet = list;
-    },(error)=>{
-         let list = [{
-           id:1,
-           name:1,
-           ip:"1.2.2.3",
-           direction:"234",
-           analyserID:"23",
-           rtspPort:80,
-           rtspPath:80,
-           camInfo:"324"
-         }]
-         this._dataSet = list;
     });
   }
 

@@ -6,7 +6,7 @@
           <label nz-form-item-required>Id</label>
         </div>
         <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
-          <nz-input formControlName="id" [nzPlaceHolder]="'自动获取'" [nzDisabled]="'true'" [nzType]="'text'" [nzSize]="'large'">
+          <nz-input formControlName="id" [nzPlaceHolder]="'自动获取'" [nzDisabled]="'true'" [(ngModel)]="_formData.id" [nzType]="'text'" [nzSize]="'large'">
           </nz-input>
         </div>
       </div>
@@ -34,8 +34,9 @@
         </div>
         <div>
           <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
-            <nz-input [appDateFormat]="_formData.createTime" formControlName="createTime" [(ngModel)]="_formData.createTime" [nzPlaceHolder]="'创建时间'" [nzType]="'text'" [nzSize]="'large'">
-            </nz-input>
+            <!--<nz-input [formData]="_formData" [fieldName]="'createTime'"  [appDateFormat]="_formData.createTime" formControlName="createTime" [(ngModel)]="_formData.createTime" [nzPlaceHolder]="'创建时间'" [nzType]="'text'" [nzSize]="'large'">-->
+            <!--</nz-input>-->
+            <nz-datepicker formControlName="createTime" [(ngModel)]="_formData.createTime" [nzPlaceHolder]="'请选择时间'"></nz-datepicker>
           </div>
         </div>
       </div>

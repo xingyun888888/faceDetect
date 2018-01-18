@@ -13,6 +13,8 @@ const api = {
   editCamera: devSeverAddress + 'camera/update',
   deleteCamera: devSeverAddress + 'camera/delete',
   addCamera: devSeverAddress + 'camera/add',
+  //分析仪名称查询
+  queryAnalyserName: devSeverAddress + 'analyser/getNameList',
   //服务端信息查询
   queryServer: devSeverAddress + 'server/list',
   editServer: devSeverAddress + 'server/update',
