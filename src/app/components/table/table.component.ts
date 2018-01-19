@@ -2,6 +2,7 @@ import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 
 import {Router} from '@angular/router';
 
+import { NzModalService } from 'ng-zorro-antd';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -51,14 +52,24 @@ export class TableComponent implements OnInit {
   total = 0; //总条数
   currentPageIndex = 1; //当前页码
 
-  constructor(public router: Router) {
+  constructor(public router: Router,private confirmServ:NzModalService) {
   }
 
   /**
    * 单个删除按钮
    */
   singleDelete(e, data) {
-    this.deleteData.emit(data);
+    let _this = this;
+    this.confirmServ.confirm({
+      title  : '您是否确认要删除',
+      content: '<b></b>',
+      onOk() {
+        console.log("确认删除");
+        _this.deleteData.emit(data);
+      },
+      onCancel() {
+      }
+    });
   }
 
   /**
@@ -145,20 +156,36 @@ export class TableComponent implements OnInit {
    * 保留,暂时没有用到
    */
   _multiDelete() {
-    const data = this._dataSet.concat();
+    let data = this._dataSet.concat();
     let delId = [];
-    for (let i = this._displayData.length - 1; i >= 0; i--) {
-      if (this._displayData[i].checked) {
-        delId.push(this._displayData[i].id);
-        data.splice(i, 1);
-      }
-    }
-    //这里获取到删除行的id 放在一个数组里面 然后传给服务端 将数据库删除
-    console.log(delId);
-    this._dataSet = data;
+    let _this = this;
+    this.confirmServ.confirm({
+      title  : '您是否确认要删除',
+      content: '<b></b>',
+      onOk() {
+        console.log("确认删除");
+        for (let i = _this._displayData.length - 1; i >= 0; i--) {
+          if (_this._displayData[i].checked) {
+            delId.push(_this._displayData[i].id);
+            data.splice(i, 1);
+          }
+        }
 
+        _this._dataSet = data;
+        //这里获取到删除行的id 放在一个数组里面 然后传给服务端 将数据库删除
+        console.log(delId);
+      },
+      onCancel() {
+      }
+    });
 
   }
+
+  /**
+   * 确认删除对话框
+   */
+
+
 
   ngOnInit() {
     this.total = this._dataSet.length;

@@ -41,7 +41,7 @@ import { UserModelComponent } from './components/model/user-model/user-model.com
 import { RecognizeModelComponent } from './components/model/recognize-model/recognize-model.component';
 import { ParamComponent } from './pages/param/param.component';
 import {ParamModelComponent} from './components/model/param-model/param-model.component';
-import {DateFormatDirective} from './directive/date-format.directive'
+import {DateFormatDirective} from './directive/date-format.directive';
 
 @NgModule({
   schemas: [
@@ -75,7 +75,7 @@ import {DateFormatDirective} from './directive/date-format.directive'
     RecognizeModelComponent,
     ParamComponent,
     ParamModelComponent,
-    DateFormatDirective
+    DateFormatDirective,
   ],
   imports: [
     BrowserModule,
