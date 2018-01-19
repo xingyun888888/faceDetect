@@ -81,8 +81,11 @@ export class ServerComponent implements OnInit {
    * 删除成功之后，调用查询方法，更新页面，删除失败之后，调用查询方法，更新页面
    */
   deleteRow(data) {
-    console.log(data);
-    this.http.get(api.deleteServer + '?id=' + data.id).subscribe((res) => {
+    this.http.post(api.deleteServer, JSON.stringify(data),{
+      headers: new HttpHeaders({
+        'Content-type': 'application/json;charset=UTF-8'
+      })
+    }).subscribe((res) => {
       this.getServer();
     }, (error) => {
       this.getServer();

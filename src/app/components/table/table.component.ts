@@ -2,7 +2,8 @@ import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 
 import {Router} from '@angular/router';
 
-import { NzModalService } from 'ng-zorro-antd';
+import {NzModalService} from 'ng-zorro-antd';
+
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -17,20 +18,17 @@ export class TableComponent implements OnInit {
 
 
   @Input()
-  isCanReback:boolean =  false;
-  /**
-   * 操作选项显示的内容
-   * 接收父组件的传值
-   * @type {{type1: string; type2: string}}
-   */
+  isCanReback = false;
+
+  /**操作选项显示的内容,接收父组件的传值*/
   @Input()
   actionType: String = 'type1';
 
-  //接收表格数据
+  /**接收表格数据*/
   @Input()
   _dataSet: Array<any> = [];
 
-  //配置表格字段
+  /**配置表格字段*/
   @Input()
   _titles: Array<any> = [];
 
@@ -52,20 +50,20 @@ export class TableComponent implements OnInit {
   total = 0; //总条数
   currentPageIndex = 1; //当前页码
 
-  constructor(public router: Router,private confirmServ:NzModalService) {
+  constructor(public router: Router, private confirmServ: NzModalService) {
   }
 
   /**
    * 单个删除按钮
    */
   singleDelete(e, data) {
-    let _this = this;
+    const _this = this;
     this.confirmServ.confirm({
-      title  : '您是否确认要删除',
+      title: '您是否确认要删除',
       content: '<b></b>',
       onOk() {
-        console.log("确认删除");
-        _this.deleteData.emit(data);
+        console.log('确认删除');
+        _this.deleteData.emit({id: data.id});
       },
       onCancel() {
       }
@@ -153,39 +151,36 @@ export class TableComponent implements OnInit {
   }
 
   /**
-   * 保留,暂时没有用到
+   * 批量删除
    */
   _multiDelete() {
-    let data = this._dataSet.concat();
-    let delId = [];
-    let _this = this;
+    const data = this._dataSet.concat();
+    const ids = [];
+    const _this = this;
     this.confirmServ.confirm({
-      title  : '您是否确认要删除',
+      title: '您是否确认要删除',
       content: '<b></b>',
       onOk() {
-        console.log("确认删除");
+        console.log('确认删除');
         for (let i = _this._displayData.length - 1; i >= 0; i--) {
           if (_this._displayData[i].checked) {
-            delId.push(_this._displayData[i].id);
-            data.splice(i, 1);
+            ids.push(_this._displayData[i].id);
+            // data.splice(i, 1);
           }
         }
-
-        _this._dataSet = data;
+        _this.deleteData.emit({ids});
+        // _this._dataSet = data;
         //这里获取到删除行的id 放在一个数组里面 然后传给服务端 将数据库删除
-        console.log(delId);
+        console.log(ids);
       },
       onCancel() {
       }
     });
-
   }
 
   /**
    * 确认删除对话框
    */
-
-
 
   ngOnInit() {
     this.total = this._dataSet.length;
@@ -199,3 +194,4 @@ export class TableComponent implements OnInit {
     console.log(data);
     //his.router.navigate(["/register",{queryParams:{id:34242}}]);
   }*/
+

@@ -126,6 +126,7 @@ export class RegisterModelComponent implements OnInit {
     console.log(value);
     //在这里请求处理提交表单数据
     this.requestData.emit(value);
+    this.validateForm.reset();
   }
 
   /**

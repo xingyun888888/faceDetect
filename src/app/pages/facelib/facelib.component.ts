@@ -30,7 +30,7 @@ export class FacelibComponent implements OnInit {
     {
       key: 'createTime',
       name: '创建时间',
-      type: "date"
+      type: 'date'
     },
     {
       key: 'maxNum',
@@ -91,8 +91,11 @@ export class FacelibComponent implements OnInit {
    * 删除成功之后，调用查询方法，更新页面，删除失败之后，调用查询方法，更新页面
    */
   deleteRow(data) {
-    console.log(data);
-    this.http.get(api.deleteFacelib + '?id=' + data.id).subscribe((res) => {
+    this.http.post(api.deleteFacelib, JSON.stringify(data),{
+      headers: new HttpHeaders({
+        'Content-type': 'application/json;charset=UTF-8'
+      })
+    }).subscribe((res) => {
       this.getFacelib();
     }, (error) => {
       this.getFacelib();
