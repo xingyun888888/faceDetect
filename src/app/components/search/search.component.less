@@ -6,10 +6,16 @@
   /* border:1px dotted #ccc;*/
   border:1px solid #ccc;
   border-radius:5px;
-}
-nz-input {
-  width: 200px;
-  margin: 0 8px 8px 0;
-}
+  position:relative;//这个是相对定位
 
+  .ant-advanced-search-form {
+    padding: 24px;
+    border-radius: 6px;
+  }
+  .query-btn{
+    position:absolute;//这个是绝对定位 是依赖于已定位祖先级元素  所以要给search-container加一个相对定位
+    right:100px;
+    bottom:20px;
+  }
+}
 

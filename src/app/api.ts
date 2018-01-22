@@ -35,6 +35,7 @@ const api = {
   editRecognize: devSeverAddress + 'recognize/update',
   deleteRecognize: devSeverAddress + 'recognize/delete',
   addRecognize: devSeverAddress + 'recognize/add',
+  queryRecognizeByConditions: devSeverAddress + 'recognize/listByConditionsc',
   //user权限信息查询
   queryUser: devSeverAddress + 'user/list',
   editUser: devSeverAddress + 'user/update',

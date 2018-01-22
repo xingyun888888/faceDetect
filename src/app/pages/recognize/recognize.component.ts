@@ -8,6 +8,14 @@ import api from '../../api';
   styleUrls: ['./recognize.component.css']
 })
 export class RecognizeComponent implements OnInit {
+
+
+  _searchTitle: Array<any> = [
+    {key: 'name', name: '姓名', type: ''},
+    {key: 'sex', name: '性别', type: ''},
+    {key: 'dc', name: '危险级别', type: ''}
+  ];
+
   /**
    * 这个字段是保存着table的自定义列标签
    */
@@ -15,63 +23,63 @@ export class RecognizeComponent implements OnInit {
     {
       key: 'id',
       name: 'ID',
-       type: 'text'
+      type: 'text'
     },
     {
       key: 'name',
       name: '用户姓名',
-       type: 'text'
+      type: 'text'
     },
     {
       key: 'serialNum',
       name: '编号',
-       type: 'text'
+      type: 'text'
     },
     {
       key: 'sex',
       name: '性别',
-       type: 'text'
+      type: 'text'
     },
     {
       key: 'zoneNum',
       name: '区域编码',
-       type: 'text'
+      type: 'text'
 
     },
     {
       key: 'camId',
       name: '摄像头ID',
-       type: 'text'
+      type: 'text'
     },
     {
       key: 'direction',
       name: '方向',
-       type: 'text'
+      type: 'text'
     },
     {
       key: 'similarDegree',
       name: '相似度',
-       type: 'text'
+      type: 'text'
     },
     {
       key: 'path',
       name: '路径',
-       type: 'text'
+      type: 'text'
     },
     {
       key: 'snapPath',
       name: '抓拍路径',
-       type: 'text'
+      type: 'text'
     },
     {
       key: 'time',
       name: '时间',
-       type: 'date'
+      type: 'date'
     },
     {
       key: 'dc',
       name: '危险等级',
-       type: 'text'
+      type: 'text'
     }
   ];
   /**
@@ -119,7 +127,7 @@ export class RecognizeComponent implements OnInit {
    * 删除成功之后，调用查询方法，更新页面，删除失败之后，调用查询方法，更新页面
    */
   deleteRow(data) {
-    this.http.post(api.deleteRecognize, JSON.stringify(data),{
+    this.http.post(api.deleteRecognize, JSON.stringify(data), {
       headers: new HttpHeaders({
         'Content-type': 'application/json;charset=UTF-8'
       })
@@ -180,6 +188,19 @@ export class RecognizeComponent implements OnInit {
       this._dataSet = list;
     });
   }
+
+
+  queryRecognizeByConditions(data){
+    console.log(data);
+    this.http.get(api.queryRecognizeByConditions,data).subscribe((res) => {
+      console.dir(res);
+      let list = <any>res;
+      this._dataSet = list;
+    },(error)=>{
+      debugger;
+    });
+  }
+
 
   /**
    * 组件初始化的时候调用一次
