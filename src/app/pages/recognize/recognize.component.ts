@@ -1,7 +1,8 @@
+///<reference path="../../utils/common.ts"/>
 import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../api';
-
+import  {parseParam} from '../../utils/common';
 @Component({
   selector: 'app-recognize',
   templateUrl: './recognize.component.html',
@@ -190,9 +191,13 @@ export class RecognizeComponent implements OnInit {
   }
 
 
+  /**
+   * 根据条件查询方法
+   * @param data
+   */
   queryRecognizeByConditions(data){
-    console.log(data);
-    this.http.get(api.queryRecognizeByConditions,data).subscribe((res) => {
+    console.log(parseParam(data));
+    this.http.get(api.queryRecognizeByConditions+parseParam(data)).subscribe((res) => {
       console.dir(res);
       let list = <any>res;
       this._dataSet = list;
