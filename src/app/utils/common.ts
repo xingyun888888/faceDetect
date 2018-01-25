@@ -19,7 +19,7 @@ export function parseParam(data:any){
   }
   url += (url.indexOf("?") != -1) ? "" : "?";
   for(var k in data) {
-    url += ((url.indexOf("=") != -1) ? "&" : "") + k + "=" + encodeURI(data[k]);
+    url += ((url.indexOf("=") != -1) ? "&" : "") + k + "=" + encodeURI((data[k]?data[k]:""));
     console.log(url);
   }
   return url;

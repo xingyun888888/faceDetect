@@ -18,9 +18,7 @@ import {numberValidator} from '../../../validator/validators';
 })
 
 export class CameraEditComponent implements OnInit {
-  /**
-   *该输入属性，里面包含着table中的所有字段
-   */
+  /**该输入属性，里面包含着table中的所有字段*/
   @Input()
   _formData = {
     id: '',
@@ -41,65 +39,53 @@ export class CameraEditComponent implements OnInit {
     camInfo: ''
   };
 
+  /**分析仪下拉列表*/
   options = [];
 
-  /**
-   *这个是将table组件中传过来的值放入表单中
-   */
+  /**这个是将table组件中传过来的值放入表单中*/
   @Input()
   set formData(value){
     this._formData = Object.assign({}, value);
   }
-  /**
-   *这个是获取表单的字段名
-   */
+
+  /**这个是获取表单的字段名*/
   get formData(){
     return this._formData;
   }
-  /**
-   *这个是控制模态框是否弹出的状态属性
-   */
+
+  /**这个是控制模态框是否弹出的状态属性*/
   @Input()
   isVisible;
-  /**
-   *向父组件发送数据请求
-   */
+
+  /**向父组件发送数据请求*/
   @Output()
   requestData = new EventEmitter();
-  /**
-   *向父组件发送关闭表单的请求
-   */
+
+  /**向父组件发送关闭表单的请求*/
   @Output() closeModel = new EventEmitter();
-  /**
-   *定义表单
-   */
+
+  /**定义表单*/
   validateForm: FormGroup;
-  val: Validators;
-  /**
-   *这个是关闭表单的方法
-   */
+  val: Validators
+
+  /**这个是关闭表单的方法*/
   handleCancel = (e) => {
     this.resetForm(e);
     this.closeModel.emit();
   }
-  /**
-   *提交表单，提交时做校验操作
-   */
+  /**提交表单，提交时做校验操作*/
   submitForm = ($event, value) => {
     $event.preventDefault();
     console.log(this.validateForm.valid);
     for (const key in this.validateForm.controls) {
       this.validateForm.controls[ key ].markAsDirty();
     }
-    //console.log(value);
-    //在这里请求处理提交表单数据
+    /**在这里请求处理提交表单数据*/
     this.requestData.emit(value);
-
     this.validateForm.reset();
   }
-  /**
-   *重置表单
-   */
+
+  /**重置表单*/
   resetForm($event: MouseEvent) {
     $event.preventDefault();
     this.validateForm.reset();
@@ -108,9 +94,7 @@ export class CameraEditComponent implements OnInit {
     }
   }
 
-  /**
-   *这个方法是获取当前表单元素绑定的值
-   */
+  /**这个方法是获取当前表单元素绑定的值*/
   getFormControl(name) {
     return this.validateForm.controls[ name ];
   }
@@ -119,9 +103,7 @@ export class CameraEditComponent implements OnInit {
     this.getAnalyserName();
   }
 
-  /**
-   *获取分析仪的名称列表
-   */
+  /**获取分析仪的名称列表*/
   getAnalyserName() {
     this.http.get(api.queryAnalyserName).subscribe((res) => {
       console.dir(res);
@@ -131,9 +113,7 @@ export class CameraEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    /**
-     *响应式表单，Validators.required表示必填
-     */
+    /**响应式表单，Validators.required表示必填*/
     this.validateForm = this.fb.group({
       id: [''],
       name: ['', [Validators.required, Validators.maxLength(10)]],

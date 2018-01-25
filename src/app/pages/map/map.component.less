@@ -1,0 +1,46 @@
+.map-container{
+  width:1200px;
+  min-height:800px;
+  margin:100px auto;
+  .map-menu{
+    display:flex;
+    justify-content:flex-start;
+    align-items:center;
+    &>div{
+      margin:0 20px;
+    }
+    .camera-state,.scale-size{
+      img{
+        width:30px;
+        height:30px;
+        vertical-align:middle;
+      }
+    }
+    .scale-size{
+      float:right;
+    }
+  }
+  .map-show{
+    width:1200px;
+    height:800px;
+    border:1px solid #ccc;
+    padding:30px;
+    box-sizing: border-box;
+    position:relative;
+    .map-menu{
+      width:100%;
+      height:80px;
+    }
+    .map-img{
+      width:95%;
+      position:absolute;
+      left:50%;
+      top:15%;
+      transform:translateX(-50%);
+      border:1px dashed #ccc;
+      img{
+        width:100%;
+      }
+    }
+  }
+}

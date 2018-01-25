@@ -42,6 +42,7 @@ import { RecognizeModelComponent } from './components/model/recognize-model/reco
 import { ParamComponent } from './pages/param/param.component';
 import {ParamModelComponent} from './components/model/param-model/param-model.component';
 import {DateFormatDirective} from './directive/date-format.directive';
+import {MapComponent} from './pages/map/map.component';
 
 @NgModule({
   schemas: [
@@ -76,6 +77,7 @@ import {DateFormatDirective} from './directive/date-format.directive';
     ParamComponent,
     ParamModelComponent,
     DateFormatDirective,
+    MapComponent
   ],
   imports: [
     BrowserModule,

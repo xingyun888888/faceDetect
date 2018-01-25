@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import api from '../../api';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {parseParam} from '../../utils/common';
 
 @Component({
   selector: 'app-camera',
@@ -8,24 +9,28 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
   styleUrls: ['./camera.component.css']
 })
 export class CameraComponent implements OnInit {
-  /**
-   * 这个字段是保存着table的自定义列标签
-   */
+  /**这个字段是保存着search的自定义列标签*/
+  _searchTitle: Array<any> = [
+    {key: 'name', name: '摄像机名称', type: '', nzSpan: 7},
+    {key: 'direction', name: '方向', type: '', nzSpan: 5}
+  ];
+
+  /**这个字段是保存着table的自定义列标签*/
   _titles: Array<any> = [
     {
       key: 'id',
       name: '摄像头编号',
       type: 'text'
     },
+    {
+      key: 'name',
+      name: '摄像头名称',
+      type: 'text'
+    },
     /*
    {
      key: 'type',
      name: '摄像头类型'
-   },
-   {
-     key: 'name',
-     name: '摄像头名称',
-     type: 'text'
    },
    {
     key:'serialNum',
@@ -199,9 +204,18 @@ export class CameraComponent implements OnInit {
     });
   }
 
-  /**
-   * 组件初始化的时候调用一次
-   */
+  /**多条件查询方法*/
+  queryCameraByConditions(data) {
+    console.log(parseParam(data));
+    this.http.get(api.queryCameraByConditions + parseParam(data)).subscribe((res) => {
+      console.dir(res);
+      let list = <any>res;
+      this._dataSet = list;
+    }, (error) => {
+    });
+  }
+
+  /**组件初始化的时候调用一次*/
   ngOnInit() {
     this.getCamera();
   }

@@ -13,6 +13,7 @@ const api = {
   editCamera: devSeverAddress + 'camera/update',
   deleteCamera: devSeverAddress + 'camera/delete',
   addCamera: devSeverAddress + 'camera/add',
+  queryCameraByConditions: devSeverAddress + 'camera/listByConditions',
   //分析仪名称查询
   queryAnalyserName: devSeverAddress + 'analyser/getNameList',
   //服务端信息查询
@@ -35,7 +36,7 @@ const api = {
   editRecognize: devSeverAddress + 'recognize/update',
   deleteRecognize: devSeverAddress + 'recognize/delete',
   addRecognize: devSeverAddress + 'recognize/add',
-  queryRecognizeByConditions: devSeverAddress + 'recognize/listByConditionsc',
+  queryRecognizeByConditions: devSeverAddress + 'recognize/listByConditions',
   //user权限信息查询
   queryUser: devSeverAddress + 'user/list',
   editUser: devSeverAddress + 'user/update',

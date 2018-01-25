@@ -3,16 +3,19 @@
     <div nz-row [nzGutter]="40">
       <div nz-col [nzSpan]="8" *ngFor="let item of _searchTitle;let i = index;">
         <div nz-form-item nz-row>
-          <div nz-form-label nz-col [nzSpan]="6">
+          <div nz-form-label nz-col [nzSpan]="item.nzSpan">
             <label>{{item.name}}</label>
           </div>
-          <div nz-form-control nz-col [nzSpan]="18">
+          <div nz-form-control nz-col [nzSpan]="16">
             <nz-input [nzSize]="'large'" [(ngModel)]="_formData[item.key]" [nzPlaceHolder]="'请输入'+item.name" [formControlName]="item.key" [nzId]=""></nz-input>
           </div>
         </div>
       </div>
     </div>
-    <button nz-button [nzType]="'default'" class="query-btn">
+    <button *ngIf="upOrDown" nz-button [nzType]="'default'" class="query-btn">
+      <i class="anticon anticon-search"></i><span>查询</span>
+    </button>
+    <button *ngIf="upOrDown==false" nz-button [nzType]="'default'" class="query-btn1">
       <i class="anticon anticon-search"></i><span>查询</span>
     </button>
   </form>

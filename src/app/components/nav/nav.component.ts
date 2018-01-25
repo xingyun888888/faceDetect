@@ -41,7 +41,7 @@ export class NavComponent implements OnInit {
                 {name: '服务端信息', routeName: '/server'},
                 {name: '移动端硬件信息', routeName: '/mobile'}]},
     {name: '布控策略', icon: '../../assets/images/icon/bukong.png'},
-    {name: '地图管理', icon: '../../assets/images/icon/map-ma.png'},
+    {name: '地图管理', routeName:"/map",icon: '../../assets/images/icon/map-ma.png'},
     {name: '系统管理', icon: '../../assets/images/icon/system-set.png',
       children: [{name: '参数配置', routeName: '/param'},
                  {name: '系统管理', routeName: '/user'}]}];
