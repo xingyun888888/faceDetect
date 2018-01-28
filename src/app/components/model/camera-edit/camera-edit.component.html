@@ -1,6 +1,6 @@
-<nz-modal [nzVisible]="isVisible" [nzTitle]="'摄像头信息编辑'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)" [nzConfirmLoading]="isConfirmLoading" nzFooter="" >
+<nz-modal [nzVisible]="isVisible" [nzTitle]="'摄像头信息编辑'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)" [nzConfirmLoading]="isConfirmLoading" nzFooter="" [maskClosable]="false">
   <ng-template #modalContent>
-    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">
+    <form nz-form [formGroup]="validateForm">
       <div nz-form-item nz-row>
         <div nz-form-label nz-col [nzSpan]="5">
           <label nz-form-item-required>Id</label>
@@ -14,7 +14,7 @@
         <div nz-form-label nz-col [nzSpan]="5">
           <label nz-form-item-required>摄像头类型</label>
         </div>
-        <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+        <div nz-col [nzSpan]="6" nz-form-control >
           <nz-input [appFormValidate]="validateForm" formControlName="type" [(ngModel)]="_formData.type"  [nzType]="'text'" [nzPlaceHolder]="'摄像头类型'" [nzSize]="'large'">
           </nz-input>
         </div>
@@ -23,7 +23,7 @@
         <div nz-form-label nz-col [nzSpan]="5">
           <label nz-form-item-required>摄像头名称</label>
         </div>
-        <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+        <div nz-col [nzSpan]="6" nz-form-control>
           <nz-input [appFormValidate]="validateForm" formControlName="name" [(ngModel)]="_formData.name"  [nzType]="'text'" [nzPlaceHolder]="'摄像头名称'" [nzSize]="'large'">
           </nz-input>
         </div>
@@ -149,10 +149,23 @@
           </nz-input>
         </div>
       </div>
-
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>摄像头坐标</label>
+        </div>
+        <div nz-col [nzSpan]="6" nz-form-control>
+          <nz-input formControlName="position"  [(ngModel)]="_formData.position"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'摄像头坐标'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+        <div nz-col [nzSpan]="5">
+          <button nz-button style="background:#ccc;font-size:12px;text-align:center;" (click)="isShowMap=true;">
+            <span>设置坐标</span>
+          </button>
+        </div>
+      </div>
       <div nz-form-item nz-row>
         <div nz-col [nzOffset]="7" [nzSpan]="12" nz-form-control>
-          <button nz-button [nzType]="'primary'" [nzSize]="'large'" [disabled]="!validateForm.valid">提交</button>
+          <button nz-button [nzType]="'primary'" [nzSize]="'large'" [disabled]="!validateForm.valid"  (ngSubmit)="submitForm($event,validateForm.value)">提交</button>
           <button nz-button [nzSize]="'large'" (click)="resetForm($event)">重置</button>
         </div>
       </div>
@@ -162,3 +175,16 @@
 
 
 
+<nz-modal [nzVisible]="isShowMap"  [nzTitle]="'地图坐标设置'" [nzContent]="mapModelContent" class="map-model">
+  <ng-template #mapModelContent>
+    <div class="map-img">
+      <img class="camera" src="../../../../assets/images/map/camera-device.png" alt="" #camera  (dragstart)="dragStartHandler($event)" >
+      <img class="map" src="../../../../assets/images/map-default.png" alt="" style="width:100%;height:100%;" (dragover)="dragoverHandler($event)" (drop)="dropHandler($event)" >
+    </div>
+    <div class="map-action">
+      <button nz-button style="background:#ccc;font-size:12px;text-align:center;" (click)="isShowMap=false;">
+        <span>确定设置</span>
+      </button>
+    </div>
+  </ng-template>
+</nz-modal>

@@ -6,7 +6,7 @@ import {parseParam} from '../../utils/common';
 @Component({
   selector: 'app-camera',
   templateUrl: './camera.component.html',
-  styleUrls: ['./camera.component.css']
+  styleUrls: ['./camera.component.less']
 })
 export class CameraComponent implements OnInit {
   /**这个字段是保存着search的自定义列标签*/
@@ -86,6 +86,11 @@ export class CameraComponent implements OnInit {
       key: 'rtspPath',
       name: 'resp路径',
       type: 'text'
+    },
+    {
+      key: 'position',
+      name: '摄像头坐标',
+      type: 'text'
     }
   ];
 
@@ -100,7 +105,9 @@ export class CameraComponent implements OnInit {
   formData = {};
 
   /**
-   * 是否加载中
+   * 是否加载中  是否显示加载状态
+   * true:代表正在加载中
+   * false:代表加载完成
    */
   isLoading = false;
 
@@ -187,6 +194,12 @@ export class CameraComponent implements OnInit {
         Object.assign(item, {a_name: item.analyser.name});
       });
       this._dataSet = list;
+
+      /**
+       * 关闭加载状态
+       * @type {boolean}
+       */
+      this.isLoading = false;
     },()=>{
       let list = [
         { id:"",name:"sdf",
@@ -199,14 +212,15 @@ export class CameraComponent implements OnInit {
           user:"3",
           pwd:"2",
           rtspPort:"3",
-          rtspPath:"3"
+          rtspPath:"3",
+          position:"3,2,5",
         }
 
       ]
       this._dataSet = list;
       setTimeout(()=>{
         this.isLoading = false;
-      },10000)
+      },2000)
     });
   }
 

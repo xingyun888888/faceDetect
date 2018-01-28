@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter,ElementRef,ViewChild } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {NzModalService} from 'ng-zorro-antd';
 import api from '../../../api';
@@ -15,7 +15,7 @@ import {numberValidator} from '../../../validator/validators';
 @Component({
   selector: 'app-camera-edit',
   templateUrl: './camera-edit.component.html',
-  styleUrls: ['./camera-edit.component.css']
+  styleUrls: ['./camera-edit.component.less']
 })
 
 export class CameraEditComponent implements OnInit {
@@ -37,7 +37,8 @@ export class CameraEditComponent implements OnInit {
     pwd: '',
     rtspPort: '',
     rtspPath: '',
-    camInfo: ''
+    camInfo: '',
+    position: ''
   };
 
   /**分析仪下拉列表*/
@@ -65,9 +66,50 @@ export class CameraEditComponent implements OnInit {
   /**向父组件发送关闭表单的请求*/
   @Output() closeModel = new EventEmitter();
 
+
+
+
+  /**
+   *  是否展示地图;
+   */
+  isShowMap = false;
+
+  defaultOffsetPosition={
+    x:0,
+    y:0
+  }
+
+  @ViewChild('camera') camera: ElementRef;
+
+  /**
+   * 拖拽开始事件
+   */
+  dragStartHandler(e){
+    this.defaultOffsetPosition.x = e.offsetX;
+    this.defaultOffsetPosition.y = e.offsetY;
+  }
+
+  /**
+   * 拖拽放置事件
+   */
+  dropHandler(e){
+    e.preventDefault();
+    this.camera.nativeElement.style.left = (e.offsetX-this.defaultOffsetPosition.x)+"px";
+    this.camera.nativeElement.style.top = (e.offsetY-this.defaultOffsetPosition.y)+"px";
+    this._formData.position = `${e.offsetX-this.defaultOffsetPosition.x},${e.offsetY-this.defaultOffsetPosition.y}`;
+  }
+
+  /**
+   * 拖拽
+   * @param e
+   */
+  dragoverHandler(e){
+    e.preventDefault();
+  }
+
   /**定义表单*/
   validateForm: FormGroup;
-  val: Validators
+  val: Validators;
 
   /**这个是关闭表单的方法*/
   handleCancel = (e) => {
@@ -81,12 +123,20 @@ export class CameraEditComponent implements OnInit {
     for (const key in this.validateForm.controls) {
       this.validateForm.controls[ key ].markAsDirty();
     }
-    /**在这里请求处理提交表单数据*/
-    this.requestData.emit(value);
-    this.confirmServ.warning({
-      content: '表单填写错误'
-    });
-    this.validateForm.reset();
+    debugger;
+    /**
+     * 如果表单验证失败
+     */
+    if(!this.validateForm.valid){
+      this.confirmServ.warning({
+        content: '表单填写错误,请检查'
+      });
+      this.closeModel.emit();
+    }else{
+      /**在这里请求处理提交表单数据*/
+      this.requestData.emit(value);
+      this.validateForm.reset();
+    }
   }
 
   /**重置表单*/
@@ -135,7 +185,8 @@ export class CameraEditComponent implements OnInit {
       pwd: ['', [ Validators.required, Validators.maxLength(9), Validators.pattern('[0-9]+')]],
       rtspPort: ['', [ Validators.required ]],
       rtspPath: ['', [ Validators.required ]],
-      camInfo: ['', [ Validators.required ]]
+      camInfo: ['', [ Validators.required ]],
+      position: ['', [ Validators.required ]]
     });
   }
 }
