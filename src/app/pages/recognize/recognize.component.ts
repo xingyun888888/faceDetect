@@ -182,9 +182,7 @@ export class RecognizeComponent implements OnInit {
     });
   }
 
-  /**
-   * 组件初始化的时候调用一次
-   */
+  /**组件初始化的时候调用一次*/
   ngOnInit() {
     this.getRecognize();
   }

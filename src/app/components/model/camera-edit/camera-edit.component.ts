@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {NzModalService} from 'ng-zorro-antd';
 import api from '../../../api';
 
 import {
@@ -82,6 +83,9 @@ export class CameraEditComponent implements OnInit {
     }
     /**在这里请求处理提交表单数据*/
     this.requestData.emit(value);
+    this.confirmServ.warning({
+      content: '表单填写错误'
+    });
     this.validateForm.reset();
   }
 
@@ -99,7 +103,7 @@ export class CameraEditComponent implements OnInit {
     return this.validateForm.controls[ name ];
   }
 
-  constructor(private http: HttpClient, private fb: FormBuilder) {
+  constructor(private http: HttpClient, private fb: FormBuilder,private confirmServ: NzModalService) {
     this.getAnalyserName();
   }
 
@@ -114,11 +118,12 @@ export class CameraEditComponent implements OnInit {
 
   ngOnInit() {
     /**响应式表单，Validators.required表示必填*/
+
     this.validateForm = this.fb.group({
       id: [''],
       name: ['', [Validators.required, Validators.maxLength(10)]],
       type: ['', [ Validators.required ]],
-      serialNum: ['', [ Validators.required ]],
+      serialNum: ['', [ Validators.required, Validators.maxLength(6)]],
       ip: ['', [ Validators.required ]],
       direction: ['', [ Validators.required , numberValidator]],
       analyserID: ['',[Validators.required]],

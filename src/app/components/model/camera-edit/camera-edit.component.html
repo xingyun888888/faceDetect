@@ -6,7 +6,7 @@
           <label nz-form-item-required>Id</label>
         </div>
         <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-          <nz-input formControlName="id" [nzPlaceHolder]="'自动获取'" [nzDisabled]="'true'" [(ngModel)]="_formData.id" [nzType]="'text'" [nzSize]="'large'">
+          <nz-input  formControlName="id" [nzPlaceHolder]="'自动获取'" [nzDisabled]="'true'" [(ngModel)]="_formData.id" [nzType]="'text'" [nzSize]="'large'">
           </nz-input>
         </div>
         <!-- </div>
@@ -15,7 +15,7 @@
           <label nz-form-item-required>摄像头类型</label>
         </div>
         <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-          <nz-input formControlName="type" [(ngModel)]="_formData.type"  [nzType]="'text'" [nzPlaceHolder]="'摄像头类型'" [nzSize]="'large'">
+          <nz-input [appFormValidate]="validateForm" formControlName="type" [(ngModel)]="_formData.type"  [nzType]="'text'" [nzPlaceHolder]="'摄像头类型'" [nzSize]="'large'">
           </nz-input>
         </div>
       </div>
@@ -24,14 +24,14 @@
           <label nz-form-item-required>摄像头名称</label>
         </div>
         <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-          <nz-input formControlName="name" [(ngModel)]="_formData.name"  [nzType]="'text'" [nzPlaceHolder]="'摄像头名称'" [nzSize]="'large'">
+          <nz-input [appFormValidate]="validateForm" formControlName="name" [(ngModel)]="_formData.name"  [nzType]="'text'" [nzPlaceHolder]="'摄像头名称'" [nzSize]="'large'">
           </nz-input>
         </div>
         <div nz-form-label nz-col [nzSpan]="5">
           <label nz-form-item-required>序列号</label>
         </div>
         <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-          <nz-input formControlName="serialNum" [(ngModel)]="_formData.serialNum"  [nzType]="'text'" [nzPlaceHolder]="'序列号'" [nzSize]="'large'">
+          <nz-input [appFormValidate]="validateForm" formControlName="serialNum" [(ngModel)]="_formData.serialNum"  [nzType]="'text'" [nzPlaceHolder]="'序列号'" [nzSize]="'large'">
           </nz-input>
         </div>
       </div>
@@ -40,7 +40,8 @@
           <label nz-form-item-required>ip地址</label>
         </div>
         <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-          <nz-input formControlName="ip" [(ngModel)]="_formData.ip" [nzType]="'text'"  [nzPlaceHolder]="'ip地址'" [nzSize]="'large'">
+          <!-- 就像这个样子添加就好了   就可以验证提示了 -->
+          <nz-input [appFormValidate]="validateForm" formControlName="ip" [(ngModel)]="_formData.ip" [nzType]="'text'"  [nzPlaceHolder]="'ip地址'" [nzSize]="'large'">
           </nz-input>
         </div>
         <div nz-col [nzSpan]="5" nz-form-label>
@@ -48,7 +49,7 @@
         </div>
         <div>
           <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-            <nz-input formControlName="direction" [(ngModel)]="_formData.direction" [nzPlaceHolder]="'方向'" [nzType]="'text'" [nzSize]="'large'">
+            <nz-input [appFormValidate]="validateForm" formControlName="direction" [(ngModel)]="_formData.direction" [nzPlaceHolder]="'方向'" [nzType]="'text'" [nzSize]="'large'">
             </nz-input>
           </div>
         </div>

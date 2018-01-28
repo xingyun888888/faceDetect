@@ -43,6 +43,7 @@ import { ParamComponent } from './pages/param/param.component';
 import {ParamModelComponent} from './components/model/param-model/param-model.component';
 import {DateFormatDirective} from './directive/date-format.directive';
 import {MapComponent} from './pages/map/map.component';
+import { FormValidateDirective } from './directive/form-validate.directive';
 
 @NgModule({
   schemas: [
@@ -77,7 +78,8 @@ import {MapComponent} from './pages/map/map.component';
     ParamComponent,
     ParamModelComponent,
     DateFormatDirective,
-    MapComponent
+    MapComponent,
+    FormValidateDirective
   ],
   imports: [
     BrowserModule,
