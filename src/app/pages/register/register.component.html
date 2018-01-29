@@ -1,6 +1,8 @@
 <app-search></app-search>
-<app-table [isCanReback]="true"   [_titles]="_titles" [_dataSet]="_dataSet" (editData)="getRowData($event)" (deleteData)="deleteRow($event)"  (refresh)="refresh()"></app-table>
-<!--<app-userinfo-model (closeModel)="isEdit=!isEdit" [isVisible]="isEdit" [_formData]="formData" (requestData)="sendData($event)"></app-userinfo-model>-->
+<nz-spin [nzTip]="'正在读取数据...'" [nzSpinning]="isLoading">
+  <app-table [isCanReback]="true"   [_titles]="_titles" [_dataSet]="_dataSet" (editData)="getRowData($event)" (deleteData)="deleteRow($event)"  (refresh)="refresh()"></app-table>
+</nz-spin>
+  <!--<app-userinfo-model (closeModel)="isEdit=!isEdit" [isVisible]="isEdit" [_formData]="formData" (requestData)="sendData($event)"></app-userinfo-model>-->
 <app-register-model (closeModel)="close()" [isVisible]="isEdit||isAdd" [_formData]="formData" (requestData)="sendData($event)"></app-register-model>
 
 

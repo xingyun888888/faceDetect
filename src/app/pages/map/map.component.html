@@ -1,9 +1,9 @@
 
 <div class="map-container">
   <div class="operate-container">
-    <button nz-button [nzType]="'default'" [nzSize]="'large'" class="map-btn">
-      <span>  添加摄像头  </span>
-    </button>
+    <!--<button nz-button [nzType]="'default'" [nzSize]="'large'" class="map-btn">-->
+      <!--<span>  添加摄像头  </span>-->
+    <!--</button>-->
     <button nz-button [nzType]="'default'" [nzSize]="large" class="map-btn1">
       <i class="anticon anticon-download"></i><span> 导出摄像头拓扑图 </span>
     </button>
@@ -11,7 +11,7 @@
       <i class="anticon anticon-download"></i><span> 导出摄像头拓扑表 </span>
     </button>
   </div>
-  <!--map-container 就是map-show的父元素  看包含关系就知道了 看到了么-->
+  <!--map-container 就是map-show的父元素-->
   <div class="map-show">
     <div class="map-menu">
        <div class="camera-state">
@@ -21,9 +21,9 @@
          离线摄像头: <img src="../../../assets/images/map/map.png" alt="">
       </div>
       <div>
-         楼层: <nz-select style="width: 120px;" [(ngModel)]="selectedOption" nzAllowClear>
-                <nz-option *ngFor="let option of options" [nzLabel]="option.label" [nzValue]="option">
-                  <ng-template #nzOptionTemplate><i class="anticon" [ngClass]="'anticon-'+option.label"></i> {{option.label}}</ng-template>
+         楼层: <nz-select style="width: 120px;" [(ngModel)]="selectedMap" >
+                <nz-option *ngFor="let option of mapOptions" [nzLabel]="mapOptions.label" [nzValue]="option">
+                  <ng-template #nzOptionTemplate>{{option.label}}</ng-template>
                 </nz-option>
               </nz-select>
       </div>
@@ -34,7 +34,7 @@
         缩小: <img src="../../../assets/images/map/smaller.png" alt="">
       </div>
     </div>
-    <div class="map-img">
+    <div class="map-img" #mapImg>
       <img src="../../../assets/images/map-default.png" alt="">
     </div>
   </div>

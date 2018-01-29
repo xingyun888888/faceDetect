@@ -2,12 +2,13 @@
   .map-img{
      width:80%;
      height:100%;
+     position:relative;
      box-sizing: border-box;
      display:inline-block;
-     position:relative;
+     overflow:hidden;
     .map{
       width:100%;
-      height:100%;
+      min-height:300px;
     }
     .camera{
       position:absolute;
@@ -18,9 +19,34 @@
     }
   }
   .map-action{
+    overflow:hidden;
+    position:absolute;
+    right:0;
+    top:48px;
+    //right:0;
+    //top:-400px; //这个相对的是.map-model
     display:inline-block;
     box-sizing: border-box;
-    width:20%;
+    width:18%;
     height:100%;
+    .floor-select{
+      position:absolute;
+      top:15px;
+      left:10px;
+    }
+    .confirm-btn{
+      position:absolute;
+      bottom:100px;
+      left:60px;// 左右left值越大就是越靠右  相对的是.map-action  试下 你来改下 就知道
+      button{
+        background:#e66924;
+        font-size:13px;
+        text-align:center;
+        outline:0;
+        border:0;
+        color:#fff;
+      }
+    }
   }
+
 }

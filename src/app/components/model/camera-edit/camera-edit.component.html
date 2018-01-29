@@ -1,4 +1,4 @@
-<nz-modal [nzVisible]="isVisible" [nzTitle]="'摄像头信息编辑'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)" [nzConfirmLoading]="isConfirmLoading" nzFooter="" [maskClosable]="false">
+<nz-modal [nzVisible]="isVisible" [nzTitle]="'摄像头信息'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)" [nzConfirmLoading]="isConfirmLoading" nzFooter="" [nzMaskClosable]="false">
   <ng-template #modalContent>
     <form nz-form [formGroup]="validateForm">
       <div nz-form-item nz-row>
@@ -158,7 +158,7 @@
           </nz-input>
         </div>
         <div nz-col [nzSpan]="5">
-          <button nz-button style="background:#ccc;font-size:12px;text-align:center;" (click)="isShowMap=true;">
+          <button nz-button style="background:#ccc;font-size:12px;text-align:center;" (click)="openMapModel($event)">
             <span>设置坐标</span>
           </button>
         </div>
@@ -175,16 +175,25 @@
 
 
 
-<nz-modal [nzVisible]="isShowMap"  [nzTitle]="'地图坐标设置'" [nzContent]="mapModelContent" class="map-model">
+<nz-modal [nzVisible]="isShowMap"  [nzTitle]="'地图坐标设置'" [nzContent]="mapModelContent" (nzOnCancel)="handleMapCancel($event)"  class="map-model" [nzMaskClosable]="false">
   <ng-template #mapModelContent>
     <div class="map-img">
-      <img class="camera" src="../../../../assets/images/map/camera-device.png" alt="" #camera  (dragstart)="dragStartHandler($event)" >
-      <img class="map" src="../../../../assets/images/map-default.png" alt="" style="width:100%;height:100%;" (dragover)="dragoverHandler($event)" (drop)="dropHandler($event)" >
+      <img class="camera" src="../../../../assets/images/map/camera-device.png" alt="" #camera (dragstart)="dragStartHandler($event)" >
+      <img class="map" [src]="selectedMap.src||'../../../../assets/images/map-default.png'" alt=""  (dragover)="dragoverHandler($event)" (drop)="dropHandler($event)" >
     </div>
     <div class="map-action">
-      <button nz-button style="background:#ccc;font-size:12px;text-align:center;" (click)="isShowMap=false;">
-        <span>确定设置</span>
-      </button>
+      <div class="floor-select">
+        楼层: <nz-select style="width: 120px;" [(ngModel)]="selectedMap">
+        <nz-option *ngFor="let option of floorOptions" [nzLabel]="option.label" [nzValue]="option">
+          <ng-template #nzOptionTemplate>{{option.label}}</ng-template>
+        </nz-option>
+      </nz-select>
+      </div>
+      <div class="confirm-btn">
+        <button nz-button (click)="isShowMap=false;">
+          <span>确定设置</span>
+        </button>
+      </div>
     </div>
   </ng-template>
 </nz-modal>

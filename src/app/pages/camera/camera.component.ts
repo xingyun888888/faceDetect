@@ -213,7 +213,7 @@ export class CameraComponent implements OnInit {
           pwd:"2",
           rtspPort:"3",
           rtspPath:"3",
-          position:"3,2,5",
+          position:"100,200",
         }
 
       ]
