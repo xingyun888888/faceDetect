@@ -21,8 +21,8 @@
          离线摄像头: <img src="../../../assets/images/map/map.png" alt="">
       </div>
       <div>
-         楼层: <nz-select style="width: 120px;" [(ngModel)]="selectedMap" >
-                <nz-option *ngFor="let option of mapOptions" [nzLabel]="mapOptions.label" [nzValue]="option">
+         楼层: <nz-select style="width: 120px;" [(ngModel)]="selectedMap" (ngModelChange)="floorChangeHandler($event)">
+                <nz-option *ngFor="let option of mapOptions" [nzLabel]="option.label" [nzValue]="option">
                   <ng-template #nzOptionTemplate>{{option.label}}</ng-template>
                 </nz-option>
               </nz-select>

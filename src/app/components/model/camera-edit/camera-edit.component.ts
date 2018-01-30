@@ -52,10 +52,7 @@ export class CameraEditComponent implements OnInit {
     { value: 'floor5', label: '地下五层',src:"../../../../assets/images/map-default.png"}
   ];
 
-  /**
-   * 当前值select展示的值
-   * @type {{value: string; label: string}|{value: string; label: string}|{value: string; label: string}|{value: string; label: string}|{value: string; label: string}}
-   */
+  /**当前值select展示的值*/
   selectedMap = this.floorOptions[0];
 
   /**这个是将table组件中传过来的值放入表单中*/
@@ -84,40 +81,22 @@ export class CameraEditComponent implements OnInit {
 
   /**是否展示地图;*/
   isShowMap = false;
-  /**
-   * 地图摄像头标志默认位置
-   * @type {{x: number; y: number}}
-   */
+
+  /**地图摄像头标志默认位置*/
   defaultOffsetPosition = {
     x: 0,
     y: 0
   };
 
-  /**
-   * 打开地图模态框  并且根据数据设置摄像头位置的默认位置
-   * @param e
-   */
+  /**打开地图模态框  并且根据数据设置摄像头位置的默认位置*/
   openMapModel(e){
     this.isShowMap=true;
     let [x,y] = this._formData.position.split(/,|，/g);
     this.camera.nativeElement.style.left = x+"px";
     this.camera.nativeElement.style.top = y+"px";
   }
-  /**
-   *
-   * 这个可以直接取到那个标志的元素  然后在控制器里操作它(注意:这里拿到的是dom元素)
-   *
-   */
+  /**这个可以直接取到那个标志的元素  然后在控制器里操作它(注意:这里拿到的是dom元素)*/
   @ViewChild('camera') camera: ElementRef;
-
-
-  /**
-   * 地图切换的回调  暂无
-   * @param e
-   */
-
-
-
 
   /**拖拽开始事件*/
   dragStartHandler(e) {
@@ -160,7 +139,6 @@ export class CameraEditComponent implements OnInit {
     for (const key in this.validateForm.controls) {
       this.validateForm.controls[key].markAsDirty();
     }
-
     /**如果表单验证失败*/
     if (!this.validateForm.valid) {
       this.confirmServ.warning({

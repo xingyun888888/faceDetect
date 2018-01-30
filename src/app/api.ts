@@ -14,6 +14,7 @@ const api = {
   deleteCamera: devSeverAddress + 'camera/delete',
   addCamera: devSeverAddress + 'camera/add',
   queryCameraByConditions: devSeverAddress + 'camera/listByConditions',
+  showCameraOnMap: devSeverAddress + 'camera/showCameraOnMap',
   //分析仪名称查询
   queryAnalyserName: devSeverAddress + 'analyser/getNameList',
   //服务端信息查询

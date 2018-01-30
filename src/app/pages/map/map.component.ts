@@ -1,5 +1,6 @@
 import { Component, OnInit,ElementRef,ViewChild } from '@angular/core';
-
+import api from '../../api';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -7,6 +8,11 @@ import { Component, OnInit,ElementRef,ViewChild } from '@angular/core';
 })
 export class MapComponent implements OnInit {
 
+
+  /**
+   * 用来存储楼层的集合
+   * @type {[{value: string; label: string},{value: string; label: string},{value: string; label: string},{value: string; label: string},{value: string; label: string}]}
+   */
   mapOptions = [
     { value: 'floor1', label: '地下一层' },
     { value: 'floor2', label: '地下二层' },
@@ -15,27 +21,36 @@ export class MapComponent implements OnInit {
     { value: 'floor5', label: '地下五层' }
   ];
 
-  cameraPositions = [
-    {name:"camera1",x:630,y:200,state:1},
-    {name:"camera1",x:530,y:210,state:0},
-    {name:"camera1",x:320,y:350,state:1},
-    {name:"camera1",x:600,y:230,state:0},
-    {name:"camera1",x:430,y:200,state:1},
-    {name:"camera1",x:250,y:100,state:0},
-    {name:"camera1",x:700,y:50,state:0},
-    {name:"camera1",x:500,y:100,state:1},
-    {name:"camera1",x:500,y:300,state:0},
-  ]
 
+  /**
+   * 用来存储当前地图上面在线camera的集合
+   * @type {[{name: string; x: number; y: number; state: number},{name: string; x: number; y: number; state: number},{name: string; x: number; y: number; state: number},{name: string; x: number; y: number; state: number},{name: string; x: number; y: number; state: number},{name: string; x: number; y: number; state: number},{name: string; x: number; y: number; state: number},{name: string; x: number; y: number; state: number},{name: string; x: number; y: number; state: number}]}
+   */
+  cameraPositions = [];
+
+
+  /**
+   * 绑定视图上面mapImg元素
+   */
   @ViewChild('mapImg') mapImg: ElementRef;
 
-
+  /**
+   * 表示当前选择的floor-map
+   * @type {{value: string; label: string}|{value: string; label: string}|{value: string; label: string}|{value: string; label: string}|{value: string; label: string}}
+   */
   selectedMap = this.mapOptions[ 0 ];
 
-  constructor() { }
 
-  ngOnInit() {
+  allCameraImgNodes:any = [];
 
+  /**
+   * 初始化当前地图上面的在线camera;
+   */
+  initCurrentMapOnlineCamera(){
+    this.cameraPositions = [];
+    for(let i=1;i<7;i++){
+      this.cameraPositions.push({name:"camera",x:Math.random()*500,y:100+Math.random()*300,state:Math.random()>0.5?1:0})
+    }
     this.cameraPositions.map((item,index)=>{
       var img = document.createElement("img");
       img.style.position = "absolute";
@@ -46,8 +61,29 @@ export class MapComponent implements OnInit {
       }
       img.style.left = item.x+"px";
       img.style.top = item.y+"px";
+      this.allCameraImgNodes.push(img);
       this.mapImg.nativeElement.appendChild(img);
     })
+  }
+
+
+  /**
+   * floor切换的回调  清除页面脏数据  更新当前map上所有camera位置
+   * @param e
+   */
+  floorChangeHandler(e){
+     console.log(this.selectedMap);
+     this.allCameraImgNodes.map((item,index)=>{
+       this.mapImg.nativeElement.removeChild(item);
+     })
+     this.allCameraImgNodes = [];
+     this.initCurrentMapOnlineCamera();
+  }
+
+  constructor(private http: HttpClient) { }
+
+  ngOnInit() {
+    this.initCurrentMapOnlineCamera();
   }
 
 }
