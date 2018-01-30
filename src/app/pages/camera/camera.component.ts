@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import api from '../../api';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {parseParam} from '../../../../../../../Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/304449468c1ebeef83dede76d4934fd9/Message/MessageTemp/e5545a12234a7e9f9b0bf68b2a123e51/File/src/app/utils/common';
+import {parseParam} from '../../../app/utils/common';
 
 @Component({
   selector: 'app-camera',
