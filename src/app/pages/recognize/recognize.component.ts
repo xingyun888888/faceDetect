@@ -11,62 +11,26 @@ import  {parseParam} from '../../utils/common';
 export class RecognizeComponent implements OnInit {
   /**这个字段是保存着search的自定义列标签*/
   _searchTitle: Array<any> = [
-    {key: 'name', name: '姓名', type: '',nzSpan:4},
-    {key: 'sex', name: '性别', type: '',nzSpan:4},
-    {key: 'dc', name: '危险级别', type: '',nzSpan:6}
+    {key: 'name', name: '姓名', type: '', nzSpan: 4},
+    {key: 'gender', name: '性别', type: '', nzSpan: 4},
+    {key: 'dc', name: '危险级别', type: '', nzSpan: 6}
   ];
 
   /**这个字段是保存着table的自定义列标签*/
   _titles: Array<any> = [
     {
-      key: 'id',
-      name: 'ID',
-      type: 'text'
-    },
-    {
       key: 'name',
-      name: '用户姓名',
+      name: '姓名',
       type: 'text'
     },
     {
-      key: 'serialNum',
-      name: '编号',
-      type: 'text'
-    },
-    {
-      key: 'sex',
+      key: 'gender',
       name: '性别',
       type: 'text'
     },
     {
-      key: 'zoneNum',
-      name: '区域编码',
-      type: 'text'
-
-    },
-    {
-      key: 'camId',
-      name: '摄像头ID',
-      type: 'text'
-    },
-    {
-      key: 'direction',
-      name: '方向',
-      type: 'text'
-    },
-    {
-      key: 'similarDegree',
-      name: '相似度',
-      type: 'text'
-    },
-    {
-      key: 'path',
-      name: '路径',
-      type: 'text'
-    },
-    {
-      key: 'snapPath',
-      name: '抓拍路径',
+      key: 'dc',
+      name: '危险等级',
       type: 'text'
     },
     {
@@ -75,8 +39,8 @@ export class RecognizeComponent implements OnInit {
       type: 'date'
     },
     {
-      key: 'dc',
-      name: '危险等级',
+      key: 'zonenum',
+      name: '区域编码',
       type: 'text'
     }
   ];
@@ -166,7 +130,7 @@ export class RecognizeComponent implements OnInit {
   getRecognize() {
     this.http.get(api.queryRecognize).subscribe((res) => {
       console.dir(res);
-      let list = <any>res;
+      const list = <any>res;
       this._dataSet = list;
     });
   }
@@ -176,7 +140,7 @@ export class RecognizeComponent implements OnInit {
     console.log(parseParam(data));
     this.http.get(api.queryRecognizeByConditions + parseParam(data)).subscribe((res) => {
       console.dir(res);
-      let list = <any>res;
+      const list = <any>res;
       this._dataSet = list;
     }, (error) => {
     });

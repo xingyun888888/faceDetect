@@ -26,18 +26,30 @@ export class CameraEditComponent implements OnInit {
     name: '',
     serialNum: '',
     ip: '',
+    port: '',
+    mediaIP: '',
+    mediaPort: '',
     direction: '',
     analyserID: '',
     zoneID: '',
     strategyID: '',
     doorID: '',
-    port: '',
     user: '',
     pwd: '',
     rtspPort: '',
     rtspPath: '',
     camInfo: '',
-    position: ''
+    camMapX: '',
+    camMapY: '',
+    camState: '',
+    streamType: '',
+    districtID: '',
+    districtName: '',
+    area: '',
+    areaID: '',
+    areaName: '',
+    distictUrl: '',
+    img_url: ''
   };
 
   /**分析仪下拉列表*/
@@ -45,11 +57,11 @@ export class CameraEditComponent implements OnInit {
 
   /**楼层下拉列表*/
   floorOptions = [
-    { value: 'floor1', label: '地下一层',src:"../../../../assets/images/map-default.png"},
-    { value: 'floor2', label: '地下二层',src:"../../../../assets/images/map-default1.png"},
-    { value: 'floor3', label: '地下三层',src:"../../../../assets/images/map-default2.png"},
-    { value: 'floor4', label: '地下四层',src:"../../../../assets/images/map-default3.png"},
-    { value: 'floor5', label: '地下五层',src:"../../../../assets/images/map-default.png"}
+    { value: 'floor1', label: '地下一层', src: '../../../../assets/images/map-default.png'},
+    { value: 'floor2', label: '地下二层', src: '../../../../assets/images/map-default1.png'},
+    { value: 'floor3', label: '地下三层', src: '../../../../assets/images/map-default2.png'},
+    { value: 'floor4', label: '地下四层', src: '../../../../assets/images/map-default3.png'},
+    { value: 'floor5', label: '地下五层', src: '../../../../assets/images/map-default.png'}
   ];
 
   /**当前值select展示的值*/
@@ -89,11 +101,12 @@ export class CameraEditComponent implements OnInit {
   };
 
   /**打开地图模态框  并且根据数据设置摄像头位置的默认位置*/
-  openMapModel(e){
-    this.isShowMap=true;
-    let [x,y] = this._formData.position.split(/,|，/g);
-    this.camera.nativeElement.style.left = x+"px";
-    this.camera.nativeElement.style.top = y+"px";
+  openMapModel(e) {
+    this.isShowMap = true;
+    const x = this._formData.camMapX;
+    const y = this._formData.camMapY;
+    this.camera.nativeElement.style.left = x + 'px';
+    this.camera.nativeElement.style.top = y + 'px';
   }
   /**这个可以直接取到那个标志的元素  然后在控制器里操作它(注意:这里拿到的是dom元素)*/
   @ViewChild('camera') camera: ElementRef;
@@ -109,7 +122,9 @@ export class CameraEditComponent implements OnInit {
     e.preventDefault();
     this.camera.nativeElement.style.left = (e.offsetX - this.defaultOffsetPosition.x) + 'px';
     this.camera.nativeElement.style.top = (e.offsetY - this.defaultOffsetPosition.y) + 'px';
-    this._formData.position = `${e.offsetX - this.defaultOffsetPosition.x},${e.offsetY - this.defaultOffsetPosition.y}`;
+    /** this._formData.position = `${e.offsetX - this.defaultOffsetPosition.x},${e.offsetY - this.defaultOffsetPosition.y}`;*/
+    this._formData.camMapX = `${e.offsetX - this.defaultOffsetPosition.x}`;
+    this._formData.camMapY = `${e.offsetY - this.defaultOffsetPosition.y}`;
   }
 
   /**拖拽*/
@@ -183,22 +198,34 @@ export class CameraEditComponent implements OnInit {
     /**响应式表单，Validators.required表示必填*/
     this.validateForm = this.fb.group({
       id: [''],
-      name: ['', [Validators.required, Validators.maxLength(10)]],
       type: ['', [Validators.required]],
+      name: ['', [Validators.required, Validators.maxLength(10)]],
       serialNum: ['', [Validators.required, Validators.maxLength(6)]],
       ip: ['', [Validators.required]],
+      port: ['', [Validators.required]],
+      mediaIP: ['', [Validators.required]],
+      mediaPort: ['', [Validators.required]],
       direction: ['', [Validators.required, numberValidator]],
       analyserID: ['', [Validators.required]],
       zoneID: ['', [Validators.required]],
       strategyID: ['', [Validators.required]],
       doorID: ['', [Validators.required]],
-      port: ['', [Validators.required]],
       user: ['', [Validators.required]],
       pwd: ['', [Validators.required, Validators.maxLength(9), Validators.pattern('[0-9]+')]],
       rtspPort: ['', [Validators.required]],
       rtspPath: ['', [Validators.required]],
       camInfo: ['', [Validators.required]],
-      position: ['', [Validators.required]]
+      camMapX: ['', [Validators.required]],
+      camMapY: ['', [Validators.required]],
+      camState: ['', [Validators.required]],
+      streamType: ['', [Validators.required]],
+      districtID: ['', [Validators.required]],
+      districtName: ['', [Validators.required]],
+      area: ['', [Validators.required]],
+      areaID: ['', [Validators.required]],
+      areaName: ['', [Validators.required]],
+      distictUrl: ['', [Validators.required]],
+      img_url: ['', [Validators.required]]
     });
   }
 }

@@ -40,16 +40,15 @@
           <label nz-form-item-required>ip地址</label>
         </div>
         <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-          <!-- 就像这个样子添加就好了   就可以验证提示了 -->
           <nz-input [appFormValidate]="validateForm" formControlName="ip" [(ngModel)]="_formData.ip" [nzType]="'text'"  [nzPlaceHolder]="'ip地址'" [nzSize]="'large'">
           </nz-input>
         </div>
         <div nz-col [nzSpan]="5" nz-form-label>
-          <label nz-form-item-required>方向</label>
+          <label nz-form-item-required>port</label>
         </div>
         <div>
           <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-            <nz-input [appFormValidate]="validateForm" formControlName="direction" [(ngModel)]="_formData.direction" [nzPlaceHolder]="'方向'" [nzType]="'text'" [nzSize]="'large'">
+            <nz-input [appFormValidate]="validateForm" formControlName="port" [(ngModel)]="_formData.port" [nzPlaceHolder]="'端口号'" [nzType]="'text'" [nzSize]="'large'">
             </nz-input>
           </div>
         </div>
@@ -68,6 +67,35 @@
           </div>
         </div>
         <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>流媒体IP</label>
+        </div>
+        <div>
+          <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+            <nz-input formControlName="mediaIP" [(ngModel)]="_formData.mediaIP" [nzPlaceHolder]="'流媒体IP'" [nzType]="'text'" [nzSize]="'large'">
+            </nz-input>
+          </div>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-form-label nz-col [nzSpan]="5">
+          <label nz-form-item-required>流媒体端口号</label>
+        </div>
+        <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+          <nz-input [appFormValidate]="validateForm" formControlName="mediaPort" [(ngModel)]="_formData.mediaPort" [nzType]="'text'"  [nzPlaceHolder]="'流媒体端口号'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>方向</label>
+        </div>
+        <div>
+          <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+            <nz-input [appFormValidate]="validateForm" formControlName="direction" [(ngModel)]="_formData.direction" [nzPlaceHolder]="'方向'" [nzType]="'text'" [nzSize]="'large'">
+            </nz-input>
+          </div>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="5" nz-form-label>
           <label nz-form-item-required>区域ID</label>
         </div>
         <div>
@@ -76,8 +104,6 @@
             </nz-input>
           </div>
         </div>
-      </div>
-      <div nz-form-item nz-row>
         <div nz-col [nzSpan]="5" nz-form-label>
           <label nz-form-item-required>策略ID</label>
         </div>
@@ -87,23 +113,14 @@
             </nz-input>
           </div>
         </div>
+      </div>
+      <div nz-form-item nz-row>
         <div nz-col [nzSpan]="5" nz-form-label>
           <label nz-form-item-required>门禁ID</label>
         </div>
         <div>
           <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
             <nz-input formControlName="doorID" [(ngModel)]="_formData.doorID" [nzPlaceHolder]="'门禁ID'" [nzType]="'text'" [nzSize]="'large'">
-            </nz-input>
-          </div>
-        </div>
-      </div>
-      <div nz-form-item nz-row>
-        <div nz-col [nzSpan]="5" nz-form-label>
-          <label nz-form-item-required>端口</label>
-        </div>
-        <div>
-          <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-            <nz-input formControlName="port" [(ngModel)]="_formData.port" [nzPlaceHolder]="'端口'" [nzType]="'text'" [nzSize]="'large'">
             </nz-input>
           </div>
         </div>
@@ -117,23 +134,25 @@
           </div>
         </div>
       </div>
-      <div nz-form-item nz-row >
+      <div nz-form-item nz-row>
         <div nz-col [nzSpan]="5" nz-form-label>
           <label nz-form-item-required>密码</label>
         </div>
-        <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback >
-          <nz-input formControlName="pwd" [(ngModel)]="_formData.pwd"  [nzType]="'password'" [nzPlaceHolder]="'密码'" [nzSize]="'large'" >
-          </nz-input>
+        <div>
+          <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+            <nz-input formControlName="pwd" [(ngModel)]="_formData.pwd" [nzPlaceHolder]="'密码'" [nzType]="'text'" [nzSize]="'large'">
+            </nz-input>
+          </div>
         </div>
         <div nz-col [nzSpan]="5" nz-form-label>
-          <label nz-form-item-required>Rtsp端口</label>
+          <label nz-form-item-required>rtsp端口</label>
         </div>
         <div nz-col [nzSpan]="6" nz-form-control>
-          <nz-input formControlName="rtspPort"  [(ngModel)]="_formData.rtspPort"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'Rtsp端口'" [nzSize]="'large'">
+          <nz-input formControlName="rtspPort"  [(ngModel)]="_formData.rtspPort"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'tsp端口'" [nzSize]="'large'">
           </nz-input>
         </div>
       </div>
-      <div nz-form-item nz-row>
+      <div nz-form-item nz-row >
         <div nz-col [nzSpan]="5" nz-form-label>
           <label nz-form-item-required>resp路径</label>
         </div>
@@ -149,18 +168,103 @@
           </nz-input>
         </div>
       </div>
+
+
+
       <div nz-form-item nz-row>
         <div nz-col [nzSpan]="5" nz-form-label>
-          <label nz-form-item-required>摄像头坐标</label>
+          <label nz-form-item-required>x轴坐标</label>
         </div>
         <div nz-col [nzSpan]="6" nz-form-control>
-          <nz-input formControlName="position"  [(ngModel)]="_formData.position"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'摄像头坐标'" [nzSize]="'large'">
+          <nz-input formControlName="camMapX"  [(ngModel)]="_formData.camMapX"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'x轴坐标'" [nzSize]="'large'">
           </nz-input>
         </div>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>y轴坐标</label>
+        </div>
+        <div nz-col [nzSpan]="6" nz-form-control>
+          <nz-input formControlName="camMapY"  [(ngModel)]="_formData.camMapY"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'y轴坐标'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
         <div nz-col [nzSpan]="5">
           <button nz-button style="background:#ccc;font-size:12px;text-align:center;" (click)="openMapModel($event)">
             <span>设置坐标</span>
           </button>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>摄像头状态</label>
+        </div>
+        <div nz-col [nzSpan]="6" nz-form-control>
+          <nz-input formControlName="camState"  [(ngModel)]="_formData.camState"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'摄像头状态'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>流媒体类型</label>
+        </div>
+        <div nz-col [nzSpan]="6" nz-form-control>
+          <nz-input formControlName="streamType"  [(ngModel)]="_formData.streamType"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'streamType'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>区域id</label>
+        </div>
+        <div nz-col [nzSpan]="6" nz-form-control>
+          <nz-input formControlName="districtID"  [(ngModel)]="_formData.districtID"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'districtID'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>区域名称</label>
+        </div>
+        <div nz-col [nzSpan]="6" nz-form-control>
+          <nz-input formControlName="districtName"  [(ngModel)]="_formData.districtName"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'districtName'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+       </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>area</label>
+        </div>
+        <div nz-col [nzSpan]="6" nz-form-control>
+          <nz-input formControlName="area"  [(ngModel)]="_formData.area"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'area'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>areaID</label>
+        </div>
+        <div nz-col [nzSpan]="6" nz-form-control>
+          <nz-input formControlName="areaID"  [(ngModel)]="_formData.areaID"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'areaID'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+      <div nz-col [nzSpan]="5" nz-form-label>
+        <label nz-form-item-required>areaName</label>
+      </div>
+      <div nz-col [nzSpan]="6" nz-form-control>
+        <nz-input formControlName="areaName"  [(ngModel)]="_formData.areaName"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'areaName'" [nzSize]="'large'">
+        </nz-input>
+      </div>
+      <div nz-col [nzSpan]="5" nz-form-label>
+        <label nz-form-item-required>distictUrl</label>
+      </div>
+      <div nz-col [nzSpan]="6" nz-form-control>
+        <nz-input formControlName="distictUrl"  [(ngModel)]="_formData.distictUrl"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'distictUrl'" [nzSize]="'large'">
+        </nz-input>
+      </div>
+    </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>img_url</label>
+        </div>
+        <div nz-col [nzSpan]="6" nz-form-control>
+          <nz-input formControlName="img_url"  [(ngModel)]="_formData.img_url"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'img_url'" [nzSize]="'large'">
+          </nz-input>
         </div>
       </div>
       <div nz-form-item nz-row>

@@ -28,6 +28,9 @@ export class SearchComponent implements OnInit, OnChanges{
   constructor(private fb: FormBuilder) {
   }
 
+
+
+
   submitForm(e, value) {
     /**在这里请求处理提交表单数据*/
     this.queryCondition.emit(value);

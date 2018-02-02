@@ -13,19 +13,14 @@ export class RegisterComponent implements OnInit {
   /**这个字段是保存着table的自定义列标签*/
   _titles: Array<any> = [
     {
-      key: 'id',
-      name: 'ID',
-       type: 'text'
-    },
-    {
       key: 'name',
       name: '用户姓名',
-       type: 'text'
+      type: 'text'
     },
     {
-      key: 'seriernum',
-      name: '编号',
-       type: 'text'
+      key: 'path',
+      name: '图片路径',
+      type: 'text'
     },
     {
       key: 'sex',
@@ -39,23 +34,18 @@ export class RegisterComponent implements OnInit {
     },
     {
       key: 'code',
-      name: '证件号码',
+      name: '证件号',
        type: 'text'
     },
     {
-      key: 'path',
-      name: '路径',
+      key: 'phoneno',
+      name: '电话',
        type: 'text'
 
     },
     {
-      key: 'feapath',
-      name: 'Fea文件路径',
-       type: 'text'
-    },
-    {
-      key: 'facelibid',
-      name: '人脸库id',
+      key: 'dc',
+      name: '危险等级',
        type: 'text'
     }
   ];

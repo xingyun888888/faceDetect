@@ -23,22 +23,23 @@ export class CameraComponent implements OnInit {
       type: 'text'
     },
     {
-      key: 'name',
-      name: '摄像头名称',
+      key: 'ip',
+      name: '相机IP',
       type: 'text'
     },
-    /*
-   {
-     key: 'type',
-     name: '摄像头类型'
-   },
-   {
-    key:'serialNum',
-    name:'序列号'
-    },*/
     {
-      key: 'ip',
-      name: '相机ip',
+      key: 'districtName',
+      name: '监控区域',
+      type: 'text'
+    },
+    {
+      key: 'a_name',
+      name: '对应的分析仪',
+      type: 'text'
+    },
+    {
+      key: 'serialNum',
+      name: 'SN号',
       type: 'text'
     },
     {
@@ -47,49 +48,13 @@ export class CameraComponent implements OnInit {
       type: 'text'
     },
     {
-      key: 'a_name',
-      name: '分析仪名称',
-      type: 'text'
-    },
-    /*
-     {
-     key:'zoneID',
-     name:'角色'
-     },
-     {
-     key:'strategyID',
-     name:'策略ID'
-
-     },
-     {
-     key:'doorID',
-     name:'门禁ID'
-     },
-     {
-     key:'port',
-     name:'端口'
-     },
-     {
-     key:'user',
-     name:'用户名'
-     },
-     {
-     key:'pwd',
-     name:'密码'
-     },*/
-    {
-      key: 'rtspPort',
-      name: 'rtsp端口',
+      key: 'name',
+      name: '摄像机名称',
       type: 'text'
     },
     {
-      key: 'rtspPath',
-      name: 'resp路径',
-      type: 'text'
-    },
-    {
-      key: 'position',
-      name: '摄像头坐标',
+      key: 'type',
+      name: '机器型号',
       type: 'text'
     }
   ];
@@ -187,7 +152,7 @@ export class CameraComponent implements OnInit {
       let list = <any>res;
       /**拿到数据之后将analyser对象里的name拿出来，赋值给a_name，这样a_name就有值，就可以显示出来了*/
       list.map((item, index) => {
-        Object.assign(item, {a_name: item.analyser.name});
+        Object.assign(item, {a_name: item.analyser ? item.analyser.name : '无名字'});
       });
       this._dataSet = list;
 
@@ -207,7 +172,6 @@ export class CameraComponent implements OnInit {
           pwd: '2',
           rtspPort: '3',
           rtspPath: '3',
-          position: '100,200',
         }
 
       ];
@@ -225,7 +189,7 @@ export class CameraComponent implements OnInit {
       console.dir(res);
       let list = <any>res;
       list.map((item, index) => {
-        Object.assign(item, {a_name: item.analyser.name});
+        Object.assign(item, {a_name: item.analyser ? item.analyser.name :'无名字'});
       });
       this._dataSet = list;
     }, (error) => {

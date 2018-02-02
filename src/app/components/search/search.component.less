@@ -13,14 +13,11 @@
     border-radius: 6px;
   }
   .query-btn{
-    position:absolute;//这个是绝对定位 是依赖于已定位祖先级元素 ,所以要给search-container加一个相对定位
-    right:120px;
-    bottom:15px;
-  }
-  .query-btn1{
-    position:absolute;//这个是绝对定位 是依赖于已定位祖先级元素 ,所以要给search-container加一个相对定位
-    right:150px;
-    bottom:55px;
+    //z-index:1000; //这个值越大  就是越在最上面   出现这个问题的原因就是 被挡住了  z-index 生效 元素必须是已定位的(就是元素有设置position)
+    //position:absolute;//这个是绝对定位 是依赖于已定位祖先级元素 ,所以要给search-container加一个相对定位
+    float:right;
+    margin-right:28px;
+
   }
 }
 
