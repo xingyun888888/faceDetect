@@ -1,4 +1,4 @@
-import { Component, OnInit,Input } from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 
 @Component({
   selector: 'app-map-mark',
@@ -6,13 +6,15 @@ import { Component, OnInit,Input } from '@angular/core';
   styleUrls: ['./map-mark.component.css']
 })
 export class MapMarkComponent implements OnInit {
-  @Input() left:string = "";
-  @Input() top:string = ""
-  @Input() title:string = "";
-  @Input() src:string = "";
+
+  @Input() left: string = '';
+  @Input() top: string = '';
+  @Input() title: string = '';
+  @Input() src: string = '';
 
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

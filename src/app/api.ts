@@ -1,4 +1,5 @@
-const devSeverAddress = 'http://localhost:8080/xface-int1.2.5/';
+//const devSeverAddress = 'http://localSeverAddress = 'http://localhost:8080/xface-int1.2.5/';
+const devSeverAddress = 'http://localhost:8080/faceDetect/';
 
 //const devServerAddress = "http://www.adding360.com:8080/bioauth/"
 
