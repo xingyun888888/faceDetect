@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import api from '../../api';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {parseParam} from '../../../app/utils/common';
+import {parseParam} from '../../utils/common';
 
 @Component({
   selector: 'app-camera',

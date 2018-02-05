@@ -18,7 +18,6 @@ import {RouterModule} from '@angular/router';
 import {appRoutes} from './app.route';
 import { HomeComponent } from './home/home.component';
 import { TableComponent } from './components/table/table.component';
-import { CommonTableComponent } from './components/table/common-table/common-table.component';
 import { UserinfoModelComponent } from './components/model/userinfo-model/userinfo-model.component';
 import {NavComponent} from './components/nav/nav.component';
 import {HeaderComponent} from './components/header/header.component';
@@ -44,8 +43,10 @@ import {ParamModelComponent} from './components/model/param-model/param-model.co
 import {DateFormatDirective} from './directive/date-format.directive';
 import {MapComponent} from './pages/map/map.component';
 import { FormValidateDirective } from './directive/form-validate.directive';
+import { MapMarkComponent } from './components/map-mark/map-mark.component';
 
 @NgModule({
+  entryComponents: [MapMarkComponent],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,
   ],
@@ -56,7 +57,6 @@ import { FormValidateDirective } from './directive/form-validate.directive';
     HeaderComponent,
     HomeComponent,
     TableComponent,
-    CommonTableComponent,
     UserinfoComponent,
     UserinfoModelComponent,
     SearchComponent,
@@ -79,7 +79,8 @@ import { FormValidateDirective } from './directive/form-validate.directive';
     ParamModelComponent,
     DateFormatDirective,
     MapComponent,
-    FormValidateDirective
+    FormValidateDirective,
+    MapMarkComponent
   ],
   imports: [
     BrowserModule,

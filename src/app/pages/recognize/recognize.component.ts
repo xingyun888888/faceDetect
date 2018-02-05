@@ -39,7 +39,7 @@ export class RecognizeComponent implements OnInit {
       type: 'date'
     },
     {
-      key: 'zonenum',
+      key: 'zoneNum',
       name: '区域编码',
       type: 'text'
     }

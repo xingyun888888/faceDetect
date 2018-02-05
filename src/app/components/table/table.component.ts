@@ -10,13 +10,20 @@ import {NzModalService} from 'ng-zorro-antd';
   styleUrls: ['./table.component.less']
 })
 export class TableComponent implements OnInit {
+  /**默认所有复选框不被选中*/
   _allChecked = false;
+  /**禁用按钮的操作*/
   _disabledButton = true;
+  /**默认复选框被选中的数量为0*/
   _checkedNumber = 0;
+  /**定义展示数据的数组*/
   _displayData: Array<any> = [];
-  _operating = false;
 
 
+  /**
+   * 这里是控制(表格操作选项)回退按钮是否展示出来;
+   * @type {boolean}
+   */
   @Input()
   isCanReback = false;
 
@@ -32,9 +39,19 @@ export class TableComponent implements OnInit {
   @Input()
   _titles: Array<any> = [];
 
+
+  /**
+   * 修改或者增加操作时, 通知父组件 发送要增加或者修改的数据
+   * @type {EventEmitter<any>}
+   */
   @Output()
   editData: EventEmitter<any> = new EventEmitter();
 
+
+  /**
+   * 刷新操作 通知父组件
+   * @type {EventEmitter<any>}
+   */
   @Output()
   refresh: EventEmitter<any> = new EventEmitter();
 
@@ -43,12 +60,27 @@ export class TableComponent implements OnInit {
    */
   @Output()
   deleteData: EventEmitter<any> = new EventEmitter();
+
+
+  /**
+   * 这个暂时也没有用到,
+   * @type {boolean}
+   * @private
+   */
   _indeterminate = false;
+
+  /**
+   * 保存编辑行的数据
+   * @type {any[]}
+   */
   editRow = []; //可编辑的行
   tempEditObject = []; //编辑暂存区
   pageSize = 5; //每页多少条数据
   total = 0; //总条数
   currentPageIndex = 1; //当前页码
+
+
+
 
   constructor(public router: Router, private confirmServ: NzModalService) {
   }
@@ -123,7 +155,7 @@ export class TableComponent implements OnInit {
   }
 
   /**
-   * 页码改变的回调函数
+   * 页码改变的回调函数   --暂时没有用到 保留
    */
   _pageSizeChange(visible) {
     console.log(visible);
@@ -154,33 +186,39 @@ export class TableComponent implements OnInit {
    * 批量删除
    */
   _multiDelete() {
-    const data = this._dataSet.concat();
-    const ids = [];
     const _this = this;
-    this.confirmServ.confirm({
-      title: '您是否确认要删除',
-      content: '<b></b>',
-      onOk() {
-        console.log('确认删除');
-        for (let i = _this._displayData.length - 1; i >= 0; i--) {
-          if (_this._displayData[i].checked) {
-            ids.push(_this._displayData[i].id);
-            // data.splice(i, 1);
-          }
-        }
-        _this.deleteData.emit({ids});
-        // _this._dataSet = data;
-        //这里获取到删除行的id 放在一个数组里面 然后传给服务端 将数据库删除
-        console.log(ids);
-      },
-      onCancel() {
+    const data = this._dataSet.concat();
+    /**
+     * 这里存储的多选的 准备删除的数据 ,所以是应该判断这个有没有值.
+     */
+    const ids = [];
+    for (let i = _this._displayData.length - 1; i >= 0; i--) {
+      if (_this._displayData[i].checked) {
+        ids.push(_this._displayData[i].id);
       }
-    });
+    }
+    if (ids.length === 0) {
+      this.confirmServ.warning({
+        title: '请选择您要删除的数据！',
+        content: '<b></b>',
+        onOk() {
+          return;
+        }
+      });
+    }else {
+      this.confirmServ.confirm({
+        title: '您是否确认要删除',
+        content: '<b></b>',
+        onOk() {
+          console.log('确认删除');
+          _this.deleteData.emit({ids});
+          console.log(ids);
+        },
+        onCancel() {
+        }
+      });
+    }
   }
-
-  /**
-   * 确认删除对话框
-   */
 
   ngOnInit() {
     this.total = this._dataSet.length;
