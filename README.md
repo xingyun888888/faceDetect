@@ -1,2 +1,15 @@
-# ng4-demo
-这是一个ag4.0的后台管理demo
+# faceDetect
+
+
+
+
+开发环境dev: npm run start  打开浏览器输入localhost:4200
+
+
+生产环境pro: npm run build 生成新目录 faceDetect ; 
+
+
+
+
+
+
