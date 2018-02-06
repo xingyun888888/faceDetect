@@ -2,6 +2,7 @@
 
 # compiled output
 /dist
+/faceDetect
 /tmp
 /out-tsc
 
