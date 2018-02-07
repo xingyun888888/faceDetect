@@ -1,5 +1,6 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import api from "../../api";
 import {Router} from '@angular/router';
 
 import {NzModalService} from 'ng-zorro-antd';
@@ -19,11 +20,24 @@ export class TableComponent implements OnInit {
   /**定义展示数据的数组*/
   _displayData: Array<any> = [];
 
-
   /**
-   * 这里是控制(表格操作选项)回退按钮是否展示出来;
-   * @type {boolean}
+   * 保存当前已经上传的文件
+   * @type {Array}
    */
+  fileList:Array<any> = [];
+  /**
+  /**
+   * 批量上传接口地址  暂时不用了
+   * @type {string}
+   */
+  mulUploadApi:string = '';
+
+
+  @Input()
+  isCanBatchUpload = false;
+
+
+
   @Input()
   isCanReback = false;
 
@@ -38,7 +52,6 @@ export class TableComponent implements OnInit {
   /**配置表格字段*/
   @Input()
   _titles: Array<any> = [];
-
 
   /**
    * 修改或者增加操作时, 通知父组件 发送要增加或者修改的数据
@@ -62,6 +75,9 @@ export class TableComponent implements OnInit {
   deleteData: EventEmitter<any> = new EventEmitter();
 
 
+
+
+
   /**
    * 这个暂时也没有用到,
    * @type {boolean}
@@ -79,18 +95,64 @@ export class TableComponent implements OnInit {
   total = 0; //总条数
   currentPageIndex = 1; //当前页码
 
+  /**
+   * 保存文件上传状态
+   * @type {boolean}
+   */
+  uploading:boolean = false;
 
-
-
-  constructor(public router: Router, private confirmServ: NzModalService) {
+  constructor(public router: Router,public http:HttpClient, private confirmServ: NzModalService) {
+    this.beforeUpload = this.beforeUpload.bind(this);
   }
+
+  /**
+   * @param e 确认上传
+   */
+  handleUpload(e){
+    const formData = new FormData();
+    this.fileList.forEach((file: any) => {
+      formData.append('files[]', file);
+    });
+    this.uploading = true;
+    this.http.post(api.batchUpload,formData).subscribe((event: any) => {
+      this.uploading = false;
+      this.fileList = [];
+    }, (err) => {
+      this.uploading = false;
+      this.fileList = [];
+    });
+  }
+
+
+  /**
+   * 返回false就是取消上传
+   * @param file
+   * @returns {boolean}
+   */
+  beforeUpload(file){
+    this.fileList.push(file);
+    console.log(file);
+    return false;
+  }
+
+  /**
+   * 取消上传
+   * @param e
+   */
+  cancalUpload(e){
+    this.fileList = [];
+  }
+
+
+
+
 
   /**
    * 单个删除按钮
    */
   singleDelete(e, data) {
-    const _this = this;
-    this.confirmServ.confirm({
+    let _this = this;
+    _this.confirmServ.confirm({
       title: '您是否确认要删除',
       content: '<b></b>',
       onOk() {
@@ -186,8 +248,8 @@ export class TableComponent implements OnInit {
    * 批量删除
    */
   _multiDelete() {
-    const _this = this;
-    const data = this._dataSet.concat();
+    let _this = this;
+    let data = this._dataSet.concat();
     /**
      * 这里存储的多选的 准备删除的数据 ,所以是应该判断这个有没有值.
      */

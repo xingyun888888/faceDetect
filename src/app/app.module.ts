@@ -3,7 +3,6 @@ import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HttpClientModule} from '@angular/common/http';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
-import { DemoComponent } from './demo/demo.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -23,7 +22,6 @@ import {NavComponent} from './components/nav/nav.component';
 import {HeaderComponent} from './components/header/header.component';
 import { SearchComponent } from './components/search/search.component';
 import { CameraComponent } from './pages/camera/camera.component';
-import {UserinfoComponent} from './pages/userinfo/userinfo.component';
 import { CameraEditComponent } from './components/model/camera-edit/camera-edit.component';
 import { ServerComponent } from './pages/server/server.component';
 import { ServerModelComponent } from './components/model/server-model/server-model.component';
@@ -52,12 +50,10 @@ import { MapMarkComponent } from './components/map-mark/map-mark.component';
   ],
   declarations: [
     AppComponent,
-    DemoComponent,
     NavComponent,
     HeaderComponent,
     HomeComponent,
     TableComponent,
-    UserinfoComponent,
     UserinfoModelComponent,
     SearchComponent,
     CameraComponent,

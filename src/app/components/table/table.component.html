@@ -7,6 +7,23 @@
         <button nz-button  [nzType]="'default'" [nzSize]="'large'" (click)="_refreshData()"><span><i class="anticon anticon-reload"></i> 刷新</span></button>
         <button *ngIf="isCanReback"  nz-button  [nzType]="'default'" [nzSize]="'large'" [routerLink]="['/facelib']"><span><i class="anticon anticon-reload"></i> 回退</span></button>
     </nz-button-group>
+    <div class="batch-upload-box" *ngIf="isCanBatchUpload">
+      <nz-upload *ngIf="fileList.length==0" nzMultiple nzShowButton [nzAction]="mulUploadApi" [nzFileList]="fileList"   (nzChange)="handleChange($event)"  [nzShowUploadList]="false"   [nzBeforeUpload]="beforeUpload"   [nzFileList]="fileList" >
+        <button nz-button>
+          <i class="anticon anticon-upload"></i><span>批量上传</span>
+        </button>
+      </nz-upload>
+      <nz-button-group *ngIf="fileList.length>0">
+        <button nz-button   [nzType]="'default'" [nzLoading]="uploading" (click)="handleUpload($event)" [disabled]="fileList.length == 0" >
+          <i class="anticon anticon-upload"></i>{{ uploading ? '上传中' : '开始上传' }}
+        </button>
+        <button nz-button  [nzType]="'default'" (click)="cancalUpload($event)">
+          <i class="anticon anticon-close"></i>取消上传
+        </button>
+      </nz-button-group>
+      <span>共选择{{fileList.length}}个文件</span>
+    </div>
+
     <!--<span style="margin-left: 8px;" *ngIf="_checkedNumber">Selected {{_checkedNumber}} items</span>-->
   </div>
   <nz-table #nzTable [nzDataSource]="_dataSet" nzShowSizeChanger [(nzPageIndex)]="currentPageIndex" [nzPageSize]="pageSize" (nzDataChange)="_displayDataChange($event)"  (nzPageIndexChange)="_refreshStatus()" (nzPageSizeChange)="_refreshStatus()">

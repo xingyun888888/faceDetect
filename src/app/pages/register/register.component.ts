@@ -50,6 +50,10 @@ export class RegisterComponent implements OnInit {
     }
   ];
 
+
+  _multiUploadApi: string = api.batchUpload;
+
+
   /**isEdit 和 isAdd 这两个属性维护着当前模态框是编辑还是新增*/
   isEdit = false;
   isAdd = false;
