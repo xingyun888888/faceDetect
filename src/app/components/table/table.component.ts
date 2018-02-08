@@ -111,10 +111,11 @@ export class TableComponent implements OnInit {
   handleUpload(e){
     const formData = new FormData();
     this.fileList.forEach((file: any) => {
-      formData.append('files[]', file);
+      formData.append('files', file);
     });
     this.uploading = true;
-    this.http.post(api.batchUpload,formData).subscribe((event: any) => {
+    this.http.post(api.batchUpload,formData, {headers:new HttpHeaders({
+    })}).subscribe((event: any) => {
       this.uploading = false;
       this.fileList = [];
     }, (err) => {
