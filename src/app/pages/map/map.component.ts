@@ -2,6 +2,7 @@ import {Component, OnInit, ElementRef, ViewChild, ViewContainerRef, ComponentFac
 import api from '../../api';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {MapMarkComponent} from '../../components/map-mark/map-mark.component';
+import { NzModalService } from 'ng-zorro-antd'
 
 @Component({
   selector: 'app-map',
@@ -75,8 +76,17 @@ export class MapComponent implements OnInit {
       this.isShowUploadModal = false;
       //上传成功之后再次请求服务器获取最新的地图列表
       this.getMapList();
+      this.confirmServ.success({
+        content: '上传成功'
+      });
     }, (err) => {
       this.mapFileList = [];
+      this.isShowUploadModal = false;
+      //上传成功之后再次请求服务器获取最新的地图列表
+      this.getMapList();
+      this.confirmServ.error({
+        title: '上传失败'
+      });
     });
   }
 
@@ -159,7 +169,7 @@ export class MapComponent implements OnInit {
 
 
 
-  constructor(private vcr: ViewContainerRef, private http: HttpClient, private resolver: ComponentFactoryResolver) {
+  constructor(private vcr: ViewContainerRef, private http: HttpClient, private resolver: ComponentFactoryResolver,private confirmServ: NzModalService) {
     /**
      *  因为beforeUpload 里面用到了this  但是this取值是根据方法执行的时候才知道的
      *  所以要想this是该组件 就必须在这里进行绑定为当前组件的this;
