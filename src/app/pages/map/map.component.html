@@ -48,8 +48,8 @@
       </div>
       <div>
          楼层: <nz-select style="width: 120px;" [(ngModel)]="selectedMap" (ngModelChange)="floorChangeHandler($event)">
-                <nz-option *ngFor="let option of mapOptions" [nzLabel]="option.label" [nzValue]="option">
-                  <ng-template #nzOptionTemplate>{{option.label}}</ng-template>
+                <nz-option *ngFor="let option of mapOptions" [nzLabel]="option.name" [nzValue]="option">
+                  <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
                 </nz-option>
               </nz-select>
       </div>
@@ -61,7 +61,7 @@
       </div>
     </div>
     <div class="map-img" #mapImg>
-      <img src="../../../assets/images/map-default.png" alt="">
+      <img [src]="selectedMap&&selectedMap.value" alt="">
     </div>
   </div>
 </div>

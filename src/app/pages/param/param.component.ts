@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Component, OnInit} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../api';
 
 @Component({
@@ -21,13 +21,13 @@ export class ParamComponent implements OnInit {
       type: 'text'
     },
     {
-      key: "value",
-      name: "参数值",
+      key: 'value',
+      name: '参数值',
       type: 'text'
     },
     {
-      key: "description",
-      name: "描述",
+      key: 'description',
+      name: '描述',
       type: 'text'
     },
     {
@@ -41,13 +41,18 @@ export class ParamComponent implements OnInit {
       type: 'text'
     },
     {
-      key: "modifierTime",
-      name: "修改时间",
+      key: 'modifierTime',
+      name: '修改时间',
       type: 'date'
     },
     {
-      key: "modifier",
-      name: "修改人",
+      key: 'modifier',
+      name: '修改人',
+      type: 'text'
+    },
+    {
+      key: 'type',
+      name: '类型',
       type: 'text'
     }
   ];
@@ -67,10 +72,10 @@ export class ParamComponent implements OnInit {
   getRowData(value) {
     console.log(value);
     this.formData = {};
-    this.formData  = Object.assign({}, value);
+    this.formData = Object.assign({}, value);
     if (!value) {
       this.isAdd = true;
-    }else {
+    } else {
       this.isEdit = true;
     }
   }
@@ -87,7 +92,7 @@ export class ParamComponent implements OnInit {
   /**删除功能处理，在这里调用删除的接口，给后台发送一个ID，应该用post，只有id查询是get，其他操作都用post
    * 删除成功之后，调用查询方法，更新页面，删除失败之后，调用查询方法，更新页面*/
   deleteRow(data) {
-    this.http.post(api.deleteParam, JSON.stringify(data),{
+    this.http.post(api.deleteParam, JSON.stringify(data), {
       headers: new HttpHeaders({
         'Content-type': 'application/json;charset=UTF-8'
       })
@@ -102,18 +107,22 @@ export class ParamComponent implements OnInit {
    * 添加下面的headers头部说明，前端需要接收的是json数据*/
   sendData(data) {
     if (this.isAdd) {
-      this.http.post(api.addParam, data, { headers: new HttpHeaders({
+      this.http.post(api.addParam, data, {
+        headers: new HttpHeaders({
           'Content-type': 'application/json;charset=UTF-8'
-        })}).subscribe((res) => {
+        })
+      }).subscribe((res) => {
         this.getParam();
       }, (error) => {
         this.getParam();
       });
       this.isAdd = false;
-    }else if (this.isEdit) {
-      this.http.post(api.editParam, data, {headers: new HttpHeaders({
+    } else if (this.isEdit) {
+      this.http.post(api.editParam, data, {
+        headers: new HttpHeaders({
           'Content-type': 'application/json;charset=UTF-8'
-        })}).subscribe((res) => {
+        })
+      }).subscribe((res) => {
         this.getParam();
       }, (error) => {
         this.getParam();
@@ -121,6 +130,7 @@ export class ParamComponent implements OnInit {
       this.isEdit = false;
     }
   }
+
   constructor(private http: HttpClient) {
   }
 

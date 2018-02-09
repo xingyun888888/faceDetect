@@ -49,6 +49,10 @@ const api = {
   editParam: devSeverAddress + 'param/update',
   deleteParam: devSeverAddress + 'param/delete',
   addParam: devSeverAddress + 'param/add',
+  //查询地图列表
+  queryMapList: devSeverAddress + 'param/getParamByType',
+  //导入地图
+  addMap: devSeverAddress + 'param/mapUpload',
   //注册信息查询
   queryRegister: devSeverAddress + 'register/listById',
   queryRegisterAll: devSeverAddress + 'register/list',

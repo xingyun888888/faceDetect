@@ -26,7 +26,8 @@ export class ParamModelComponent implements OnInit {
     createtime: '',
     creater: '',
     modifierTime: '',
-    modifier: ''
+    modifier: '',
+    type: ''
   };
   /**
    *这个是将table组件中传过来的值放入表单中
@@ -117,9 +118,9 @@ export class ParamModelComponent implements OnInit {
       description: ['', [Validators.required]],
       createtime: ['', [ Validators.required ]],
       creater: ['', [Validators.required]],
-      modifierTime: ['', [Validators.required]
-      ],
-      modifier: ['', [ Validators.required ]]
+      modifierTime: ['', [Validators.required]],
+      modifier: ['', [ Validators.required ]],
+      type: ['', [ Validators.required ]]
     });
   }
 
