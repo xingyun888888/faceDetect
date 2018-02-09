@@ -47,7 +47,7 @@
          离线摄像头: <img src="../../../assets/images/map/map.png" alt="">
       </div>
       <div>
-         楼层: <nz-select style="width: 120px;" [(ngModel)]="selectedMap" (ngModelChange)="floorChangeHandler($event)">
+         楼层: <nz-select style="width: 120px;" [(ngModel)]="selectedMap"  [nzPlaceHolder]="'暂无地图'" (ngModelChange)="floorChangeHandler($event)">
                 <nz-option *ngFor="let option of mapOptions" [nzLabel]="option.name" [nzValue]="option">
                   <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
                 </nz-option>
@@ -60,7 +60,7 @@
         缩小: <img src="../../../assets/images/map/smaller.png" alt="">
       </div>
     </div>
-    <div class="map-img" #mapImg>
+    <div class="map-img" *ngIf="selectedMap&&selectedMap.value" #mapImg>
       <img [src]="selectedMap&&selectedMap.value" alt="">
     </div>
   </div>
