@@ -2,7 +2,7 @@ import {Component, OnInit, ElementRef, ViewChild, ViewContainerRef, ComponentFac
 import api from '../../api';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {MapMarkComponent} from '../../components/map-mark/map-mark.component';
-import { NzModalService } from 'ng-zorro-antd'
+import {NzModalService} from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-map',
@@ -23,7 +23,7 @@ export class MapComponent implements OnInit {
    */
   handleMapUploadOk = (e) => {
     this.isShowUploadModal = false;
-  }
+  };
   /**
    * 地图上传模态框点击取消的回调
    * @param e
@@ -31,7 +31,7 @@ export class MapComponent implements OnInit {
   handleMapUploadCancel = (e) => {
     console.log(e);
     this.isShowUploadModal = false;
-  }
+  };
 
 
   /**用来存储楼层的集合*/
@@ -49,6 +49,7 @@ export class MapComponent implements OnInit {
    */
   mapName: string = '';
 
+  districtID: any = '';
   /**
    * 返回false就是取消上传
    * @param file
@@ -123,8 +124,8 @@ export class MapComponent implements OnInit {
       let mapMark = this.resolver.resolveComponentFactory(MapMarkComponent);
       let component = this.mapImg.createComponent(mapMark);
 
-      component.instance['left'] = item.camMapX + 'px';
-      component.instance['top'] = item.camMapY + 'px';
+      component.instance['left'] = item.camMapX-16 + 'px';
+      component.instance['top'] = item.camMapY-32 + 'px';
       component.instance['title'] = `x:${item.camMapX},y:${item.camMapY}`;
       component.instance['src'] = item.camState ? '../../../assets/images/map/map-active.png' : '../../../assets/images/map/map.png';
       this.allCameraImgNodes.push(component);
@@ -140,13 +141,10 @@ export class MapComponent implements OnInit {
      */
     console.log(this.selectedMap);
     this.allCameraImgNodes.map((item, index) => {
-      //this.mapImg.nativeElement.removeChild(item);
       item.destroy();
     });
     this.allCameraImgNodes = [];
-    setTimeout(() => {
-      this.initCurrentMapOnlineCamera(this.cameraPositions);
-    }, 2000);
+    this.getCameraOnMap();
   }
 
   /**
@@ -155,21 +153,18 @@ export class MapComponent implements OnInit {
    * @param {HttpClient} http
    * @param {ComponentFactoryResolver} resolver
    */
-  getMapList(){
-    this.http.get(api.queryMapList+"?type=map").subscribe((res) => {
+  getMapList() {
+    this.http.get(api.queryMapList + '?type=map').subscribe((res) => {
       console.dir(res);
       const list = <any>res;
-      this.mapOptions  = list;
+      this.mapOptions = list;
       this.selectedMap = list[0];
+      this.getCameraOnMap();
     });
   }
 
 
-
-
-
-
-  constructor(private vcr: ViewContainerRef, private http: HttpClient, private resolver: ComponentFactoryResolver,private confirmServ: NzModalService) {
+  constructor(private vcr: ViewContainerRef, private http: HttpClient, private resolver: ComponentFactoryResolver, private confirmServ: NzModalService) {
     /**
      *  因为beforeUpload 里面用到了this  但是this取值是根据方法执行的时候才知道的
      *  所以要想this是该组件 就必须在这里进行绑定为当前组件的this;
@@ -180,12 +175,18 @@ export class MapComponent implements OnInit {
 
   }
 
-  /**将查询到的camera的坐标信息赋值给mapDataSet*/
-  showCameraOnMap() {
-    this.http.get(api.showCameraOnMap).subscribe((res) => {
-      console.dir(res);
+
+
+  /**将查询到的camera的坐标信息赋值给mapDataSet
+   *this.selectedMap 就是当前选择地图 信息包含 地图的id,name,value(图片路径)
+   *
+   * */
+  getCameraOnMap() {
+    this.http.get(api.getCameraOnMap + '?districtID=' + this.selectedMap.id).subscribe((res) => {
       const list = <any>res;
+      console.log(list);
       this.initCurrentMapOnlineCamera(list);
+
     }, (error) => {
       const list = [{
         id: 1,
@@ -208,7 +209,6 @@ export class MapComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.showCameraOnMap();
     this.getMapList();
   }
 

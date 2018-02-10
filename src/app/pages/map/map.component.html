@@ -60,8 +60,8 @@
         缩小: <img src="../../../assets/images/map/smaller.png" alt="">
       </div>
     </div>
-    <div class="map-img" *ngIf="selectedMap&&selectedMap.value" #mapImg>
-      <img [src]="selectedMap&&selectedMap.value" alt="">
+    <div class="map-img" *ngIf="selectedMap&&selectedMap.value" >
+      <img [src]="selectedMap&&selectedMap.value" alt="" #mapImg>
     </div>
   </div>
 </div>

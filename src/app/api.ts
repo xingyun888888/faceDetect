@@ -15,7 +15,8 @@ const api = {
   deleteCamera: devSeverAddress + 'camera/delete',
   addCamera: devSeverAddress + 'camera/add',
   queryCameraByConditions: devSeverAddress + 'camera/listByConditions',
-  showCameraOnMap: devSeverAddress + 'camera/showCameraOnMap',
+  //据地图id查询对应的摄像头列表
+  getCameraOnMap: devSeverAddress + 'camera/getCameraByDistrictID',
   //分析仪名称查询
   queryAnalyserName: devSeverAddress + 'analyser/getNameList',
   //服务端信息查询
@@ -49,7 +50,7 @@ const api = {
   editParam: devSeverAddress + 'param/update',
   deleteParam: devSeverAddress + 'param/delete',
   addParam: devSeverAddress + 'param/add',
-  //查询地图列表
+  //获取地图下拉列表
   queryMapList: devSeverAddress + 'param/getParamByType',
   //导入地图
   addMap: devSeverAddress + 'param/mapUpload',

@@ -1,4 +1,4 @@
-<nz-modal [nzVisible]="isVisible" [nzTitle]="'摄像头信息'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)" [nzConfirmLoading]="isConfirmLoading" nzFooter="" [nzMaskClosable]="false">
+<nz-modal class="camera-modal-container"  [nzVisible]="isVisible" [nzTitle]="'摄像头信息'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)" [nzConfirmLoading]="isConfirmLoading" nzFooter="" [nzMaskClosable]="false">
   <ng-template #modalContent>
     <form nz-form [formGroup]="validateForm">
       <div nz-form-item nz-row>
@@ -168,8 +168,29 @@
           </nz-input>
         </div>
       </div>
-
-
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>选择地图</label>
+        </div>
+        <div nz-col [nzSpan]="6" nz-form-control>
+          <!-- <nz-input formControlName="districtID"  [(ngModel)]="_formData.districtID"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'districtID'" [nzSize]="'large'">
+         </nz-input> -->
+          <div nz-col [nzSpan]="6" nz-form-control>
+            <nz-select style="width: 120px;" formControlName="districtID"  [(ngModel)]="_formData.districtID"  (ngModelChange)="mapSelectHandler($event)"  [nzPlaceHolder]="'选择地图'" >
+              <nz-option *ngFor="let option of mapOptions" [nzLabel]="option.name" [nzValue]="option.id">
+                <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
+              </nz-option>
+            </nz-select>
+          </div>
+        </div>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>区域名称</label>
+        </div>
+        <div nz-col [nzSpan]="6" nz-form-control>
+          <nz-input formControlName="districtName"  [nzDisabled]="'true'" [(ngModel)]="_formData.districtName"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'districtName'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+      </div>
 
       <div nz-form-item nz-row>
         <div nz-col [nzSpan]="5" nz-form-label>
@@ -182,12 +203,10 @@
         <div nz-col [nzSpan]="5" nz-form-label>
           <label nz-form-item-required>y轴坐标</label>
         </div>
-        <div nz-col [nzSpan]="6" nz-form-control>
+        <div nz-col [nzSpan]="3" nz-form-control>
           <nz-input formControlName="camMapY"  [(ngModel)]="_formData.camMapY"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'y轴坐标'" [nzSize]="'large'">
           </nz-input>
         </div>
-      </div>
-      <div nz-form-item nz-row>
         <div nz-col [nzSpan]="5">
           <button nz-button style="background:#ccc;font-size:12px;text-align:center;" (click)="openMapModel($event)">
             <span>设置坐标</span>
@@ -210,22 +229,6 @@
           </nz-input>
         </div>
       </div>
-      <div nz-form-item nz-row>
-        <div nz-col [nzSpan]="5" nz-form-label>
-          <label nz-form-item-required>区域id</label>
-        </div>
-        <div nz-col [nzSpan]="6" nz-form-control>
-          <nz-input formControlName="districtID"  [(ngModel)]="_formData.districtID"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'districtID'" [nzSize]="'large'">
-          </nz-input>
-        </div>
-        <div nz-col [nzSpan]="5" nz-form-label>
-          <label nz-form-item-required>区域名称</label>
-        </div>
-        <div nz-col [nzSpan]="6" nz-form-control>
-          <nz-input formControlName="districtName"  [(ngModel)]="_formData.districtName"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'districtName'" [nzSize]="'large'">
-          </nz-input>
-        </div>
-       </div>
       <div nz-form-item nz-row>
         <div nz-col [nzSpan]="5" nz-form-label>
           <label nz-form-item-required>area</label>
@@ -283,13 +286,13 @@
   <ng-template #mapModelContent>
     <div class="map-img">
       <img class="camera" src="../../../../assets/images/map/camera-device.png" alt="" #camera (dragstart)="dragStartHandler($event)" >
-      <img class="map" [src]="selectedMap.src||'../../../../assets/images/map-default.png'" alt=""  (dragover)="dragoverHandler($event)" (drop)="dropHandler($event)" >
+      <img class="map" [src]="selectedMap&&selectedMap.value" alt=""  (dragover)="dragoverHandler($event)" (drop)="dropHandler($event)" >
     </div>
     <div class="map-action">
       <div class="floor-select">
-        楼层: <nz-select style="width: 120px;" [(ngModel)]="selectedMap">
-        <nz-option *ngFor="let option of floorOptions" [nzLabel]="option.label" [nzValue]="option">
-          <ng-template #nzOptionTemplate>{{option.label}}</ng-template>
+        楼层: <nz-select style="width: 120px;" [(ngModel)]="selectedMap" (ngModelChange)="modalMapChangeHandle($event)">
+        <nz-option *ngFor="let option of mapOptions" [nzLabel]="option.name" [nzValue]="option">
+          <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
         </nz-option>
       </nz-select>
       </div>

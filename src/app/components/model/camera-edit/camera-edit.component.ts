@@ -56,16 +56,11 @@ export class CameraEditComponent implements OnInit {
   options = [];
 
   /**楼层下拉列表*/
-  floorOptions = [
-    { value: 'floor1', label: '地下一层', src: '../../../../assets/images/map-default.png'},
-    { value: 'floor2', label: '地下二层', src: '../../../../assets/images/map-default1.png'},
-    { value: 'floor3', label: '地下三层', src: '../../../../assets/images/map-default2.png'},
-    { value: 'floor4', label: '地下四层', src: '../../../../assets/images/map-default3.png'},
-    { value: 'floor5', label: '地下五层', src: '../../../../assets/images/map-default.png'}
-  ];
+  mapOptions = [];
 
   /**当前值select展示的值*/
-  selectedMap = this.floorOptions[0];
+  selectedMap = this.mapOptions[0];
+
 
   /**这个是将table组件中传过来的值放入表单中*/
   @Input()
@@ -181,8 +176,48 @@ export class CameraEditComponent implements OnInit {
     return this.validateForm.controls[name];
   }
 
+
+  /**
+   * 获取地图列表
+   */
+  getMapList() {
+    this.http.get(api.queryMapList + '?type=map').subscribe((res) => {
+      console.dir(res);
+      const list = <any>res;
+      this.mapOptions = list;
+      this.selectedMap = list[0];
+    });
+  }
+
+  /**
+   *
+   * @param e
+   * @param data
+   */
+  mapSelectHandler(e){
+    /**
+     * 遍历地图数组 然后判断 当前id对应的地图;取出id的名字  并跟坐标设置modal里面的选择框关联起来
+     */
+    this.mapOptions.map((item,index)=>{
+       if(item.id == this._formData.districtID){
+         this._formData.districtName = item.name;
+         this.selectedMap  = item;
+       }
+    })
+  }
+
+
+  /**
+   * 为了跟表单 地图选择下拉框关联起来 才绑定这么一个方法
+   * @param e
+   */
+  modalMapChangeHandle(e){
+     this._formData.districtID = this.selectedMap.id;
+  }
+
   constructor(private http: HttpClient, private fb: FormBuilder, private confirmServ: NzModalService) {
     this.getAnalyserName();
+    this.getMapList();
   }
 
   /**获取分析仪的名称列表*/
