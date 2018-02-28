@@ -15,7 +15,6 @@ export class SearchComponent implements OnInit, OnChanges{
    */
   validateForm: FormGroup;
 
-
   /**
    * 没有用到了
    * @type {boolean}
@@ -46,7 +45,6 @@ export class SearchComponent implements OnInit, OnChanges{
 
   constructor(private fb: FormBuilder) {
   }
-
 
   /**
    * 表单提交的事件

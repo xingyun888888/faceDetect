@@ -2,7 +2,7 @@
 <div class="pp-table">
   <div style="margin-bottom: 16px;">
     <nz-button-group>
-        <button nz-button  [nzType]="'default'" [nzSize]="'large'" (click)="add()"><span><i class="anticon anticon-file-add"></i> 新增</span></button>
+        <button *ngIf="isShowOperate" nz-button  [nzType]="'default'" [nzSize]="'large'" (click)="add()"><span><i class="anticon anticon-file-add"></i> 新增</span></button>
         <button nz-button  [nzType]="'default'" [nzSize]="'large'" (click)="_multiDelete()"><span><i class="anticon anticon-delete"></i> 删除</span></button>
         <button nz-button  [nzType]="'default'" [nzSize]="'large'" (click)="_refreshData()"><span><i class="anticon anticon-reload"></i> 刷新</span></button>
         <button *ngIf="isCanReback"  nz-button  [nzType]="'default'" [nzSize]="'large'" [routerLink]="['/facelib']"><span><i class="anticon anticon-reload"></i> 回退</span></button>
@@ -23,8 +23,6 @@
       </nz-button-group>
       <span>共选择{{fileList.length}}个文件</span>
     </div>
-
-    <!--<span style="margin-left: 8px;" *ngIf="_checkedNumber">Selected {{_checkedNumber}} items</span>-->
   </div>
   <nz-table #nzTable [nzDataSource]="_dataSet" nzShowSizeChanger [(nzPageIndex)]="currentPageIndex" [nzPageSize]="pageSize" (nzDataChange)="_displayDataChange($event)"  (nzPageIndexChange)="_refreshStatus()" (nzPageSizeChange)="_refreshStatus()">
     <thead nz-thead>
@@ -34,7 +32,7 @@
         </label>
       </th>
       <th nz-th  *ngFor="let item of _titles"><span>{{item.name}}</span></th>
-      <th nz-th><span>操作</span></th>
+      <th nz-th  *ngIf="isShowOperate"><span>操作</span></th>
     </tr>
     </thead>
     <tbody nz-tbody>
@@ -49,11 +47,8 @@
         <span *ngIf="item.type=='date'" style="display:-webkit-box;-webkit-line-clamp:1;overflow:hidden;-webkit-box-orient:vertical;text-overflow:ellipsis;max-width:120px; overflow:hidden;">{{data[item.key] | date:'yyyy-MM-dd HH:mm:ss'}}</span>
         <img [src]="''" alt="" *ngIf="item.type=='img'">
       </td>
-      <td nz-td class="action" style="width:240px;">
+      <td nz-td class="action" *ngIf="isShowOperate" style="width:240px;">
         <div *ngIf="actionType=='type1'">
-          <!--<button nz-button [nzType]="'primary'" nzGhost>
-            <span><p style="color: #2FC3C3">查看</p></span>
-          </button>-->
           <button nz-button nzGhost style="font-size:12px;text-align:center;" (click)="singleEdit($event,data)" >
             <span>修改</span>
           </button>

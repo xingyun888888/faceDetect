@@ -6,8 +6,11 @@
           <div nz-form-label nz-col [nzSpan]="item.nzSpan">
             <label>{{item.name}}</label>
           </div>
-          <div nz-form-control nz-col [nzSpan]="16">
+          <div *ngIf="item.type==''"  nz-form-control nz-col [nzSpan]="16">
             <nz-input [nzSize]="'large'" [(ngModel)]="_formData[item.key]" [nzPlaceHolder]="'请输入'+item.name" [formControlName]="item.key" [nzId]=""></nz-input>
+          </div>
+          <div *ngIf="item.type=='date'"   nz-form-control nz-col [nzSpan]="50">
+            <nz-datepicker style="width:150px;"  nzShowTime [nzFormat]="'YYYY-MM-DD HH:mm:ss'" [nzPlaceHolder]="item.name"></nz-datepicker>
           </div>
         </div>
       </div>

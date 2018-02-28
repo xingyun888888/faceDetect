@@ -86,7 +86,7 @@ export class CameraEditComponent implements OnInit {
 
   /**向父组件发送关闭添加坐标的表单页面的请求 --这个不用父组件处理了
 
-  /**是否展示地图;*/
+   /**是否展示地图;*/
   isShowMap = false;
 
   /**地图摄像头标志默认位置*/
@@ -103,6 +103,7 @@ export class CameraEditComponent implements OnInit {
     this.camera.nativeElement.style.left = x + 'px';
     this.camera.nativeElement.style.top = y + 'px';
   }
+
   /**这个可以直接取到那个标志的元素  然后在控制器里操作它(注意:这里拿到的是dom元素)*/
   @ViewChild('camera') camera: ElementRef;
 
@@ -134,13 +135,13 @@ export class CameraEditComponent implements OnInit {
   handleCancel = (e) => {
     this.resetForm(e);
     this.closeModel.emit();
-  }
+  };
 
   /**这个是关闭表单的方法*/
   handleMapCancel = (e) => {
     this.isShowMap = false;
 
-  }
+  };
 
   /**提交表单，提交时做校验操作*/
   submitForm = ($event, value) => {
@@ -160,7 +161,7 @@ export class CameraEditComponent implements OnInit {
       this.requestData.emit(value);
       this.validateForm.reset();
     }
-  }
+  };
 
   /**重置表单*/
   resetForm($event: MouseEvent) {
@@ -194,16 +195,16 @@ export class CameraEditComponent implements OnInit {
    * @param e
    * @param data
    */
-  mapSelectHandler(e){
+  mapSelectHandler(e) {
     /**
      * 遍历地图数组 然后判断 当前id对应的地图;取出id的名字  并跟坐标设置modal里面的选择框关联起来
      */
-    this.mapOptions.map((item,index)=>{
-       if(item.id == this._formData.districtID){
-         this._formData.districtName = item.name;
-         this.selectedMap  = item;
-       }
-    })
+    this.mapOptions.map((item, index) => {
+      if (item.id == this._formData.districtID) {
+        this._formData.districtName = item.name;
+        this.selectedMap = item;
+      }
+    });
   }
 
 
@@ -211,8 +212,8 @@ export class CameraEditComponent implements OnInit {
    * 为了跟表单 地图选择下拉框关联起来 才绑定这么一个方法
    * @param e
    */
-  modalMapChangeHandle(e){
-     this._formData.districtID = this.selectedMap.id;
+  modalMapChangeHandle(e) {
+    this._formData.districtID = this.selectedMap.id;
   }
 
   constructor(private http: HttpClient, private fb: FormBuilder, private confirmServ: NzModalService) {

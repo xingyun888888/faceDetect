@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Component, OnInit} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../api';
 
 @Component({
@@ -21,13 +21,13 @@ export class MobileComponent implements OnInit {
       type: 'text'
     },
     {
-      key: "port",
-      name: "型号",
+      key: 'port',
+      name: '型号',
       type: 'text'
     },
     {
-      key: "state",
-      name: "描述",
+      key: 'state',
+      name: '描述',
       type: 'text'
     },
   ];
@@ -47,10 +47,10 @@ export class MobileComponent implements OnInit {
   getRowData(value) {
     console.log(value);
     this.formData = {};
-    this.formData  = Object.assign({}, value);
+    this.formData = Object.assign({}, value);
     if (!value) {
       this.isAdd = true;
-    }else {
+    } else {
       this.isEdit = true;
     }
   }
@@ -67,7 +67,7 @@ export class MobileComponent implements OnInit {
   /**删除功能处理，在这里调用删除的接口，给后台发送一个ID，应该用post，只有id查询是get，其他操作都用post
    * 删除成功之后，调用查询方法，更新页面，删除失败之后，调用查询方法，更新页面*/
   deleteRow(data) {
-    this.http.post(api.deleteMobile, JSON.stringify(data),{
+    this.http.post(api.deleteMobile, JSON.stringify(data), {
       headers: new HttpHeaders({
         'Content-type': 'application/json;charset=UTF-8'
       })
@@ -82,18 +82,22 @@ export class MobileComponent implements OnInit {
    * 添加下面的headers头部说明，前端需要接收的是json数据*/
   sendData(data) {
     if (this.isAdd) {
-      this.http.post(api.addMobile, data, { headers: new HttpHeaders({
-        'Content-type': 'application/json;charset=UTF-8'
-      })}).subscribe((res) => {
+      this.http.post(api.addMobile, data, {
+        headers: new HttpHeaders({
+          'Content-type': 'application/json;charset=UTF-8'
+        })
+      }).subscribe((res) => {
         this.getMobile();
       }, (error) => {
         this.getMobile();
       });
       this.isAdd = false;
-    }else if (this.isEdit) {
-      this.http.post(api.editMobile, data, {headers: new HttpHeaders({
-        'Content-type': 'application/json;charset=UTF-8'
-      })}).subscribe((res) => {
+    } else if (this.isEdit) {
+      this.http.post(api.editMobile, data, {
+        headers: new HttpHeaders({
+          'Content-type': 'application/json;charset=UTF-8'
+        })
+      }).subscribe((res) => {
         this.getMobile();
       }, (error) => {
         this.getMobile();
@@ -102,6 +106,7 @@ export class MobileComponent implements OnInit {
     }
 
   }
+
   constructor(private http: HttpClient) {
 
   }
@@ -120,9 +125,9 @@ export class MobileComponent implements OnInit {
     }, (error) => {
       const list = [{
         id: 1,
-        ip: "192.168.1.1",
-        port: "80",
-        state: "1"
+        ip: '192.168.1.1',
+        port: '80',
+        state: '1'
       }];
       this._dataSet = list;
     });

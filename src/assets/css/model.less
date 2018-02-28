@@ -26,3 +26,33 @@
     min-width:740px !important;
   }
 }
+
+
+/**
+   布控策略管理界面model
+ */
+.strategy-modal-container{
+  .ant-modal{
+    min-width:1200px !important;
+    .strategy-modal-content{
+      column-width:1200px;
+      min-height:500px;
+      column-count:2;
+      overflow:hidden;
+    }
+    .this-system{
+      h2{
+        width:100%;
+        text-align:center;
+        margin-bottom:20px;
+      }
+      box-sizing: border-box;
+      width:50%;
+      min-height:500px;
+      float:left;
+      &:first-child{
+        border-right:1px solid #ccc;
+      }
+    }
+  }
+}

@@ -12,18 +12,33 @@ import {UserComponent} from './pages/user/user.component';
 import {LogComponent} from './pages/log/log.component';
 import {ParamComponent} from './pages/param/param.component';
 import {MapComponent} from './pages/map/map.component';
+import {StrategyComponent} from './pages/strategy/strategy.component';
+import {SnapshotComponent} from './pages/snapshot/snapshot.component';
+import {VedioComponent} from './pages/vedio/vedio.component';
 
 export const appRoutes: Routes = [
   {
-    path:"map",
-    component:MapComponent
+    path: 'snapshot',
+    component: SnapshotComponent
   },
   {
-    path: "param",
+    path: 'vedio',
+    component: VedioComponent
+  },
+  {
+    path: 'strategy',
+    component: StrategyComponent
+  },
+  {
+    path: 'map',
+    component: MapComponent
+  },
+  {
+    path: 'param',
     component: ParamComponent
   },
   {
-    path: "log",
+    path: 'log',
     component: LogComponent
   },
   {

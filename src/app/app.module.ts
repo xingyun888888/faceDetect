@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HttpClientModule} from '@angular/common/http';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
@@ -42,6 +42,11 @@ import {DateFormatDirective} from './directive/date-format.directive';
 import {MapComponent} from './pages/map/map.component';
 import { FormValidateDirective } from './directive/form-validate.directive';
 import { MapMarkComponent } from './components/map-mark/map-mark.component';
+import { StrategyComponent } from './pages/strategy/strategy.component';
+import { StrategyModelComponent } from './components/model/strategy-model/strategy-model.component';
+import { SnapshotComponent } from './pages/snapshot/snapshot.component';
+import { VedioComponent } from './pages/vedio/vedio.component';
+
 
 @NgModule({
   entryComponents: [MapMarkComponent],
@@ -76,7 +81,11 @@ import { MapMarkComponent } from './components/map-mark/map-mark.component';
     DateFormatDirective,
     MapComponent,
     FormValidateDirective,
-    MapMarkComponent
+    MapMarkComponent,
+    StrategyComponent,
+    StrategyModelComponent,
+    SnapshotComponent,
+    VedioComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,237 @@
+<nz-modal class="strategy-modal-container"  [nzVisible]="isVisible" [nzTitle]="'布控策略'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)" [nzConfirmLoading]="isConfirmLoading" nzFooter="" >
+  <!--<ng-template #modalContent>-->
+    <!--<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">-->
+      <!--<div nz-form-item nz-row>-->
+        <!--<div nz-form-label nz-col [nzSpan]="7">-->
+          <!--<label nz-form-item-required>ID</label>-->
+        <!--</div>-->
+        <!--<div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>-->
+          <!--<nz-input formControlName="id" [nzPlaceHolder]="'自动获取'" [(ngModel)]="_formData.id"  [nzDisabled]="'true'" [nzType]="'text'" [nzSize]="'large'">-->
+          <!--</nz-input>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div nz-form-item nz-row>-->
+        <!--<div nz-form-label nz-col [nzSpan]="7">-->
+          <!--<label nz-form-item-required>参数名</label>-->
+        <!--</div>-->
+        <!--<div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>-->
+          <!--<nz-input formControlName="name" [(ngModel)]="_formData.name"  [nzType]="'text'" [nzPlaceHolder]="'参数名'" [nzSize]="'large'">-->
+          <!--</nz-input>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div nz-form-item nz-row>-->
+        <!--<div nz-form-label nz-col [nzSpan]="7">-->
+          <!--<label nz-form-item-required>参数类型</label>-->
+        <!--</div>-->
+        <!--<div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>-->
+          <!--<nz-input formControlName="type" [(ngModel)]="_formData.type"  [nzPlaceHolder]="'参数类型'" [nzType]="'text'" [nzSize]="'large'">-->
+          <!--</nz-input>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div nz-form-item nz-row>-->
+        <!--<div nz-form-label nz-col [nzSpan]="7">-->
+          <!--<label nz-form-item-required>操作类型</label>-->
+        <!--</div>-->
+        <!--<div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>-->
+          <!--<nz-input formControlName="operateType" [(ngModel)]="_formData.operateType"  [nzPlaceHolder]="'操作类型'" [nzType]="'text'" [nzSize]="'large'">-->
+          <!--</nz-input>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div nz-form-item nz-row>-->
+        <!--<div nz-col [nzSpan]="7" nz-form-label>-->
+          <!--<label nz-form-item-required>描述</label>-->
+        <!--</div>-->
+        <!--<div>-->
+          <!--<div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>-->
+            <!--<nz-input formControlName="description" [(ngModel)]="_formData.description" [nzPlaceHolder]="'描述'" [nzType]="'text'" [nzSize]="'large'">-->
+            <!--</nz-input>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div nz-form-item nz-row>-->
+        <!--<div nz-col [nzSpan]="7" nz-form-label>-->
+          <!--<label nz-form-item-required>创建时间</label>-->
+        <!--</div>-->
+        <!--<div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>-->
+          <!--<nz-input formControlName="createTime" [(ngModel)]="_formData.createTime"  [nzType]="'text'" [nzPlaceHolder]="'创建时间'" [nzSize]="'large'">-->
+          <!--</nz-input>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div nz-form-item nz-row>-->
+        <!--<div nz-col [nzSpan]="7" nz-form-label>-->
+          <!--<label nz-form-item-required>创建人</label>-->
+        <!--</div>-->
+        <!--<div nz-col [nzSpan]="12" nz-form-control>-->
+          <!--<nz-input formControlName="creater"  [(ngModel)]="_formData.creater"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'创建人'" [nzSize]="'large'">-->
+          <!--</nz-input>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div nz-form-item nz-row>-->
+        <!--<div nz-col [nzSpan]="7" nz-form-label>-->
+          <!--<label nz-form-item-required>修改时间</label>-->
+        <!--</div>-->
+        <!--<div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>-->
+          <!--<nz-input formControlName="modifyTime" [(ngModel)]="_formData.modifyTime"  [nzType]="'text'" [nzPlaceHolder]="'修改时间'" [nzSize]="'large'">-->
+          <!--</nz-input>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div nz-form-item nz-row>-->
+        <!--<div nz-col [nzSpan]="7" nz-form-label>-->
+          <!--<label nz-form-item-required>修改人</label>-->
+        <!--</div>-->
+        <!--<div nz-col [nzSpan]="12" nz-form-control>-->
+          <!--<nz-input formControlName="modifier"  [(ngModel)]="_formData.modifier"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'修改人'" [nzSize]="'large'">-->
+          <!--</nz-input>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div nz-form-item nz-row>-->
+        <!--<div nz-col [nzSpan]="7" nz-form-label>-->
+          <!--<label nz-form-item-required>最小像素大小</label>-->
+        <!--</div>-->
+        <!--<div nz-col [nzSpan]="12" nz-form-control>-->
+          <!--<nz-input formControlName="minPixel"  [(ngModel)]="_formData.minPixel"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'最小像素大小'" [nzSize]="'large'">-->
+          <!--</nz-input>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div nz-form-item nz-row>-->
+        <!--<div nz-col [nzSpan]="7" nz-form-label>-->
+          <!--<label nz-form-item-required>人脸图像质量</label>-->
+        <!--</div>-->
+        <!--<div nz-col [nzSpan]="12" nz-form-control>-->
+          <!--<nz-input formControlName="pQ"  [(ngModel)]="_formData.pQ"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'人脸图像质量'" [nzSize]="'large'">-->
+          <!--</nz-input>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div nz-form-item nz-row>-->
+        <!--<div nz-col [nzSpan]="7" nz-form-label>-->
+          <!--<label nz-form-item-required>时间段id</label>-->
+        <!--</div>-->
+        <!--<div nz-col [nzSpan]="12" nz-form-control>-->
+          <!--<nz-input formControlName="timeSlotId"  [(ngModel)]="_formData.timeSlotId"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'时间段id'" [nzSize]="'large'">-->
+          <!--</nz-input>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div nz-form-item nz-row>-->
+        <!--<div nz-col [nzOffset]="7" [nzSpan]="12" nz-form-control>-->
+          <!--<button nz-button [nzType]="'primary'" [nzSize]="'large'" [disabled]="!validateForm.valid">提交</button>-->
+          <!--<button nz-button [nzSize]="'large'" (click)="resetForm($event)">重置</button>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</form>-->
+  <!--</ng-template>-->
+  <ng-template #modalContent>
+    <div class="strategy-modal-content">
+      <div class="this-system">
+        <h2>本系统</h2>
+        <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">
+          <div nz-form-item nz-row>
+            <div nz-form-label nz-col [nzSpan]="5">
+              <label nz-form-item-required>开始时间</label>
+            </div>
+            <div nz-col [nzSpan]="6" nz-form-control >
+              <nz-input formControlName="name" [nzType]="'text'" [nzPlaceHolder]="'开始时间'" [nzSize]="'large'">
+              </nz-input>
+            </div>
+            <div nz-form-label nz-col [nzSpan]="5">
+              <label nz-form-item-required>结束时间</label>
+            </div>
+            <div nz-col [nzSpan]="6" nz-form-control >
+              <nz-input formControlName="name" [nzType]="'text'" [nzPlaceHolder]="'结束时间'" [nzSize]="'large'">
+              </nz-input>
+            </div>
+          </div>
+          <div nz-form-item nz-row>
+            <div nz-form-label nz-col [nzSpan]="5">
+              <label nz-form-item-required>操作</label>
+            </div>
+            <div nz-col [nzSpan]="17" nz-form-control >
+              <nz-checkbox-group formControlName="name" [(ngModel)]="checkBoxOptions"></nz-checkbox-group>
+            </div>
+          </div>
+
+          <div nz-form-item nz-row>
+            <div nz-form-label nz-col [nzSpan]="5">
+              <label nz-form-item-required>命名</label>
+            </div>
+            <div nz-col [nzSpan]="6" nz-form-control >
+              <nz-input formControlName="name" [nzType]="'text'" [nzPlaceHolder]="'命名'" [nzSize]="'large'">
+              </nz-input>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="this-system">
+        <h2>选择设备</h2>
+        <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">
+          <div nz-form-item nz-row>
+            <div nz-form-label nz-col [nzSpan]="5">
+              <label nz-form-item-required>开始时间</label>
+            </div>
+            <div nz-col [nzSpan]="6" nz-form-control >
+              <nz-input formControlName="name" [nzType]="'text'" [nzPlaceHolder]="'开始时间'" [nzSize]="'large'">
+              </nz-input>
+            </div>
+            <div nz-form-label nz-col [nzSpan]="5">
+              <label nz-form-item-required>结束时间</label>
+            </div>
+            <div nz-col [nzSpan]="6" nz-form-control >
+              <nz-input formControlName="name" [nzType]="'text'" [nzPlaceHolder]="'结束时间'" [nzSize]="'large'">
+              </nz-input>
+            </div>
+          </div>
+          <div nz-form-item nz-row>
+            <div nz-form-label nz-col [nzSpan]="5">
+              <label nz-form-item-required>操作</label>
+            </div>
+            <div nz-col [nzSpan]="17" nz-form-control >
+              <nz-checkbox-group formControlName="name" [(ngModel)]="checkBoxOptions"></nz-checkbox-group>
+            </div>
+          </div>
+          <div nz-form-item nz-row>
+            <div nz-form-label nz-col [nzSpan]="5">
+              <label nz-form-item-required>人脸尺寸</label>
+            </div>
+            <div nz-col [nzSpan]="6" nz-form-control >
+              <nz-input formControlName="name" [nzType]="'text'" [nzPlaceHolder]="'结束时间'" [nzSize]="'large'">
+              </nz-input>
+            </div>
+          </div>
+          <div nz-form-item nz-row>
+            <div nz-form-label nz-col [nzSpan]="5">
+              <label nz-form-item-required>人脸质量</label>
+            </div>
+            <div nz-col [nzSpan]="6" nz-form-control >
+              <nz-input formControlName="name" [nzType]="'text'" [nzPlaceHolder]="'结束时间'" [nzSize]="'large'">
+              </nz-input>
+            </div>
+          </div>
+          <div nz-form-item nz-row>
+            <div nz-form-label nz-col [nzSpan]="5">
+              <label nz-form-item-required>报警阈值</label>
+            </div>
+            <div nz-col [nzSpan]="6" nz-form-control >
+              <nz-input formControlName="name" [nzType]="'text'" [nzPlaceHolder]="'结束时间'" [nzSize]="'large'">
+              </nz-input>
+            </div>
+          </div>
+          <div nz-form-item nz-row>
+            <div nz-form-label nz-col [nzSpan]="5">
+              <label nz-form-item-required>命名</label>
+            </div>
+            <div nz-col [nzSpan]="6" nz-form-control >
+              <nz-input formControlName="name" [nzType]="'text'" [nzPlaceHolder]="'结束时间'" [nzSize]="'large'">
+              </nz-input>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+</nz-modal>
+
+
+
+
+
+
+

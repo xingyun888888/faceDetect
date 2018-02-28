@@ -1,6 +1,6 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import api from "../../api";
+import api from '../../api';
 import {Router} from '@angular/router';
 
 import {NzModalService} from 'ng-zorro-antd';
@@ -24,22 +24,23 @@ export class TableComponent implements OnInit {
    * 保存当前已经上传的文件
    * @type {Array}
    */
-  fileList:Array<any> = [];
+  fileList: Array<any> = [];
   /**
   /**
    * 批量上传接口地址  暂时不用了
    * @type {string}
    */
-  mulUploadApi:string = '';
+  mulUploadApi = '';
 
 
   @Input()
   isCanBatchUpload = false;
 
-
-
   @Input()
   isCanReback = false;
+
+  @Input()
+  isShowOperate = true;
 
   /**操作选项显示的内容,接收父组件的传值*/
   @Input()
@@ -99,9 +100,9 @@ export class TableComponent implements OnInit {
    * 保存文件上传状态
    * @type {boolean}
    */
-  uploading:boolean = false;
+  uploading = false;
 
-  constructor(public router: Router,public http:HttpClient, private confirmServ: NzModalService) {
+  constructor(public router: Router, public http: HttpClient, private confirmServ: NzModalService) {
     this.beforeUpload = this.beforeUpload.bind(this);
   }
 
@@ -114,7 +115,7 @@ export class TableComponent implements OnInit {
       formData.append('files', file);
     });
     this.uploading = true;
-    this.http.post(api.batchUpload,formData, {headers:new HttpHeaders({
+    this.http.post(api.batchUpload, formData, {headers: new HttpHeaders({
     })}).subscribe((event: any) => {
       this.uploading = false;
       this.fileList = [];
@@ -152,7 +153,7 @@ export class TableComponent implements OnInit {
    * 单个删除按钮
    */
   singleDelete(e, data) {
-    let _this = this;
+    const _this = this;
     _this.confirmServ.confirm({
       title: '您是否确认要删除',
       content: '<b></b>',
@@ -249,8 +250,8 @@ export class TableComponent implements OnInit {
    * 批量删除
    */
   _multiDelete() {
-    let _this = this;
-    let data = this._dataSet.concat();
+    const _this = this;
+    const data = this._dataSet.concat();
     /**
      * 这里存储的多选的 准备删除的数据 ,所以是应该判断这个有没有值.
      */
