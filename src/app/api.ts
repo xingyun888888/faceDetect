@@ -69,10 +69,11 @@ const api = {
   deleteRegister: devSeverAddress + 'register/delete',
   addRegister: devSeverAddress + 'register/add',
   uploadImg: devSeverAddress + 'register/upload',
+  queryRegisterByConditions: devSeverAddress + 'register/listByConditions',
 
 
 
-  batchUpload: devSeverAddress +'register/batchUpload'
+  batchUpload: devSeverAddress + 'register/batchUpload',
 };
 
 export default api;

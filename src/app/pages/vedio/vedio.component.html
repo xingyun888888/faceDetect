@@ -1,3 +1,4 @@
-<p>
-  vedio works!
-</p>
+<app-search [_searchTitle]="_searchTitle" ></app-search>
+<nz-spin [nzTip]="'正在读取数据...'" [nzSpinning]="isLoading">
+  <app-table [_titles]="_titles" ></app-table>
+</nz-spin>

@@ -11,9 +11,9 @@ import {parseParam} from '../../utils/common';
 export class LogComponent implements OnInit {
   /**这个字段是保存着search的自定义列标签*/
   _searchTitle: Array<any> = [
-    {key: 'username', name: '用户名', type: '', nzSpan: 5},
-    {key: 'time', name: '开始时间', type: 'date', nzSpan: 10},
-    {key: 'time', name: '结束时间', type: 'date', nzSpan: 10}
+    {key: 'userName', name: '用户名', type: '', nzSpan: 5},
+    {key: 'role', name: '角色', type: '', nzSpan: 5},
+    {key: 'operator', name: '操作', type: '', nzSpan: 5}
   ];
   /**这个字段是保存着table的自定义列标签*/
   _titles: Array<any> = [
@@ -23,7 +23,7 @@ export class LogComponent implements OnInit {
       type: 'text'
     },
     {
-      key: 'username',
+      key: 'userName',
       name: '用户名',
       type: 'text'
     },

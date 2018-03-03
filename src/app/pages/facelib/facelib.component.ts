@@ -17,7 +17,7 @@ export class FacelibComponent implements OnInit {
     },
     {
       key: 'name',
-      name: '数据库名称',
+      name: '人脸库名称',
       type: 'text'
     },
     {

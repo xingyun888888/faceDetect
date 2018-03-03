@@ -1,3 +1,4 @@
-<p>
-  snapshot works!
-</p>
+<app-search [upOrDown]="true" [_searchTitle]="_searchTitle"></app-search>
+<nz-spin [nzTip]="'正在读取数据...'" [nzSpinning]="isLoading">
+  <app-table [_titles]="_titles" [_dataSet]="_dataSet" (editData)="getRowData($event)" (deleteData)="deleteRow($event)" (refresh)="refresh()" actionType="type4"></app-table>
+</nz-spin>

@@ -26,7 +26,7 @@ export class TableComponent implements OnInit {
    */
   fileList: Array<any> = [];
   /**
-  /**
+   /**
    * 批量上传接口地址  暂时不用了
    * @type {string}
    */
@@ -76,9 +76,6 @@ export class TableComponent implements OnInit {
   deleteData: EventEmitter<any> = new EventEmitter();
 
 
-
-
-
   /**
    * 这个暂时也没有用到,
    * @type {boolean}
@@ -109,18 +106,44 @@ export class TableComponent implements OnInit {
   /**
    * @param e 确认上传
    */
-  handleUpload(e){
+  handleUpload(e) {
     const formData = new FormData();
     this.fileList.forEach((file: any) => {
+      console.log(file);
       formData.append('files', file);
     });
     this.uploading = true;
-    this.http.post(api.batchUpload, formData, {headers: new HttpHeaders({
-    })}).subscribe((event: any) => {
+    this.http.post(api.batchUpload, formData, {
+      headers: new HttpHeaders({})
+    }).subscribe((res: any) => {
+      console.log(res);
+
+      let failFile = '';
+      res.msgBody.dataSend.PictureList.map((item, index) => {
+        if (item.code == 0) {
+
+          console.log(item.PicturePathDir);
+
+          failFile += item.PicturePathDir.match(/[\u4e00-\u9fa5_a-zA-Z0-9:\/]+\/(\w+\.\w+)$/i)[1] + '、';
+        }
+      });
       this.uploading = false;
       this.fileList = [];
+      if (failFile.length != 0) {
+        this.confirmServ.error({
+          title: '上传失败',
+          content: failFile.substring(0, failFile.length - 1) + '等,文件上传失败'
+        });
+        return;
+      }
+      this.confirmServ.success({
+        content: '上传成功'
+      });
     }, (err) => {
       this.uploading = false;
+      this.confirmServ.error({
+        content: '上传失败'
+      });
       this.fileList = [];
     });
   }
@@ -131,7 +154,7 @@ export class TableComponent implements OnInit {
    * @param file
    * @returns {boolean}
    */
-  beforeUpload(file){
+  beforeUpload(file) {
     this.fileList.push(file);
     console.log(file);
     return false;
@@ -141,12 +164,9 @@ export class TableComponent implements OnInit {
    * 取消上传
    * @param e
    */
-  cancalUpload(e){
+  cancalUpload(e) {
     this.fileList = [];
   }
-
-
-
 
 
   /**
@@ -269,7 +289,7 @@ export class TableComponent implements OnInit {
           return;
         }
       });
-    }else {
+    } else {
       this.confirmServ.confirm({
         title: '您是否确认要删除',
         content: '<b></b>',
