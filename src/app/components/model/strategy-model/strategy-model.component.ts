@@ -35,6 +35,11 @@ export class StrategyModelComponent implements OnInit {
   selectedEndDate  =  this.dateOptions[0];
 
 
+  /**
+   * 摄像头选择模态框是否展示
+   * @type {boolean}
+   */
+  cameraSelectIsShow = false;
 
    selectDeviceOperateOptions = [
     { label: '接受所有视频流', value: '接受所有视频流',checked:true},
@@ -164,6 +169,22 @@ export class StrategyModelComponent implements OnInit {
     return this.validateForm.controls[name];
   }
 
+
+  /**
+   * 摄像头选择取消事件
+   */
+  cameraSelectCancel(e){
+     this.cameraSelectIsShow = false;
+  }
+
+  /**
+   * 摄像头选择确认事件
+   * @param e
+   */
+  cameraSelectConfirm(e){
+    this.cameraSelectIsShow = false;
+
+  }
   constructor(private fb: FormBuilder) {
   }
 
