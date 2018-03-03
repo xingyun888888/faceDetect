@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, ElementRef,ViewChild,Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
@@ -8,21 +8,36 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class StrategyModelComponent implements OnInit {
 
-  options = [
-    { value: 'android', label: 'android' },
-    { value: 'apple', label: 'apple' },
-    { value: 'windows', label: 'windows' },
+
+  /**
+   * 开始结束时间拉下选择框
+   * @type {[{value: string; label: string},{value: string; label: string},{value: string; label: string},{value: string; label: string},{value: string; label: string},{value: string; label: string},{value: string; label: string},{value: string; label: string}]}
+   */
+  dateOptions = [
+    { value: 'android', label: 'android'},
+    { value: 'apple', label: 'apple'},
+    { value: 'windows', label: 'windows'},
     { value: 'ie', label: 'ie' },
-    { value: 'chrome', label: 'chrome' },
-    { value: 'github', label: 'github' },
-    { value: 'aliwangwang', label: 'aliwangwang' },
-    { value: 'dingding', label: 'dingding' },
+    { value: 'chrome', label: 'chrome'},
+    { value: 'github', label: 'github'},
+    { value: 'aliwangwang', label: 'aliwangwang'},
+    { value: 'dingding', label: 'dingding'},
   ];
-  selectedOption = this.options[ 0 ];
+  /**
+   * 开始时间
+   */
+  selectedStartDate = this.dateOptions[0];
 
 
-  checkBoxOptions = [
-    { label: '接受所有视频流', value: '接受所有视频流'},
+  /**
+   * 结束时间
+   */
+  selectedEndDate  =  this.dateOptions[0];
+
+
+
+   selectDeviceOperateOptions = [
+    { label: '接受所有视频流', value: '接受所有视频流',checked:true},
     { label: '广播所有视频流', value: '广播所有视频流' },
     { label: '人脸分析', value: '人脸分析' },
     { label: '人脸检测', value: '人脸检测' },
@@ -30,7 +45,27 @@ export class StrategyModelComponent implements OnInit {
     { label: '跟踪', value: '跟踪' },
     { label: '存储所有视频', value: '存储所有视频' },
     { label: '告警', value: '告警' },
-  ]
+   ]
+
+   thisSystemOperateOptions = [
+     { label: '存储视频', value: '存储视频',checked:true},
+     { label: '告警', value: '告警' },
+     { label: '人脸分析', value: '人脸分析' },
+     { label: '人脸检测', value: '人脸检测' },
+     { label: '形体分析', value: '形体分析' },
+     { label: '跟踪', value: '跟踪' },
+   ]
+
+
+  @ViewChild('thisSystem') thisSystem: ElementRef;
+
+  @ViewChild("selectDevice")  selectDevice:ElementRef;
+
+  /**
+   * 表示当前哪张表单激活状态
+   * @type {string}
+   */
+  currentActiveForm = "thisSystem";
 
 
   /**

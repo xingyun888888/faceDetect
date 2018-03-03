@@ -27,6 +27,24 @@
   }
 }
 
+/**
+  识别管理界面modal
+ */
+.recognize-modal-container{
+  .ant-modal{
+    min-width:740px !important;
+  }
+}
+/**
+  注册管理界面modal
+ */
+.register-modal-container{
+  .ant-modal{
+    min-width:740px !important;
+  }
+}
+
+
 
 /**
    布控策略管理界面model
@@ -34,24 +52,38 @@
 .strategy-modal-container{
   .ant-modal{
     min-width:1200px !important;
+    .ant-modal-body{
+      padding:0;
+    }
     .strategy-modal-content{
       column-width:1200px;
       min-height:500px;
       column-count:2;
       overflow:hidden;
     }
-    .this-system{
+    .this-system,.select-device{
+      position:relative;
+      .form-mark-layer{
+        display:none;
+        position:absolute;
+        background:#e8e8e8;
+        opacity:0.5;
+        z-index:100;
+        width:100%;
+        height:100%;
+      }
       h2{
         width:100%;
         text-align:center;
         margin-bottom:20px;
+        margin-top:20px;
       }
       box-sizing: border-box;
       width:50%;
       min-height:500px;
       float:left;
       &:first-child{
-        border-right:1px solid #ccc;
+        border-right:1px solid #e8e8e8;
       }
     }
   }
