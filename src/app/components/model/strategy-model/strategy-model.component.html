@@ -7,20 +7,10 @@
         <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">
           <div nz-form-item nz-row>
             <div nz-form-label nz-col [nzSpan]="5">
-              <label nz-form-item-required>开始时间</label>
+              <label nz-form-item-required>选择时间段</label>
             </div>
-            <div nz-col [nzSpan]="6" nz-form-control >
+            <div nz-col [nzSpan]="10" nz-form-control >
               <nz-select style="width: 120px;"  formControlName="type"  [(ngModel)]="selectedStartDate" >
-                <nz-option *ngFor="let option of dateOptions" [nzLabel]="option.label" [nzValue]="option">
-                  <ng-template #nzOptionTemplate>{{option.label}}</ng-template>
-                </nz-option>
-              </nz-select>
-            </div>
-            <div nz-form-label nz-col [nzSpan]="5">
-              <label nz-form-item-required>结束时间</label>
-            </div>
-            <div nz-col [nzSpan]="6" nz-form-control >
-              <nz-select style="width: 120px;" formControlName="id" [(ngModel)]="selectedEndDate"  >
                 <nz-option *ngFor="let option of dateOptions" [nzLabel]="option.label" [nzValue]="option">
                   <ng-template #nzOptionTemplate>{{option.label}}</ng-template>
                 </nz-option>
@@ -58,20 +48,17 @@
         <h2>选择设备</h2>
         <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">
           <div nz-form-item nz-row>
+            <div nz-form-label nz-col [nzSpan]="2">
+            </div>
+            <div nz-col [nzSpan]="6" >
+              <button nz-button  (click)="resetForm($event)">摄像头选择</button>
+            </div>
+          </div>
+          <div nz-form-item nz-row>
             <div nz-form-label nz-col [nzSpan]="5">
-              <label nz-form-item-required>开始时间</label>
+              <label nz-form-item-required>选择时间段</label>
             </div>
-            <div nz-col [nzSpan]="6" nz-form-control >
-              <nz-select style="width: 120px;"  formControlName="type"  [(ngModel)]="selectedStartDate" >
-                <nz-option *ngFor="let option of dateOptions" [nzLabel]="option.label" [nzValue]="option">
-                  <ng-template #nzOptionTemplate>{{option.label}}</ng-template>
-                </nz-option>
-              </nz-select>
-            </div>
-            <div nz-form-label nz-col [nzSpan]="5">
-              <label nz-form-item-required>结束时间</label>
-            </div>
-            <div nz-col [nzSpan]="6" nz-form-control >
+            <div nz-col [nzSpan]="10" nz-form-control >
               <nz-select style="width: 120px;"  formControlName="type"  [(ngModel)]="selectedStartDate" >
                 <nz-option *ngFor="let option of dateOptions" [nzLabel]="option.label" [nzValue]="option">
                   <ng-template #nzOptionTemplate>{{option.label}}</ng-template>
