@@ -19,7 +19,7 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.less"
+        "styles.less"     
       ],
       "scripts": [
         "../node_modules/echarts/dist/echarts.min.js"

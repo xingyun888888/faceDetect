@@ -1,4 +1,4 @@
 <app-search  [_searchTitle]="_searchTitle" (queryCondition)="queryLogByConditions($event)"></app-search>
 <nz-spin [nzTip]="'正在读取数据...'" [nzSpinning]="isLoading">
-  <app-table [isShowOperate]="false" [_titles]="_titles" [_dataSet]="_dataSet" (editData)="getRowData($event)" (deleteData)="deleteRow($event)" (refresh)="refresh()" ></app-table>
+  <app-table [isCanAdd]="false" [isShowOperate]="false" [_titles]="_titles" [_dataSet]="_dataSet" (editData)="getRowData($event)" (deleteData)="deleteRow($event)" (refresh)="refresh()" ></app-table>
 </nz-spin>

@@ -8,6 +8,15 @@ import api from '../../api';
   styleUrls: ['./facelib.component.css']
 })
 export class FacelibComponent implements OnInit {
+
+
+  /**这个字段是保存着search的自定义列标签*/
+  _searchTitle: Array<any> = [
+    {key: 'name', name: '人脸库名称', type: 'select',options:[{id:1,name:"2"},{id:2,name:"234"},{id:3,name:'34'}], nzSpan: 7},
+    {key: 'name', name: '人脸库名', type: 'select',options:[{id:1,name:"2"},{id:2,name:"234"},{id:3,name:'2423423'}], nzSpan: 7}
+  ];
+
+
   /**这个字段是保存着table的自定义列标签*/
   _titles: Array<any> = [
     {

@@ -132,6 +132,9 @@ export class RecognizeComponent implements OnInit {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list;
+    },(error)=>{
+      const list = [{name:"23",gender:2,dc:2,time:23,zoneNum:2}];
+      this._dataSet = list;
     });
   }
 

@@ -40,6 +40,15 @@ export class TableComponent implements OnInit {
   isCanReback = false;
 
   @Input()
+  isCanAdd = true;
+
+  @Input()
+  canDblClick= true;
+  /**
+   * 是否需要展示table中的操作那一列，默认展示
+   * @type {boolean}
+   */
+  @Input()
   isShowOperate = true;
 
   /**操作选项显示的内容,接收父组件的传值*/
@@ -192,6 +201,8 @@ export class TableComponent implements OnInit {
   singleEdit(e, data) {
     this.editData.emit(data);
   }
+
+
 
   /**
    * 单个增加按钮
