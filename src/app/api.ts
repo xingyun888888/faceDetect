@@ -42,7 +42,9 @@ const api = {
   editFacelib: devSeverAddress + 'facelib/update',
   deleteFacelib: devSeverAddress + 'facelib/delete',
   addFacelib: devSeverAddress + 'facelib/add',
+  queryFacelibName: devSeverAddress + 'facelib/getNameList',
   queryFacelibByConditions: devSeverAddress + 'facelib/listByConditions',
+
   //告警信息查询
   queryRecognize: devSeverAddress + 'recognize/list',
   editRecognize: devSeverAddress + 'recognize/update',

@@ -11,7 +11,7 @@ import  {parseParam} from '../../utils/common';
 export class RecognizeComponent implements OnInit {
   /**这个字段是保存着search的自定义列标签*/
   _searchTitle: Array<any> = [
-    {key: 'name', name: '姓名', type: '', nzSpan: 4},
+    {key: 'name', name: '人脸库名称', type: 'select', options: [{id: 1, name: '2'}, {id: 2, name: '234'}, {id: 3, name: '34'}], nzSpan: 7},
     {key: 'gender', name: '性别', type: '', nzSpan: 4},
     {key: 'dc', name: '危险级别', type: '', nzSpan: 6}
   ];

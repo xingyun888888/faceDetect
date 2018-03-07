@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../api';
+import {parseParam} from '../../utils/common';
 
 @Component({
   selector: 'app-facelib',
@@ -8,12 +9,9 @@ import api from '../../api';
   styleUrls: ['./facelib.component.css']
 })
 export class FacelibComponent implements OnInit {
-
-
   /**这个字段是保存着search的自定义列标签*/
   _searchTitle: Array<any> = [
-    {key: 'name', name: '人脸库名称', type: 'select',options:[{id:1,name:"2"},{id:2,name:"234"},{id:3,name:'34'}], nzSpan: 7},
-    {key: 'name', name: '人脸库名', type: 'select',options:[{id:1,name:"2"},{id:2,name:"234"},{id:3,name:'2423423'}], nzSpan: 7}
+    {key: 'name', name: '人脸库名称', type: 'select', options:[], nzSpan: 7},
   ];
 
 
@@ -86,7 +84,7 @@ export class FacelibComponent implements OnInit {
   /**删除功能处理，在这里调用删除的接口，给后台发送一个ID，应该用post，只有id查询是get，其他操作都用post
    * 删除成功之后，调用查询方法，更新页面，删除失败之后，调用查询方法，更新页面*/
   deleteRow(data) {
-    this.http.post(api.deleteFacelib, JSON.stringify(data),{
+    this.http.post(api.deleteFacelib, JSON.stringify(data), {
       headers: new HttpHeaders({
         'Content-type': 'application/json;charset=UTF-8'
       })
@@ -125,12 +123,33 @@ export class FacelibComponent implements OnInit {
     }
   }
 
-  constructor(private http: HttpClient, ) {
+  constructor(private http: HttpClient) {}
+
+  /**获取人脸库的名称列表*/
+  getFacelibName() {
+    this.http.get(api.queryFacelibName).subscribe((res) => {
+      console.dir(res);
+      const list = <any>res;
+      this._searchTitle[0].options = list;
+    });
   }
+
+  queryFacelibByConditions(data){
+    this.http.get(api.queryFacelibByConditions + parseParam(data)).subscribe((res) => {
+      console.dir(res);
+      const list = <any>res;
+      this._dataSet = list;
+    });
+  };
+
+
+
+
 
   /**在这里调用刷新,点击刷新按钮之后就会调用这个方法,刷新就是调用一次查询接口*/
   refresh(e) {
     this.getFacelib();
+    this.getFacelibName();
   }
 
   /**调用查询接口，查询到结果之后将拿到的res赋值给_dataSet才能显示到table*/
@@ -139,23 +158,24 @@ export class FacelibComponent implements OnInit {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list;
-    },(error)=>{
-       const list = [
-         {id:1,name:"",path:"",createTime:"",maxNum:3,state:1},
-         {id:2,name:"",path:"",createTime:"",maxNum:3,state:1},
-         {id:3,name:"",path:"",createTime:"",maxNum:2,state:1},
-         {id:4,name:"",path:"",createTime:"",maxNum:3,state:1},
-         {id:5,name:"",path:"",createTime:"",maxNum:3,state:1},
-         {id:6,name:"",path:"",createTime:"",maxNum:3,state:1},
-         {id:7,name:"",path:"",createTime:"",maxNum:3,state:1}
-       ]
-       this._dataSet = list;
+    }, (error) => {
+      const list = [
+        {id: 1, name: '', path: '', createTime: '', maxNum: 3, state: 1},
+        {id: 2, name: '', path: '', createTime: '', maxNum: 3, state: 1},
+        {id: 3, name: '', path: '', createTime: '', maxNum: 2, state: 1},
+        {id: 4, name: '', path: '', createTime: '', maxNum: 3, state: 1},
+        {id: 5, name: '', path: '', createTime: '', maxNum: 3, state: 1},
+        {id: 6, name: '', path: '', createTime: '', maxNum: 3, state: 1},
+        {id: 7, name: '', path: '', createTime: '', maxNum: 3, state: 1}
+      ];
+      this._dataSet = list;
     });
   }
 
   /**组件初始化的时候调用一次*/
   ngOnInit() {
     this.getFacelib();
+    this.getFacelibName();
   }
 
 }
