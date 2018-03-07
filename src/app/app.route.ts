@@ -1,77 +1,62 @@
 import {Routes, RouterModule} from '@angular/router';
-
-import {HomeComponent} from './home/home.component';
-import {ReportDataAnalyzeComponent} from './pages/report-data-analyze/report-data-analyze.component';
-import {RegisterComponent} from './pages/register/register.component';
-import {RecognizeComponent} from './pages/recognize/recognize.component';
-import {FacelibComponent} from './pages/facelib/facelib.component';
-import {MobileComponent} from './pages/mobile/mobile.component';
-import {ServerComponent} from './pages/server/server.component';
-import {CameraComponent} from './pages/camera/camera.component';
-import {UserComponent} from './pages/user/user.component';
-import {LogComponent} from './pages/log/log.component';
-import {ParamComponent} from './pages/param/param.component';
-import {MapComponent} from './pages/map/map.component';
-import {StrategyComponent} from './pages/strategy/strategy.component';
-import {SnapshotComponent} from './pages/snapshot/snapshot.component';
-import {VedioComponent} from './pages/vedio/vedio.component';
+import {HomeComponent} from "./home/home.component";
 
 export const appRoutes: Routes = [
   {
     path: 'snapshot',
-    component: SnapshotComponent
+    loadChildren: "app/pages/snapshot/snapshot.module#SnapshotModule"
   },
   {
     path: 'vedio',
-    component: VedioComponent
+    loadChildren: "app/pages/vedio/vedio.module#VedioModule"
   },
   {
     path: 'strategy',
-    component: StrategyComponent
+    loadChildren: 'app/pages/strategy/strategy.module#StrategyModule'
   },
   {
     path: 'map',
-    component: MapComponent
+    loadChildren: 'app/pages/map/map.module#MapModule'
   },
   {
     path: 'param',
-    component: ParamComponent
+    loadChildren: 'app/pages/param/param.module#ParamModule'
   },
   {
     path: 'log',
-    component: LogComponent
+    loadChildren: 'app/pages/log/log.module#LogModule'
   },
   {
     path: 'user',
-    component: UserComponent
+    loadChildren: 'app/pages/user/user.module#UserModule'
   },
   {
     path: 'reportAnalyze',
-    component: ReportDataAnalyzeComponent,
+    loadChildren: 'app/pages/report-data-analyze/report-data-analyze.module#ReportDataAnalyzeModule',
   },
   {
     path: 'register',
-    component: RegisterComponent,
+    loadChildren:'app/pages/register/register.module#RegisterModule',
   },
   {
     path: 'recognize',
-    component: RecognizeComponent,
+    loadChildren:'app/pages/recognize/recognize.module#RecognizeModule',
   },
   {
     path: 'facelib',
-    component: FacelibComponent,
+    loadChildren: 'app/pages/facelib/facelib.module#FacelibModule',
   },
   {
     path: 'mobile',
-    component: MobileComponent,
+    loadChildren:'app/pages/mobile/mobile.module#MobileModule',
   },
   {
     path: 'server',
-    component: ServerComponent,
+    loadChildren: 'app/pages/server/server.module#ServerModule',
   },
   {
     path: 'camera',
-    component: CameraComponent,
+    loadChildren:'app/pages/camera/camera.module#CameraModule',
   },
   {
     path: 'home',

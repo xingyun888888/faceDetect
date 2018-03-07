@@ -1,0 +1,20 @@
+import { NgModule }   from '@angular/core';
+import { CommonModule }       from '@angular/common';
+import { FormsModule }        from '@angular/forms';
+import {UserinfoModelComponent }   from './userinfo-model.component';
+import { UserinfoModelRoutingModule  } from './userinfo-model-routing.module';
+
+
+@NgModule({
+  imports:      [
+    CommonModule,
+    FormsModule,
+    UserinfoModelRoutingModule,
+  ],
+  declarations: [
+    UserinfoModelComponent
+  ],
+  exports:[],
+  providers:[]
+})
+export class UserinfoModelModule { }
