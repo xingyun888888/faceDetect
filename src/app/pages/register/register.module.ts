@@ -4,14 +4,15 @@ import { FormsModule }        from '@angular/forms';
 import { RegisterComponent }   from './register.component';
 import { RegisterRoutingModule} from './register-routing.module';
 import {SearchModule} from "../../components/search/search.module";
-
+import {NgZorroAntdModule} from "ng-zorro-antd";
 
 @NgModule({
   imports:      [
     CommonModule,
     FormsModule,
     RegisterRoutingModule,
-    SearchModule
+    SearchModule,
+    NgZorroAntdModule.forRoot(),
   ],
   declarations: [
     RegisterComponent

@@ -4,14 +4,15 @@ import { FormsModule }        from '@angular/forms';
 import { ParamComponent }   from './param.component';
 import { ParamRoutingModule} from './param-routing.module';
 import {SearchModule} from "../../components/search/search.module";
-
+import {NgZorroAntdModule} from "ng-zorro-antd";
 
 @NgModule({
   imports:      [
     CommonModule,
     FormsModule,
     ParamRoutingModule,
-    SearchModule
+    SearchModule,
+    NgZorroAntdModule.forRoot(),
   ],
   declarations: [
     ParamComponent

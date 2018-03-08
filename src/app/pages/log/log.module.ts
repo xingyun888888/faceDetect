@@ -4,14 +4,15 @@ import { FormsModule }        from '@angular/forms';
 import { LogComponent }   from './log.component';
 import { LogRoutingModule } from './log-routing.module';
 import {SearchModule} from "../../components/search/search.module";
-
+import {NgZorroAntdModule} from "ng-zorro-antd";
 
 @NgModule({
   imports:      [
     CommonModule,
     FormsModule,
     LogRoutingModule,
-    SearchModule
+    SearchModule,
+    NgZorroAntdModule.forRoot(),
   ],
   declarations: [
     LogComponent

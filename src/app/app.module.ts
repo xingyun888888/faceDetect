@@ -20,7 +20,7 @@ import { TableComponent } from './components/table/table.component';
 import { UserinfoModelComponent } from './components/model/userinfo-model/userinfo-model.component';
 import {NavComponent} from './components/nav/nav.component';
 import {HeaderComponent} from './components/header/header.component';
-// import { SearchComponent } from './components/search/search.component';
+import { SearchComponent } from './components/search/search.component';
 // import { CameraComponent } from './pages/camera/camera.component';
 import { CameraEditComponent } from './components/model/camera-edit/camera-edit.component';
 // import { ServerComponent } from './pages/server/server.component';
@@ -60,7 +60,7 @@ import { StrategyModelComponent } from './components/model/strategy-model/strate
     HomeComponent,
     TableComponent,
     UserinfoModelComponent,
-    // SearchComponent,
+    SearchComponent,
     // CameraComponent,
     CameraEditComponent,
     // ServerComponent,

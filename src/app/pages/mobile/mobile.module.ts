@@ -4,14 +4,15 @@ import { FormsModule }        from '@angular/forms';
 import { MobileComponent }   from './mobile.component';
 import { MobileRoutingModule } from './mobile-routing.module';
 import {SearchModule} from "../../components/search/search.module";
-
+import {NgZorroAntdModule} from "ng-zorro-antd";
 
 @NgModule({
   imports:      [
     CommonModule,
     FormsModule,
     MobileRoutingModule,
-    SearchModule
+    SearchModule,
+    NgZorroAntdModule.forRoot(),
   ],
   declarations: [
     MobileComponent
