@@ -11,7 +11,7 @@ import {parseParam} from '../../utils/common';
 export class FacelibComponent implements OnInit {
   /**这个字段是保存着search的自定义列标签*/
   _searchTitle: Array<any> = [
-    {key: 'name', name: '人脸库名称', type: 'select', options:[], nzSpan: 7},
+    {key: 'name', name: '人脸库名称', type: 'select', options: [], nzSpan: 7},
   ];
 
 

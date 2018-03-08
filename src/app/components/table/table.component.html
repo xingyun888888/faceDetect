@@ -44,6 +44,7 @@
       <td nz-td *ngFor="let item of _titles" style="max-width:150px;">
         <!-- 在这里判断当前字段的类型是文本还是图片  通过传进来的type是否是img判断nnp-->
         <span *ngIf="item.type=='text'" style="display:-webkit-box;-webkit-line-clamp:1;overflow:hidden;-webkit-box-orient:vertical;text-overflow:ellipsis;max-width:120x; overflow:hidden;">{{data[item.key]}}</span>
+        <span *ngIf="item.type=='gender'" style="display:-webkit-box;-webkit-line-clamp:1;overflow:hidden;-webkit-box-orient:vertical;text-overflow:ellipsis;max-width:120x; overflow:hidden;">{{data[item.key]==1?"男":"女"}}</span>
         <span *ngIf="item.type=='date'" style="display:-webkit-box;-webkit-line-clamp:1;overflow:hidden;-webkit-box-orient:vertical;text-overflow:ellipsis;max-width:120px; overflow:hidden;">{{data[item.key] | date:'yyyy-MM-dd HH:mm:ss'}}</span>
         <img [src]="''" alt="" *ngIf="item.type=='img'">
       </td>

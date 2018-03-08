@@ -13,7 +13,7 @@
             <nz-datepicker style="width:150px;"  nzShowTime [nzFormat]="'YYYY-MM-DD HH:mm:ss'" [nzPlaceHolder]="item.name"></nz-datepicker>
           </div>
           <div *ngIf="item.type=='select'" nz-form-control nz-col [nzSpan]="40">
-            <nz-select style="width: 150px;" [formControlName]="item.key" [(ngModel)]="_formData[item.key]"  [nzPlaceHolder]="'请选择'+item.name" >
+            <nz-select style="width: 150px;" nzAllowClear [formControlName]="item.key" [(ngModel)]="_formData[item.key]"  [nzPlaceHolder]="'请选择'+item.name" >
               <nz-option *ngFor="let option of item.options" [nzLabel]="option.name" [nzValue]="option.name">
                 <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
               </nz-option>

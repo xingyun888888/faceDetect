@@ -2,7 +2,8 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../api';
-import  {parseParam} from '../../utils/common';
+import {parseParam} from '../../utils/common';
+
 @Component({
   selector: 'app-recognize',
   templateUrl: './recognize.component.html',
@@ -11,9 +12,9 @@ import  {parseParam} from '../../utils/common';
 export class RecognizeComponent implements OnInit {
   /**这个字段是保存着search的自定义列标签*/
   _searchTitle: Array<any> = [
-    {key: 'name', name: '人脸库名称', type: 'select', options: [{id: 1, name: '2'}, {id: 2, name: '234'}, {id: 3, name: '34'}], nzSpan: 7},
-    {key: 'gender', name: '性别', type: '', nzSpan: 4},
-    {key: 'dc', name: '危险级别', type: '', nzSpan: 6}
+    {key: 'name', name: '姓名', type: '', nzSpan: 4},
+    {key: 'gender', name: '性别', type: 'select', options: [{id: 1, name: '男'}, {id: 2, name: '女'}], nzSpan: 4},
+    {key: 'dc', name: '危险级别', type: 'select', options: [{id: 1, name: '1'}, {id: 2, name: '2'}, {id: 1, name: '3'}, {id: 2, name: '4'}], nzSpan: 6}
   ];
 
   /**这个字段是保存着table的自定义列标签*/
@@ -26,7 +27,7 @@ export class RecognizeComponent implements OnInit {
     {
       key: 'gender',
       name: '性别',
-      type: 'text'
+      type: 'gender'
     },
     {
       key: 'dc',
@@ -132,19 +133,25 @@ export class RecognizeComponent implements OnInit {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list;
-    },(error)=>{
-      const list = [{name:"23",gender:2,dc:2,time:23,zoneNum:2}];
+    }, (error) => {
+      const list = [{name: '23', gender: 2, dc: 2, time: 23, zoneNum: 2}];
       this._dataSet = list;
     });
   }
 
   /**根据条件查询方法*/
   queryRecognizeByConditions(data) {
+
+    console.log(data);
+    if(data.gender){
+      data.gender = (data.gender == '男' ? "1" : "0");
+    }
+
     console.log(parseParam(data));
     this.http.get(api.queryRecognizeByConditions + parseParam(data)).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
-      this._dataSet = list;
+      this._dataSet = list.data;
     }, (error) => {
     });
   }

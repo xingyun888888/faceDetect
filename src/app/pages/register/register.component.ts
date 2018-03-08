@@ -14,9 +14,8 @@ export class RegisterComponent implements OnInit {
   /**这个字段是保存着search的自定义列标签*/
   _searchTitle: Array<any> = [
     {key: 'name', name: '姓名', type: '', nzSpan: 6},
-    {key: 'sex', name: '性别', type: '', nzSpan: 4},
-    {key: 'faceLibid', name: '人脸库id', type: '', nzSpan: 6},
-    {key: 'dc', name: '危险级别', type: '', nzSpan: 6}
+    {key: 'sex', name: '性别', type: 'select', options: [{id: 1, name: '男'}, {id: 2, name: '女'}], nzSpan: 4},
+    {key: 'dc', name: '危险级别', type: 'select', options: [{id: 1, name: '1'}, {id: 2, name: '2'}, {id: 1, name: '3'}, {id: 2, name: '4'}, {id: 2, name: '5'}], nzSpan: 6}
   ];
 
   /**这个字段是保存着table的自定义列标签*/
@@ -100,7 +99,7 @@ export class RegisterComponent implements OnInit {
   /**删除功能处理，在这里调用删除的接口，给后台发送一个ID，应该用post，只有id查询是get，其他操作都用post
    * 删除成功之后，调用查询方法，更新页面，删除失败之后，调用查询方法，更新页面*/
   deleteRow(data) {
-    this.http.post(api.deleteRegister, JSON.stringify(data),{
+    this.http.post(api.deleteRegister, JSON.stringify(data), {
       headers: new HttpHeaders({
         'Content-type': 'application/json;charset=UTF-8'
       })
@@ -200,11 +199,15 @@ export class RegisterComponent implements OnInit {
 
   /**根据条件查询方法*/
   queryRegisterByConditions(data) {
+    /**
+     * 判断data里面是否包含性别gender属性
+     */
+
     console.log(parseParam(data));
     this.http.get(api.queryRegisterByConditions + parseParam(data)).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
-      this._dataSet = list;
+      this._dataSet = list.data;
     }, (error) => {
     });
   }
