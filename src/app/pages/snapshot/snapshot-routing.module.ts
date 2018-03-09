@@ -7,7 +7,7 @@ import { SnapshotComponent } from './snapshot.component';
  * 摄像机页面路由
  */
 const snapshotRoutes: Routes = [
-  { path: '', component: SnapshotComponent }
+  { path: '/', component: SnapshotComponent }
 ]
 
 

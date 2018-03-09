@@ -4,6 +4,7 @@ import { FormsModule }        from '@angular/forms';
 import { SnapshotComponent }   from './snapshot.component';
 import {SnapshotRoutingModule} from './snapshot-routing.module';
 import {SearchModule} from "../../components/search/search.module";
+import {TableModule} from '../../components/table/table.module';
 import {NgZorroAntdModule} from "ng-zorro-antd";
 
 @NgModule({
@@ -13,7 +14,9 @@ import {NgZorroAntdModule} from "ng-zorro-antd";
   imports:      [
     CommonModule,
     FormsModule,
+    TableModule,
     SnapshotRoutingModule,
+    SearchModule,
     NgZorroAntdModule.forRoot(),
   ],
   declarations: [
