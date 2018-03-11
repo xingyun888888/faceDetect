@@ -13,13 +13,13 @@ import {NgZorroAntdModule} from "ng-zorro-antd";
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    SearchRoutingModule,
     NgZorroAntdModule.forRoot(),
+    SearchRoutingModule,
   ],
   declarations: [
     SearchComponent
   ],
-  exports:[],
+  exports:[SearchComponent],
   providers:[]
 })
 export class SearchModule { }

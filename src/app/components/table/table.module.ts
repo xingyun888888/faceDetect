@@ -12,8 +12,8 @@ import {NgZorroAntdModule} from "ng-zorro-antd";
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    NgZorroAntdModule.forRoot(),
     TableRoutingModule,
-    NgZorroAntdModule.forRoot()
   ],
   declarations: [
     TableComponent

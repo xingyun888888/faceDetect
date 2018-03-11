@@ -12,6 +12,8 @@ export class SnapshotComponent implements OnInit {
     {key: 'dc', name: '人脸库', type: '', nzSpan: 6}
   ];
 
+  _dataSet = [];
+
   /**这个字段是保存着table的自定义列标签*/
   _titles: Array<any> = [
     {

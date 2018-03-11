@@ -13,9 +13,9 @@ import {NgZorroAntdModule} from "ng-zorro-antd";
   imports:[
     CommonModule,
     FormsModule,
-    StrategyRoutingModule,
     SearchModule,
     NgZorroAntdModule.forRoot(),
+    StrategyRoutingModule,
   ],
   declarations: [
     StrategyComponent

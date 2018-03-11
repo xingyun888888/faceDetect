@@ -1,10 +1,12 @@
 import { NgModule ,CUSTOM_ELEMENTS_SCHEMA}   from '@angular/core';
 import { CommonModule }       from '@angular/common';
-import { FormsModule }        from '@angular/forms';
+import { FormsModule ,ReactiveFormsModule}        from '@angular/forms';
 import { VedioComponent }   from './vedio.component';
 import {VedioRoutingModule} from './vedio-routing.module';
-import {SearchModule} from "../../components/search/search.module";
+import { TableComponent } from '../../components/table/table.component';
+import { SearchComponent } from '../../components/search/search.component';
 import {NgZorroAntdModule} from "ng-zorro-antd";
+import  {CommonUiModule} from '../../components/common.module'
 
 @NgModule({
   schemas: [
@@ -13,13 +15,12 @@ import {NgZorroAntdModule} from "ng-zorro-antd";
   imports:[
     CommonModule,
     FormsModule,
-    VedioRoutingModule,
-    SearchModule,
+    ReactiveFormsModule,
     NgZorroAntdModule.forRoot(),
+    CommonUiModule,
+    VedioRoutingModule,
   ],
-  declarations: [
-    VedioComponent
-  ],
+  declarations: [VedioComponent],
   exports:[],
   providers:[]
 })

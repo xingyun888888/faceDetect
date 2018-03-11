@@ -92,10 +92,10 @@ import { StrategyModelComponent } from './components/model/strategy-model/strate
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
-    RouterModule.forRoot(appRoutes),
     NgZorroAntdModule.forRoot(),
     ReactiveFormsModule,
-    NgxEchartsModule
+    NgxEchartsModule,
+    RouterModule.forRoot(appRoutes),
   ],
   providers: [],
   bootstrap: [AppComponent]

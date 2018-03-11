@@ -7,7 +7,7 @@ import { VedioComponent } from './vedio.component';
  * 摄像机页面路由
  */
 const vedioRoutes: Routes = [
-  { path: '/', component: VedioComponent }
+  { path: '', component: VedioComponent }
 ]
 
 

@@ -11,7 +11,6 @@ import {NgZorroAntdModule} from "ng-zorro-antd";
     CommonModule,
     FormsModule,
     LogRoutingModule,
-    SearchModule,
     NgZorroAntdModule.forRoot(),
   ],
   declarations: [
