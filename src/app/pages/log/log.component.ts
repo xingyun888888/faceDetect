@@ -94,11 +94,10 @@ export class LogComponent implements OnInit {
 
   /**根据条件查询方法*/
   queryLogByConditions(data) {
-    console.log(parseParam(data));
     this.http.get(api.queryLogByConditions + parseParam(data)).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
-      this._dataSet = list;
+      this._dataSet = list.data;
     }, (error) => {
     });
   }

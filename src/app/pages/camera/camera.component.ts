@@ -189,7 +189,7 @@ export class CameraComponent implements OnInit {
       console.dir(res);
       let list = <any>res;
       list.map((item, index) => {
-        Object.assign(item, {a_name: item.analyser ? item.analyser.name :'无名字'});
+        Object.assign(item, {a_name: item.analyser ? item.analyser.name : '无名字'});
       });
       this._dataSet = list;
     }, (error) => {

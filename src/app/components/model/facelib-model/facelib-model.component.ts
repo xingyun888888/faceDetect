@@ -112,11 +112,11 @@ export class FacelibModelComponent implements OnInit {
   ngOnInit() {
     this.validateForm = this.fb.group({
       id: [''],
-      name: ['', [Validators.required]],
-      path: ['', [Validators.required]],
-      createTime: ['', [Validators.required]],
-      maxNum: ['', [Validators.required]],
-      state: ['', [Validators.required]]
+      name: [''],
+      path: [''],
+      createTime: [''],
+      maxNum: [''],
+      state: ['']
     });
   }
 }

@@ -14,8 +14,9 @@ export class RegisterComponent implements OnInit {
   /**这个字段是保存着search的自定义列标签*/
   _searchTitle: Array<any> = [
     {key: 'name', name: '姓名', type: '', nzSpan: 6},
-    {key: 'sex', name: '性别', type: 'select', options: [{id: 1, name: '男'}, {id: 2, name: '女'}], nzSpan: 4},
-    {key: 'dc', name: '危险级别', type: 'select', options: [{id: 1, name: '1'}, {id: 2, name: '2'}, {id: 1, name: '3'}, {id: 2, name: '4'}, {id: 2, name: '5'}], nzSpan: 6}
+    {key: 'gender', name: '性别', type: 'select', options: [{id: 1, name: '男'}, {id: 2, name: '女'}], nzSpan: 4},
+    {key: 'dc', name: '危险级别', type: 'select', options: [{id: 1, name: '1'}, {id: 2, name: '2'}, {id: 1, name: '3'}, {id: 2, name: '4'}, {id: 2, name: '5'}], nzSpan: 6
+    }
   ];
 
   /**这个字段是保存着table的自定义列标签*/
@@ -31,30 +32,30 @@ export class RegisterComponent implements OnInit {
       type: 'text'
     },
     {
-      key: 'sex',
+      key: 'gender',
       name: '性别',
-       type: 'text'
+      type: 'gender'
     },
     {
       key: 'type',
       name: '证件类型',
-       type: 'text'
+      type: 'text'
     },
     {
       key: 'code',
       name: '证件号',
-       type: 'text'
+      type: 'text'
     },
     {
       key: 'phoneno',
       name: '电话',
-       type: 'text'
+      type: 'text'
 
     },
     {
       key: 'dc',
       name: '危险等级',
-       type: 'text'
+      type: 'text'
     }
   ];
 
@@ -104,9 +105,9 @@ export class RegisterComponent implements OnInit {
         'Content-type': 'application/json;charset=UTF-8'
       })
     }).subscribe((res) => {
-      this.getRegister();
+      this.getRegisterAll();
     }, (error) => {
-      this.getRegister();
+      this.getRegisterAll();
     });
   }
 
@@ -163,7 +164,7 @@ export class RegisterComponent implements OnInit {
         imgPath: '3',
         name: '',
         seriernum: '',
-        sex: '4',
+        gender: '4',
         type: '',
         code: '5',
         path: '5',
@@ -186,7 +187,7 @@ export class RegisterComponent implements OnInit {
         imgPath: '',
         name: '',
         seriernum: '',
-        sex: '',
+        gender: '',
         type: '',
         code: '',
         path: '',
@@ -199,9 +200,11 @@ export class RegisterComponent implements OnInit {
 
   /**根据条件查询方法*/
   queryRegisterByConditions(data) {
-    /**
-     * 判断data里面是否包含性别gender属性
-     */
+
+    console.log(data);
+    if (data.gender) {
+      data.gender = (data.gender == '男' ? '1' : '2');
+    }
 
     console.log(parseParam(data));
     this.http.get(api.queryRegisterByConditions + parseParam(data)).subscribe((res) => {

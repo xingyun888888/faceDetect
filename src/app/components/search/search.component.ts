@@ -59,7 +59,7 @@ export class SearchComponent implements OnInit, OnChanges{
     let _this = this;
     let flag = true;
     for(let key in value){
-      if(value[key]){
+      if(value[key]&&value[key].trim()){
         flag = false;
       }
     }

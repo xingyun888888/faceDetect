@@ -144,7 +144,7 @@ export class RecognizeComponent implements OnInit {
 
     console.log(data);
     if(data.gender){
-      data.gender = (data.gender == '男' ? "1" : "0");
+      data.gender = (data.gender == '男' ? "1" : "2");
     }
 
     console.log(parseParam(data));

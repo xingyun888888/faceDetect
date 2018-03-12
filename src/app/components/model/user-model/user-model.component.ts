@@ -90,13 +90,13 @@ export class UserModelComponent implements OnInit {
   ngOnInit() {
     this.validateForm = this.fb.group({
       id: [''],
-      name: ['', [Validators.required]],
-      displayName: ['', [ Validators.required ]],
-      pwd: ['', [Validators.required]],
-      module: ['', [ Validators.required ]],
-      role: ['', [Validators.required]],
+      name: [''],
+      displayName: [''],
+      pwd: [''],
+      module: [''],
+      role: [''],
       isEnable: [''],
-      state: ['', [ Validators.required ]]
+      state: ['']
     });
   }
 }

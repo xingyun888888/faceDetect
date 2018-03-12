@@ -22,7 +22,10 @@ export class ServerModelComponent implements OnInit {
     id: '',
     ip: '',
     port: '',
-    state: ''
+    state: '',
+    type: '',
+    memory: '',
+    networkFlow: '',
   };
   /**
    *这个是将table组件中传过来的值放入表单中
@@ -107,9 +110,12 @@ export class ServerModelComponent implements OnInit {
   ngOnInit() {
     this.validateForm = this.fb.group({
       id: [''],
-      ip: ['', [ Validators.required ]],
-      port: ['', [ Validators.required ]],
-      state: ['', [ Validators.required ]]
+      ip: [''],
+      port: [''],
+      state: [''],
+      type: [''],
+      memory: [''],
+      networkFlow: ['']
     });
   }
 

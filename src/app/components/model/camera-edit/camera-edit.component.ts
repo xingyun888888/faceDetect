@@ -135,13 +135,13 @@ export class CameraEditComponent implements OnInit {
   handleCancel = (e) => {
     this.resetForm(e);
     this.closeModel.emit();
-  };
+  }
 
   /**这个是关闭表单的方法*/
   handleMapCancel = (e) => {
     this.isShowMap = false;
 
-  };
+  }
 
   /**提交表单，提交时做校验操作*/
   submitForm = ($event, value) => {
@@ -161,7 +161,7 @@ export class CameraEditComponent implements OnInit {
       this.requestData.emit(value);
       this.validateForm.reset();
     }
-  };
+  }
 
   /**重置表单*/
   resetForm($event: MouseEvent) {
@@ -184,7 +184,16 @@ export class CameraEditComponent implements OnInit {
   getMapList() {
     this.http.get(api.queryMapList + '?type=map').subscribe((res) => {
       console.dir(res);
-      const list = <any>res;
+      let list = <any>res;
+      /**
+       * 判断如果文件是file协议;
+       */
+      list.map((item,index)=>{
+          if(/^\\\\/.test(item.value)){
+            console.log(item.value);
+            item.value ="file:"+item.value.replace(/\\/g,"/");
+          }
+      })
       this.mapOptions = list;
       this.selectedMap = list[0];
     });
@@ -234,34 +243,34 @@ export class CameraEditComponent implements OnInit {
     /**响应式表单，Validators.required表示必填*/
     this.validateForm = this.fb.group({
       id: [''],
-      type: ['', [Validators.required]],
-      name: ['', [Validators.required, Validators.maxLength(10)]],
-      serialNum: ['', [Validators.required, Validators.maxLength(6)]],
-      ip: ['', [Validators.required]],
-      port: ['', [Validators.required]],
-      mediaIP: ['', [Validators.required]],
-      mediaPort: ['', [Validators.required]],
-      direction: ['', [Validators.required, numberValidator]],
-      analyserID: ['', [Validators.required]],
-      zoneID: ['', [Validators.required]],
-      strategyID: ['', [Validators.required]],
-      doorID: ['', [Validators.required]],
-      user: ['', [Validators.required]],
-      pwd: ['', [Validators.required, Validators.maxLength(9), Validators.pattern('[0-9]+')]],
-      rtspPort: ['', [Validators.required]],
-      rtspPath: ['', [Validators.required]],
-      camInfo: ['', [Validators.required]],
-      camMapX: ['', [Validators.required]],
-      camMapY: ['', [Validators.required]],
-      camState: ['', [Validators.required]],
-      streamType: ['', [Validators.required]],
-      districtID: ['', [Validators.required]],
-      districtName: ['', [Validators.required]],
-      area: ['', [Validators.required]],
-      areaID: ['', [Validators.required]],
-      areaName: ['', [Validators.required]],
-      distictUrl: ['', [Validators.required]],
-      img_url: ['', [Validators.required]]
+      type: [''],
+      name: ['', [Validators.maxLength(10)]],
+      serialNum: ['', [Validators.maxLength(6)]],
+      ip: [''],
+      port: [''],
+      mediaIP: [''],
+      mediaPort: [''],
+      direction: ['', [numberValidator]],
+      analyserID: [''],
+      zoneID: [''],
+      strategyID: [''],
+      doorID: [''],
+      user: [''],
+      pwd: ['', [Validators.maxLength(9), Validators.pattern('[0-9]+')]],
+      rtspPort: [''],
+      rtspPath: [''],
+      camInfo: [''],
+      camMapX: [''],
+      camMapY: [''],
+      camState: [''],
+      streamType: [''],
+      districtID: [''],
+      districtName: [''],
+      area: [''],
+      areaID: [''],
+      areaName: [''],
+      distictUrl: [''],
+      img_url: ['']
     });
   }
 }

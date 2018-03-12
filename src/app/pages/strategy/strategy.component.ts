@@ -54,11 +54,6 @@ export class StrategyComponent implements OnInit {
       type: 'text'
     },
     {
-      key: 'modifyTime',
-      name: '修改时间',
-      type: 'date'
-    },
-    {
       key: 'modifier',
       name: '修改人',
       type: 'text'

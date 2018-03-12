@@ -140,7 +140,7 @@ export class FacelibComponent implements OnInit {
       const list = <any>res;
       this._dataSet = list;
     });
-  };
+  }
 
 
 
