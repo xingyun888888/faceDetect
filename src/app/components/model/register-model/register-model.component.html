@@ -1,0 +1,207 @@
+<nz-modal class="register-modal-container" [nzVisible]="isVisible" [nzTitle]="'注册信息'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)" [nzConfirmLoading]="isConfirmLoading" nzFooter="" >
+  <ng-template #modalContent>
+    <form nz-form [formGroup]="validateForm">
+      <div nz-form-item nz-row>
+        <div nz-form-label nz-col [nzSpan]="5">
+          <label nz-form-item-required>Id</label>
+        </div>
+        <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+          <nz-input formControlName="id" [nzPlaceHolder]="'自动获取'"  [(ngModel)]="_formData.id" [nzDisabled]="'true'" [nzType]="'text'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+        <div nz-form-label nz-col [nzSpan]="5">
+          <label nz-form-item-required>用户姓名</label>
+        </div>
+        <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+          <nz-input formControlName="name" [(ngModel)]="_formData.name"  [nzType]="'text'" [nzPlaceHolder]="'用户姓名'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-form-label nz-col [nzSpan]="5">
+          <label nz-form-item-required>编号</label>
+        </div>
+        <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+          <nz-input formControlName="seriernum" [(ngModel)]="_formData.seriernum"  [nzPlaceHolder]="'编号'" [nzType]="'text'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>性别</label>
+        </div>
+        <div>
+          <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+            <nz-input formControlName="gender" [(ngModel)]="_formData.gender" [nzPlaceHolder]="'性别'" [nzType]="'text'" [nzSize]="'large'">
+            </nz-input>
+          </div>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>证件类型</label>
+        </div>
+        <div>
+          <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+            <nz-input formControlName="type" [(ngModel)]="_formData.type" [nzPlaceHolder]="'证件类型'" [nzType]="'text'" [nzSize]="'large'">
+            </nz-input>
+          </div>
+        </div>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>证件号</label>
+        </div>
+        <div>
+          <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+            <nz-input formControlName="code" [(ngModel)]="_formData.code" [nzPlaceHolder]="'证件号码'" [nzType]="'text'" [nzSize]="'large'">
+            </nz-input>
+          </div>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>电话</label>
+        </div>
+        <div>
+          <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+            <nz-input formControlName="phoneno" [(ngModel)]="_formData.phoneno" [nzPlaceHolder]="'电话'" [nzType]="'text'" [nzSize]="'large'">
+            </nz-input>
+          </div>
+        </div>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>md5</label>
+        </div>
+        <div>
+          <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+            <nz-input formControlName="md5" [(ngModel)]="_formData.md5" [nzPlaceHolder]="'md5'" [nzType]="'text'" [nzSize]="'large'">
+            </nz-input>
+          </div>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>fea文件路径</label>
+        </div>
+        <div>
+          <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+            <nz-input formControlName="feapath" [(ngModel)]="_formData.feapath" [nzPlaceHolder]="'Fea文件路径'" [nzType]="'text'" [nzSize]="'large'">
+            </nz-input>
+          </div>
+        </div>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>time</label>
+        </div>
+        <div>
+          <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+            <nz-datepicker formControlName="time" style="width:150px;" [nzFormat]="'YYYY-MM-DD'"  [(ngModel)]="_formData.time" [nzPlaceHolder]="'time'" [nzType]="'date'" [nzSize]="'large'">
+            </nz-datepicker>
+          </div>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>住址</label>
+        </div>
+        <div>
+          <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+            <nz-input formControlName="address" [(ngModel)]="_formData.address" [nzPlaceHolder]="'address'" [nzType]="'text'" [nzSize]="'large'">
+            </nz-input>
+          </div>
+        </div>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>资源</label>
+        </div>
+        <div>
+          <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+            <nz-input formControlName="source" [(ngModel)]="_formData.source" [nzPlaceHolder]="'source'" [nzType]="'text'" [nzSize]="'large'">
+            </nz-input>
+          </div>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>区域号</label>
+        </div>
+        <div>
+          <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+            <nz-input formControlName="zoneno" [(ngModel)]="_formData.zoneno" [nzPlaceHolder]="'zoneno'" [nzType]="'text'" [nzSize]="'large'">
+            </nz-input>
+          </div>
+        </div>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>区域名</label>
+        </div>
+        <div>
+          <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+            <nz-input formControlName="zonename" [(ngModel)]="_formData.zonename" [nzPlaceHolder]="'zonename'" [nzType]="'text'" [nzSize]="'large'">
+            </nz-input>
+          </div>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>人脸库id</label>
+        </div>
+        <div>
+          <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+            <nz-input formControlName="facelibid" [(ngModel)]="_formData.facelibid" [nzPlaceHolder]="'人脸库id'" [nzType]="'text'" [nzSize]="'large'">
+            </nz-input>
+          </div>
+        </div>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>危险等级</label>
+        </div>
+        <div>
+          <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+            <nz-input formControlName="dc" [(ngModel)]="_formData.dc" [nzPlaceHolder]="'危险等级'" [nzType]="'text'" [nzSize]="'large'">
+            </nz-input>
+          </div>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>imgid</label>
+        </div>
+        <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+            <nz-input formControlName="imgid" [(ngModel)]="_formData.imgid" [nzPlaceHolder]="'imgid'" [nzType]="'text'" [nzSize]="'large'">
+            </nz-input>
+        </div>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>缩略图</label>
+        </div>
+        <div nz-col [nzSpan]="4" nz-form-control nzHasFeedback>
+          <nz-input formControlName="path" [(ngModel)]="_formData.path" [nzPlaceHolder]="'缩略图'" [nzType]="'text'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+        <div nz-col [nzSpan]="3">
+          <button nz-button  [nzType]="'default'" [nzSize]="'large'" (click)="fileSelect($event)"><span><i class="anticon anticon-add"></i> 添加</span></button>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+      </div>
+      <div nz-form-item nz-row style="margin-bottom:5px;">
+        <div nz-col [nzSpan]="5">
+          <label></label>
+        </div>
+        <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback style="text-align:left;">
+          <ul>
+            <li *ngFor="let item of uploadImgList;let i = index"><span style="display:inline-block;width:150px;text-align:left;margin-right:10px;">{{item}}</span><a style="float:right;" href="javascript:void(0)" (click)="deleteImg(e,i)">删除</a></li>
+          </ul>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+          <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback  >
+            <input type="file" #imgSelect style="visibility:hidden;"  (change)="fileChange($event)"/>
+          </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzOffset]="7" [nzSpan]="12" nz-form-control>
+          <!-- validateForm.valid 表示所有字段必须验证通过之后才能进行提交-->
+          <button nz-button [nzType]="'primary'" [nzSize]="'large'"  (click)="submitForm($event,validateForm.value)">提交</button>
+          <button nz-button [nzSize]="'large'" (click)="resetForm($event)">重置</button>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+</nz-modal>
+
+
+
+

@@ -1,2 +1,2 @@
 #npm run build
-scp -r  faceDetect/ root@119.23.251.61:/www/wwwroot/
+scp -r  faceDetect/ root@112.74.186.155:/www/wwwroot/

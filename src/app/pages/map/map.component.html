@@ -1,0 +1,68 @@
+
+<div class="map-container">
+  <nz-modal [nzVisible]="isShowUploadModal" [nzTitle]="'地图导入'" [nzContent]="modalContent" (nzOnCancel)="handleMapUploadCancel($event)" (nzOnOk)="handleMapUploadOk($event)">
+    <ng-template #modalContent>
+      <div nz-form>
+        <div nz-form-item nz-row>
+          <div nz-form-label nz-col [nzSpan]="4">
+            <label>地图名</label>
+          </div>
+          <div nz-col [nzSpan]="9" nz-form-control>
+            <nz-input  [nzPlaceHolder]="'请输入地图名'" [nzType]="'text'" [(ngModel)]="mapName" [nzSize]="'large'">
+            </nz-input>
+          </div>
+          <div nz-col [nzSpan]="10" nz-form-control>
+            <nz-upload
+              [nzBeforeUpload]="beforeUpload"  [ngFileList]="mapFileList">
+              <button nz-button>
+                <i class="anticon anticon-upload"></i><span>{{mapFileList.length==0?'选择地图':'重新选择'}}</span>
+              </button>
+            </nz-upload>
+          </div>
+        </div>
+        <div nz-form-item nz-row>
+          <div nz-col [nzOffset]="7" [nzSpan]="12" nz-form-control>
+            <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="handleMapUpload($event)" [disabled]="mapFileList.length==0">确认上传</button>
+            <button nz-button [nzSize]="'large'" (click)="cancalMapUpload($event)" >重置</button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </nz-modal>
+  <div class="operate-container">
+    <button nz-button [nzType]="'default'" [nzSize]="large" class="map-btn1" (click)="isShowUploadModal=true">
+      <i class="anticon anticon-download"></i><span> 导入地图 </span>
+    </button>
+    <button nz-button [nzType]="'default'" [nzSize]="large" class="map-btn1">
+      <i class="anticon anticon-download"></i><span> 导出摄像头拓扑表 </span>
+    </button>
+  </div>
+  <!--map-container 就是map-show的父元素-->
+  <div class="map-show">
+    <div class="map-menu">
+       <div class="camera-state">
+         在线摄像头: <img src="../../../assets/images/map/map-active.png" alt="">
+       </div>
+      <div class="camera-state">
+         离线摄像头: <img src="../../../assets/images/map/map.png" alt="">
+      </div>
+      <div>
+         楼层: <nz-select style="width: 120px;" [(ngModel)]="selectedMap"  [nzPlaceHolder]="'暂无地图'" (ngModelChange)="floorChangeHandler($event)">
+                <nz-option *ngFor="let option of mapOptions" [nzLabel]="option.name" [nzValue]="option">
+                  <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
+                </nz-option>
+              </nz-select>
+      </div>
+      <div class="scale-size">
+        放大: <img src="../../../assets/images/map/bigger.png" alt="">
+      </div>
+      <div class="scale-size">
+        缩小: <img src="../../../assets/images/map/smaller.png" alt="">
+      </div>
+    </div>
+    <div class="map-img" *ngIf="selectedMap&&selectedMap.value" >
+      <img [src]="selectedMap&&selectedMap.value" alt="" #mapImg>
+    </div>
+  </div>
+</div>
+

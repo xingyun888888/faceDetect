@@ -1,0 +1,10 @@
+<app-search [upOrDown]="true" [_searchTitle]="_searchTitle" (queryCondition)="queryServerByConditions($event)"></app-search>
+<nz-spin [nzTip]="'正在读取数据...'" [nzSpinning]="isLoading">
+  <app-table [_titles]="_titles" [_dataSet]="_dataSet" (editData)="getRowData($event)" (deleteData)="deleteRow($event)"  (refresh)="refresh()"></app-table>
+</nz-spin>
+  <!--<app-userinfo-model (closeModel)="isEdit=!isEdit" [isVisible]="isEdit" [_formData]="formData" (requestData)="sendData($event)"></app-userinfo-model>-->
+<app-server-model (closeModel)="close()" [isVisible]="isEdit||isAdd" [_formData]="formData" (requestData)="sendData($event)"></app-server-model>
+
+
+
+
