@@ -57,7 +57,6 @@ export class SnapshotComponent implements OnInit {
    * @type {any[]}
    * @private
    */
-  _dataSet = [];
 
 
   constructor() { }

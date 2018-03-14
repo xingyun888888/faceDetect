@@ -6,10 +6,10 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-/**
- * 引入图表库
- */
-import { NgxEchartsModule } from 'ngx-echarts';
+// /**
+//  * 引入图表库
+//  */
+// import { NgxEchartsModule } from 'ngx-echarts';
 
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -59,16 +59,16 @@ import { StrategyModelComponent } from './components/model/strategy-model/strate
     HeaderComponent,
     HomeComponent,
     // TableComponent,
-    UserinfoModelComponent,
+    // UserinfoModelComponent,
     // SearchComponent,
     // CameraComponent,
-    CameraEditComponent,
+    // CameraEditComponent,
     // ServerComponent,
-    ServerModelComponent,
+    // ServerModelComponent,
     // MobileComponent,
-    ReportDataAnalyzeComponent,
+    // ReportDataAnalyzeComponent,
     // FacelibComponent,
-    FacelibModelComponent,
+    // FacelibModelComponent,
     // LogComponent,
     // RecognizeComponent,
     // RegisterModelComponent,
@@ -77,13 +77,13 @@ import { StrategyModelComponent } from './components/model/strategy-model/strate
     // UserModelComponent,
     // RecognizeModelComponent,
     // ParamComponent,
-    ParamModelComponent,
+    // ParamModelComponent,
     DateFormatDirective,
     // MapComponent,
     FormValidateDirective,
     MapMarkComponent,
     // StrategyComponent,
-    StrategyModelComponent,
+    // StrategyModelComponent,
     // SnapshotComponent,
     // VedioComponent,
   ],
@@ -93,7 +93,7 @@ import { StrategyModelComponent } from './components/model/strategy-model/strate
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxEchartsModule,
+    // NgxEchartsModule,
     RouterModule.forRoot(appRoutes),
   ],
   exports:[],

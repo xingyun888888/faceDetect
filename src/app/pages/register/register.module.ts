@@ -1,19 +1,23 @@
-import { NgModule }   from '@angular/core';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA }   from '@angular/core';
 import { CommonModule }       from '@angular/common';
 import { FormsModule }        from '@angular/forms';
 import { RegisterComponent }   from './register.component';
 import { RegisterRoutingModule} from './register-routing.module';
-import {NgZorroAntdModule} from "ng-zorro-antd";
+import {CommonUiModule} from "../../components/common.module";
+import {RegisterModelComponent} from "../../components/model/register-model/register-model.component";
 
 @NgModule({
-  imports:      [
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ],
+  imports:[
     CommonModule,
     FormsModule,
+    CommonUiModule,
     RegisterRoutingModule,
-    NgZorroAntdModule.forRoot(),
   ],
   declarations: [
-    RegisterComponent
+    RegisterComponent,RegisterModelComponent
   ],
   exports:[],
   providers:[]

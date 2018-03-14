@@ -1,23 +1,21 @@
 import { NgModule }   from '@angular/core';
 import { CommonModule }       from '@angular/common';
-import { FormsModule }        from '@angular/forms';
-
-
+import { FormsModule,ReactiveFormsModule }        from '@angular/forms';
 import { FacelibComponent }   from './facelib.component';
 import { FacelibRoutingModule } from './facelib-routing.module';
-import {FacelibModelModule} from "../../components/model/facelib-model/facelib-model.module";
-import {NgZorroAntdModule} from "ng-zorro-antd";
+import {CommonUiModule} from "../../components/common.module";
+import {FacelibModelComponent} from "../../components/model/facelib-model/facelib-model.component";
 
 @NgModule({
   imports:      [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
+    CommonUiModule,
     FacelibRoutingModule,
-    FacelibModelModule,
-    NgZorroAntdModule.forRoot(),
   ],
   declarations: [
-    FacelibComponent
+    FacelibComponent,FacelibModelComponent
   ],
   exports:[],
   providers:[]

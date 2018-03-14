@@ -1,20 +1,23 @@
 import { NgModule,CUSTOM_ELEMENTS_SCHEMA }   from '@angular/core';
 import { CommonModule }       from '@angular/common';
 import { FormsModule }        from '@angular/forms';
+import {NgZorroAntdModule} from "ng-zorro-antd";
 import { ReportDataAnalyzeComponent }   from './report-data-analyze.component';
 import { ReportDataAnalyzeRoutingModule} from './report-data-analyze-routing.module';
-import {SearchComponent} from "../../components/search/search.component";
-import {NgZorroAntdModule} from "ng-zorro-antd";
-
+/**
+ * 引入图表库
+ */
+import { NgxEchartsModule } from 'ngx-echarts';
 @NgModule({
   schemas: [
-    CUSTOM_ELEMENTS_SCHEMA,
+    CUSTOM_ELEMENTS_SCHEMA
   ],
-  imports:      [
+  imports:[
     CommonModule,
     FormsModule,
-    ReportDataAnalyzeRoutingModule,
+    NgxEchartsModule,
     NgZorroAntdModule.forRoot(),
+    ReportDataAnalyzeRoutingModule,
   ],
   declarations: [
     ReportDataAnalyzeComponent
@@ -22,4 +25,4 @@ import {NgZorroAntdModule} from "ng-zorro-antd";
   exports:[],
   providers:[]
 })
-export class ReportDataAnalyzeModule { }
+export class ReportDataAnalyzeModule{ }

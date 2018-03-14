@@ -3,17 +3,18 @@ import { CommonModule }       from '@angular/common';
 import { FormsModule }        from '@angular/forms';
 import { ParamComponent }   from './param.component';
 import { ParamRoutingModule} from './param-routing.module';
-import {NgZorroAntdModule} from "ng-zorro-antd";
+import {ParamModelComponent} from "../../components/model/param-model/param-model.component";
+import {CommonUiModule} from "../../components/common.module";
 
 @NgModule({
   imports:      [
     CommonModule,
     FormsModule,
+    CommonUiModule,
     ParamRoutingModule,
-    NgZorroAntdModule.forRoot(),
   ],
   declarations: [
-    ParamComponent
+    ParamComponent,ParamModelComponent
   ],
   exports:[],
   providers:[]

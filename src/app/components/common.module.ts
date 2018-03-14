@@ -8,7 +8,7 @@ import {SearchComponent} from './search/search.component';
 
 @NgModule({
   schemas: [
-    NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA
+    CUSTOM_ELEMENTS_SCHEMA
   ],
   imports:[
     CommonModule,
@@ -18,7 +18,7 @@ import {SearchComponent} from './search/search.component';
     NgZorroAntdModule.forRoot()
   ],
   declarations: [TableComponent,SearchComponent],
-  exports:[TableComponent,SearchComponent,NgZorroAntdModule],
+  exports:[ReactiveFormsModule,TableComponent,SearchComponent,NgZorroAntdModule],
   providers:[]
 })
 export class CommonUiModule{ }

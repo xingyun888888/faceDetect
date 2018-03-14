@@ -3,20 +3,18 @@ import { CommonModule }       from '@angular/common';
 import { FormsModule }        from '@angular/forms';
 import { ServerComponent }   from './server.component';
 import { ServerRoutingModule} from './server-routing.module';
-import {NgZorroAntdModule} from "ng-zorro-antd";
+import {ServerModelComponent} from "../../components/model/server-model/server-model.component";
+import {CommonUiModule} from "../../components/common.module";
 
 @NgModule({
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA,
-  ],
   imports:[
     CommonModule,
     FormsModule,
+    CommonUiModule,
     ServerRoutingModule,
-    NgZorroAntdModule.forRoot(),
   ],
   declarations: [
-    ServerComponent
+    ServerComponent,ServerModelComponent
   ],
   exports:[],
   providers:[]
