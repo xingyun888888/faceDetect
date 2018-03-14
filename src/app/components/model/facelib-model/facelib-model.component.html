@@ -3,15 +3,6 @@
     <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">
       <div nz-form-item nz-row>
         <div nz-form-label nz-col [nzSpan]="7">
-          <label nz-form-item-required>Id</label>
-        </div>
-        <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
-          <nz-input formControlName="id" [nzPlaceHolder]="'自动获取'" [nzDisabled]="'true'" [(ngModel)]="_formData.id" [nzType]="'text'" [nzSize]="'large'">
-          </nz-input>
-        </div>
-      </div>
-      <div nz-form-item nz-row>
-        <div nz-form-label nz-col [nzSpan]="7">
           <label nz-form-item-required>数据库名称</label>
         </div>
         <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>

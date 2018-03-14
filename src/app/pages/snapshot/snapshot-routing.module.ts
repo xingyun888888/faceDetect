@@ -16,7 +16,7 @@ const snapshotRoutes: Routes = [
     RouterModule.forChild(snapshotRoutes)
   ],
   exports: [
-    RouterModule
+     RouterModule
   ]
 })
 export class SnapshotRoutingModule { }

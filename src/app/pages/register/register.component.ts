@@ -14,9 +14,9 @@ export class RegisterComponent implements OnInit {
   /**这个字段是保存着search的自定义列标签*/
   _searchTitle: Array<any> = [
     {key: 'name', name: '姓名', type: '', nzSpan: 6},
-    {key: 'sex', name: '性别', type: '', nzSpan: 4},
-    {key: 'faceLibid', name: '人脸库id', type: '', nzSpan: 6},
-    {key: 'dc', name: '危险级别', type: '', nzSpan: 6}
+    {key: 'gender', name: '性别', type: 'select', options: [{id: 1, name: '男'}, {id: 2, name: '女'}], nzSpan: 4},
+    {key: 'dc', name: '危险级别', type: 'select', options: [{id: 1, name: '1'}, {id: 2, name: '2'}, {id: 1, name: '3'}, {id: 2, name: '4'}, {id: 2, name: '5'}], nzSpan: 6
+    }
   ];
 
   /**这个字段是保存着table的自定义列标签*/
@@ -32,30 +32,30 @@ export class RegisterComponent implements OnInit {
       type: 'text'
     },
     {
-      key: 'sex',
+      key: 'gender',
       name: '性别',
-       type: 'text'
+      type: 'gender'
     },
     {
       key: 'type',
       name: '证件类型',
-       type: 'text'
+      type: 'text'
     },
     {
       key: 'code',
       name: '证件号',
-       type: 'text'
+      type: 'text'
     },
     {
       key: 'phoneno',
       name: '电话',
-       type: 'text'
+      type: 'text'
 
     },
     {
       key: 'dc',
       name: '危险等级',
-       type: 'text'
+      type: 'text'
     }
   ];
 
@@ -100,14 +100,14 @@ export class RegisterComponent implements OnInit {
   /**删除功能处理，在这里调用删除的接口，给后台发送一个ID，应该用post，只有id查询是get，其他操作都用post
    * 删除成功之后，调用查询方法，更新页面，删除失败之后，调用查询方法，更新页面*/
   deleteRow(data) {
-    this.http.post(api.deleteRegister, JSON.stringify(data),{
+    this.http.post(api.deleteRegister, JSON.stringify(data), {
       headers: new HttpHeaders({
         'Content-type': 'application/json;charset=UTF-8'
       })
     }).subscribe((res) => {
-      this.getRegister();
+      this.getRegisterAll();
     }, (error) => {
-      this.getRegister();
+      this.getRegisterAll();
     });
   }
 
@@ -164,7 +164,7 @@ export class RegisterComponent implements OnInit {
         imgPath: '3',
         name: '',
         seriernum: '',
-        sex: '4',
+        gender: '4',
         type: '',
         code: '5',
         path: '5',
@@ -187,7 +187,7 @@ export class RegisterComponent implements OnInit {
         imgPath: '',
         name: '',
         seriernum: '',
-        sex: '',
+        gender: '',
         type: '',
         code: '',
         path: '',
@@ -200,11 +200,17 @@ export class RegisterComponent implements OnInit {
 
   /**根据条件查询方法*/
   queryRegisterByConditions(data) {
+
+    console.log(data);
+    if (data.gender) {
+      data.gender = (data.gender == '男' ? '1' : '2');
+    }
+
     console.log(parseParam(data));
     this.http.get(api.queryRegisterByConditions + parseParam(data)).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
-      this._dataSet = list;
+      this._dataSet = list.data;
     }, (error) => {
     });
   }

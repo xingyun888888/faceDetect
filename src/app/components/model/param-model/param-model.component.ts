@@ -112,15 +112,14 @@ export class ParamModelComponent implements OnInit {
 
   ngOnInit() {
     this.validateForm = this.fb.group({
-      id: [''],
-      name: ['', [Validators.required]],
-      value: ['', [ Validators.required ]],
-      description: ['', [Validators.required]],
-      createtime: ['', [ Validators.required ]],
-      creater: ['', [Validators.required]],
-      modifierTime: ['', [Validators.required]],
-      modifier: ['', [ Validators.required ]],
-      type: ['', [ Validators.required ]]
+      name: [''],
+      value: [''],
+      description: [''],
+      createtime: [''],
+      creater: [''],
+      modifierTime: [''],
+      modifier: [''],
+      type: ['']
     });
   }
 

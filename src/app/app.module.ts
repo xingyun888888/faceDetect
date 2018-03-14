@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA ,NO_ERRORS_SCHEMA} from '@angular/core';
 import { AppComponent } from './app.component';
 import { HttpClientModule} from '@angular/common/http';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
@@ -51,7 +51,7 @@ import { StrategyModelComponent } from './components/model/strategy-model/strate
 @NgModule({
   entryComponents: [MapMarkComponent],
   schemas: [
-    CUSTOM_ELEMENTS_SCHEMA,
+    CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA
   ],
   declarations: [
     AppComponent,
@@ -71,11 +71,11 @@ import { StrategyModelComponent } from './components/model/strategy-model/strate
     FacelibModelComponent,
     // LogComponent,
     // RecognizeComponent,
-    RegisterModelComponent,
+    // RegisterModelComponent,
     // RegisterComponent,
     // UserComponent,
-    UserModelComponent,
-    RecognizeModelComponent,
+    // UserModelComponent,
+    // RecognizeModelComponent,
     // ParamComponent,
     ParamModelComponent,
     DateFormatDirective,
@@ -92,11 +92,11 @@ import { StrategyModelComponent } from './components/model/strategy-model/strate
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
-    NgZorroAntdModule.forRoot(),
     ReactiveFormsModule,
     NgxEchartsModule,
     RouterModule.forRoot(appRoutes),
   ],
+  exports:[],
   providers: [],
   bootstrap: [AppComponent]
 })

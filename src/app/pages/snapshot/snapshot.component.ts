@@ -52,6 +52,14 @@ export class SnapshotComponent implements OnInit {
       type: 'text'
     }
   ];
+  /**
+   * 保存table数据
+   * @type {any[]}
+   * @private
+   */
+  _dataSet = [];
+
+
   constructor() { }
 
   ngOnInit() {

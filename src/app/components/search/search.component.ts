@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output,OnChanges,SimpleChanges} from '@angular/core';
 import {FormBuilder, FormGroup,FormControl} from '@angular/forms';
+import {NzModalService} from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-search',
@@ -43,7 +44,7 @@ export class SearchComponent implements OnInit, OnChanges{
   @Input()
   _formData: any = [];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private confirmServ: NzModalService) {
   }
 
   /**
@@ -55,7 +56,21 @@ export class SearchComponent implements OnInit, OnChanges{
     /**
      * 在这里请求处理提交表单数据
      * */
-    this.queryCondition.emit(value);
+    let _this = this;
+    let flag = true;
+    for(let key in value){
+      if(value[key]&&value[key].trim()){
+        flag = false;
+      }
+    }
+
+    if(flag){
+      this.confirmServ.warning({
+        content: '请选择查询条件',
+      });
+    }else{
+      _this.queryCondition.emit(value);
+    }
     /**
      * 表单提交之后 清空表单为初始值
      */

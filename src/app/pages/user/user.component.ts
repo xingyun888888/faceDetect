@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../api';
+import {parseParam} from '../../utils/common';
 
 
 @Component({
@@ -9,6 +10,12 @@ import api from '../../api';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
+  /**这个字段是保存着search的自定义列标签*/
+  _searchTitle: Array<any> = [
+    {key: 'name', name: '姓名', type: '', nzSpan: 5},
+    {key: 'role', name: '角色', type: '', nzSpan: 5},
+  ];
+
   /**这个字段是保存着table的自定义列标签*/
   _titles: Array<any> = [
     {
@@ -142,6 +149,17 @@ export class UserComponent implements OnInit {
       console.dir(res);
       let list = <any>res;
       this._dataSet = list;
+    });
+  }
+
+  /**根据条件查询方法*/
+  queryUserByConditions(data) {
+    console.log(parseParam(data));
+    this.http.get(api.queryUserByConditions + parseParam(data)).subscribe((res) => {
+      console.dir(res);
+      const list = <any>res;
+      this._dataSet = list.data;
+    }, (error) => {
     });
   }
 

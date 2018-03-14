@@ -1,5 +1,8 @@
 const devSeverAddress = 'http://localhost:8080/faceDetect/';
 
+//192.168.1.200 部署之后的web接口
+//const devSeverAddress = 'http://192.168.1.200/faceDetect/';
+
 //const devServerAddress = "http://www.adding360.com:8080/bioauth/"
 
 const api = {
@@ -32,6 +35,7 @@ const api = {
   editServer: devSeverAddress + 'server/update',
   deleteServer: devSeverAddress + 'server/delete',
   addServer: devSeverAddress + 'server/add',
+  queryServerByConditions: devSeverAddress + 'server/listByConditions',
   //客户端信息查询
   queryMobile: devSeverAddress + 'mobile/list',
   editMobile: devSeverAddress + 'mobile/update',
@@ -54,11 +58,13 @@ const api = {
   editUser: devSeverAddress + 'user/update',
   deleteUser: devSeverAddress + 'user/delete',
   addUser: devSeverAddress + 'user/add',
+  queryUserByConditions: devSeverAddress + 'user/listByConditions',
   //参数信息查询
   queryParam: devSeverAddress + 'param/list',
   editParam: devSeverAddress + 'param/update',
   deleteParam: devSeverAddress + 'param/delete',
   addParam: devSeverAddress + 'param/add',
+  queryParamByConditions: devSeverAddress + 'param/listByConditions',
   //获取地图下拉列表
   queryMapList: devSeverAddress + 'param/getParamByType',
   //导入地图
@@ -71,7 +77,18 @@ const api = {
   addRegister: devSeverAddress + 'register/add',
   uploadImg: devSeverAddress + 'register/upload',
   queryRegisterByConditions: devSeverAddress + 'register/listByConditions',
-
+  //注册信息数据报表分析
+  queryRegisterDayCount: devSeverAddress + 'register/listByDay',
+  queryRegisterWeekCount: devSeverAddress + 'register/listByWeek',
+  queryRegisterMonthCount: devSeverAddress + 'register/listByMonth',
+  //serverLoad数据报表分析
+  queryServerLoadDayCount: devSeverAddress + 'serverLoad/listByDay',
+  queryServerLoadWeekCount: devSeverAddress + 'serverLoad/listByWeek',
+  queryServerLoadMonthCount: devSeverAddress + 'serverLoad/listByMonth',
+  //识别信息数据报表分析
+  queryRecognizeLoadDayCount: devSeverAddress + 'recognize/listByDay',
+  queryRecognizeWeekCount: devSeverAddress + 'recognize/listByWeek',
+  queryRecognizeMonthCount: devSeverAddress + 'recognize/listByMonth',
 
 
   batchUpload: devSeverAddress + 'register/batchUpload',

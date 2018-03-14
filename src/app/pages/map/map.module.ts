@@ -3,7 +3,6 @@ import { CommonModule }       from '@angular/common';
 import { FormsModule }        from '@angular/forms';
 import { MapComponent }   from './map.component';
 import { MapRoutingModule } from './map-routing.module';
-import {SearchModule} from "../../components/search/search.module";
 import {NgZorroAntdModule} from "ng-zorro-antd";
 
 @NgModule({
@@ -11,7 +10,6 @@ import {NgZorroAntdModule} from "ng-zorro-antd";
     CommonModule,
     FormsModule,
     MapRoutingModule,
-    SearchModule,
     NgZorroAntdModule.forRoot(),
   ],
   declarations: [

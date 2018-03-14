@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../api';
+import {parseParam} from '../../utils/common';
 
 @Component({
   selector: 'app-server',
@@ -8,6 +9,13 @@ import api from '../../api';
   styleUrls: ['./server.component.css']
 })
 export class ServerComponent implements OnInit {
+  /**这个字段是保存着search的自定义列标签*/
+  _searchTitle: Array<any> = [
+    {key: 'ip', name: '服务器地址', type: '', nzSpan: 7},
+    {key: 'port', name: '服务器端口', type: '', nzSpan: 7},
+    {key: 'state', name: '状态', type: 'select', options: [{id: 1, name: '启用'}, {id: 2, name: '未启用'}], nzSpan: 4}
+  ];
+
   /**这个字段是保存着table的自定义列标签*/
   _titles: Array<any> = [
     {
@@ -17,20 +25,34 @@ export class ServerComponent implements OnInit {
     },
     {
       key: 'ip',
-      name: 'IP地址',
+      name: '服务器地址',
        type: 'text'
     },
     {
       key: 'port',
-      name: '端口',
+      name: '服务器端口',
        type: 'text'
+    },
+    {
+      key: 'memory',
+      name: '内存使用率',
+      type: 'text'
+    },
+    {
+      key: 'type',
+      name: '类型',
+      type: 'text'
+    },
+    {
+      key: 'networkFlow',
+      name: '网络流量',
+      type: 'text'
     },
     {
       key: 'state',
       name: '状态',
-       type: 'text'
-
-    },
+      type: 'state'
+    }
   ];
 
   /**isEdit 和 isAdd 这两个属性维护着当前模态框是编辑还是新增*/
@@ -122,6 +144,23 @@ export class ServerComponent implements OnInit {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list;
+    });
+  }
+
+  /**根据条件查询方法*/
+  queryServerByConditions(data) {
+
+    console.log(data);
+    if(data.state){
+      data.state = (data.state == '启用' ? "1" : "2");
+    }
+
+    console.log(parseParam(data));
+    this.http.get(api.queryServerByConditions + parseParam(data)).subscribe((res) => {
+      console.dir(res);
+      const list = <any>res;
+      this._dataSet = list.data;
+    }, (error) => {
     });
   }
 

@@ -3,15 +3,6 @@
     <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">
       <div nz-form-item nz-row>
         <div nz-form-label nz-col [nzSpan]="7">
-          <label nz-form-item-required>ID</label>
-        </div>
-        <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
-          <nz-input formControlName="id" [nzPlaceHolder]="'自动获取'" [(ngModel)]="_formData.id"  [nzDisabled]="'true'" [nzType]="'text'" [nzSize]="'large'">
-          </nz-input>
-        </div>
-      </div>
-      <div nz-form-item nz-row>
-        <div nz-form-label nz-col [nzSpan]="7">
           <label nz-form-item-required>参数名</label>
         </div>
         <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
@@ -30,7 +21,7 @@
       </div>
       <div nz-form-item nz-row>
         <div nz-col [nzSpan]="7" nz-form-label>
-          <label nz-form-item-required>描述</label>
+          <label>描述</label>
         </div>
         <div>
           <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
@@ -44,8 +35,8 @@
           <label nz-form-item-required>创建时间</label>
         </div>
         <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
-          <nz-input formControlName="createtime" [(ngModel)]="_formData.createtime"  [nzType]="'text'" [nzPlaceHolder]="'创建时间'" [nzSize]="'large'">
-          </nz-input>
+          <nz-datepicker formControlName="createtime" style="width:150px;" [(ngModel)]="_formData.createtime"  [nzType]="'text'" [nzPlaceHolder]="'创建时间'" [nzSize]="'large'">
+          </nz-datepicker>
         </div>
       </div>
       <div nz-form-item nz-row>
@@ -62,8 +53,8 @@
           <label nz-form-item-required>修改时间</label>
         </div>
         <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
-          <nz-input formControlName="modifierTime" [(ngModel)]="_formData.modifierTime"  [nzType]="'text'" [nzPlaceHolder]="'修改时间'" [nzSize]="'large'">
-          </nz-input>
+          <nz-datepicker formControlName="modifierTime" style="width:150px;" [(ngModel)]="_formData.modifierTime"  [nzType]="'text'" [nzPlaceHolder]="'修改时间'" [nzSize]="'large'">
+          </nz-datepicker>
         </div>
       </div>
       <div nz-form-item nz-row>
@@ -71,7 +62,7 @@
           <label nz-form-item-required>修改人</label>
         </div>
         <div nz-col [nzSpan]="12" nz-form-control>
-          <nz-input formControlName="modifier"  [(ngModel)]="_formData.creater"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'修改人'" [nzSize]="'large'">
+          <nz-input formControlName="modifier"  [(ngModel)]="_formData.modifier"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'修改人'" [nzSize]="'large'">
           </nz-input>
         </div>
       </div>

@@ -4,7 +4,6 @@ import { FormsModule }        from '@angular/forms';
 import { ReportDataAnalyzeComponent }   from './report-data-analyze.component';
 import { ReportDataAnalyzeRoutingModule} from './report-data-analyze-routing.module';
 import {SearchComponent} from "../../components/search/search.component";
-import {SearchModule} from "../../components/search/search.module";
 import {NgZorroAntdModule} from "ng-zorro-antd";
 
 @NgModule({
@@ -15,7 +14,6 @@ import {NgZorroAntdModule} from "ng-zorro-antd";
     CommonModule,
     FormsModule,
     ReportDataAnalyzeRoutingModule,
-    SearchModule,
     NgZorroAntdModule.forRoot(),
   ],
   declarations: [

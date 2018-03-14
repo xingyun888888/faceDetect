@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../api';
+import {parseParam} from "../../utils/common";
 
 @Component({
   selector: 'app-facelib',
@@ -12,8 +13,7 @@ export class FacelibComponent implements OnInit {
 
   /**这个字段是保存着search的自定义列标签*/
   _searchTitle: Array<any> = [
-    {key: 'name', name: '人脸库名称', type: 'select',options:[{id:1,name:"2"},{id:2,name:"234"},{id:3,name:'34'}], nzSpan: 7},
-    {key: 'name', name: '人脸库名', type: 'select',options:[{id:1,name:"2"},{id:2,name:"234"},{id:3,name:'2423423'}], nzSpan: 7}
+    {key: 'name', name: '人脸库名称', type: 'select', options: [], nzSpan: 7},
   ];
 
 
@@ -126,6 +126,13 @@ export class FacelibComponent implements OnInit {
   }
 
   constructor(private http: HttpClient, ) {
+  }
+  queryFacelibByConditions(data){
+    this.http.get(api.queryFacelibByConditions + parseParam(data)).subscribe((res) => {
+      console.dir(res);
+      const list = <any>res;
+      this._dataSet = list;
+    });
   }
 
   /**在这里调用刷新,点击刷新按钮之后就会调用这个方法,刷新就是调用一次查询接口*/

@@ -50,13 +50,6 @@
       <div class="right-content" nz-col [nzSpan]="10">
         <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">
           <div nz-form-item nz-row>
-            <div nz-form-label nz-col [nzSpan]="5">
-              <label nz-form-item-required>Id</label>
-            </div>
-            <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-              <nz-input formControlName="id" [nzPlaceHolder]="'自动获取'" [(ngModel)]="_formData.id"  [nzDisabled]="'true'" [nzType]="'text'" [nzSize]="'large'">
-              </nz-input>
-            </div>
               <div nz-form-label nz-col [nzSpan]="5">
                 <label nz-form-item-required>用户名</label>
               </div>
@@ -64,6 +57,15 @@
                 <nz-input formControlName="name" [(ngModel)]="_formData.name"  [nzType]="'text'" [nzPlaceHolder]="'用户姓名'" [nzSize]="'large'">
                 </nz-input>
               </div>
+            <div nz-col [nzSpan]="5" nz-form-label>
+              <label nz-form-item-required>状态</label>
+            </div>
+            <div>
+              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+                <nz-input formControlName="state" [(ngModel)]="_formData.state" [nzPlaceHolder]="'state'" [nzType]="'text'" [nzSize]="'large'">
+                </nz-input>
+              </div>
+            </div>
           </div>
           <div nz-form-item nz-row>
               <div nz-form-label nz-col [nzSpan]="5">
@@ -132,26 +134,6 @@
               </div>
             </div>
             <div nz-col [nzSpan]="5" nz-form-label>
-              <label nz-form-item-required>路径</label>
-            </div>
-            <div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-input formControlName="path" [(ngModel)]="_formData.path" [nzPlaceHolder]="'路径'" [nzType]="'text'" [nzSize]="'large'">
-                </nz-input>
-              </div>
-            </div>
-          </div>
-          <div nz-form-item nz-row>
-            <div nz-col [nzSpan]="5" nz-form-label>
-              <label nz-form-item-required>抓拍路径</label>
-            </div>
-            <div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-input formControlName="snapPath" [(ngModel)]="_formData.snapPath" [nzPlaceHolder]="'抓拍路径'" [nzType]="'text'" [nzSize]="'large'">
-                </nz-input>
-              </div>
-            </div>
-            <div nz-col [nzSpan]="5" nz-form-label>
               <label nz-form-item-required>时间</label>
             </div>
             <div>
@@ -203,40 +185,11 @@
           </div>
           <div nz-form-item nz-row>
             <div nz-col [nzSpan]="5" nz-form-label>
-              <label nz-form-item-required>url</label>
-            </div>
-            <div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-input formControlName="url" [(ngModel)]="_formData.url" [nzPlaceHolder]="'url'" [nzType]="'text'" [nzSize]="'large'">
-                </nz-input>
-              </div>
-            </div>
-            <div nz-col [nzSpan]="5" nz-form-label>
-              <label nz-form-item-required>地图路径</label>
-            </div>
-            <div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-input formControlName="mappath" [(ngModel)]="_formData.mappath" [nzPlaceHolder]="'mappath'" [nzType]="'text'" [nzSize]="'large'">
-                </nz-input>
-              </div>
-            </div>
-          </div>
-          <div nz-form-item nz-row>
-            <div nz-col [nzSpan]="5" nz-form-label>
               <label nz-form-item-required>mappath_new</label>
             </div>
             <div>
               <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
                 <nz-input formControlName="mappath_new" [(ngModel)]="_formData.mappath_new" [nzPlaceHolder]="'mappath_new'" [nzType]="'text'" [nzSize]="'large'">
-                </nz-input>
-              </div>
-            </div>
-            <div nz-col [nzSpan]="5" nz-form-label>
-              <label nz-form-item-required>状态</label>
-            </div>
-            <div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-input formControlName="state" [(ngModel)]="_formData.state" [nzPlaceHolder]="'state'" [nzType]="'text'" [nzSize]="'large'">
                 </nz-input>
               </div>
             </div>

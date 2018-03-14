@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../../api';
+import {NzModalService} from 'ng-zorro-antd';
 
 interface FileReaderEventTarget extends EventTarget {
   result: string
@@ -24,7 +25,7 @@ export class RegisterModelComponent implements OnInit {
     id: '',
     name: '',
     seriernum: '',
-    sex: '',
+    gender: '',
     type: '',
     code: '',
     path: '',
@@ -80,6 +81,22 @@ export class RegisterModelComponent implements OnInit {
 
   defaultImg: string = '../../../assets/images/upload-icon.png';
 
+
+  /**
+   * 删除上传图片列表uploadImgList里面的图片
+   * @param e
+   * @param index
+   */
+  deleteImg(e,index){
+    this.uploadImgList.splice(index,1);
+    if(index>0){
+      this._formData.path = this.uploadImgList[index-1];
+    }else{
+      this._formData.path = this.uploadImgList[this.uploadImgList.length-1];
+    }
+  }
+
+
   fileChange(e) {
     console.log(e);
     let img = e.target.files[0];
@@ -114,6 +131,13 @@ export class RegisterModelComponent implements OnInit {
       this.validateForm.controls[key].markAsDirty();
     }
     console.log(value);
+    /**
+     * 在这里验证字段是否通过校验
+     */
+    if(!this.validateForm.valid){
+      return;
+    }
+
     /**在这里请求处理提交表单数据*/
     this.requestData.emit(value);
     this.validateForm.reset();
@@ -126,6 +150,7 @@ export class RegisterModelComponent implements OnInit {
     for (const key in this.validateForm.controls) {
       this.validateForm.controls[key].markAsPristine();
     }
+    this.uploadImgList = [];
   }
 
   /**这个方法是获取当前表单元素绑定的值*/
@@ -133,29 +158,29 @@ export class RegisterModelComponent implements OnInit {
     return this.validateForm.controls[name];
   }
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private http: HttpClient,private confirmServ: NzModalService) {
   }
 
   ngOnInit() {
     this.validateForm = this.fb.group({
       id: [''],
       name: ['', [ Validators.required ]],
-      seriernum: ['', [ Validators.required ]],
-      sex: ['', [ Validators.required ]],
-      type: ['', [ Validators.required ]],
-      code: ['', [ Validators.required ]],
+      seriernum: [''],
+      gender: [''],
+      type: [''],
+      code: [''],
       path: ['', [ Validators.required ]],
-      phoneno: ['', [ Validators.required ]],
-      md5: ['', [ Validators.required ]],
-      feapath: ['', [ Validators.required ]],
-      time: ['', [ Validators.required ]],
-      address: ['', [ Validators.required ]],
-      source: ['', [ Validators.required ]],
-      zoneno: ['', [ Validators.required ]],
-      zonename: ['', [ Validators.required ]],
-      facelibid: ['', [ Validators.required ]],
-      dc: ['', [ Validators.required ]],
-      imgid: ['', [ Validators.required ]]
+      phoneno: [''],
+      md5: [''],
+      feapath: [''],
+      time: [''],
+      address: [''],
+      source: [''],
+      zoneno: [''],
+      zonename: [''],
+      facelibid: [''],
+      dc: [''],
+      imgid: ['']
     });
   }
 }

@@ -6,7 +6,6 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CameraComponent }   from './camera.component';
 import { CameraRoutingModule  } from './camera-routing.module';
 import {CameraEditModule} from "../../components/model/camera-edit/camera-edit.module";
-import {SearchModule} from "../../components/search/search.module";
 
 
 @NgModule({
@@ -14,7 +13,6 @@ import {SearchModule} from "../../components/search/search.module";
     CommonModule,
     FormsModule,
     CameraRoutingModule,
-    SearchModule,
     NgZorroAntdModule.forRoot(),
   ],
   declarations: [

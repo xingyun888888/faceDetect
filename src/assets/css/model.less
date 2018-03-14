@@ -4,12 +4,17 @@
   /**
    checked-box的样式
   */
+  .ant-checkbox-wrapper{
+    margin:5px 0;
+  }
   .ant-checkbox-wrapper + .ant-checkbox-wrapper{
     margin-left:0;
   }
   .ant-checkbox-wrapper + span, .ant-checkbox + span{
     padding-left:0;
     padding-right:16px;
+    display:inline-block;
+    min-width:100px;
   }
 }
 
@@ -70,7 +75,7 @@
         font-size:16px;
         text-align:center;
       }
-      img{      
+      img{
         height:200px;
       }
       .video-js{
@@ -92,6 +97,7 @@
   注册管理界面modal
  */
 .register-modal-container{
+
   .ant-modal{
     min-width:740px !important;
   }
@@ -104,18 +110,21 @@
  */
 .strategy-modal-container{
   .ant-modal{
-     min-width:1200px !important;
+     min-width:900px !important;
     .ant-modal-body{
       padding:0;
     }
     .strategy-modal-content{
-      column-width:1200px;
-      min-height:500px;
+      column-width:900px;
+      min-height:600px;
       column-count:2;
       overflow:hidden;
     }
     .this-system,.select-device{
       position:relative;
+      .ant-modal .ant-checkbox-wrapper{
+        margin:3px 0;
+      }
       .form-mark-layer{
         display:none;
         position:absolute;
@@ -133,7 +142,7 @@
       }
       box-sizing: border-box;
       width:50%;
-      min-height:500px;
+      min-height:600px;
       float:left;
       &:first-child{
         border-right:1px solid #e8e8e8;

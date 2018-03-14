@@ -3,7 +3,6 @@ import { CommonModule }       from '@angular/common';
 import { FormsModule }        from '@angular/forms';
 import { StrategyComponent }   from './strategy.component';
 import {StrategyRoutingModule} from './strategy-routing.module';
-import {SearchModule} from "../../components/search/search.module";
 import {NgZorroAntdModule} from "ng-zorro-antd";
 
 @NgModule({
@@ -13,7 +12,6 @@ import {NgZorroAntdModule} from "ng-zorro-antd";
   imports:[
     CommonModule,
     FormsModule,
-    SearchModule,
     NgZorroAntdModule.forRoot(),
     StrategyRoutingModule,
   ],

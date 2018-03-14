@@ -3,7 +3,6 @@ import { CommonModule }       from '@angular/common';
 import { FormsModule }        from '@angular/forms';
 import { MobileComponent }   from './mobile.component';
 import { MobileRoutingModule } from './mobile-routing.module';
-import {SearchModule} from "../../components/search/search.module";
 import {NgZorroAntdModule} from "ng-zorro-antd";
 
 @NgModule({
@@ -11,7 +10,6 @@ import {NgZorroAntdModule} from "ng-zorro-antd";
     CommonModule,
     FormsModule,
     MobileRoutingModule,
-    SearchModule,
     NgZorroAntdModule.forRoot(),
   ],
   declarations: [

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, ElementRef,ViewChild,Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, ElementRef, ViewChild, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
@@ -42,7 +42,7 @@ export class StrategyModelComponent implements OnInit {
   cameraSelectIsShow = false;
 
    selectDeviceOperateOptions = [
-    { label: '接受所有视频流', value: '接受所有视频流',checked:true},
+    { label: '接受所有视频流', value: '接受所有视频流', checked: true},
     { label: '广播所有视频流', value: '广播所有视频流' },
     { label: '人脸分析', value: '人脸分析' },
     { label: '人脸检测', value: '人脸检测' },
@@ -50,27 +50,27 @@ export class StrategyModelComponent implements OnInit {
     { label: '跟踪', value: '跟踪' },
     { label: '存储所有视频', value: '存储所有视频' },
     { label: '告警', value: '告警' },
-   ]
+   ];
 
    thisSystemOperateOptions = [
-     { label: '存储视频', value: '存储视频',checked:true},
+     { label: '存储视频', value: '存储视频', checked: true},
      { label: '告警', value: '告警' },
      { label: '人脸分析', value: '人脸分析' },
      { label: '人脸检测', value: '人脸检测' },
      { label: '形体分析', value: '形体分析' },
      { label: '跟踪', value: '跟踪' },
-   ]
+   ];
 
 
   @ViewChild('thisSystem') thisSystem: ElementRef;
 
-  @ViewChild("selectDevice")  selectDevice:ElementRef;
+  @ViewChild('selectDevice')  selectDevice: ElementRef;
 
   /**
    * 表示当前哪张表单激活状态
    * @type {string}
    */
-  currentActiveForm = "thisSystem";
+  currentActiveForm = 'thisSystem';
 
 
   /**
@@ -85,7 +85,6 @@ export class StrategyModelComponent implements OnInit {
     description: '',
     createTime: '',
     creater: '',
-    modifyTime: '',
     modifier: '',
     minPixel: '',
     pQ: '',
@@ -191,17 +190,16 @@ export class StrategyModelComponent implements OnInit {
   ngOnInit() {
     this.validateForm = this.fb.group({
       id: [''],
-      name: ['', [Validators.required]],
-      type: ['', [ Validators.required ]],
-      operateType: ['', [ Validators.required ]],
-      description: ['', [Validators.required]],
-      createTime: ['', [ Validators.required ]],
-      creater: ['', [Validators.required]],
-      modifyTime: ['', [Validators.required]],
-      modifier: ['', [ Validators.required ]],
-      minPixel: ['', [ Validators.required ]],
-      pQ: ['', [ Validators.required ]],
-      timeSlotId: ['', [ Validators.required ]]
+      name: [''],
+      type: [''],
+      operateType: [''],
+      description: [''],
+      createTime: [''],
+      creater: [''],
+      modifier: [''],
+      minPixel: [''],
+      pQ: [''],
+      timeSlotId: ['']
     });
   }
 

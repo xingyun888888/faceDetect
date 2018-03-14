@@ -1,21 +1,21 @@
-import { NgModule }   from '@angular/core';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA }   from '@angular/core';
 import { CommonModule }       from '@angular/common';
-import { FormsModule }        from '@angular/forms';
+import { FormsModule,ReactiveFormsModule }from '@angular/forms';
 import { RecognizeComponent }   from './recognize.component';
 import { RecognizeRoutingModule} from './recognize-routing.module';
-import {SearchModule} from "../../components/search/search.module";
-import {NgZorroAntdModule} from "ng-zorro-antd";
+import {CommonUiModule} from "../../components/common.module";
+import {RecognizeModelComponent} from "../../components/model/recognize-model/recognize-model.component";
 
 @NgModule({
-  imports:      [
+  imports:[
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
+    CommonUiModule,
     RecognizeRoutingModule,
-    SearchModule,
-    NgZorroAntdModule.forRoot(),
   ],
   declarations: [
-    RecognizeComponent
+    RecognizeComponent,RecognizeModelComponent
   ],
   exports:[],
   providers:[]

@@ -30,7 +30,7 @@
         </div>
         <div>
           <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-            <nz-input formControlName="sex" [(ngModel)]="_formData.sex" [nzPlaceHolder]="'性别'" [nzType]="'text'" [nzSize]="'large'">
+            <nz-input formControlName="gender" [(ngModel)]="_formData.gender" [nzPlaceHolder]="'性别'" [nzType]="'text'" [nzSize]="'large'">
             </nz-input>
           </div>
         </div>
@@ -90,8 +90,8 @@
         </div>
         <div>
           <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-            <nz-input formControlName="time" [(ngModel)]="_formData.time" [nzPlaceHolder]="'time'" [nzType]="'text'" [nzSize]="'large'">
-            </nz-input>
+            <nz-datepicker formControlName="time" style="width:150px;" [nzFormat]="'YYYY-MM-DD'"  [(ngModel)]="_formData.time" [nzPlaceHolder]="'time'" [nzType]="'date'" [nzSize]="'large'">
+            </nz-datepicker>
           </div>
         </div>
       </div>
@@ -162,7 +162,7 @@
         <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
             <nz-input formControlName="imgid" [(ngModel)]="_formData.imgid" [nzPlaceHolder]="'imgid'" [nzType]="'text'" [nzSize]="'large'">
             </nz-input>
-        </div>      
+        </div>
         <div nz-col [nzSpan]="5" nz-form-label>
           <label nz-form-item-required>缩略图</label>
         </div>
@@ -182,7 +182,7 @@
         </div>
         <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback style="text-align:left;">
           <ul>
-            <li *ngFor="let item of uploadImgList"><span style="display:inline-block;width:150px;text-align:left;margin-right:10px;">{{item}}</span><a style="float:right;" href="javascript:void(0)">删除</a></li>
+            <li *ngFor="let item of uploadImgList;let i = index"><span style="display:inline-block;width:150px;text-align:left;margin-right:10px;">{{item}}</span><a style="float:right;" href="javascript:void(0)" (click)="deleteImg(e,i)">删除</a></li>
           </ul>
         </div>
       </div>
@@ -193,7 +193,8 @@
       </div>
       <div nz-form-item nz-row>
         <div nz-col [nzOffset]="7" [nzSpan]="12" nz-form-control>
-          <button nz-button [nzType]="'primary'" [nzSize]="'large'" [disabled]="!validateForm.valid" (ngSubmit)="submitForm($event,validateForm.value)">提交</button>
+          <!-- validateForm.valid 表示所有字段必须验证通过之后才能进行提交-->
+          <button nz-button [nzType]="'primary'" [nzSize]="'large'"  (click)="submitForm($event,validateForm.value)">提交</button>
           <button nz-button [nzSize]="'large'" (click)="resetForm($event)">重置</button>
         </div>
       </div>
