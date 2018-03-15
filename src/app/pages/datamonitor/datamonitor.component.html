@@ -1,0 +1,14 @@
+<div>
+  <div id="u7205_text">
+    <ul class="left_nav">
+      <li [routerLink]="['./camerainfo']" (click)="onClick()"><a><img src="../../../assets/images/icon/camera.png">摄像头</a></li>
+      <li [routerLink]="['./servermonitor']" (click)="onClick()"><a><img src="../../../assets/images/icon/server.png">服务器</a></li>
+      <li [routerLink]="['./mobilemonitor']" (click)="onClick()"><a><img src="../../../assets/images/icon/mobile.png">移动端</a></li>
+      <li [routerLink]="['./clientmonitor']" (click)="onClick()"><a><img src="../../../assets/images/icon/client.png">客户端</a></li>
+      <li [routerLink]="['./netmonitor']" (click)="onClick()"><a><img src="../../../assets/images/icon/net.png">网络流量</a></li>
+    </ul>
+  </div>
+  <div id="u7206_text">
+    <router-outlet></router-outlet>
+  </div>
+</div>

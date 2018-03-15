@@ -49,6 +49,11 @@ export class RecognizeComponent implements OnInit {
   isEdit = false;
   isAdd = false;
 
+  /**是否加载中,是否显示加载状态,true:代表正在加载中,false:代表加载完成*/
+  isLoading = false;
+
+
+
   /**这里存放着table需要的数据*/
   _dataSet = [];
 
@@ -129,10 +134,12 @@ export class RecognizeComponent implements OnInit {
 
   /**调用查询接口，查询到结果之后将拿到的res赋值给_dataSet才能显示到table*/
   getRecognize() {
+    this.isLoading = true;
     this.http.get(api.queryRecognize).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list;
+      this.isLoading = false;
     }, (error) => {
       const list = [{name: '23', gender: 2, dc: 2, time: 23, zoneNum: 2}];
       this._dataSet = list;

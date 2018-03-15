@@ -46,6 +46,7 @@ import { StrategyComponent } from './pages/strategy/strategy.component';
 import { StrategyModelComponent } from './components/model/strategy-model/strategy-model.component';
 import { SnapshotComponent } from './pages/snapshot/snapshot.component';
 import { VedioComponent } from './pages/vedio/vedio.component';
+import { TransforTypePipe } from './pipe/transfor-type.pipe';
 
 
 @NgModule({
@@ -86,6 +87,7 @@ import { VedioComponent } from './pages/vedio/vedio.component';
     StrategyModelComponent,
     SnapshotComponent,
     VedioComponent,
+    TransforTypePipe,
   ],
   imports: [
     BrowserModule,

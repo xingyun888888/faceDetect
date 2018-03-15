@@ -46,6 +46,7 @@
         <span *ngIf="item.type=='gender'" style="display:-webkit-box;-webkit-line-clamp:1;overflow:hidden;-webkit-box-orient:vertical;text-overflow:ellipsis;max-width:120x; overflow:hidden;">{{data[item.key]==1?"男":"女"}}</span>
         <span *ngIf="item.type=='state'" style="display:-webkit-box;-webkit-line-clamp:1;overflow:hidden;-webkit-box-orient:vertical;text-overflow:ellipsis;max-width:120x; overflow:hidden;">{{data[item.key]==1?"启用":"未启用"}}</span>
         <span *ngIf="item.type=='date'" style="display:-webkit-box;-webkit-line-clamp:1;overflow:hidden;-webkit-box-orient:vertical;text-overflow:ellipsis;max-width:120px; overflow:hidden;">{{data[item.key] | date:'yyyy-MM-dd'}}</span>
+        <span *ngIf="item.type=='select'" style="display:-webkit-box;-webkit-line-clamp:1;overflow:hidden;-webkit-box-orient:vertical;text-overflow:ellipsis;max-width:120px; overflow:hidden;">{{data[item.key] | transforType:item.options}}</span>
         <img [src]="''" alt="" *ngIf="item.type=='img'">
       </td>
       <td nz-td class="action" *ngIf="isShowOperate" style="width:240px;">

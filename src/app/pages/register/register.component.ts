@@ -4,6 +4,7 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../api';
 import {parseParam} from '../../utils/common';
+import {certTypeOptions, dangerOptions, genderOptions} from '../../config/selectConf';
 
 @Component({
   selector: 'app-register',
@@ -14,9 +15,18 @@ export class RegisterComponent implements OnInit {
   /**这个字段是保存着search的自定义列标签*/
   _searchTitle: Array<any> = [
     {key: 'name', name: '姓名', type: '', nzSpan: 6},
-    {key: 'gender', name: '性别', type: 'select', options: [{id: 1, name: '男'}, {id: 2, name: '女'}], nzSpan: 4},
-    {key: 'dc', name: '危险级别', type: 'select', options: [{id: 1, name: '1'}, {id: 2, name: '2'}, {id: 3, name: '3'}, {id: 4, name: '4'}, {id: 5, name: '5'}], nzSpan: 6},
+    {key: 'gender', name: '性别', type: 'select', options: genderOptions, nzSpan: 4},
+    {key: 'dc', name: '危险级别', type: 'select', options: dangerOptions, nzSpan: 6},
   ];
+
+
+  /**
+   * 证件类型
+   * @type {string}
+   * @private
+   */
+  _certTypeOptions = certTypeOptions;
+
 
   /**这个字段是保存着table的自定义列标签*/
   _titles: Array<any> = [
@@ -33,12 +43,14 @@ export class RegisterComponent implements OnInit {
     {
       key: 'gender',
       name: '性别',
-      type: 'gender'
+      type: 'select',
+      options: genderOptions
     },
     {
       key: 'type',
       name: '证件类型',
-      type: 'text'
+      type: 'select',
+      options: this._certTypeOptions
     },
     {
       key: 'code',
@@ -54,16 +66,11 @@ export class RegisterComponent implements OnInit {
     {
       key: 'dc',
       name: '危险等级',
-      type: 'text'
+      type: 'select',
+      options:dangerOptions
     }
   ];
 
-  /**
-   * 证件类型
-   * @type {string}
-   * @private
-   */
-  _certTypeOptions = [{name: '身份证'}, {name: '港澳通行证'}, {name: '护照'}];
 
   _multiUploadApi: string = api.batchUpload;
 
@@ -171,7 +178,7 @@ export class RegisterComponent implements OnInit {
         name: '',
         seriernum: '',
         gender: '4',
-        type: '',
+        type: 1,
         code: '5',
         path: '5',
         feapath: '4',
@@ -206,14 +213,8 @@ export class RegisterComponent implements OnInit {
 
   /**根据条件查询方法*/
   queryRegisterByConditions(data) {
-
-    console.log(data);
-    if (data.gender) {
-      data.gender = (data.gender == '男' ? '1' : '2');
-    }
-
     console.log(parseParam(data));
-    this.http.get(api.queryRegisterByConditions + parseParam(data)).subscribe((res) => {
+    this.http.get(api.queryRegisterByConditions + parseParam(data) + '&id=' + this.id).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list.data;

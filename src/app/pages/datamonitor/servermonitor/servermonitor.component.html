@@ -1,0 +1,49 @@
+<div id="u140" class="ax_default shape1">
+  <app-displaytable [_titles]="_titlesofservice" [_dataSet]="_dataSet"></app-displaytable>
+  <div class="report-chart">
+    <!--<div class="button-group" style="width: auto;white-space:nowrap;">-->
+      <!--<button nz-button [nzType]="'danger'" nzSize="large">-->
+      <!--<h1><p style="float: left">实时监控情况</p></h1>-->
+      <!--<hr/>-->
+      <!--</button>-->
+      <!--<button>-->
+        <!--<span>检测识别服务器</span>-->
+      <!--</button>-->
+      <!--<button>-->
+        <!--<span>存储服务器</span>-->
+      <!--</button>-->
+      <!--<button>-->
+        <!--<span>媒体服务器</span>-->
+      <!--</button>-->
+      <!--<button>-->
+        <!--<span>文件服务器</span>-->
+      <!--</button>-->
+      <!--<button>-->
+        <!--<span>结构化服务器</span>-->
+      <!--</button>-->
+    <!--</div>-->
+    <div id="cache0">
+      <!--<div class="bbb1">今日平均负载<br>80%</div>-->
+      <!--<div class="bbb2">峰值负载运行时间<br>42分钟</div>-->
+      <!--<div class="bbb3">负载最大的服务器种类<br>算法服务器</div>-->
+      <h1><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;实时监控情况</p></h1>
+      <hr/>
+      <table  id="tb1" width="800" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <th scope="col">今日平均负载</th>
+          <th scope="col">峰值负载运行时间</th>
+          <th scope="col">负载最大的服务器种类</th>
+        </tr>
+        <tr>
+          <td align="center">80%</td>
+          <td align="center">42分钟</td>
+          <td align="center">算法服务器</td>
+        </tr>
+      </table>
+    </div>
+    <div echarts [options]="options" class="demo-chart"></div>
+
+  </div>
+</div>
+
+

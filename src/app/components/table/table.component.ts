@@ -132,8 +132,7 @@ export class TableComponent implements OnInit {
         if (item.code == 0) {
 
           console.log(item.PicturePathDir);
-
-          failFile += item.PicturePathDir.match(/[\u4e00-\u9fa5_a-zA-Z0-9:\/]+\/(\w+\.\w+)$/i)[1] + '、';
+          failFile += item.PicturePathDir.match(/[\u4e00-\u9fa5_a-zA-Z0-9:]+[\\\/](\w+\.\w+)$/i)[1] + '、';
         }
       });
       this.uploading = false;

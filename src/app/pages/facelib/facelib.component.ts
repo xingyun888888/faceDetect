@@ -39,7 +39,7 @@ export class FacelibComponent implements OnInit {
     },
     {
       key: 'maxNum',
-      name: '人脸个数',
+      name: '最大人脸数',
       type: 'text'
     },
     {

@@ -56,10 +56,10 @@ export class SearchComponent implements OnInit, OnChanges{
     /**
      * 在这里请求处理提交表单数据
      * */
-    let _this = this;
+    const _this = this;
     let flag = true;
     for(let key in value){
-      if(value[key]&&value[key].trim()){
+      if(value[key]){
         flag = false;
       }
     }

@@ -45,8 +45,9 @@
             </nz-input>-->
             <!-- type已经被转换成文字了 -->
             <nz-select formControlName="type" [(ngModel)]="_formData.type" [nzPlaceHolder]="'证件类型'" [nzSize]="'large'" nzAllowClear>
-              <nz-option *ngFor="let option of certTypeOptions" [nzLabel]="option.name" [nzValue]="option.name">
+              <nz-option *ngFor="let option of certTypeOptions" [nzLabel]="option.name" [nzValue]="option.value">
                 <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
+
               </nz-option>
             </nz-select>
           </div>
