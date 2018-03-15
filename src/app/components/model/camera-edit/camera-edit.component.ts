@@ -185,15 +185,6 @@ export class CameraEditComponent implements OnInit {
     this.http.get(api.queryMapList + '?type=map').subscribe((res) => {
       console.dir(res);
       let list = <any>res;
-      /**
-       * 判断如果文件是file协议;
-       */
-      list.map((item,index)=>{
-          if(/^\\\\/.test(item.value)){
-            console.log(item.value);
-            item.value ="file:"+item.value.replace(/\\/g,"/");
-          }
-      })
       this.mapOptions = list;
       this.selectedMap = list[0];
     });

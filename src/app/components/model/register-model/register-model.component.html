@@ -41,8 +41,14 @@
         </div>
         <div>
           <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-            <nz-input formControlName="type" [(ngModel)]="_formData.type" [nzPlaceHolder]="'证件类型'" [nzType]="'text'" [nzSize]="'large'">
-            </nz-input>
+            <!--<nz-input formControlName="type" [(ngModel)]="_formData.type" [nzPlaceHolder]="'证件类型'" [nzType]="'text'" [nzSize]="'large'">
+            </nz-input>-->
+            <!-- type已经被转换成文字了 -->
+            <nz-select formControlName="type" [(ngModel)]="_formData.type" [nzPlaceHolder]="'证件类型'" [nzSize]="'large'" nzAllowClear>
+              <nz-option *ngFor="let option of certTypeOptions" [nzLabel]="option.name" [nzValue]="option.name">
+                <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
+              </nz-option>
+            </nz-select>
           </div>
         </div>
         <div nz-col [nzSpan]="5" nz-form-label>
@@ -141,7 +147,7 @@
         </div>
         <div>
           <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-            <nz-input formControlName="facelibid" [(ngModel)]="_formData.facelibid" [nzPlaceHolder]="'人脸库id'" [nzType]="'text'" [nzSize]="'large'">
+            <nz-input formControlName="faceLibid" [(ngModel)]="_formData.faceLibid" [nzPlaceHolder]="'人脸库id'" [nzType]="'text'" [nzSize]="'large'">
             </nz-input>
           </div>
         </div>

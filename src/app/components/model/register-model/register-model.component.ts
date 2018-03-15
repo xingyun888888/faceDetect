@@ -37,10 +37,18 @@ export class RegisterModelComponent implements OnInit {
     source: '',
     zoneno: '',
     zonename: '',
-    facelibid: '',
+    faceLibid: '',
     dc: '',
     imgid: ''
   };
+
+  /**
+   * 证件类型下拉内容配置项
+   */
+  @Input()
+  certTypeOptions = [];
+
+
 
   /**这个是将table组件中传过来的值放入表单中*/
   @Input()
@@ -137,7 +145,6 @@ export class RegisterModelComponent implements OnInit {
     if(!this.validateForm.valid){
       return;
     }
-
     /**在这里请求处理提交表单数据*/
     this.requestData.emit(value);
     this.validateForm.reset();
@@ -178,7 +185,7 @@ export class RegisterModelComponent implements OnInit {
       source: [''],
       zoneno: [''],
       zonename: [''],
-      facelibid: [''],
+      faceLibid: [''],
       dc: [''],
       imgid: ['']
     });

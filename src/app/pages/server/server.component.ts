@@ -151,8 +151,8 @@ export class ServerComponent implements OnInit {
   queryServerByConditions(data) {
 
     console.log(data);
-    if(data.state){
-      data.state = (data.state == '启用' ? "1" : "2");
+    if (data.state) {
+      data.state = (data.state == '启用' ? '1' : '2');
     }
 
     console.log(parseParam(data));

@@ -45,7 +45,7 @@ export class NavComponent implements OnInit {
     {name: '地图管理', routeName: '/map', icon: 'assets/images/icon/map-ma.png'},
     {name: '系统管理', icon: 'assets/images/icon/system-set.png',
       children: [{name: '参数配置', routeName: '/param'},
-                 {name: '系统管理', routeName: '/user'}]}];
+                 {name: '权限管理', routeName: '/user'}]}];
 
   showList(e, curIndex) {
     this.currentIndex = curIndex;

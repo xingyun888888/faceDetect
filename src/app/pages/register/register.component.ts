@@ -15,8 +15,7 @@ export class RegisterComponent implements OnInit {
   _searchTitle: Array<any> = [
     {key: 'name', name: '姓名', type: '', nzSpan: 6},
     {key: 'gender', name: '性别', type: 'select', options: [{id: 1, name: '男'}, {id: 2, name: '女'}], nzSpan: 4},
-    {key: 'dc', name: '危险级别', type: 'select', options: [{id: 1, name: '1'}, {id: 2, name: '2'}, {id: 1, name: '3'}, {id: 2, name: '4'}, {id: 2, name: '5'}], nzSpan: 6
-    }
+    {key: 'dc', name: '危险级别', type: 'select', options: [{id: 1, name: '1'}, {id: 2, name: '2'}, {id: 3, name: '3'}, {id: 4, name: '4'}, {id: 5, name: '5'}], nzSpan: 6},
   ];
 
   /**这个字段是保存着table的自定义列标签*/
@@ -59,6 +58,12 @@ export class RegisterComponent implements OnInit {
     }
   ];
 
+  /**
+   * 证件类型
+   * @type {string}
+   * @private
+   */
+  _certTypeOptions = [{name: '身份证'}, {name: '港澳通行证'}, {name: '护照'}];
 
   _multiUploadApi: string = api.batchUpload;
 
@@ -121,9 +126,9 @@ export class RegisterComponent implements OnInit {
           'Content-type': 'application/json;charset=UTF-8'
         })
       }).subscribe((res) => {
-        this.getRegisterAll();
+        this.getRegister();
       }, (error) => {
-        this.getRegisterAll();
+        this.getRegister();
       });
       this.isAdd = false;
     } else if (this.isEdit) {
@@ -149,7 +154,7 @@ export class RegisterComponent implements OnInit {
 
   /**在这里调用刷新,点击刷新按钮之后就会调用这个方法,刷新就是调用一次查询接口*/
   refresh(e) {
-    this.getRegisterAll();
+    this.getRegister();
   }
 
   /**调用查询接口，查询到结果之后将拿到的res赋值给_dataSet才能显示到table*/
@@ -158,6 +163,7 @@ export class RegisterComponent implements OnInit {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list;
+
     }, (error) => {
       const list = [{
         id: 1,
@@ -169,7 +175,7 @@ export class RegisterComponent implements OnInit {
         code: '5',
         path: '5',
         feapath: '4',
-        facelibid: '3'
+        faceLibid: '3'
       }];
       this._dataSet = list;
     });
@@ -192,7 +198,7 @@ export class RegisterComponent implements OnInit {
         code: '',
         path: '',
         feapath: '',
-        facelibid: ''
+        faceLibid: ''
       }];
       this._dataSet = list;
     });

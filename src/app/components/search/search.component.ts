@@ -44,7 +44,7 @@ export class SearchComponent implements OnInit, OnChanges{
   @Input()
   _formData: any = [];
 
-  constructor(private fb: FormBuilder,private confirmServ: NzModalService) {
+  constructor(private fb: FormBuilder, private confirmServ: NzModalService) {
   }
 
   /**

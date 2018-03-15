@@ -12,7 +12,7 @@ export class ParamComponent implements OnInit {
   /**这个字段是保存着search的自定义列标签*/
   _searchTitle: Array<any> = [
     {key: 'name', name: '参数名', type: '', nzSpan: 6},
-    {key: 'type', name: '参数类型', type: '', nzSpan: 6}
+    {key: 'type', name: '参数类型', type: 'select', options: [], nzSpan: 6}
   ];
 
   /**这个字段是保存着table的自定义列标签*/
@@ -139,6 +139,15 @@ export class ParamComponent implements OnInit {
   }
 
   constructor(private http: HttpClient) {
+  }
+
+  /**获取参数类型列表*/
+  getParamType() {
+    this.http.get(api.queryParamType).subscribe((res) => {
+      console.dir(res);
+      const list = <any>res;
+      this._searchTitle[1].options = list;
+    });
   }
 
   /**在这里调用刷新,点击刷新按钮之后就会调用这个方法,刷新就是调用一次查询接口*/

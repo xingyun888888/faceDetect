@@ -134,17 +134,13 @@ export class FacelibComponent implements OnInit {
     });
   }
 
-  queryFacelibByConditions(data){
+  queryFacelibByConditions(data) {
     this.http.get(api.queryFacelibByConditions + parseParam(data)).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list;
     });
   }
-
-
-
-
 
   /**在这里调用刷新,点击刷新按钮之后就会调用这个方法,刷新就是调用一次查询接口*/
   refresh(e) {

@@ -61,12 +61,14 @@ const api = {
   deleteUser: devSeverAddress + 'user/delete',
   addUser: devSeverAddress + 'user/add',
   queryUserByConditions: devSeverAddress + 'user/listByConditions',
+
   //参数信息查询
   queryParam: devSeverAddress + 'param/list',
   editParam: devSeverAddress + 'param/update',
   deleteParam: devSeverAddress + 'param/delete',
   addParam: devSeverAddress + 'param/add',
   queryParamByConditions: devSeverAddress + 'param/listByConditions',
+  queryParamType: devSeverAddress + 'param/getAllType',
   //获取地图下拉列表
   queryMapList: devSeverAddress + 'param/getParamByType',
   //导入地图
