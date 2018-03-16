@@ -23,7 +23,8 @@ export class SearchComponent implements OnInit, OnChanges{
   @Input()
   upOrDown = true;
 
-
+  @Input()
+  checkName:string = "查询";
   /**
    * 保存查询的数据 通知父组件
    * @type {EventEmitter<any>}

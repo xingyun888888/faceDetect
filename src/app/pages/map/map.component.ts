@@ -1,4 +1,4 @@
-import {Component, OnInit, ElementRef, ViewChild, ViewContainerRef, ComponentFactoryResolver} from '@angular/core';
+import {Component, OnInit, ElementRef, ViewChild, ViewContainerRef, ComponentFactoryResolver, Input} from '@angular/core';
 import api from '../../api';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {MapMarkComponent} from '../../components/map-mark/map-mark.component';
@@ -15,7 +15,8 @@ export class MapComponent implements OnInit {
    * @type {boolean}
    */
   isShowUploadModal: boolean = false;
-
+  @Input()
+  isShowUpDownModal = true;
 
   /**
    * 地图上传模态框点击确定的回调

@@ -43,13 +43,19 @@ export class TableComponent implements OnInit {
   isCanAdd = true;
 
   @Input()
-  canDblClick= true;
+  isCanDelete = true;
+  @Input()
+  isCanRefresh = true;
+  @Input()
+  canDblClick = true;
   /**
    * 是否需要展示table中的操作那一列，默认展示
    * @type {boolean}
    */
   @Input()
   isShowOperate = true;
+  @Input()
+  isShowCheckbox = true;
 
   /**操作选项显示的内容,接收父组件的传值*/
   @Input()

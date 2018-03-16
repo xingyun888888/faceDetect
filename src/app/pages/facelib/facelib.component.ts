@@ -59,6 +59,9 @@ export class FacelibComponent implements OnInit {
   /**这里存放着从服务端接收到的数据，模态框需要*/
   formData = {};
 
+  /**是否加载中,是否显示加载状态,true:代表正在加载中,false:代表加载完成*/
+  isLoading = false;
+
   /**这个方法是订阅的子组件传进来的事件,当子组件触发的时候就会获取到值value,判断拿出的value是否是undefined,如果是新增处理,否则编辑处理，
    * 首先要把formData的脏值清空，然后将拿到的最新值赋值到formData，如果value有值那就是表明当前是编辑状态，否则说明是新增*/
   getRowData(value) {

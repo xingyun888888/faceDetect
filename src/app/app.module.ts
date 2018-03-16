@@ -47,6 +47,14 @@ import { StrategyModelComponent } from './components/model/strategy-model/strate
 import { SnapshotComponent } from './pages/snapshot/snapshot.component';
 import { VedioComponent } from './pages/vedio/vedio.component';
 import { TransforTypePipe } from './pipe/transfor-type.pipe';
+import {DatamonitorComponent} from './pages/datamonitor/datamonitor.component';
+import {MobilemonitorComponent} from './pages/datamonitor/mobilemonitor/mobilemonitor.component';
+import {ServermonitorComponent} from './pages/datamonitor/servermonitor/servermonitor.component';
+import {NetmonitorComponent} from './pages/datamonitor/netmonitor/netmonitor.component';
+import {ClientmonitorComponent} from './pages/datamonitor/clientmonitor/clientmonitor.component';
+import {MapmonitorComponent} from './pages/datamonitor/mapmonitor/mapmonitor.component';
+import {AnalyzerComponent} from './pages/analyzer/analyzer.component';
+import {CustomValidService} from "./service/custom-valid.service";
 
 
 @NgModule({
@@ -88,6 +96,13 @@ import { TransforTypePipe } from './pipe/transfor-type.pipe';
     SnapshotComponent,
     VedioComponent,
     TransforTypePipe,
+    DatamonitorComponent,
+    MobilemonitorComponent,
+    ServermonitorComponent,
+    NetmonitorComponent,
+    ClientmonitorComponent,
+    AnalyzerComponent,
+    MapmonitorComponent,
   ],
   imports: [
     BrowserModule,
@@ -99,7 +114,7 @@ import { TransforTypePipe } from './pipe/transfor-type.pipe';
     ReactiveFormsModule,
     NgxEchartsModule
   ],
-  providers: [],
+  providers: [CustomValidService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

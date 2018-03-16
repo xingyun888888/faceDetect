@@ -15,6 +15,13 @@ import {MapComponent} from './pages/map/map.component';
 import {StrategyComponent} from './pages/strategy/strategy.component';
 import {SnapshotComponent} from './pages/snapshot/snapshot.component';
 import {VedioComponent} from './pages/vedio/vedio.component';
+import {DatamonitorComponent} from './pages/datamonitor/datamonitor.component';
+import {MapmonitorComponent} from './pages/datamonitor/mapmonitor/mapmonitor.component';
+import {ServermonitorComponent} from './pages/datamonitor/servermonitor/servermonitor.component';
+import {MobilemonitorComponent} from './pages/datamonitor/mobilemonitor/mobilemonitor.component';
+import {ClientmonitorComponent} from './pages/datamonitor/clientmonitor/clientmonitor.component';
+import {NetmonitorComponent} from './pages/datamonitor/netmonitor/netmonitor.component';
+import {AnalyzerComponent} from './pages/analyzer/analyzer.component';
 
 export const appRoutes: Routes = [
   {
@@ -44,6 +51,10 @@ export const appRoutes: Routes = [
   {
     path: 'user',
     component: UserComponent
+  },
+  {
+    path: 'analyzer',
+    component: AnalyzerComponent
   },
   {
     path: 'reportAnalyze',
@@ -76,6 +87,17 @@ export const appRoutes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+  },
+  {
+    path: 'datamonitor',
+    component: DatamonitorComponent, children: [
+      {path: '', component: MapmonitorComponent},
+      {path: 'camerainfo', component: MapmonitorComponent},
+      {path: 'servermonitor', component: ServermonitorComponent},
+      {path: 'mobilemonitor', component: MobilemonitorComponent},
+      {path: 'clientmonitor', component: ClientmonitorComponent},
+      {path: 'netmonitor', component: NetmonitorComponent}
+    ]
   }
 ];
 

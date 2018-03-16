@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../api';
 import {parseParam} from '../../utils/common';
+import {stateOptions} from '../../config/selectConf';
 
 @Component({
   selector: 'app-server',
@@ -13,8 +14,14 @@ export class ServerComponent implements OnInit {
   _searchTitle: Array<any> = [
     {key: 'ip', name: '服务器地址', type: '', nzSpan: 7},
     {key: 'port', name: '服务器端口', type: '', nzSpan: 7},
-    {key: 'state', name: '状态', type: 'select', options: [{id: 1, name: '启用'}, {id: 2, name: '未启用'}], nzSpan: 4}
+    // 这里也放到配置里面去我知道，
+    {key: 'state', name: '状态', type: 'select', options: stateOptions, nzSpan: 4}
   ];
+
+  /**
+   * 状态
+   */
+  _stateOptions = stateOptions;
 
   /**这个字段是保存着table的自定义列标签*/
   _titles: Array<any> = [
@@ -51,7 +58,8 @@ export class ServerComponent implements OnInit {
     {
       key: 'state',
       name: '状态',
-      type: 'state'
+      type: 'select',
+      options: this._stateOptions
     }
   ];
 
@@ -64,6 +72,11 @@ export class ServerComponent implements OnInit {
 
   /**这里存放着从服务端接收到的数据，模态框需要*/
   formData = {};
+
+  /**是否加载中,是否显示加载状态,true:代表正在加载中,false:代表加载完成*/
+  isLoading = false;
+
+
 
   /**这个方法是订阅的子组件传进来的事件,当子组件触发的时候就会获取到值value,判断拿出的value是否是undefined,如果是新增处理,否则编辑处理，
    * 首先要把formData的脏值清空，然后将拿到的最新值赋值到formData，如果value有值那就是表明当前是编辑状态，否则说明是新增*/
@@ -140,16 +153,19 @@ export class ServerComponent implements OnInit {
 
   /**调用查询接口，查询到结果之后将拿到的res赋值给_dataSet才能显示到table*/
   getServer() {
+    this.isLoading = true;
     this.http.get(api.queryServer).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list;
+      /**关闭加载状态*/
+      this.isLoading = false;
     });
   }
 
   /**根据条件查询方法*/
   queryServerByConditions(data) {
-
+    this.isLoading = true;
     console.log(data);
     if (data.state) {
       data.state = (data.state == '启用' ? '1' : '2');
@@ -160,6 +176,8 @@ export class ServerComponent implements OnInit {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list.data;
+      /**关闭加载状态*/
+      this.isLoading = false;
     }, (error) => {
     });
   }

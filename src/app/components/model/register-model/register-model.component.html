@@ -30,8 +30,11 @@
         </div>
         <div>
           <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-            <nz-input formControlName="gender" [(ngModel)]="_formData.gender" [nzPlaceHolder]="'性别'" [nzType]="'text'" [nzSize]="'large'">
-            </nz-input>
+            <nz-select formControlName="gender" [(ngModel)]="_formData.gender" [nzPlaceHolder]="'-请选择-'" [nzSize]="'large'" nzAllowClear>
+              <nz-option *ngFor="let option of genderOptions" [nzLabel]="option.name" [nzValue]="option.id">
+                <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
+              </nz-option>
+            </nz-select>
           </div>
         </div>
       </div>
@@ -41,13 +44,9 @@
         </div>
         <div>
           <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-            <!--<nz-input formControlName="type" [(ngModel)]="_formData.type" [nzPlaceHolder]="'证件类型'" [nzType]="'text'" [nzSize]="'large'">
-            </nz-input>-->
-            <!-- type已经被转换成文字了 -->
-            <nz-select formControlName="type" [(ngModel)]="_formData.type" [nzPlaceHolder]="'证件类型'" [nzSize]="'large'" nzAllowClear>
-              <nz-option *ngFor="let option of certTypeOptions" [nzLabel]="option.name" [nzValue]="option.value">
+            <nz-select formControlName="type" [(ngModel)]="_formData.type" [nzPlaceHolder]="'-请选择-'" [nzSize]="'large'" nzAllowClear>
+              <nz-option *ngFor="let option of certTypeOptions" [nzLabel]="option.name" [nzValue]="option.id">
                 <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
-
               </nz-option>
             </nz-select>
           </div>
@@ -157,10 +156,14 @@
         </div>
         <div>
           <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-            <nz-input formControlName="dc" [(ngModel)]="_formData.dc" [nzPlaceHolder]="'危险等级'" [nzType]="'text'" [nzSize]="'large'">
-            </nz-input>
+            <nz-select formControlName="dc" [(ngModel)]="_formData.type" [nzPlaceHolder]="'-请选择-'" [nzSize]="'large'" nzAllowClear>
+              <nz-option *ngFor="let option of dangerOptions" [nzLabel]="option.name" [nzValue]="option.id">
+                <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
+              </nz-option>
+            </nz-select>
           </div>
         </div>
+
       </div>
       <div nz-form-item nz-row>
         <div nz-col [nzSpan]="5" nz-form-label>

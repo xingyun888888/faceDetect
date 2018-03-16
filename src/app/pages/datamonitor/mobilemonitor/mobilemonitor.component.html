@@ -1,5 +1,5 @@
-<nz-spin [nzTip]="'正在读取数据...'" [nzSpinning]="isLoading">
-  <app-displaytable [_titles]="_titles" [_dataSet]="_dataSet"  actionType="type2"></app-displaytable>
-</nz-spin>
+<!--<nz-spin [nzTip]="'正在读取数据...'">-->
+  <app-table [isCanAdd]="false" [isCanDelete]="false" [isCanRefresh]="false" [isShowOperate]="false" [isShowCheckbox]="false" [_titles]="_titles" [_dataSet]="_dataSet"></app-table>
+<!--</nz-spin>-->
 <!--<app-userinfo-model (closeModel)="isEdit=!isEdit" [isVisible]="isEdit" [_formData]="formData" (requestData)="sendData($event)"></app-userinfo-model>-->
 <app-mobile-model  [_formData]="formData"></app-mobile-model>

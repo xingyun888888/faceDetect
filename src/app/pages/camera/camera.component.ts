@@ -184,6 +184,7 @@ export class CameraComponent implements OnInit {
 
   /**多条件查询方法*/
   queryCameraByConditions(data) {
+    this.isLoading = true;
     console.log(parseParam(data));
     this.http.get(api.queryCameraByConditions + parseParam(data)).subscribe((res) => {
       console.dir(res);
@@ -192,6 +193,8 @@ export class CameraComponent implements OnInit {
         Object.assign(item, {a_name: item.analyser ? item.analyser.name : '无名字'});
       });
       this._dataSet = list;
+      /**关闭加载状态*/
+      this.isLoading = false;
     }, (error) => {
 
     });

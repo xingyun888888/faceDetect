@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ServermonitorComponent } from './servermonitor.component.ts_bk';
+import { MapmonitorComponent } from './mapmonitor.component';
 
-describe('ServermonitorComponent', () => {
-  let component: ServermonitorComponent;
-  let fixture: ComponentFixture<ServermonitorComponent>;
+describe('MapmonitorComponent', () => {
+  let component: MapmonitorComponent;
+  let fixture: ComponentFixture<MapmonitorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ServermonitorComponent ]
+      declarations: [ MapmonitorComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ServermonitorComponent);
+    fixture = TestBed.createComponent(MapmonitorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

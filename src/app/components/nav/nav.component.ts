@@ -27,8 +27,8 @@ export class NavComponent implements OnInit {
 
   currentIndex: number = -1;
 
-  navList: any = [{name: '首页', icon: 'assets/images/icon/home-fill.png'},
-    {name: '数据监控', icon: 'assets/images/icon/data-moniting.png'},
+  navList: any = [{name: '首页', routeName: '/home', icon: 'assets/images/icon/home-fill.png'},
+    {name: '数据监控', routeName: '/datamonitor', icon: 'assets/images/icon/data-moniting.png'},
     {name: '报表数据分析', routeName: '/reportAnalyze', icon: 'assets/images/icon/table-ana.png'},
     {name: '查询', icon: 'assets/images/icon/query.png',
       children: [{name: '抓拍查询', routeName: '/snapshot'},
@@ -45,7 +45,8 @@ export class NavComponent implements OnInit {
     {name: '地图管理', routeName: '/map', icon: 'assets/images/icon/map-ma.png'},
     {name: '系统管理', icon: 'assets/images/icon/system-set.png',
       children: [{name: '参数配置', routeName: '/param'},
-                 {name: '权限管理', routeName: '/user'}]}];
+                 {name: '权限管理', routeName: '/user'},
+                 {name: '分析仪设置', routeName: '/analyzer'}]}];
 
   showList(e, curIndex) {
     this.currentIndex = curIndex;

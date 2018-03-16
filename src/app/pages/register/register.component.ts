@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 import {ActivatedRoute, Params} from '@angular/router';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
@@ -26,6 +26,17 @@ export class RegisterComponent implements OnInit {
    * @private
    */
   _certTypeOptions = certTypeOptions;
+
+  /**
+   * 危险等级
+   */
+  _dangerOptions = dangerOptions;
+
+  /**
+   * 性别
+   */
+  _genderOptions = genderOptions;
+
 
 
   /**这个字段是保存着table的自定义列标签*/
@@ -67,7 +78,7 @@ export class RegisterComponent implements OnInit {
       key: 'dc',
       name: '危险等级',
       type: 'select',
-      options:dangerOptions
+      options: dangerOptions
     }
   ];
 
@@ -84,6 +95,9 @@ export class RegisterComponent implements OnInit {
 
   /**这里存放着从服务端接收到的数据，模态框需要*/
   formData = {};
+
+  /**是否加载中,是否显示加载状态,true:代表正在加载中,false:代表加载完成*/
+  isLoading = false;
 
   id: any = '';
 
@@ -166,6 +180,7 @@ export class RegisterComponent implements OnInit {
 
   /**调用查询接口，查询到结果之后将拿到的res赋值给_dataSet才能显示到table*/
   getRegisterAll() {
+    this.isLoading = true;
     this.http.get(api.queryRegisterAll).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
@@ -190,10 +205,13 @@ export class RegisterComponent implements OnInit {
 
   /**通过人脸库ID获取对应的注册信息*/
   getRegister() {
+    this.isLoading = true;
     this.http.get(api.queryRegister + '?id=' + this.id).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list;
+      /**关闭加载状态*/
+      this.isLoading = false;
     }, (error) => {
       const list = [{
         id: 1,
@@ -213,11 +231,14 @@ export class RegisterComponent implements OnInit {
 
   /**根据条件查询方法*/
   queryRegisterByConditions(data) {
+    this.isLoading = true;
     console.log(parseParam(data));
     this.http.get(api.queryRegisterByConditions + parseParam(data) + '&id=' + this.id).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list.data;
+      /**关闭加载状态*/
+      this.isLoading = false;
     }, (error) => {
     });
   }

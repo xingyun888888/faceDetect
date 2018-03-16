@@ -93,9 +93,11 @@ const api = {
   queryRecognizeLoadDayCount: devSeverAddress + 'recognize/listByDay',
   queryRecognizeWeekCount: devSeverAddress + 'recognize/listByWeek',
   queryRecognizeMonthCount: devSeverAddress + 'recognize/listByMonth',
-
-
   batchUpload: devSeverAddress + 'register/batchUpload',
+  //数据监控页面接口
+  getServerInfo: devSeverAddress + 'datamonitor/getServerInfo',
+  getServerListInfo: devSeverAddress + 'datamonitor/getServerListInfo',
+  getClientInfo: devSeverAddress + 'datamonitor/getClientInfo',
 };
 
 export default api;

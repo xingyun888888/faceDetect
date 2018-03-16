@@ -22,11 +22,17 @@ export class ServerModelComponent implements OnInit {
     id: '',
     ip: '',
     port: '',
-    state: '',
+    state: 0,
     type: '',
     memory: '',
     networkFlow: '',
   };
+
+  /**
+   * 状态下拉内容配置项
+   */
+  @Input()
+  stateOptions = [];
   /**
    *这个是将table组件中传过来的值放入表单中
    */
@@ -112,7 +118,7 @@ export class ServerModelComponent implements OnInit {
       id: [''],
       ip: [''],
       port: [''],
-      state: [''],
+      state: [0],
       type: [''],
       memory: [''],
       networkFlow: ['']

@@ -31,7 +31,7 @@ export class NetmonitorComponent implements OnInit {
           dataView : {show: true, readOnly: false},
           magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
           restore : {show: true},
-          saveAsImage : {show: true}
+          saveAsImage : {show: true,title:'保存'}
         }
       },
       calculable : true,
@@ -52,14 +52,14 @@ export class NetmonitorComponent implements OnInit {
           name:'网络上行',
           type:'line',
           smooth:true,
-          itemStyle: {normal: {areaStyle: {type: 'default'}}},
+          itemStyle: {normal: {areaStyle: {type: 'default'},lineStyle: {color: '#B3E759'},color: '#D5E6FF'}},
           data:[12, 32, 10, 34, 90, 30, 10, 90, 30]
         },
         {
           name:'网络下行',
           type:'line',
           smooth:true,
-          itemStyle: {normal: {areaStyle: {type: 'default'}}},
+          itemStyle: {normal: {areaStyle: {type: 'default'},lineStyle: {color: '#61A2FE'},color: '#FFFFFF'}},
           data:[20, 18, 19, 23, 29, 33, 31, 34, 43]
         }
       ]
@@ -82,7 +82,7 @@ export class NetmonitorComponent implements OnInit {
           dataView : {show: true, readOnly: false},
           magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
           restore : {show: true},
-          saveAsImage : {show: true}
+          saveAsImage : {show: true,title:'保存'}
         }
       },
       calculable : true,
@@ -103,14 +103,14 @@ export class NetmonitorComponent implements OnInit {
           name:'网络上行',
           type:'line',
           smooth:true,
-          itemStyle: {normal: {areaStyle: {type: 'default'}}},
+          itemStyle: {normal: {areaStyle: {type: 'default'},lineStyle: {color: '#F56244'},color: '#FEEAE7'}},
           data:[12, 32, 10, 34, 90, 30, 10, 90, 30]
         },
         {
           name:'网络下行',
           type:'line',
           smooth:true,
-          itemStyle: {normal: {areaStyle: {type: 'default'}}},
+          itemStyle: {normal: {areaStyle: {type: 'default'},lineStyle: {color: '#826AA8'},color: '#FFFFFF'}},
           data:[20, 18, 19, 23, 29, 33, 31, 34, 43]
         }
       ]
@@ -133,7 +133,7 @@ export class NetmonitorComponent implements OnInit {
           dataView : {show: true, readOnly: false},
           magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
           restore : {show: true},
-          saveAsImage : {show: true}
+          saveAsImage : {show: true,title:'保存'}
         }
       },
       calculable : true,
@@ -154,14 +154,14 @@ export class NetmonitorComponent implements OnInit {
           name:'网络上行',
           type:'line',
           smooth:true,
-          itemStyle: {normal: {areaStyle: {type: 'default'}}},
+          itemStyle: {normal: {areaStyle: {type: 'default'},lineStyle: {color: '#F9CB23'},color: '#FFF9E7'}},
           data:[12, 32, 10, 34, 90, 30, 10, 90, 30]
         },
         {
           name:'网络下行',
           type:'line',
           smooth:true,
-          itemStyle: {normal: {areaStyle: {type: 'default'}}},
+          itemStyle: {normal: {areaStyle: {type: 'default'},lineStyle: {color: '#F99F7C'},color: '#FFFFFF'}},
           data:[20, 18, 19, 23, 29, 33, 31, 34, 43]
         }
       ]
@@ -184,7 +184,7 @@ export class NetmonitorComponent implements OnInit {
           dataView : {show: true, readOnly: false},
           magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
           restore : {show: true},
-          saveAsImage : {show: true}
+          saveAsImage : {show: true,title:'保存'}
         }
       },
       calculable : true,
@@ -205,14 +205,14 @@ export class NetmonitorComponent implements OnInit {
           name:'网络上行',
           type:'line',
           smooth:true,
-          itemStyle: {normal: {areaStyle: {type: 'default'}}},
+          itemStyle: {normal: {areaStyle: {type: 'default'},lineStyle: {color: '#58388B'},color: '#EFEAF7'}},
           data:[12, 32, 10, 34, 90, 30, 10, 90, 30]
         },
         {
           name:'网络下行',
           type:'line',
           smooth:true,
-          itemStyle: {normal: {areaStyle: {type: 'default'}}},
+          itemStyle: {normal: {areaStyle: {type: 'default'},lineStyle: {color: '#8FB1F6'},color: '#FFFFFF'}},
           data:[20, 18, 19, 23, 29, 33, 31, 34, 43]
         }
       ]

@@ -52,6 +52,9 @@ export class LogComponent implements OnInit {
   /**这里存放着table需要的数据*/
   _dataSet = [];
 
+  /**是否加载中,是否显示加载状态,true:代表正在加载中,false:代表加载完成*/
+  isLoading = false;
+
   /**删除功能处理，在这里调用删除的接口，给后台发送一个ID，应该用post，只有id查询是get，其他操作都用post
    * 删除成功之后，调用查询方法，更新页面，删除失败之后，调用查询方法，更新页面*/
   deleteRow(data) {
@@ -77,10 +80,13 @@ export class LogComponent implements OnInit {
 
   /**调用查询接口，查询到结果之后将拿到的res赋值给_dataSet才能显示到table*/
   getLog() {
+    this.isLoading = true;
     this.http.get(api.queryLog).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list;
+      /**关闭加载状态*/
+      this.isLoading = false;
     }, (error) => {
       const list = [{
         id: 1,
@@ -94,10 +100,13 @@ export class LogComponent implements OnInit {
 
   /**根据条件查询方法*/
   queryLogByConditions(data) {
+    this.isLoading = true;
     this.http.get(api.queryLogByConditions + parseParam(data)).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list.data;
+      /**关闭加载状态*/
+      this.isLoading = false;
     }, (error) => {
     });
   }

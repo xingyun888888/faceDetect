@@ -33,9 +33,12 @@
           <label nz-form-item-required>状态</label>
         </div>
         <div>
-          <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
-            <nz-input formControlName="state" [(ngModel)]="_formData.state" [nzPlaceHolder]="'状态'" [nzType]="'text'" [nzSize]="'large'">
-            </nz-input>
+          <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+            <nz-select formControlName="state" [(ngModel)]="_formData.state" [nzPlaceHolder]="'-请选择-'" [nzSize]="'large'" nzAllowClear>
+              <nz-option *ngFor="let option of stateOptions" [nzLabel]="option.name" [nzValue]="option.id">
+                <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
+              </nz-option>
+            </nz-select>
           </div>
         </div>
       </div>

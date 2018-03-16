@@ -52,8 +52,6 @@ export class RecognizeComponent implements OnInit {
   /**是否加载中,是否显示加载状态,true:代表正在加载中,false:代表加载完成*/
   isLoading = false;
 
-
-
   /**这里存放着table需要的数据*/
   _dataSet = [];
 
@@ -148,7 +146,7 @@ export class RecognizeComponent implements OnInit {
 
   /**根据条件查询方法*/
   queryRecognizeByConditions(data) {
-
+    this.isLoading = true;
     console.log(data);
     if(data.gender){
       data.gender = (data.gender == '男' ? "1" : "2");
@@ -159,6 +157,8 @@ export class RecognizeComponent implements OnInit {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list.data;
+      /**关闭加载状态*/
+      this.isLoading = false;
     }, (error) => {
     });
   }

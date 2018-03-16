@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {$} from 'jquery';
+import $ from "jquery";
 
 @Component({
   selector: 'app-datamonitor',
@@ -27,10 +27,13 @@ export class DatamonitorComponent implements OnInit {
     $(document).ready(function () {
       $(".left_nav li" ).click(function (event) {
         // $(this).first().css("background","#FFFFFF");
-        $(this).children("a").css("background","#FFFFFF");
-        $(this).children("a").css("color","#EA5404");
+        $(this).children("a").css("background", "#FFFFFF");
+        $(this).children("a").css("color", "#EA5404");
+        // $(this).children("a").css("border","0px solid");  left: 50px;
+        // $(this).children("a").css("border-top-left-radius","15px");
+        // $(this).children("a").css("padding-right","15px");
         // $(this).siblings("li").removeClass("active");
-        // $(this).siblings("li").attr("class", "active");
+        $(this).children("a").attr("class", "a_active");
         // $(this).attr("class", "active");
         // $(this).css("border", "1px #f4f7fa");
         $(this).siblings("li").children("a").css("background", "#f4f7fa");

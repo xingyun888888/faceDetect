@@ -1,165 +1,196 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewChecked, Component, Input, OnInit, Output} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import api from '../../../api';
+import {parseParam} from '../../../utils/common';
+import 'rxjs/Rx';
+import {forEach} from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-servermonitor',
   templateUrl: './servermonitor.component.html',
   styleUrls: ['./servermonitor.component.less']
 })
-export class ServermonitorComponent implements OnInit {
-
-  _titlesofservice:Array<any> =[
-    {
-      key:"name",
-      name:"服务器ID"
-    },{
-      key:"age",
-      name:"运行温度"
-    },{
-      key:"code",
-      name:"GPU负载"
-    },{
-      key:"sex",
-      name:"CPU负载"
-    },{
-      key:"aaa",
-      name:"内存负载"
-    },{
-      key:"time",
-      name:"上线时间"
-    }]
-
-
-  _dataSet = [{
-    key:0,
-    name:"dsfdf",
-    age:"d",
-    code:"dsf",
-    sex:"dd",
-    aaa:"dfd"
-  },{
-    key:0,
-    name:"dsfdf",
-    age:"d",
-    code:"dsf",
-    sex:"dd",
-    aaa:"dfd"
-  },{
-    key:0,
-    name:"dsfdf",
-    age:"d",
-    code:"dsf",
-    sex:"dd",
-    aaa:"dfd"
-  },{
-    key:0,
-    name:"dsfdf",
-    age:"d",
-    code:"dsf",
-    sex:"dd",
-    aaa:"dfd"
-  },{
-    key:0,
-    name:"dsfdf",
-    age:"d",
-    code:"dsf",
-    sex:"dd",
-    aaa:"dfd"
-  },{
-    key:0,
-    name:"dsfdf",
-    age:"d",
-    code:"dsf",
-    sex:"dd",
-    aaa:"dfd"
-  }]
-  options: any;
-
-  constructor() {
+export class ServermonitorComponent implements OnInit, AfterViewChecked {
+  constructor(private http: HttpClient) {
+      // setInterval(() => {
+        this.getServerInfo();
+        this.getServerListInfo();
+      // }, 3000);
   }
 
   ngOnInit() {
-    // let xAxisData = [];
-    // let data1 = [];
-    // let data2 = [];
-    //
-    // for (let i = 0; i < 100; i++) {
-    //   xAxisData.push('category' + i);
-    //   data1.push((Math.sin(i / 5) * (i / 5 - 10) + i / 6) * 5);
-    //   data2.push((Math.cos(i / 5) * (i / 5 - 10) + i / 6) * 5);
-    // }
+  }
 
+  ngAfterViewChecked(): void {
     this.options = {
-      title : {
+      title: {
         // text: '实时监控情况',
         // subtext:['今日平均负载:80%','峰值负载运行时间:42分钟','负载最大的服务器种类:算法服务器']
       },
-      tooltip : {
+      tooltip: {
         trigger: 'axis'
       },
       legend: {
-        data:['检测识别服务器', '存储服务器', '媒体服务器', '文件服务器', '结构化服务器']
+        data: ['检测识别服务器', '存储服务器', '媒体服务器', '文件服务器', '结构化服务器']
       },
       toolbox: {
-        show : true,
-        feature : {
-          mark : {show: true},
-          dataView : {show: true, readOnly: false},
-          magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
-          restore : {show: true},
-          saveAsImage : {show: true}
+        show: true,
+        feature: {
+          mark: {show: true},
+          dataView: {show: true, readOnly: false},
+          magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+          restore: {show: true},
+          saveAsImage: {show: true}
         }
       },
-      calculable : true,
-      xAxis : [
+      calculable: true,
+      xAxis: [
         {
-          type : 'category',
-          boundaryGap : false,
-          data : ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00']
+          type: 'category',
+          boundaryGap: false,
+          data: this._dataSetsTimes
         }
       ],
-      yAxis : [
+      yAxis: [
         {
-          type : 'value'
+          type: 'value'
         }
       ],
-      series : [
+      series: [
         {
-          name:'检测识别服务器',
-          type:'line',
-          smooth:true,
+          name: '检测识别服务器',
+          type: 'line',
+          smooth: true,
           itemStyle: {normal: {areaStyle: {type: 'default'}}},
-          data:[12, 32, 10, 34, 90, 30, 10, 90, 30]
+          data: this._detectServer
         },
         {
-          name:'存储服务器',
-          type:'line',
-          smooth:true,
+          name: '存储服务器',
+          type: 'line',
+          smooth: true,
           itemStyle: {normal: {areaStyle: {type: 'default'}}},
-          data:[20, 18, 19, 23, 29, 33, 31, 34, 43]
+          data: this._storeServer
         },
         {
-          name:'媒体服务器',
-          type:'line',
-          smooth:true,
+          name: '媒体服务器',
+          type: 'line',
+          smooth: true,
           itemStyle: {normal: {areaStyle: {type: 'default'}}},
-          data:[50, 32, 20, 15, 90, 30, 40, 32, 13]
+          data: this._mediaServer
         },
         {
-          name:'文件服务器',
-          type:'line',
-          smooth:true,
+          name: '文件服务器',
+          type: 'line',
+          smooth: true,
           itemStyle: {normal: {areaStyle: {type: 'default'}}},
-          data:[20, 32, 30, 34, 39, 30, 20, 43, 22]
+          data: this._fileServer
         },
         {
-          name:'结构化服务器',
-          type:'line',
-          smooth:true,
+          name: '结构化服务器',
+          type: 'line',
+          smooth: true,
           itemStyle: {normal: {areaStyle: {type: 'default'}}},
-          data:[20, 32, 90, 34, 90, 30, 20, 22, 34]
+          data: this._structServer
         }
       ]
     };
+  }
 
+  _titles: Array<any> = [
+    {
+      key: 'id',
+      name: '服务器ID',
+      type: 'text'
+    }, {
+      key: 'temperature',
+      name: '运行温度',
+      type: 'text'
+    }, {
+      key: 'gPU',
+      name: 'GPU负载',
+      type: 'text'
+    }, {
+      key: 'cPU',
+      name: 'CPU负载',
+      type: 'text'
+    }, {
+      key: 'rAM',
+      name: '内存负载',
+      type: 'text'
+    }, {
+      key: 'time',
+      name: '上线时间',
+      type: 'date'
+    }];
+
+  /**这里存放着table需要的数据*/
+  _dataSet: Array<any> = [];
+  _dataSetsTimes: Array<any> = [];
+  _detectServer: Array<any> = [];
+  _storeServer: Array<any> = [];
+  _mediaServer: Array<any> = [];
+  _fileServer: Array<any> = [];
+  _structServer: Array<any> = [];
+  options: any;
+
+  /**查询服务器数据信息*/
+  getServerInfo() {
+    this.http.get(api.getServerInfo).subscribe((res) => {
+      console.dir(res);
+      const list = <any>res;
+      this._dataSet = list;
+    });
+  }
+
+  /**查询服务器数据信息*/
+  getServerListInfo() {
+    this.http.get(api.getServerListInfo).subscribe((res) => {
+      console.dir(res);
+      const list = <any>res;
+      // this._dataSets = list;
+      var serverDataInfo = (<ServerDataInfo>list);
+      for (let entry in serverDataInfo) {
+        this._dataSetsTimes.push(serverDataInfo[entry].times);
+        this._detectServer.push(serverDataInfo[entry].detectServer);
+        this._storeServer.push(serverDataInfo[entry].storeServer);
+        this._mediaServer.push(serverDataInfo[entry].mediaServer);
+        this._fileServer.push(serverDataInfo[entry].fileServer);
+        this._structServer.push(serverDataInfo[entry].structServer);
+      }
+      console.dir(this._dataSetsTimes);
+    });
+  }
+}
+
+export class ServerDataInfo {
+  private _times: number;
+  private _detectServer: number;
+  private _storeServer: number;
+  private _mediaServer: number;
+  private _fileServer: number;
+  private _structServer: number;
+
+  set times(value: number) {
+    this._times = value;
+  }
+
+  set detectServer(value: number) {
+    this._detectServer = value;
+  }
+
+  set storeServer(value: number) {
+    this._storeServer = value;
+  }
+
+  set mediaServer(value: number) {
+    this._mediaServer = value;
+  }
+
+  set fileServer(value: number) {
+    this._fileServer = value;
+  }
+
+  set structServer(value: number) {
+    this._structServer = value;
   }
 }

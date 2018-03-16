@@ -29,11 +29,11 @@
       </div>
     </ng-template>
   </nz-modal>
-  <div class="operate-container">
-    <button nz-button [nzType]="'default'" [nzSize]="large" class="map-btn1" (click)="isShowUploadModal=true">
+  <div class="operate-container" *ngIf="isShowUpDownModal">
+    <button *ngIf="isShowUpDownModal" nz-button [nzType]="'default'" [nzSize]="large" class="map-btn1" (click)="isShowUploadModal=true">
       <i class="anticon anticon-download"></i><span> 导入地图 </span>
     </button>
-    <button nz-button [nzType]="'default'" [nzSize]="large" class="map-btn1">
+    <button *ngIf="isShowUpDownModal" nz-button [nzType]="'default'" [nzSize]="large" class="map-btn1">
       <i class="anticon anticon-download"></i><span> 导出摄像头拓扑表 </span>
     </button>
   </div>

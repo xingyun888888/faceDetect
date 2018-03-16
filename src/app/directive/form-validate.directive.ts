@@ -2,7 +2,7 @@ import {Directive, ElementRef, Input, OnChanges, OnInit, Renderer2, SimpleChange
 
 /**appFormValidate就是表单验证的指令,在需要验证的input上面加上这个属性,就表示支持这个指令*/
 @Directive({
-  selector: '[appFormValidate][ngModel][formControlName]'
+  selector: '[appFormValidate][ngModel][formControlName][tipInfo]'
 })
 export class FormValidateDirective implements OnInit, OnChanges {
   /** 创建一个用来显示错误信息的div */
@@ -20,6 +20,11 @@ export class FormValidateDirective implements OnInit, OnChanges {
 
   /** 传入的是需要校验的表单   这个appFormValidate是从哪个地方传过来的？？？？像上面的ngModel和formControlName在模态框的HTML页面里的input中都能找到*/
   @Input('appFormValidate') validForm;
+
+  /**
+   * 提示信息
+   */
+  @Input('tipInfo') tipInfo;
 
   ngOnInit(): void {
     this.renderer.parentNode(this.elementRef.nativeElement).appendChild(this.errorChild);
@@ -41,7 +46,7 @@ export class FormValidateDirective implements OnInit, OnChanges {
       }
       /**最大长度限制提示信息*/
       if (this.validForm.hasError('maxlength', this.formControlName)) {
-        this.errorChild.innerHTML = this.formControlName + '最小长度为6';
+        this.errorChild.innerHTML = this.formControlName + this.tipInfo;
       }
       /** ``也是代表字符串的引用,比 "" '' 好处就是支持换行处理,还可以支持包含变量*/
 

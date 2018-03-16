@@ -24,8 +24,13 @@ export class UserModelComponent implements OnInit {
     module: '',
     role: '',
     isEnable: '',
-    state: ''
+    state: 0
   };
+  /**
+   * 状态下拉内容配置项
+   */
+  @Input()
+  stateOptions = [];
 
   /**这个是将table组件中传过来的值放入表单中*/
   @Input()
@@ -96,7 +101,7 @@ export class UserModelComponent implements OnInit {
       module: [''],
       role: [''],
       isEnable: [''],
-      state: ['']
+      state: [0]
     });
   }
 }

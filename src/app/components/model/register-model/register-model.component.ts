@@ -25,8 +25,8 @@ export class RegisterModelComponent implements OnInit {
     id: '',
     name: '',
     seriernum: '',
-    gender: '',
-    type:0,
+    gender: 0,
+    type: 0,
     code: '',
     path: '',
     phoneno: '',
@@ -38,7 +38,7 @@ export class RegisterModelComponent implements OnInit {
     zoneno: '',
     zonename: '',
     faceLibid: '',
-    dc: '',
+    dc: 0,
     imgid: ''
   };
 
@@ -48,6 +48,17 @@ export class RegisterModelComponent implements OnInit {
   @Input()
   certTypeOptions = [];
 
+  /**
+   * 危险等级下拉内容配置项
+   */
+  @Input()
+  dangerOptions = [];
+
+  /**
+   * 性别下拉内容配置项
+   */
+  @Input()
+  genderOptions = [];
 
 
   /**这个是将table组件中传过来的值放入表单中*/
@@ -95,12 +106,12 @@ export class RegisterModelComponent implements OnInit {
    * @param e
    * @param index
    */
-  deleteImg(e,index){
-    this.uploadImgList.splice(index,1);
-    if(index>0){
-      this._formData.path = this.uploadImgList[index-1];
-    }else{
-      this._formData.path = this.uploadImgList[this.uploadImgList.length-1];
+  deleteImg(e, index) {
+    this.uploadImgList.splice(index, 1);
+    if (index > 0) {
+      this._formData.path = this.uploadImgList[index - 1];
+    } else {
+      this._formData.path = this.uploadImgList[this.uploadImgList.length - 1];
     }
   }
 
@@ -142,7 +153,7 @@ export class RegisterModelComponent implements OnInit {
     /**
      * 在这里验证字段是否通过校验
      */
-    if(!this.validateForm.valid){
+    if (!this.validateForm.valid) {
       return;
     }
     /**在这里请求处理提交表单数据*/
@@ -165,18 +176,18 @@ export class RegisterModelComponent implements OnInit {
     return this.validateForm.controls[name];
   }
 
-  constructor(private fb: FormBuilder, private http: HttpClient,private confirmServ: NzModalService) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private confirmServ: NzModalService) {
   }
 
   ngOnInit() {
     this.validateForm = this.fb.group({
       id: [''],
-      name: ['', [ Validators.required ]],
+      name: ['', [Validators.required]],
       seriernum: [''],
-      gender: [''],
+      gender: [0],
       type: [0],
       code: [''],
-      path: ['', [ Validators.required ]],
+      path: ['', [Validators.required]],
       phoneno: [''],
       md5: [''],
       feapath: [''],
@@ -186,7 +197,7 @@ export class RegisterModelComponent implements OnInit {
       zoneno: [''],
       zonename: [''],
       faceLibid: [''],
-      dc: [''],
+      dc: [0],
       imgid: ['']
     });
   }
