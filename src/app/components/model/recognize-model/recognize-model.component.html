@@ -50,6 +50,7 @@
       <!-- 右边的表单 -->
       <div class="right-content" nz-col [nzSpan]="10">
         <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">
+          <input type="hidden" formControlName="id" [(ngModel)]="_formData.id"  >
           <div nz-form-item nz-row>
               <div nz-form-label nz-col [nzSpan]="5">
                 <label nz-form-item-required>用户名</label>

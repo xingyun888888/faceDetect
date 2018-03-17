@@ -16,16 +16,7 @@ import {Observable} from 'rxjs/Observable';
 export class UserModelComponent implements OnInit {
   /**该输入属性，里面包含着table中的所有字段*/
   @Input()
-  _formData = {
-    id: '',
-    name: '',
-    displayName: '',
-    pwd: '',
-    module: '',
-    role: '',
-    isEnable: '',
-    state: 0
-  };
+  _formData = null;
   /**
    * 状态下拉内容配置项
    */

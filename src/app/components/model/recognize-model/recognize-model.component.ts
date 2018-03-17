@@ -16,28 +16,7 @@ import {Observable} from 'rxjs/Observable';
 export class RecognizeModelComponent implements OnInit {
   /**该输入属性，里面包含着table中的所有字段*/
   @Input()
-  _formData = {
-    id: '',
-    name: '',
-    personid: '',
-    serialNum: '',
-    gender: '',
-    zoneNum: '',
-    camId: '',
-    direction: '',
-    similarDegree: '',
-    path: '',
-    snapPath: '',
-    time: '',
-    dc: '',
-    type: '',
-    card: '',
-    basepath: '',
-    url: '',
-    mappath: '',
-    mappath_new: '',
-    state: ''
-  };
+  _formData = null;
 
   /**这个是将table组件中传过来的值放入表单中*/
   @Input()
@@ -101,6 +80,7 @@ export class RecognizeModelComponent implements OnInit {
 
   ngOnInit() {
     this.validateForm = this.fb.group({
+      id: [''],
       name: [''],
       personid: [''],
       serialNum: [''],

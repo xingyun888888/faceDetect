@@ -77,19 +77,7 @@ export class StrategyModelComponent implements OnInit {
    *该输入属性，里面包含着table中的所有字段
    */
   @Input()
-  _formData = {
-    id: '',
-    name: '',
-    type: '',
-    operateType: '',
-    description: '',
-    createTime: '',
-    creater: '',
-    modifier: '',
-    minPixel: '',
-    pQ: '',
-    timeSlotId: ''
-  };
+  _formData =  null;
   /**
    *这个是将table组件中传过来的值放入表单中
    */

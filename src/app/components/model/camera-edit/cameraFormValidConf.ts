@@ -1,15 +1,15 @@
 /**
- * Created by smileMAC on 3/16/18.
- */
-/**
  * 表单验证以及错误信息配置项
  * @type {[{fieldName: string; options: [{validCondition: string; info: string},{key: string; info: string}]}]}
  */
 export const validOptions = [
   {
-    fieldName: "type",
+    fieldName: "type", //字段的名字对应的是模板里面formControllName;
     options: [
-      {validCondition: "required", info: "姓名不能为空"},
+      {
+        validCondition: "required", //这是验证条件 required 需要注意的是maxLength对应的是maxlength;
+        info: "姓名不能为空"          //如果验证出错提示的信息
+      },
       {validCondition: "maxlength", info: "姓名长度不能大于2"}
     ]
   },
@@ -27,9 +27,8 @@ export const validOptions = [
     fieldName: "ip",
     options: [
       {validCondition: "required", info: "ip地址不能为空"},
-      {validCondition: "maxlength", info: "ip地址长度不能大25"},
-      {validCondition:"pattern",info:"ip必须是数字"}
-      ]
+      {validCondition: "maxlength", info: "ip地址长度不能大25"}
+    ]
   },
   {
     fieldName: "port",
@@ -41,7 +40,10 @@ export const validOptions = [
   },
   {
     fieldName: "mediaPort",
-    options: [{validCondition: "required", info: "流媒体端口号不能为空"}, {validCondition: "maxlength", info: "流媒体端口号长度不能大于3"},{validCondition:"pattern",info:"流媒体端口号必须是数字"}]
+    options: [{validCondition: "required", info: "流媒体端口号不能为空"}, {
+      validCondition: "maxlength",
+      info: "流媒体端口号长度不能大于3"
+    }, {validCondition: "pattern", info: "流媒体端口号必须是数字"}]
   },
   {
     fieldName: "direction",
@@ -51,7 +53,13 @@ export const validOptions = [
     fieldName: "analyserID",
     options: [{validCondition: "required", info: "区域ID不能为空"}, {validCondition: "maxlength", info: "区域ID长度不能大于3"}]
   },
-  {fieldName: "pwd", options: [{validCondition:"pattern",info:"密码必须是数字"},{validCondition: "required", info: "密码不能为空"}, {key: "maxlength", info: "密码长度不能大于9"}]},
+  {
+    fieldName: "pwd",
+    options: [{validCondition: "pattern", info: "密码必须是数字"}, {
+      validCondition: "required",
+      info: "密码不能为空"
+    }, {key: "maxlength", info: "密码长度不能大于9"}]
+  },
   // {
   //   fieldName: "rtspPort",
   //   options: [{validCondition:"pattern",info:"rtsp端口必须是数字"},{validCondition: "required", info: "rtsp端口不能为空"}, {validCondition: "maxlength", info: "rtsp端口长度不能大于5"}]

@@ -1,15 +1,8 @@
 <nz-modal [nzVisible]="isVisible" [nzTitle]="'服务端信息编辑'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)" [nzConfirmLoading]="isConfirmLoading" nzFooter="" >
   <ng-template #modalContent>
     <form nz-form [formGroup]="validateForm">
-      <div nz-form-item nz-row>
-        <div nz-form-label nz-col [nzSpan]="7">
-          <label nz-form-item-required>Id</label>
-        </div>
-        <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
-          <nz-input  formControlName="id" [nzPlaceHolder]="'自动获取'" [nzDisabled]="'true'" [(ngModel)]="_formData.id" [nzType]="'text'" [nzSize]="'large'">
-          </nz-input>
-        </div>
-      </div>
+      <input type="hidden" formControlName="id" [(ngModel)]="_formData.id"  >
+
       <div nz-form-item nz-row>
         <div nz-form-label nz-col [nzSpan]="7">
           <label nz-form-item-required>ip地址</label>

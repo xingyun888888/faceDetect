@@ -18,15 +18,7 @@ export class ServerModelComponent implements OnInit {
    *该输入属性，里面包含着table中的所有字段
    */
   @Input()
-  _formData = {
-    id: '',
-    ip: '',
-    port: '',
-    state: 0,
-    type: '',
-    memory: '',
-    networkFlow: '',
-  };
+  _formData = null;
 
   /**
    * 状态下拉内容配置项

@@ -1,6 +1,7 @@
 <nz-modal class="camera-modal-container"  [nzVisible]="isVisible" [nzTitle]="'摄像头信息'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)" [nzConfirmLoading]="isConfirmLoading" nzFooter="" [nzMaskClosable]="false">
   <ng-template #modalContent>
     <form nz-form [formGroup]="validateForm">
+      <input type="hidden" formControlName="id" [(ngModel)]="_formData.id"  >
       <div nz-form-item nz-row>
         <div nz-form-label nz-col [nzSpan]="5">
           <label nz-form-item-required>摄像头名称</label>
@@ -13,7 +14,7 @@
           <label nz-form-item-required>摄像头类型</label>
         </div>
         <div nz-col [nzSpan]="6" nz-form-control>
-          <nz-input [appFormValidate]="validateForm" formControlName="type" [(ngModel)]="_formData.type"  [nzType]="'text'" [nzPlaceHolder]="'枪机/球机'" [nzSize]="'large'">
+          <nz-input  formControlName="type" [(ngModel)]="_formData.type"  [nzType]="'text'" [nzPlaceHolder]="'枪机/球机'" [nzSize]="'large'">
           </nz-input>
         </div>
       </div>

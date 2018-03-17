@@ -21,26 +21,7 @@ interface FileReaderEvent extends Event {
 export class RegisterModelComponent implements OnInit {
   /***该输入属性，里面包含着table中的所有字段*/
   @Input()
-  _formData = {
-    id: '',
-    name: '',
-    seriernum: '',
-    gender: 0,
-    type: 0,
-    code: '',
-    path: '',
-    phoneno: '',
-    md5: '',
-    feapath: '',
-    time: '',
-    address: '',
-    source: '',
-    zoneno: '',
-    zonename: '',
-    faceLibid: '',
-    dc: 0,
-    imgid: ''
-  };
+  _formData = null;
 
   /**
    * 证件类型下拉内容配置项
@@ -91,16 +72,21 @@ export class RegisterModelComponent implements OnInit {
 
   priviewImg: string = '';
 
+
+
   fileSelect(e) {
     this.imgSelect.nativeElement.click();
     console.log(this.imgSelect);
   }
 
-  uploadImgList: string[] = [];
+  uploadImgNameList: string[] = [];
+
+  uploadImgList: any[] = [];
+
 
   defaultImg: string = '../../../assets/images/upload-icon.png';
 
-
+  uploadApi = api.uploadImg;
   /**
    * 删除上传图片列表uploadImgList里面的图片
    * @param e
@@ -116,25 +102,62 @@ export class RegisterModelComponent implements OnInit {
   }
 
 
-  fileChange(e) {
-    console.log(e);
-    let img = e.target.files[0];
-    console.log(e.target.files[0].name);
-    this._formData.path = e.target.files[0].name;
-    this.uploadImgList.push(e.target.files[0].name);
+  /**
+   * 批量上传
+   */
+  batchUploadHandler({file,fileList}){
+    const status = file.status;
+    if (status !== 'uploading') {
+      console.log(file, fileList);
+    }
+    if (status === 'done') {
+    } else if (status === 'error') {
+    }
+  }
+
+  imgUploadHandler(e){
     let formData = new FormData();
-    formData.append('uploadFile', img);
+    console.dir(this.uploadImgList);
+    if(this.uploadImgList.length==0){
+      this.confirmServ.error({
+        zIndex: 2000,
+        title: "请先选择图片"
+      })
+      return;
+    }
+    formData.append('uploadFile',this.uploadImgList[0]);
     let reader = new FileReader();
-    reader.readAsDataURL(img);
+    reader.readAsDataURL(this.uploadImgList[0]);
     reader.onload = (res: FileReaderEvent) => {
       this.priviewImg = res.target.result;
       this.http.post(api.uploadImg, formData).subscribe((res) => {
         const result = <any>res;
-        this._formData.path = result.path;
+        this._formData.path = result.msgBody.dataSend.PictureList[0]&&result.msgBody.dataSend.PictureList[0].PicturePathDir;
         this.defaultImg = this.priviewImg;
+        this.confirmServ.success({
+          zIndex: 2000,
+          title: "缩略图添加成功"
+        })
       }, (error) => {
+        this._formData.path = "";
+        this.confirmServ.success({
+          zIndex: 2000,
+          title: "缩略图添加失败"
+        })
       });
     };
+  }
+
+  /**
+   * @param e
+   */
+  fileChange(e) {
+    console.log(e);
+    //let img = e.target.files[0];
+    console.log(e.target.files[0].name);
+    this.uploadImgList[0] = e.target.files[0];
+    this._formData.path = e.target.files[0].name;
+    this.uploadImgNameList.push(e.target.files[0].name);
   }
 
   /**这个是关闭表单的方法*/

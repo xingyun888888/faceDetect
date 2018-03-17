@@ -22,37 +22,7 @@ import {validOptions} from "./cameraFormValidConf";
 export class CameraEditComponent implements OnInit {
   /**该输入属性，里面包含着table中的所有字段*/
   @Input()
-  _formData = {
-    id: '',
-    type: '',
-    name: '',
-    serialNum: '',
-    ip: '',
-    port: '',
-    mediaIP: '',
-    mediaPort: '',
-    direction: '',
-    analyserID: '',
-    // zoneID: '',
-    // strategyID: '',
-    // doorID: '',
-    user: '',
-    pwd: '',
-    // rtspPort: '',
-    rtspPath: '',
-    camInfo: '',
-    camMapX: '',
-    camMapY: '',
-    camState: '',
-    streamType: '',
-    districtID: '',
-    districtName: '',
-    area: '',
-    areaID: '',
-    areaName: '',
-    distictUrl: ''
-    // img_url: ''
-  };
+  _formData =  null;
 
   /**分析仪下拉列表*/
   options = [];
@@ -147,14 +117,22 @@ export class CameraEditComponent implements OnInit {
 
   /**提交表单，提交时做校验操作*/
   submitForm = ($event, value) => {
+
+    //阻止事件默认行为
     $event.preventDefault();
     for (const key in this.validateForm.controls) {
       this.validateForm.controls[key].markAsDirty();
     }
-    /**如果表单验证失败*/
+    /**如果表单验证失败*
+     *
+     * this.validateForm.valid 返回为true的话 就是表单填写正确
+     * 否则表单填写有误
+     *
+     */
     if (!this.validateForm.valid) {
       /**
        * 在这里使用表单验证 提示校验错误的信息
+       * 使用表单验证服务的valid方法  接收两个参数 第一个是表单对象  第二个参数是配置选项
        */
       this.customValidServ.valid(this.validateForm, validOptions);
       // this.closeModel.emit();
@@ -233,40 +211,9 @@ export class CameraEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    // /**响应式表单，Validators.required表示必填*/
-    // this.validateForm = this.fb.group({
-    //   type: [''],
-    //   name: [''],
-    //   serialNum: [''],
-    //   ip: [''],
-    //   port: [''],
-    //   mediaIP: [''],
-    //   mediaPort: [''],
-    //   direction: [''],
-    //   analyserID: [''],
-    //   // zoneID: [''],
-    //   // strategyID: [''],
-    //   // doorID: [''],
-    //   user: [''],
-    //   pwd: [''],
-    //   rtspPort: [''],
-    //   rtspPath: [''],
-    //   camInfo: [''],
-    //   camMapX: [''],
-    //   camMapY: [''],
-    //   camState: [''],
-    //   streamType: [''],
-    //   districtID: [''],
-    //   districtName: [''],
-    //   area: [''],
-    //   areaID: [''],
-    //   areaName: [''],
-    //   distictUrl: [''],
-    //   // img_url: ['']
-    // });
-
     /**响应式表单，Validators.required表示必填*/
     this.validateForm = this.fb.group({
+      id: [''],
       type: ['', [Validators.required, Validators.maxLength(2)]],
       name: ['', [Validators.required, Validators.maxLength(10)]],
       serialNum: ['', [Validators.maxLength(25)]],

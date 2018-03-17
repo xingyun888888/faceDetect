@@ -42,17 +42,17 @@ export class ReportDataAnalyzeComponent implements OnInit {
   ]
 
   toggleChart(e,index){
-     if(!this.options.series[index]){
-       this.options.series.push({
-         name:this.xAxisName[index],
-         type: 'line',
-         stack: '总量',
-         itemStyle: {normal: {areaStyle: {type: 'default'}}},
-         data: [220, 182, 191, 234, 290, 330, 310, 342, 432]
-       },)
-     }else{
-       this.options.series.splice(index,1);
-     }
+     // if(!this.options.series[index]){
+     //   this.options.series.push({
+     //     name:this.xAxisName[index],
+     //     type: 'line',
+     //     stack: '总量',
+     //     itemStyle: {normal: {areaStyle: {type: 'default'}}},
+     //     data: [220, 182, 191, 234, 290, 330, 310, 342, 432]
+     //   },)
+     // }else{
+     //   this.options.series.splice(index,1);
+     // }
   }
 
   /**

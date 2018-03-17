@@ -213,6 +213,7 @@ export class RegisterComponent implements OnInit {
       /**关闭加载状态*/
       this.isLoading = false;
     }, (error) => {
+      this.isLoading = false;
       const list = [{
         id: 1,
         imgPath: '',

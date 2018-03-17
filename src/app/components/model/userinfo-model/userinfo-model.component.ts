@@ -15,16 +15,7 @@ import { Observable } from 'rxjs/Observable';
 })
 export class UserinfoModelComponent implements OnInit {
   @Input()
-  _formData = {
-    id:"",
-    name:"",
-    displayName:"",
-    pwd:"",
-    module:"",
-    role:"",
-    isEnable:0,
-    state:""
-  }
+  _formData = null;
 
 
   @Input()

@@ -1,6 +1,7 @@
 <nz-modal [nzVisible]="isVisible" [nzTitle]="'用户信息编辑'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)" [nzConfirmLoading]="isConfirmLoading" nzFooter="" >
   <ng-template #modalContent>
     <form nz-form [formGroup]="validateForm">
+      <input type="hidden" formControlName="id" [(ngModel)]="_formData.id"  >
       <div nz-form-item nz-row>
         <div nz-form-label nz-col [nzSpan]="7">
           <label nz-form-item-required>Id</label>
