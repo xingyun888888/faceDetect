@@ -1,7 +1,7 @@
 const devSeverAddress = 'http://localhost:8080/faceDetect/';
 
 //192.168.1.200 部署之后的web接口
-//const devSeverAddress = 'http://192.168.1.200/faceDetect/';
+//const devSeverAddress = 'http://192.168.1.200:8088/faceDetect/';
 
 //const devServerAddress = "http://www.adding360.com:8080/bioauth/"
 
@@ -79,7 +79,9 @@ const api = {
   editRegister: devSeverAddress + 'register/update',
   deleteRegister: devSeverAddress + 'register/delete',
   addRegister: devSeverAddress + 'register/add',
-  uploadImg: devSeverAddress + 'register/upload',
+  singleUpload: devSeverAddress + 'register/singleUpload',
+  batchUpload: devSeverAddress + 'register/batchUpload',
+
   queryRegisterByConditions: devSeverAddress + 'register/listByConditions',
   //注册信息数据报表分析
   queryRegisterDayCount: devSeverAddress + 'register/listByDay',
@@ -93,11 +95,13 @@ const api = {
   queryRecognizeLoadDayCount: devSeverAddress + 'recognize/listByDay',
   queryRecognizeWeekCount: devSeverAddress + 'recognize/listByWeek',
   queryRecognizeMonthCount: devSeverAddress + 'recognize/listByMonth',
-  batchUpload: devSeverAddress + 'register/batchUpload',
+
   //数据监控页面接口
   getServerInfo: devSeverAddress + 'datamonitor/getServerInfo',
   getServerListInfo: devSeverAddress + 'datamonitor/getServerListInfo',
   getClientInfo: devSeverAddress + 'datamonitor/getClientInfo',
+  //登录
+  userLogin: devSeverAddress + 'user/login',
 };
 
 export default api;

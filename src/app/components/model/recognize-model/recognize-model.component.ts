@@ -7,6 +7,8 @@ import {
   Validators
 } from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
+import {CustomValidService} from '../../../service/custom-valid.service';
+import {validOptions} from '../facelib-model/faceFormValidConf';
 
 @Component({
   selector: 'app-recognize-model',
@@ -56,9 +58,18 @@ export class RecognizeModelComponent implements OnInit {
       this.validateForm.controls[key].markAsDirty();
     }
     console.log(value);
-    /**在这里请求处理提交表单数据*/
-    this.requestData.emit(value);
-    this.validateForm.reset();
+    if (!this.validateForm.valid) {
+      /**
+       * 在这里使用表单验证 提示校验错误的信息
+       * 使用表单验证服务的valid方法  接收两个参数 第一个是表单对象  第二个参数是配置选项
+       */
+      this.customValidServ.valid(this.validateForm, validOptions);
+      // this.closeModel.emit();
+    } else {
+      /**在这里请求处理提交表单数据*/
+      this.requestData.emit(value);
+      this.validateForm.reset();
+    }
   }
 
   /**重置表单*/
@@ -75,7 +86,7 @@ export class RecognizeModelComponent implements OnInit {
     return this.validateForm.controls[name];
   }
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private customValidServ: CustomValidService) {
   }
 
   ngOnInit() {

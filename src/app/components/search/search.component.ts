@@ -36,7 +36,6 @@ export class SearchComponent implements OnInit, OnChanges{
   @Input()
   _searchTitle: any = [];
 
-
   /**
    * 保存表单的数据
    * @type {any[]}

@@ -6,6 +6,17 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+
+/**
+ * 引入store管理页面状态
+ */
+import {StoreModule,ActionReducer} from '@ngrx/store'
+
+import * as fromRoot from '@app-root-store';
+
+import { storeLogger } from 'ngrx-store-logger';
+
+
 /**
  * 引入图表库
  */
@@ -56,6 +67,11 @@ import {MapmonitorComponent} from './pages/datamonitor/mapmonitor/mapmonitor.com
 import {AnalyzerComponent} from './pages/analyzer/analyzer.component';
 import {CustomValidService} from "./service/custom-valid.service";
 
+export function logger(reducer:ActionReducer<fromRoot.State>): any {
+  return storeLogger()(reducer);
+}
+
+export const metaReducers = [logger];
 
 @NgModule({
   entryComponents: [MapMarkComponent],
@@ -112,7 +128,8 @@ import {CustomValidService} from "./service/custom-valid.service";
     RouterModule.forRoot(appRoutes),
     NgZorroAntdModule.forRoot(),
     ReactiveFormsModule,
-    NgxEchartsModule
+    NgxEchartsModule,
+    StoreModule.forRoot(fromRoot.reducers,{metaReducers})
   ],
   providers: [CustomValidService],
   bootstrap: [AppComponent]

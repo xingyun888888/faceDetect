@@ -132,11 +132,9 @@ export class TableComponent implements OnInit {
       headers: new HttpHeaders({})
     }).subscribe((res: any) => {
       console.log(res);
-
       let failFile = '';
       res.msgBody.dataSend.PictureList.map((item, index) => {
         if (item.code == 0) {
-
           console.log(item.PicturePathDir);
           failFile += item.PicturePathDir.match(/[\u4e00-\u9fa5_a-zA-Z0-9:]+[\\\/](\w+\.\w+)$/i)[1] + '、';
         }
@@ -163,6 +161,12 @@ export class TableComponent implements OnInit {
   }
 
 
+  /**
+   * 页码改变的回调函数
+   */
+  pageSizeChangeHandler(pageSize){
+    this.pageSize = this.pageSize;
+  }
   /**
    * 返回false就是取消上传
    * @param file
@@ -254,12 +258,6 @@ export class TableComponent implements OnInit {
     this._refreshStatus();
   }
 
-  /**
-   * 页码改变的回调函数   --暂时没有用到 保留
-   */
-  _pageSizeChange(visible) {
-    console.log(visible);
-  }
 
   /**
    * 保留,暂时没有用到

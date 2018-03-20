@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import * as moment from 'moment';
-import {parseParam,dateFormat} from '../../utils/common';
+import {parseParam, dateFormat} from '../../utils/common';
 import api from '../../api';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
@@ -23,56 +23,62 @@ export class ReportDataAnalyzeComponent implements OnInit {
    */
 
 
-
-
   /**
    * 定义x轴的显示名称
    * @type {string[]}
    */
-  //xAxisName = ['服务器负载', '人脸分析次数', '网络流量', '抓水客数', '报警频度', '人脸库底图数', '摄像头在线数'];
+    //xAxisName = ['服务器负载', '人脸分析次数', '网络流量', '抓水客数', '报警频度', '人脸库底图数', '摄像头在线数'];
 
   xAxisName = [
-    {name:'服务器负载',key:"",resourceUrl:api.queryRegisterWeekCount},
-    {name:"人脸分析次数",key:"",resourceUrl:api.queryRegisterWeekCount},
-    {name:"网络流量",key:"",resourceUrl:api.queryRegisterWeekCount},
-    {name:"抓水客数",key:"",resourceUrl:api.queryRegisterWeekCount},
-    {name:"报警频度",key:"",resourceUrl:api.queryRegisterWeekCount},
-    {name:"人脸库底图数",key:"queryRegisterWeekCount",resourceUrl:api.queryRegisterWeekCount},
-    {name:"摄像头在线数",key:"",resourceUrl:api.queryRegisterWeekCount}
-  ]
+    {name: '服务器负载', key: '', resourceUrl: api.queryRegisterWeekCount},
+    {name: '人脸分析次数', key: '', resourceUrl: api.queryRegisterWeekCount},
+    {name: '网络流量', key: '', resourceUrl: api.queryRegisterWeekCount},
+    {name: '抓水客数', key: '', resourceUrl: api.queryRegisterWeekCount},
+    {name: '报警频度', key: '', resourceUrl: api.queryRegisterWeekCount},
+    {name: '人脸库底图数', key: 'queryRegisterWeekCount', resourceUrl: api.queryRegisterWeekCount},
+    {name: '摄像头在线数', key: '', resourceUrl: api.queryRegisterWeekCount}
+  ];
 
-  toggleChart(e,index){
-     // if(!this.options.series[index]){
-     //   this.options.series.push({
-     //     name:this.xAxisName[index],
-     //     type: 'line',
-     //     stack: '总量',
-     //     itemStyle: {normal: {areaStyle: {type: 'default'}}},
-     //     data: [220, 182, 191, 234, 290, 330, 310, 342, 432]
-     //   },)
-     // }else{
-     //   this.options.series.splice(index,1);
-     // }
+
+  timeOptions = [
+    {name: '天', id: 1, value: 'byDay'},
+    {name: '周', id: 2, value: 'byWeek'},
+    {name: '月', id: 3, value: 'byMonth'},
+    {name: '年', id: 4, value: 'byYear'}
+  ];
+
+  toggleChart(e, index) {
+    // if(!this.options.series[index]){
+    //   this.options.series.push({
+    //     name:this.xAxisName[index],
+    //     type: 'line',
+    //     stack: '总量',
+    //     itemStyle: {normal: {areaStyle: {type: 'default'}}},
+    //     data: [220, 182, 191, 234, 290, 330, 310, 342, 432]
+    //   },)
+    // }else{
+    //   this.options.series.splice(index,1);
+    // }
   }
 
   /**
    * 查询分析数据
    * @param e
    */
-  getAnalyzeData(e, item){
+  getAnalyzeData(e, item) {
     console.log(this._startDate);
     console.log(this._endDate);
     /**
      * 日期格式 2018-01-01
      */
     const data = {
-      startTime:dateFormat(new Date(this._startDate),"yyyy-MM-dd hh:mm:ss"),
-      endTime:dateFormat(new Date(this._endDate),"yyyy-MM-dd hh:mm:ss")
+      startTime: dateFormat(new Date(this._startDate), 'yyyy-MM-dd hh:mm:ss'),
+      endTime: dateFormat(new Date(this._endDate), 'yyyy-MM-dd hh:mm:ss')
     };
     /**
      * 明天记得改成get方式
      */
-    this.http.post(api.queryRegisterWeekCount + parseParam(data), data,{
+    this.http.post(api.queryRegisterWeekCount + parseParam(data), data, {
       headers: new HttpHeaders({
         'Content-type': 'application/json;charset=UTF-8'
       })
@@ -85,41 +91,39 @@ export class ReportDataAnalyzeComponent implements OnInit {
   }
 
 
-
-
   newArray = (len) => {
     const result = [];
     for (let i = 0; i < len; i++) {
       result.push(i);
     }
     return result;
-  }
+  };
 
   _startValueChange = () => {
     if (this._startDate > this._endDate) {
       this._endDate = null;
     }
-  }
+  };
 
   _endValueChange = () => {
     if (this._startDate > this._endDate) {
       this._startDate = null;
     }
-  }
+  };
 
   _disabledStartDate = (startValue) => {
     if (!startValue || !this._endDate) {
       return false;
     }
     return startValue.getTime() >= this._endDate.getTime();
-  }
+  };
 
   _disabledEndDate = (endValue) => {
     if (!endValue || !this._startDate) {
       return false;
     }
     return endValue.getTime() <= this._startDate.getTime();
-  }
+  };
 
   get _isSameDay() {
     return this._startDate && this._endDate && moment(this._startDate).isSame(this._endDate, 'day');
@@ -146,12 +150,12 @@ export class ReportDataAnalyzeComponent implements OnInit {
     };
   }
 
-  options: any  = {
+  options: any = {
     tooltip: {
       trigger: 'axis'
     },
     legend: {
-      data:this.xAxisName
+      data: this.xAxisName
     },
     toolbox: {
       show: true,
@@ -168,7 +172,7 @@ export class ReportDataAnalyzeComponent implements OnInit {
       {
         type: 'category',
         boundaryGap: false,
-        data: ['01-11', '02-11', '03-11', '04-11', '05-11', '06-11', '07-11', '08-11', '09-11', ]
+        data: ['01-11', '02-11', '03-11', '04-11', '05-11', '06-11', '07-11', '08-11', '09-11',]
       }
     ],
     yAxis: [
@@ -234,25 +238,25 @@ export class ReportDataAnalyzeComponent implements OnInit {
    * 将数据渲染到页面上
    * res是服务器返回的
    */
-  renderData(res){
+  renderData(res) {
     this.options.xAxis.data = [];
     this.options.series = [];
-     res.map((item,index)=>{
-       this.options.xAxis.data.push(item);
-       this.options.series.push({
-         name:this.xAxisName[index],
-         type: 'line',
-         stack: '总量',
-         itemStyle: {normal: {areaStyle: {type: 'default'}}},
-         data: [820, 932, 901, 934, 1290, 1330, 1320, 1111, 225]
-       })
-     })
+    res.map((item, index) => {
+      this.options.xAxis.data.push(item);
+      this.options.series.push({
+        name: this.xAxisName[index],
+        type: 'line',
+        stack: '总量',
+        itemStyle: {normal: {areaStyle: {type: 'default'}}},
+        data: [820, 932, 901, 934, 1290, 1330, 1320, 1111, 225]
+      });
+    });
   }
 
-  constructor(private http:HttpClient) {
+  constructor(private http: HttpClient) {
   }
 
   ngOnInit() {
-   // this.renderData([1,2,3,4,5])
+    // this.renderData([1,2,3,4,5])
   }
 }

@@ -7,6 +7,7 @@ import {
   Validators
 } from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
+import {CustomValidService} from '../../../service/custom-valid.service';
 
 @Component({
   selector: 'app-user-model',
@@ -80,7 +81,7 @@ export class UserModelComponent implements OnInit {
     return this.validateForm.controls[name];
   }
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private customValidServ: CustomValidService) {
   }
 
   ngOnInit() {

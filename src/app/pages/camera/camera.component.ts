@@ -2,6 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import api from '../../api';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {parseParam} from '../../utils/common';
+import {cameraStateOptions, cameraTypeOptions, dangerOptions, genderOptions, streamTypeOptions} from '../../config/selectConf';
+import {Store} from '@ngrx/store';
+import * as fromRoot from '@app-root-store';
+import * as actions from './../../store/actions';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-camera',
@@ -11,24 +16,56 @@ import {parseParam} from '../../utils/common';
 export class CameraComponent implements OnInit {
   /**这个字段是保存着search的自定义列标签*/
   _searchTitle: Array<any> = [
-    {key: 'name', name: '摄像机名称', type: '', nzSpan: 7},
-    {key: 'direction', name: '方向', type: '', nzSpan: 5}
+    {key: 'name', name: '摄像头名称', type: '', nzSpan: 7},
+    {key: 'camState', name: '摄像头状态', type: 'select', options: cameraStateOptions, nzSpan: 7}
   ];
+
+  /**
+   * 流媒体类型下拉框内容配置项
+   */
+  _streamTypeOptions = streamTypeOptions;
+
+  /**
+   *摄像头类型
+   */
+  _cameraTypeOptions = cameraTypeOptions;
+
+  /**
+   *摄像头状态
+   */
+  _cameraStateOptions = cameraStateOptions;
+
 
   /**这个字段是保存着table的自定义列标签*/
   _titles: Array<any> = [
     {
       key: 'id',
-      name: '摄像头编号',
+      name: '编号',
+      type: 'text'
+    },
+    {
+      key: 'name',
+      name: '摄像头名称',
+      type: 'text'
+    },
+    {
+      key: 'camState',
+      name: '摄像头状态',
+      type: 'select',
+      options: cameraStateOptions
+    },
+    {
+      key: 'type',
+      name: '摄像头类型',
       type: 'text'
     },
     {
       key: 'ip',
-      name: '相机IP',
+      name: '摄像头IP',
       type: 'text'
     },
     {
-      key: 'districtName',
+      key: 'area',
       name: '监控区域',
       type: 'text'
     },
@@ -39,22 +76,12 @@ export class CameraComponent implements OnInit {
     },
     {
       key: 'serialNum',
-      name: 'SN号',
+      name: '序列号',
       type: 'text'
     },
     {
       key: 'direction',
       name: '方向',
-      type: 'text'
-    },
-    {
-      key: 'name',
-      name: '摄像机名称',
-      type: 'text'
-    },
-    {
-      key: 'type',
-      name: '机器型号',
       type: 'text'
     }
   ];
@@ -136,7 +163,7 @@ export class CameraComponent implements OnInit {
     }
   }
 
-  constructor(private http: HttpClient) {
+  constructor(private store:Store<fromRoot.State>,private http: HttpClient) {
   }
 
   /**在这里调用刷新,点击刷新按钮之后就会调用这个方法,刷新就是调用一次查询接口*/
@@ -146,7 +173,9 @@ export class CameraComponent implements OnInit {
 
   /**调用查询接口，查询到结果之后将拿到的res赋值给_dataSet才能显示到table*/
   getCamera() {
-    this.isLoading = true;
+    debugger;
+    this.store.dispatch(new actions.setLoadingState(true));
+    debugger;
     this.http.get(api.queryCamera).subscribe((res) => {
       console.dir(res);
       let list = <any>res;
@@ -157,34 +186,20 @@ export class CameraComponent implements OnInit {
       this._dataSet = list;
 
       /**关闭加载状态*/
-      this.isLoading = false;
+      this.store.dispatch(new actions.setLoadingState(false));
     }, () => {
       let list = [
-        {
-          id: '', name: 'sdf',
-          ip: '23', direction: '3',
-          type: '3', serialNum: '3',
-          zoneID: '3', a_name: '3',
-          strategyID: '3',
-          doorID: '3',
-          port: '3',
-          user: '3',
-          pwd: '2',
-          rtspPort: '3',
-          rtspPath: '3',
-        }
-
       ];
       this._dataSet = list;
       setTimeout(() => {
-        this.isLoading = false;
-      }, 2000);
+        this.store.dispatch(new actions.setLoadingState(false));
+      }, 3000);
     });
   }
 
   /**多条件查询方法*/
   queryCameraByConditions(data) {
-    this.isLoading = true;
+    this.store.dispatch(new actions.setLoadingState(true));
     console.log(parseParam(data));
     this.http.get(api.queryCameraByConditions + parseParam(data)).subscribe((res) => {
       console.dir(res);
@@ -194,9 +209,9 @@ export class CameraComponent implements OnInit {
       });
       this._dataSet = list;
       /**关闭加载状态*/
-      this.isLoading = false;
+      this.store.dispatch(new actions.setLoadingState(false));
     }, (error) => {
-
+      this.store.dispatch(new actions.setLoadingState(false));
     });
   }
 

@@ -9,3 +9,18 @@ export const dangerOptions = [{id: 1, name: '低', value: 1}, {id: 2, name: '中
 
 /***********  状态配置  ************/
 export const stateOptions = [{id: 1, name: '启用', value: 1}, {id: 2, name: '未启用', value: 2}];
+
+/***********  摄像头类型(因为数据库是varchar，所以直接存文字)************/
+export const cameraTypeOptions = [{id: '枪机', name: '枪机'}, {id: '球机', name: '球机'}, {id: '其它', name: '其它'}];
+/***********  摄像头状态  ************/
+export const cameraStateOptions = [{id: 1, name: '启用', value: 1}, {id: 2, name: '未启用', value: 2}];
+/***********  流媒体类型  ************/
+export const streamTypeOptions = [{id: 1, name: 'H264', value: 1}, {id: 2, name: 'H265', value: 2}];
+
+/***********  服务器管理 服务器类型************/
+export const serverTypeOptions = [
+  {id: 1, name: '人脸检测', value: 1},
+  {id: 2, name: '人脸识别', value: 2},
+  {id: 3, name: '人型分析', value: 3},
+  {id: 4, name: '跟踪', value: 4}];
+

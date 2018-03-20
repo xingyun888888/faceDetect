@@ -3,6 +3,10 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../api';
 import {parseParam} from '../../utils/common';
+import {Store} from '@ngrx/store';
+import * as fromRoot from '@app-root-store';
+import * as actions from './../../store/actions';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-recognize',
@@ -49,8 +53,6 @@ export class RecognizeComponent implements OnInit {
   isEdit = false;
   isAdd = false;
 
-  /**是否加载中,是否显示加载状态,true:代表正在加载中,false:代表加载完成*/
-  isLoading = false;
 
   /**这里存放着table需要的数据*/
   _dataSet = [];
@@ -121,8 +123,7 @@ export class RecognizeComponent implements OnInit {
       this.isEdit = false;
     }
   }
-
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,private store:Store<fromRoot.State>) {
   }
 
   /**在这里调用刷新,点击刷新按钮之后就会调用这个方法,刷新就是调用一次查询接口*/
@@ -132,34 +133,35 @@ export class RecognizeComponent implements OnInit {
 
   /**调用查询接口，查询到结果之后将拿到的res赋值给_dataSet才能显示到table*/
   getRecognize() {
-    this.isLoading = true;
+    this.store.dispatch(new actions.setLoadingState(true));
     this.http.get(api.queryRecognize).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list;
-      this.isLoading = false;
+      this.store.dispatch(new actions.setLoadingState(false));
     }, (error) => {
       const list = [{name: '23', gender: 2, dc: 2, time: 23, zoneNum: 2}];
       this._dataSet = list;
+      this.store.dispatch(new actions.setLoadingState(false));
     });
   }
 
   /**根据条件查询方法*/
   queryRecognizeByConditions(data) {
-    this.isLoading = true;
+    this.store.dispatch(new actions.setLoadingState(true));
     console.log(data);
     if(data.gender){
       data.gender = (data.gender == '男' ? "1" : "2");
     }
-
     console.log(parseParam(data));
     this.http.get(api.queryRecognizeByConditions + parseParam(data)).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list.data;
       /**关闭加载状态*/
-      this.isLoading = false;
+      this.store.dispatch(new actions.setLoadingState(false));
     }, (error) => {
+      this.store.dispatch(new actions.setLoadingState(false));
     });
   }
 

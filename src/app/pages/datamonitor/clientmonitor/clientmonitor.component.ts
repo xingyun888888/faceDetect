@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewChecked, Component, OnInit} from '@angular/core';
 import api from '../../../api';
 import {HttpClient} from '@angular/common/http';
 
@@ -7,7 +7,50 @@ import {HttpClient} from '@angular/common/http';
   templateUrl: './clientmonitor.component.html',
   styleUrls: ['./clientmonitor.component.less']
 })
-export class ClientmonitorComponent implements OnInit {
+export class ClientmonitorComponent implements OnInit,AfterViewChecked{
+  options: any;
+  ngAfterViewChecked(): void {
+    this.options = {
+      title: {
+      },
+      tooltip: {
+        trigger: 'axis'
+      },
+      legend: {
+        data: ['接受视频数', '在线时间'],
+        y: 'bottom'
+      },
+      calculable: true,
+      xAxis: [
+        {
+          type: 'category',
+          boundaryGap: false,
+          data: ['01-11', '02-11', '03-11', '04-11', '05-11', '06-11', '07-11', '08-11', '09-11', ]
+        }
+      ],
+      yAxis: [
+        {
+          type: 'value'
+        }
+      ],
+      series: [
+        {
+          name: '接受视频数',
+          type: 'line',
+          smooth: true,
+          itemStyle: {normal: {areaStyle: {type: 'default'}}},
+          data: [220, 182, 191, 234, 290, 330, 310, 342, 432]
+        },
+        {
+          name: '在线时间',
+          type: 'line',
+          smooth: true,
+          itemStyle: {normal: {areaStyle: {type: 'default'}}},
+          data: [22, 18, 19, 23, 20, 10, 15, 21, 12]
+        }
+      ]
+    };
+  }
   _titles:Array<any> =[
     {
       key:"name",

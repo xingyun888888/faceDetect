@@ -1,10 +1,13 @@
 import {Component, Input, OnInit} from '@angular/core';
-
 import {ActivatedRoute, Params} from '@angular/router';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../api';
 import {parseParam} from '../../utils/common';
 import {certTypeOptions, dangerOptions, genderOptions} from '../../config/selectConf';
+import {Store} from '@ngrx/store';
+import * as fromRoot from '@app-root-store';
+import * as actions from './../../store/actions';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-register',
@@ -36,8 +39,6 @@ export class RegisterComponent implements OnInit {
    * 性别
    */
   _genderOptions = genderOptions;
-
-
 
   /**这个字段是保存着table的自定义列标签*/
   _titles: Array<any> = [
@@ -97,7 +98,13 @@ export class RegisterComponent implements OnInit {
   formData = {};
 
   /**是否加载中,是否显示加载状态,true:代表正在加载中,false:代表加载完成*/
-  isLoading = false;
+  isLoading$:Observable<boolean>;
+
+  /**
+   * 是否保存数据 防止重复提交
+   * @type {boolean}
+   */
+
 
   id: any = '';
 
@@ -151,7 +158,6 @@ export class RegisterComponent implements OnInit {
       }, (error) => {
         this.getRegister();
       });
-      this.isAdd = false;
     } else if (this.isEdit) {
       this.http.post(api.editRegister, data, {
         headers: new HttpHeaders({
@@ -167,7 +173,7 @@ export class RegisterComponent implements OnInit {
 
   }
 
-  constructor(private routerInfo: ActivatedRoute, private http: HttpClient) {
+  constructor(private store:Store<fromRoot.State>,private routerInfo: ActivatedRoute, private http: HttpClient) {
     routerInfo.queryParams.subscribe(queryParams => {
       console.log(queryParams);
     });
@@ -180,7 +186,7 @@ export class RegisterComponent implements OnInit {
 
   /**调用查询接口，查询到结果之后将拿到的res赋值给_dataSet才能显示到table*/
   getRegisterAll() {
-    this.isLoading = true;
+    this.store.dispatch(new actions.setLoadingState(true));
     this.http.get(api.queryRegisterAll).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
@@ -200,20 +206,20 @@ export class RegisterComponent implements OnInit {
         faceLibid: '3'
       }];
       this._dataSet = list;
+      this.store.dispatch(new actions.setLoadingState(false));
     });
   }
 
   /**通过人脸库ID获取对应的注册信息*/
   getRegister() {
-    this.isLoading = true;
+    this.store.dispatch(new actions.setLoadingState(true));
     this.http.get(api.queryRegister + '?id=' + this.id).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list;
       /**关闭加载状态*/
-      this.isLoading = false;
+      this.store.dispatch(new actions.setLoadingState(false));
     }, (error) => {
-      this.isLoading = false;
       const list = [{
         id: 1,
         imgPath: '',
@@ -227,25 +233,27 @@ export class RegisterComponent implements OnInit {
         faceLibid: ''
       }];
       this._dataSet = list;
+      this.store.dispatch(new actions.setLoadingState(false));
     });
   }
 
   /**根据条件查询方法*/
   queryRegisterByConditions(data) {
-    this.isLoading = true;
+    this.store.dispatch(new actions.setLoadingState(true));
     console.log(parseParam(data));
     this.http.get(api.queryRegisterByConditions + parseParam(data) + '&id=' + this.id).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list.data;
       /**关闭加载状态*/
-      this.isLoading = false;
+      this.store.dispatch(new actions.setLoadingState(false));
     }, (error) => {
     });
   }
 
   /**组件初始化的时候调用一次*/
   ngOnInit() {
+    this.isLoading$ = this.store.select(fromRoot.getCurrentState);
     this.id = this.routerInfo.snapshot.queryParams['id'];
     this.getRegister();
   }

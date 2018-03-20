@@ -17,7 +17,6 @@
     }
     &>span{
       display:inline-block;
-      vertical-align:middle;
       color: #e66924;
       margin-left:20px;
       font-size:30px;
@@ -25,24 +24,31 @@
     }
     &>b{
       display:inline-block;
-      vertical-align:middle;
-      margin-left:15px;
+      margin-left:10px;
       font-size:16px;
       color:#E74C3C;
     }
   }
   .user-action{
     float:right;
-    width:300px;
+    min-width:350px;
+    height:50px;
     .login-info{
       height:50px;
       line-height:50px;
       color:#fff;
       font-size:14px;
+      .logintime{
+        padding-left:25px;
+        background-size:25%;
+        color: #fb754e;
+      }
       .username{
         padding-left:25px;
         background:url(../../../assets/images/person.svg) no-repeat left center;
         background-size:25%;
+        font-weight:400;
+        color: #666;
       }
     }
     .last-login-time{

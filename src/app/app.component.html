@@ -5,10 +5,48 @@
 
 <!--<router-outlet name="aux"></router-outlet>-->
 <!--<router-outlet></router-outlet>-->
-<div class="container">
-  <app-header></app-header>
+<div *ngIf="_formLogin" class="wrapper">
+  <div *ngIf="_isBackGround" id="background" style="position:absolute;z-index:-1;width:100%;height:100vh;top:0px;left:0px;"><img src="../assets/images/u0_state0.jpg" width="100%" height="100%" /></div>
+  <!--<img src="img/u0_state0.jpg" id="bkg_img" width="" height="">-->
+  <form *ngIf="_formLogin" [formGroup]="formModel" (submit)="onSubmit()">
+    <div class="loginBox">
+      <div class="loginBoxCenter">
+        <p><label for="text">用户名：</label></p>
+        <!--autofocus 规定当页面加载时按钮应当自动地获得焦点。 -->
+        <!-- placeholder提供可描述输入字段预期值的提示信息-->
+        <p><input [class.hasError]="formModel.get('user').invalid && formModel.get('user').touched" type="text" formControlName="user" id="text" name="text" class="loginInput" autofocus="autofocus" required="required" autocomplete="off" placeholder="请输入用户名称" value="" /></p>
+        <div [hidden]="formModel.get('user').valid || formModel.get('user').untouched">
+          <div [hidden]="!formModel.hasError('required','user')" style="font-size: small;color: #FF0000">
+            用户名是必填项
+          </div>
+        </div>
+        <!-- required 规定必需在提交之前填写输入字段-->
+        <p><label for="password">密码：</label></p>
+        <p><input [class.hasError]="formModel.get('pwd').invalid && formModel.get('pwd').touched" type="password" formControlName="pwd" id="password" name="password" class="loginInput" required="required" placeholder="请输入登录密码" value="" /></p>
+        <div [hidden]="formModel.get('pwd').valid || formModel.get('pwd').untouched">
+          <div [hidden]="!formModel.hasError('required','pwd')"  style="font-size: small;color: #FF0000">
+            密码不能为空
+          </div>
+        </div>
+        <p>
+          <a class="forgetLink" href="#">忘记密码?</a>
+        </p>
+        <input id="remember" type="checkbox" name="remember" />
+        <label for="remember">记住登录状态</label>
+      </div>
+      <div class="loginBoxButtons">
+        <button type="submit" class="loginBtn">登录</button>
+      </div>
+    </div>
+  </form>
+  <!--<router-outlet *ngIf="_routermenu"></router-outlet>-->
+</div>
+<div *ngIf="_routermenu" class="container">
+  <app-header [username]="username"></app-header>
   <app-nav></app-nav>
-  <router-outlet></router-outlet>
+  <nz-spin [nzTip]="'正在读取数据...'" [nzSpinning]="isLoading$|async">
+      <router-outlet></router-outlet>
+  </nz-spin>
 </div>
 
 

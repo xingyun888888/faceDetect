@@ -1,5 +1,7 @@
 import {Component, EventEmitter, ElementRef, ViewChild, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {CustomValidService} from '../../../service/custom-valid.service';
+import {validOptions} from '../facelib-model/faceFormValidConf';
 
 @Component({
   selector: 'app-strategy-model',
@@ -132,10 +134,18 @@ export class StrategyModelComponent implements OnInit {
       this.validateForm.controls[key].markAsDirty();
     }
     console.log(value);
-    //在这里请求处理提交表单数据
-    this.requestData.emit(value);
-    this.validateForm.reset();
-
+    if (!this.validateForm.valid) {
+      /**
+       * 在这里使用表单验证 提示校验错误的信息
+       * 使用表单验证服务的valid方法  接收两个参数 第一个是表单对象  第二个参数是配置选项
+       */
+      this.customValidServ.valid(this.validateForm, validOptions);
+      // this.closeModel.emit();
+    } else {
+      /**在这里请求处理提交表单数据*/
+      this.requestData.emit(value);
+      this.validateForm.reset();
+    }
   }
 
   /**
@@ -172,7 +182,7 @@ export class StrategyModelComponent implements OnInit {
     this.cameraSelectIsShow = false;
 
   }
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private customValidServ: CustomValidService) {
   }
 
   ngOnInit() {

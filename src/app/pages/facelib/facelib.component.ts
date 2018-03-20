@@ -11,9 +11,8 @@ import {parseParam} from '../../utils/common';
 export class FacelibComponent implements OnInit {
   /**这个字段是保存着search的自定义列标签*/
   _searchTitle: Array<any> = [
-    {key: 'name', name: '人脸库名称', type: 'select', options: [], nzSpan: 7},
+    {key: 'id', name: '人脸库名称', type: 'select', options: [], nzSpan: 7},
   ];
-
 
   /**这个字段是保存着table的自定义列标签*/
   _titles: Array<any> = [
@@ -67,10 +66,11 @@ export class FacelibComponent implements OnInit {
   getRowData(value) {
     console.log(value);
     this.formData = {};
-    this.formData = Object.assign({}, value);
     if (!value) {
+      this.formData = {createTime:null};
       this.isAdd = true;
     } else {
+      this.formData = Object.assign({createTime:null}, value);
       this.isEdit = true;
     }
   }

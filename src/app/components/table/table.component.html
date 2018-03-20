@@ -10,7 +10,7 @@
       <button *ngIf="isCanReback" nz-button [nzType]="'default'" [nzSize]="'large'" [routerLink]="['/facelib']"><span><i
         class="anticon anticon-reload"></i> 回退</span></button>
     </nz-button-group>
-    <div class="batch-upload-box" *ngIf="isCanBatchUpload">
+    <!-- <div class="batch-upload-box" *ngIf="isCanBatchUpload">
       <nz-upload *ngIf="fileList.length==0" nzMultiple nzShowButton [nzAction]="mulUploadApi" [nzFileList]="fileList"   (nzChange)="handleChange($event)"  [nzShowUploadList]="false"   [nzBeforeUpload]="beforeUpload"   >
         <button nz-button>
           <i class="anticon anticon-upload"></i><span>批量上传</span>
@@ -25,10 +25,16 @@
         </button>
       </nz-button-group>
       <span>共选择{{fileList.length}}个文件</span>
-    </div>
+    </div> -->
   </div>
+  <!--
+     [(nzPageSize)]这种是双向绑定
+      默认会绑定一个事件 ngPageSizeChange($event);
+      所以需要监听nzPageSize变化值的时候
+     就在绑定nzPageSizeChange属性
+   -->
   <nz-table #nzTable [nzDataSource]="_dataSet" nzShowSizeChanger [(nzPageIndex)]="currentPageIndex"
-            [(nzPageSize)]="pageSize" (nzDataChange)="_displayDataChange($event)" (nzPageIndexChange)="_refreshStatus()"
+            [(nzPageSize)]="pageSize" (nzPageSizeChange)="pageSizeChangeHandler($event)" (nzDataChange)="_displayDataChange($event)" (nzPageIndexChange)="_refreshStatus()"
             (nzPageSizeChange)="_refreshStatus()" [nzShowQuickJumper]="true" [nzShowTotal]="true">
     <thead nz-thead>
     <tr>

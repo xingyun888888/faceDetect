@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --open",
     "start:proxy": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build --base-href /faceDetect/",
     "test": "ng test",
@@ -28,6 +28,7 @@
     "echarts": "^3.8.5",
     "ng-zorro-antd": "^0.6.14",
     "ngrx-store-logger": "^0.2.0",
+    "ngrx-undo": "^4.0.2",
     "ngx-echarts": "^2.0.1",
     "rxjs": "^5.5.2",
     "zone.js": "^0.8.14"

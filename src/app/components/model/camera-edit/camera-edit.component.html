@@ -1,21 +1,30 @@
-<nz-modal class="camera-modal-container"  [nzVisible]="isVisible" [nzTitle]="'摄像头信息'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)" [nzConfirmLoading]="isConfirmLoading" nzFooter="" [nzMaskClosable]="false">
+<nz-modal class="camera-modal-container" [nzVisible]="isVisible" [nzTitle]="'摄像头信息'" [nzContent]="modalContent"
+          (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)" [nzConfirmLoading]="isConfirmLoading"
+          nzFooter="" [nzMaskClosable]="false">
   <ng-template #modalContent>
     <form nz-form [formGroup]="validateForm">
-      <input type="hidden" formControlName="id" [(ngModel)]="_formData.id"  >
+      <input type="hidden" formControlName="id" [(ngModel)]="_formData.id">
       <div nz-form-item nz-row>
         <div nz-form-label nz-col [nzSpan]="5">
           <label nz-form-item-required>摄像头名称</label>
         </div>
-        <div nz-col [nzSpan]="6" nz-form-control >
-          <nz-input [appFormValidate]="validateForm" formControlName="name" [(ngModel)]="_formData.name"  [nzType]="'text'" [nzPlaceHolder]="'摄像头名称'" [nzSize]="'large'">
+        <div nz-col [nzSpan]="6" nz-form-control>
+          <nz-input [appFormValidate]="validateForm" formControlName="name" [(ngModel)]="_formData.name"
+                    [nzType]="'text'" [nzPlaceHolder]="'摄像头名称'" [nzSize]="'large'">
           </nz-input>
         </div>
         <div nz-form-label nz-col [nzSpan]="5">
           <label nz-form-item-required>摄像头类型</label>
         </div>
         <div nz-col [nzSpan]="6" nz-form-control>
-          <nz-input  formControlName="type" [(ngModel)]="_formData.type"  [nzType]="'text'" [nzPlaceHolder]="'枪机/球机'" [nzSize]="'large'">
-          </nz-input>
+          <!--<nz-input  formControlName="type" [(ngModel)]="_formData.type"  [nzType]="'text'" [nzPlaceHolder]="'枪机/球机'" [nzSize]="'large'">-->
+          <!--</nz-input>-->
+          <nz-select formControlName="type" [(ngModel)]="_formData.type" [nzPlaceHolder]="'-请选择-'" [nzSize]="'large'"
+                     nzAllowClear>
+            <nz-option *ngFor="let option of cameraTypeOptions" [nzLabel]="option.name" [nzValue]="option.id">
+              <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
+            </nz-option>
+          </nz-select>
         </div>
       </div>
       <div nz-form-item nz-row>
@@ -23,74 +32,161 @@
           <label>摄像头品牌</label>
         </div>
         <div nz-col [nzSpan]="6" nz-form-control>
-          <nz-input formControlName="camInfo"  [(ngModel)]="_formData.camInfo"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'摄像头品牌'" [nzSize]="'large'">
+          <nz-input formControlName="camInfo" [(ngModel)]="_formData.camInfo" [nzRows]="2" [nzType]="'text'"
+                    [nzPlaceHolder]="'摄像头品牌'" [nzSize]="'large'">
           </nz-input>
         </div>
         <div nz-form-label nz-col [nzSpan]="5">
           <label>序列号</label>
         </div>
         <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-          <nz-input [appFormValidate]="validateForm" formControlName="serialNum" [(ngModel)]="_formData.serialNum"  [nzType]="'text'" [nzPlaceHolder]="'序列号'" [nzSize]="'large'">
+          <nz-input [appFormValidate]="validateForm" formControlName="serialNum" [(ngModel)]="_formData.serialNum"
+                    [nzType]="'text'" [nzPlaceHolder]="'序列号'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>摄像头状态</label>
+        </div>
+        <div nz-col [nzSpan]="6" nz-form-control>
+          <nz-select formControlName="camState" [(ngModel)]="_formData.camState" [nzPlaceHolder]="'-请选择-'"
+                     [nzSize]="'large'" nzAllowClear>
+            <nz-option *ngFor="let option of cameraStateOptions" [nzLabel]="option.name" [nzValue]="option.id">
+              <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
+            </nz-option>
+          </nz-select>
+        </div>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>摄像头区域</label>
+        </div>
+        <div nz-col [nzSpan]="6" nz-form-control>
+          <nz-input formControlName="area" [(ngModel)]="_formData.area" [nzRows]="2" [nzType]="'text'"
+                    [nzPlaceHolder]="'移动端使用'" [nzSize]="'large'">
           </nz-input>
         </div>
       </div>
       <div nz-form-item nz-row>
         <div nz-form-label nz-col [nzSpan]="5">
-          <label nz-form-item-required>摄像机IP地址</label>
+          <label nz-form-item-required>摄像头IP地址</label>
         </div>
         <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-          <nz-input [appFormValidate]="validateForm" formControlName="ip" [(ngModel)]="_formData.ip" [nzType]="'text'"  [nzPlaceHolder]="'摄像机IP地址'" [nzSize]="'large'">
+          <nz-input [appFormValidate]="validateForm" formControlName="ip" [(ngModel)]="_formData.ip" [nzType]="'text'"
+                    [nzPlaceHolder]="'摄像机IP地址'" [nzSize]="'large'">
           </nz-input>
         </div>
         <div nz-col [nzSpan]="5" nz-form-label>
-          <label nz-form-item-required>摄像机端口号</label>
+          <label nz-form-item-required>摄像头端口号</label>
         </div>
         <div>
           <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-            <nz-input [appFormValidate]="validateForm" formControlName="port" [(ngModel)]="_formData.port" [nzPlaceHolder]="'摄像机端口号'" [nzType]="'text'" [nzSize]="'large'">
+            <nz-input [appFormValidate]="validateForm" formControlName="port" [(ngModel)]="_formData.port"
+                      [nzPlaceHolder]="'摄像机端口号'" [nzType]="'text'" [nzSize]="'large'">
             </nz-input>
           </div>
         </div>
       </div>
       <div nz-form-item nz-row>
         <div nz-col [nzSpan]="5" nz-form-label>
-          <label nz-form-item-required>选择分析仪</label>
+          <label nz-form-item-required>摄像机方向</label>
         </div>
         <div>
           <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-            <nz-select formControlName="analyserID" [(ngModel)]="_formData.analyserID" [nzPlaceHolder]="'分析仪名称'" [nzSize]="'large'" nzAllowClear>
+            <nz-input [appFormValidate]="validateForm" formControlName="direction" [(ngModel)]="_formData.direction"
+                      [nzPlaceHolder]="'采用东南西北或上下左右描述大概方向'" [nzType]="'text'" [nzSize]="'large'">
+            </nz-input>
+          </div>
+        </div>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label>选择分析仪</label>
+        </div>
+        <div>
+          <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+            <nz-select formControlName="analyserID" [(ngModel)]="_formData.analyserID" [nzPlaceHolder]="'分析仪名称'"
+                       [nzSize]="'large'" nzAllowClear>
               <nz-option *ngFor="let option of options" [nzLabel]="option.name" [nzValue]="option.id">
                 <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
               </nz-option>
             </nz-select>
           </div>
         </div>
+      </div>
+      <div nz-form-item nz-row>
+        <!--<div nz-col [nzSpan]="5" nz-form-label>-->
+        <!--<label>门禁ID</label>-->
+        <!--</div>-->
+        <!--<div>-->
+        <!--<div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>-->
+        <!--<nz-input formControlName="doorID" [(ngModel)]="_formData.doorID" [nzPlaceHolder]="'门禁ID'" [nzType]="'text'" [nzSize]="'large'">-->
+        <!--</nz-input>-->
+        <!--</div>-->
+        <!--</div>-->
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>用户名</label>
+        </div>
+        <div>
+          <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+            <nz-input formControlName="user" [(ngModel)]="_formData.user" [nzPlaceHolder]="'用户名'" [nzType]="'text'"
+                      [nzSize]="'large'">
+            </nz-input>
+          </div>
+        </div>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>密码</label>
+        </div>
+        <div>
+          <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+            <nz-input formControlName="pwd" [(ngModel)]="_formData.pwd" [nzPlaceHolder]="'密码'" [nzType]="'password'"
+                      [nzSize]="'large'">
+            </nz-input>
+          </div>
+        </div>
+      </div>
+      <!--<div nz-form-item nz-row>-->
+
+      <!--<div nz-col [nzSpan]="5" nz-form-label>-->
+      <!--<label nz-form-item-required>rtsp端口</label>-->
+      <!--</div>-->
+      <!--<div nz-col [nzSpan]="6" nz-form-control>-->
+      <!--<nz-input formControlName="rtspPort"  [(ngModel)]="_formData.rtspPort"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'tsp端口'" [nzSize]="'large'">-->
+      <!--</nz-input>-->
+      <!--</div>-->
+      <!--</div>-->
+      <div nz-form-item nz-row>
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>rtsp路径</label>
+        </div>
+        <div nz-col [nzSpan]="17" nz-form-control>
+          <nz-input formControlName="rtspPath" [(ngModel)]="_formData.rtspPath" [nzRows]="2" [nzType]="'text'"
+                    [nzPlaceHolder]="'移动端使用,请输入完整的rtsp路径'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+        <!--<div nz-col [nzSpan]="5" nz-form-label>-->
+        <!--<label nz-form-item-required>img_url</label>-->
+        <!--</div>-->
+        <!--<div nz-col [nzSpan]="6" nz-form-control>-->
+        <!--<nz-input formControlName="截图地址"  [(ngModel)]="_formData.img_url"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'截图地址'" [nzSize]="'large'">-->
+        <!--</nz-input>-->
+        <!--</div>-->
+      </div>
+      <div nz-form-item nz-row>
         <div nz-col [nzSpan]="5" nz-form-label>
           <label nz-form-item-required>流媒体IP地址</label>
         </div>
         <div>
           <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-            <nz-input formControlName="mediaIP" [(ngModel)]="_formData.mediaIP" [nzPlaceHolder]="'流媒体IP地址'" [nzType]="'text'" [nzSize]="'large'">
+            <nz-input formControlName="mediaIP" [(ngModel)]="_formData.mediaIP" [nzPlaceHolder]="'流媒体IP地址'"
+                      [nzType]="'text'" [nzSize]="'large'">
             </nz-input>
           </div>
         </div>
-      </div>
-      <div nz-form-item nz-row>
         <div nz-form-label nz-col [nzSpan]="5">
           <label nz-form-item-required>流媒体端口号</label>
         </div>
         <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-          <nz-input [appFormValidate]="validateForm" formControlName="mediaPort" [(ngModel)]="_formData.mediaPort" [nzType]="'text'"  [nzPlaceHolder]="'流媒体端口号'" [nzSize]="'large'">
+          <nz-input [appFormValidate]="validateForm" formControlName="mediaPort" [(ngModel)]="_formData.mediaPort"
+                    [nzType]="'text'" [nzPlaceHolder]="'流媒体端口号'" [nzSize]="'large'">
           </nz-input>
-        </div>
-        <div nz-col [nzSpan]="5" nz-form-label>
-          <label nz-form-item-required>摄像机方向</label>
-        </div>
-        <div>
-          <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-            <nz-input [appFormValidate]="validateForm" formControlName="direction" [(ngModel)]="_formData.direction" [nzPlaceHolder]="'采用东南西北或上下左右描述大概方向'" [nzType]="'text'" [nzSize]="'large'">
-            </nz-input>
-          </div>
         </div>
       </div>
       <!--<div nz-form-item nz-row>-->
@@ -113,80 +209,36 @@
       <!--</div>-->
       <!--</div>-->
       <!--</div>-->
-      <div nz-form-item nz-row>
-        <!--<div nz-col [nzSpan]="5" nz-form-label>-->
-        <!--<label>门禁ID</label>-->
-        <!--</div>-->
-        <!--<div>-->
-        <!--<div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>-->
-        <!--<nz-input formControlName="doorID" [(ngModel)]="_formData.doorID" [nzPlaceHolder]="'门禁ID'" [nzType]="'text'" [nzSize]="'large'">-->
-        <!--</nz-input>-->
-        <!--</div>-->
-        <!--</div>-->
-        <div nz-col [nzSpan]="5" nz-form-label>
-          <label nz-form-item-required>用户名</label>
-        </div>
-        <div>
-          <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-            <nz-input formControlName="user" [(ngModel)]="_formData.user" [nzPlaceHolder]="'用户名'" [nzType]="'text'" [nzSize]="'large'">
-            </nz-input>
-          </div>
-        </div>
-        <div nz-col [nzSpan]="5" nz-form-label>
-          <label nz-form-item-required>密码</label>
-        </div>
-        <div>
-          <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-            <nz-input formControlName="pwd" [(ngModel)]="_formData.pwd" [nzPlaceHolder]="'密码'" [nzType]="'password'" [nzSize]="'large'">
-            </nz-input>
-          </div>
-        </div>
-      </div>
-      <!--<div nz-form-item nz-row>-->
 
-      <!--<div nz-col [nzSpan]="5" nz-form-label>-->
-      <!--<label nz-form-item-required>rtsp端口</label>-->
-      <!--</div>-->
-      <!--<div nz-col [nzSpan]="6" nz-form-control>-->
-      <!--<nz-input formControlName="rtspPort"  [(ngModel)]="_formData.rtspPort"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'tsp端口'" [nzSize]="'large'">-->
-      <!--</nz-input>-->
-      <!--</div>-->
-      <!--</div>-->
-      <div nz-form-item nz-row >
-        <div nz-col [nzSpan]="5" nz-form-label>
-          <label nz-form-item-required>rtsp路径</label>
-        </div>
-        <div nz-col [nzSpan]="17" nz-form-control>
-          <nz-input formControlName="rtspPath"  [(ngModel)]="_formData.rtspPath"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'移动端使用,请输入完整的rtsp路径'" [nzSize]="'large'">
-          </nz-input>
-        </div>
-        <!--<div nz-col [nzSpan]="5" nz-form-label>-->
-        <!--<label nz-form-item-required>img_url</label>-->
-        <!--</div>-->
-        <!--<div nz-col [nzSpan]="6" nz-form-control>-->
-        <!--<nz-input formControlName="截图地址"  [(ngModel)]="_formData.img_url"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'截图地址'" [nzSize]="'large'">-->
-        <!--</nz-input>-->
-        <!--</div>-->
-      </div>
       <div nz-form-item nz-row>
         <div nz-col [nzSpan]="5" nz-form-label>
           <label nz-form-item-required>选择地图</label>
         </div>
-        <div nz-col [nzSpan]="6" nz-form-control>
-          <div nz-col [nzSpan]="6" nz-form-control>
-            <nz-select style="width: 120px;" formControlName="districtID"  [(ngModel)]="_formData.districtID"  (ngModelChange)="mapSelectHandler($event)"  [nzPlaceHolder]="'选择地图'" >
-              <nz-option *ngFor="let option of mapOptions" [nzLabel]="option.name" [nzValue]="option.id">
-                <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
-              </nz-option>
-            </nz-select>
-          </div>
+
+        <div nz-col [nzSpan]="3" nz-form-control>
+          <nz-select style="width: 120px;" formControlName="districtID" [(ngModel)]="_formData.districtID"
+                     (ngModelChange)="mapSelectHandler($event)" [nzPlaceHolder]="'选择地图'">
+            <nz-option *ngFor="let option of mapOptions" [nzLabel]="option.name" [nzValue]="option.id">
+              <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
+            </nz-option>
+          </nz-select>
         </div>
-        <div nz-col [nzSpan]="5" nz-form-label>
-          <label nz-form-item-required>区域名称</label>
-        </div>
-        <div nz-col [nzSpan]="6" nz-form-control>
-          <nz-input formControlName="districtName"  [nzDisabled]="'true'" [(ngModel)]="_formData.districtName"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'districtName'" [nzSize]="'large'">
+        <div nz-col [nzSpan]="3" nz-form-control>
+          <nz-input formControlName="districtName" [nzDisabled]="'true'" [(ngModel)]="_formData.districtName"
+                    [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'地图名称'" [nzSize]="'large'">
           </nz-input>
+        </div>
+
+        <div nz-col [nzSpan]="5" nz-form-label>
+          <label nz-form-item-required>流媒体类型</label>
+        </div>
+        <div nz-col [nzSpan]="6" nz-form-control>
+          <nz-select formControlName="streamType" [(ngModel)]="_formData.streamType" [nzPlaceHolder]="'-请选择-'"
+                     [nzSize]="'large'" nzAllowClear>
+            <nz-option *ngFor="let option of streamTypeOptions" [nzLabel]="option.name" [nzValue]="option.id">
+              <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
+            </nz-option>
+          </nz-select>
         </div>
       </div>
 
@@ -195,14 +247,16 @@
           <label nz-form-item-required>x轴坐标</label>
         </div>
         <div nz-col [nzSpan]="6" nz-form-control>
-          <nz-input formControlName="camMapX"  [(ngModel)]="_formData.camMapX"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'x轴坐标'" [nzSize]="'large'">
+          <nz-input formControlName="camMapX" [(ngModel)]="_formData.camMapX" [nzRows]="2" [nzType]="'text'"
+                    [nzPlaceHolder]="'x轴坐标'" [nzSize]="'large'">
           </nz-input>
         </div>
         <div nz-col [nzSpan]="5" nz-form-label>
           <label nz-form-item-required>y轴坐标</label>
         </div>
         <div nz-col [nzSpan]="3" nz-form-control>
-          <nz-input formControlName="camMapY"  [(ngModel)]="_formData.camMapY"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'y轴坐标'" [nzSize]="'large'">
+          <nz-input formControlName="camMapY" [(ngModel)]="_formData.camMapY" [nzRows]="2" [nzType]="'text'"
+                    [nzPlaceHolder]="'y轴坐标'" [nzSize]="'large'">
           </nz-input>
         </div>
         <div nz-col [nzSpan]="5">
@@ -211,57 +265,39 @@
           </button>
         </div>
       </div>
-      <div nz-form-item nz-row>
-        <div nz-col [nzSpan]="5" nz-form-label>
-          <label nz-form-item-required>摄像头状态</label>
-        </div>
-        <div nz-col [nzSpan]="6" nz-form-control>
-          <nz-input formControlName="camState"  [(ngModel)]="_formData.camState"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'摄像头状态'" [nzSize]="'large'">
-          </nz-input>
-        </div>
-        <div nz-col [nzSpan]="5" nz-form-label>
-          <label nz-form-item-required>流媒体类型</label>
-        </div>
-        <div nz-col [nzSpan]="6" nz-form-control>
-          <nz-input formControlName="streamType"  [(ngModel)]="_formData.streamType"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'H264/H265等'" [nzSize]="'large'">
-          </nz-input>
-        </div>
-      </div>
-      <div nz-form-item nz-row>
-        <div nz-col [nzSpan]="5" nz-form-label>
-          <label nz-form-item-required>摄像头区域</label>
-        </div>
-        <div nz-col [nzSpan]="6" nz-form-control>
-          <nz-input formControlName="area"  [(ngModel)]="_formData.area"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'移动端使用'" [nzSize]="'large'">
-          </nz-input>
-        </div>
-        <div nz-col [nzSpan]="5" nz-form-label>
-          <label nz-form-item-required>一级区域ID</label>
-        </div>
-        <div nz-col [nzSpan]="6" nz-form-control>
-          <nz-input formControlName="areaID"  [(ngModel)]="_formData.areaID"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'一级区域ID'" [nzSize]="'large'">
-          </nz-input>
-        </div>
-      </div>
-      <div nz-form-item nz-row>
-        <div nz-col [nzSpan]="5" nz-form-label>
-          <label nz-form-item-required>一级区域名称</label>
-        </div>
-        <div nz-col [nzSpan]="6" nz-form-control>
-          <nz-input formControlName="areaName"  [(ngModel)]="_formData.areaName"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'一级区域名称'" [nzSize]="'large'">
-          </nz-input>
-        </div>
-        <div nz-col [nzSpan]="5" nz-form-label>
-          <label nz-form-item-required>地图路径</label>
-        </div>
-        <div nz-col [nzSpan]="6" nz-form-control>
-          <nz-input formControlName="distictUrl"  [(ngModel)]="_formData.distictUrl"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'地图路径'" [nzSize]="'large'">
-          </nz-input>
-        </div>
-      </div>
+
+      <!--<div nz-form-item nz-row>        -->
+      <!--<div nz-col [nzSpan]="5" nz-form-label>-->
+      <!--<label nz-form-item-required>地图路径</label>-->
+      <!--</div>-->
+      <!--<div nz-col [nzSpan]="6" nz-form-control>-->
+      <!--<nz-input formControlName="distictUrl" [(ngModel)]="_formData.distictUrl" [nzRows]="2" [nzType]="'text'"-->
+      <!--[nzPlaceHolder]="'地图路径'" [nzSize]="'large'">-->
+      <!--</nz-input>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div nz-form-item nz-row>-->
+      <!--<div nz-col [nzSpan]="5" nz-form-label>-->
+      <!--<label nz-form-item-required>一级区域ID</label>-->
+      <!--</div>-->
+      <!--<div nz-col [nzSpan]="6" nz-form-control>-->
+      <!--<nz-input formControlName="areaID" [(ngModel)]="_formData.areaID" [nzRows]="2" [nzType]="'text'"-->
+      <!--[nzPlaceHolder]="'一级区域ID'" [nzSize]="'large'">-->
+      <!--</nz-input>-->
+      <!--</div>-->
+      <!--<div nz-col [nzSpan]="5" nz-form-label>-->
+      <!--<label nz-form-item-required>一级区域名称</label>-->
+      <!--</div>-->
+      <!--<div nz-col [nzSpan]="6" nz-form-control>-->
+      <!--<nz-input formControlName="areaName" [(ngModel)]="_formData.areaName" [nzRows]="2" [nzType]="'text'"-->
+      <!--[nzPlaceHolder]="'一级区域名称'" [nzSize]="'large'">-->
+      <!--</nz-input>-->
+      <!--</div>-->
+      <!--</div>-->
       <div nz-form-item nz-row>
         <div nz-col [nzOffset]="10" [nzSpan]="22" nz-form-control>
-          <button nz-button [nzType]="'primary'" [nzSize]="'large'"  (click)="submitForm($event,validateForm.value)">提交</button>
+          <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="submitForm($event,validateForm.value)">提交
+          </button>
           <button nz-button [nzSize]="'large'" (click)="resetForm($event)">重置</button>
         </div>
       </div>
@@ -270,20 +306,23 @@
 </nz-modal>
 
 
-
-<nz-modal [nzVisible]="isShowMap"  [nzTitle]="'地图坐标设置'" [nzContent]="mapModelContent" (nzOnCancel)="handleMapCancel($event)"  class="map-model" [nzMaskClosable]="false">
+<nz-modal [nzVisible]="isShowMap" [nzTitle]="'地图坐标设置'" [nzContent]="mapModelContent"
+          (nzOnCancel)="handleMapCancel($event)" class="map-model" [nzMaskClosable]="false">
   <ng-template #mapModelContent>
     <div class="map-img">
-      <img class="camera" src="../../../../assets/images/map/camera-device.png" alt="" #camera (dragstart)="dragStartHandler($event)" >
-      <img class="map" [src]="selectedMap&&selectedMap.value" alt=""  (dragover)="dragoverHandler($event)" (drop)="dropHandler($event)" >
+      <img class="camera" src="../../../../assets/images/map/camera-device.png" alt="" #camera
+           (dragstart)="dragStartHandler($event)">
+      <img class="map" [src]="selectedMap&&selectedMap.value" alt="" (dragover)="dragoverHandler($event)"
+           (drop)="dropHandler($event)">
     </div>
     <div class="map-action">
       <div class="floor-select">
-        楼层: <nz-select style="width: 120px;" [(ngModel)]="selectedMap" (ngModelChange)="modalMapChangeHandle($event)">
-        <nz-option *ngFor="let option of mapOptions" [nzLabel]="option.name" [nzValue]="option">
-          <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
-        </nz-option>
-      </nz-select>
+        楼层:
+        <nz-select style="width: 120px;" [(ngModel)]="selectedMap" (ngModelChange)="modalMapChangeHandle($event)">
+          <nz-option *ngFor="let option of mapOptions" [nzLabel]="option.name" [nzValue]="option">
+            <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
+          </nz-option>
+        </nz-select>
       </div>
       <div class="confirm-btn">
         <button nz-button (click)="isShowMap=false;">

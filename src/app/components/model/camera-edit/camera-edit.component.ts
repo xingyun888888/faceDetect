@@ -10,8 +10,9 @@ import {
   Validators
 } from '@angular/forms';
 import {numberValidator} from '../../../validator/validators';
-import {CustomValidService} from "../../../service/custom-valid.service";
-import {validOptions} from "./cameraFormValidConf";
+import {CustomValidService} from '../../../service/custom-valid.service';
+import {validOptions} from './cameraFormValidConf';
+import {cameraStateOptions, cameraTypeOptions} from '../../../config/selectConf';
 
 @Component({
   selector: 'app-camera-edit',
@@ -22,7 +23,7 @@ import {validOptions} from "./cameraFormValidConf";
 export class CameraEditComponent implements OnInit {
   /**该输入属性，里面包含着table中的所有字段*/
   @Input()
-  _formData =  null;
+  _formData = null;
 
   /**分析仪下拉列表*/
   options = [];
@@ -33,6 +34,23 @@ export class CameraEditComponent implements OnInit {
   /**当前值select展示的值*/
   selectedMap = this.mapOptions[0];
 
+  /**
+   * 流媒体类型下拉框内容配置项
+   */
+  @Input()
+  streamTypeOptions = [];
+
+  /**
+   * 摄像头类型下拉框内容配置项
+   */
+  @Input()
+  cameraTypeOptions = [];
+
+  /**
+   * 摄像头状态下拉框内容配置项
+   */
+  @Input()
+  cameraStateOptions = [];
 
   /**这个是将table组件中传过来的值放入表单中*/
   @Input()
@@ -107,13 +125,13 @@ export class CameraEditComponent implements OnInit {
   handleCancel = (e) => {
     this.resetForm(e);
     this.closeModel.emit();
-  }
+  };
 
   /**这个是关闭表单的方法*/
   handleMapCancel = (e) => {
     this.isShowMap = false;
 
-  }
+  };
 
   /**提交表单，提交时做校验操作*/
   submitForm = ($event, value) => {
@@ -123,11 +141,8 @@ export class CameraEditComponent implements OnInit {
     for (const key in this.validateForm.controls) {
       this.validateForm.controls[key].markAsDirty();
     }
-    /**如果表单验证失败*
-     *
+    /**如果表单填写有误,表单验证失败
      * this.validateForm.valid 返回为true的话 就是表单填写正确
-     * 否则表单填写有误
-     *
      */
     if (!this.validateForm.valid) {
       /**
@@ -135,13 +150,12 @@ export class CameraEditComponent implements OnInit {
        * 使用表单验证服务的valid方法  接收两个参数 第一个是表单对象  第二个参数是配置选项
        */
       this.customValidServ.valid(this.validateForm, validOptions);
-      // this.closeModel.emit();
     } else {
       /**在这里请求处理提交表单数据*/
       this.requestData.emit(value);
       this.validateForm.reset();
     }
-  }
+  };
 
   /**重置表单*/
   resetForm($event: MouseEvent) {
@@ -214,7 +228,7 @@ export class CameraEditComponent implements OnInit {
     /**响应式表单，Validators.required表示必填*/
     this.validateForm = this.fb.group({
       id: [''],
-      type: ['', [Validators.required, Validators.maxLength(2)]],
+      type: ['', [Validators.required, Validators.maxLength(25)]],
       name: ['', [Validators.required, Validators.maxLength(10)]],
       serialNum: ['', [Validators.maxLength(25)]],
       ip: ['', [Validators.required, Validators.maxLength(25)]],
@@ -227,21 +241,21 @@ export class CameraEditComponent implements OnInit {
       // strategyID: [''],
       // doorID: [''],
       user: ['', [Validators.required, Validators.maxLength(10)]],
-      pwd: ['', [Validators.required, Validators.maxLength(9), Validators.pattern('[0-9]+')]],
+      pwd: ['', [Validators.required, Validators.maxLength(9)]],
       // rtspPort: ['', [Validators.required, Validators.maxLength(5), Validators.pattern('[0-9]+')]],
-      rtspPath: ['', [Validators.required, Validators.maxLength(100)]],
+      rtspPath: ['', [Validators.required, Validators.maxLength(200)]],
       camInfo: ['', [Validators.maxLength(25)]],
-      camMapX: ['', [Validators.required, Validators.maxLength(5)]],
-      camMapY: ['', [Validators.required, Validators.maxLength(5)]],
-      camState: ['', [Validators.required, Validators.maxLength(5)]],
-      streamType: ['', [Validators.required, Validators.maxLength(5)]],
+      camMapX: ['', [Validators.required, Validators.maxLength(5), Validators.pattern('[0-9]+')]],
+      camMapY: ['', [Validators.required, Validators.maxLength(5), Validators.pattern('[0-9]+')]],
+      camState: ['', [Validators.required]],
+      streamType: ['', [Validators.required]],
       districtID: ['', [Validators.maxLength(5), Validators.pattern('[0-9]+')]],
       // districtID: [''],
       districtName: ['', [Validators.maxLength(22)]],
       area: ['', [Validators.required, Validators.maxLength(25)]],
-      areaID: [''],
-      areaName: [''],
-      distictUrl: ['', [Validators.maxLength(22)]],
+      areaID: ['', [Validators.maxLength(5), Validators.pattern('[0-9]+')]],
+      areaName: ['', [Validators.maxLength(22)]],
+      // distictUrl: ['', [Validators.maxLength(22)]],
       // img_url: ['']
     });
   }

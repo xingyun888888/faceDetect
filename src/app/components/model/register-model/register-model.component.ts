@@ -4,6 +4,8 @@ import {Observable} from 'rxjs/Observable';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../../api';
 import {NzModalService} from 'ng-zorro-antd';
+import {CustomValidService} from '../../../service/custom-valid.service';
+import {validOptions} from '../facelib-model/faceFormValidConf';
 
 interface FileReaderEventTarget extends EventTarget {
   result: string
@@ -41,7 +43,6 @@ export class RegisterModelComponent implements OnInit {
   @Input()
   genderOptions = [];
 
-
   /**这个是将table组件中传过来的值放入表单中*/
   @Input()
   set formData(value) {
@@ -69,24 +70,32 @@ export class RegisterModelComponent implements OnInit {
 
   @ViewChild('imgSelect', {read: ElementRef}) imgSelect: ElementRef;
 
-
   priviewImg: string = '';
-
-
 
   fileSelect(e) {
     this.imgSelect.nativeElement.click();
     console.log(this.imgSelect);
   }
 
+  /**
+   * 保存单个上传选择的文件名字
+   * @type {any[]}
+   */
   uploadImgNameList: string[] = [];
 
+  /**
+   * 保存单个上传选择的文件 之前你是
+   * @type {any[]}
+   */
   uploadImgList: any[] = [];
 
-
+  /* 图片展示 需要预览时会用到 */
   defaultImg: string = '../../../assets/images/upload-icon.png';
 
-  uploadApi = api.uploadImg;
+
+
+  uploadApi = api.batchUpload;
+
   /**
    * 删除上传图片列表uploadImgList里面的图片
    * @param e
@@ -101,59 +110,175 @@ export class RegisterModelComponent implements OnInit {
     }
   }
 
-
   /**
-   * 批量上传
+   * @param e 单个上传 ()
    */
-  batchUploadHandler({file,fileList}){
-    const status = file.status;
-    if (status !== 'uploading') {
-      console.log(file, fileList);
-    }
-    if (status === 'done') {
-    } else if (status === 'error') {
-    }
-  }
-
-  imgUploadHandler(e){
+  imgUploadHandler(e) {
+    /**
+     * 1.创建一个FormData表单对象 用来封装保存表单数据
+     * @type {FormData}
+     */
     let formData = new FormData();
     console.dir(this.uploadImgList);
-    if(this.uploadImgList.length==0){
+    /**
+     * 2.在这里判断当前选择的文件是否为空 如果为空就提示 否则继续下一步
+     */
+    if (this.uploadImgList.length == 0) {
       this.confirmServ.error({
         zIndex: 2000,
-        title: "请先选择图片"
-      })
+        title: '请先选择图片'
+      });
       return;
     }
-    formData.append('uploadFile',this.uploadImgList[0]);
+    /**
+     * 3.将选择的文件添加到创建好的表单对象中,
+     */
+    formData.append('uploadFile', this.uploadImgList[0]);
+
+
+    /**
+     * 创建一个文件读取对象
+     * @type {FileReader}
+     */
     let reader = new FileReader();
+    /**
+     * 读取文件保存成url类型
+     */
     reader.readAsDataURL(this.uploadImgList[0]);
+
+    /**
+     * 以上两步如果前端界面不需要展示图片的话可以省略
+     * @param {FileReaderEvent} res
+     */
+
     reader.onload = (res: FileReaderEvent) => {
       this.priviewImg = res.target.result;
-      this.http.post(api.uploadImg, formData).subscribe((res) => {
+      /**
+       * 请求后台地址 提交已经封装好的表单对象
+       */
+      this.http.post(api.singleUpload, formData).subscribe((res) => {
         const result = <any>res;
-        this._formData.path = result.msgBody.dataSend.PictureList[0]&&result.msgBody.dataSend.PictureList[0].PicturePathDir;
+        /**
+         *  请求响应200时  将返回的结果数据解析 并赋值到_formData里面
+         */
+        // this._formData.path = result.msgBody.dataSend.PictureList[0]&&result.msgBody.dataSend.PictureList[0].PicturePathDir;
+        this._formData.feapath = result.msgBody.dataSend.PictureList[0] && result.msgBody.dataSend.PictureList[0].FeaDir;
+        this._formData.path = result.msgBody.dataSend.PictureList[0] && result.msgBody.dataSend.PictureList[0].PicturePathDir;
+
+        /**
+         * 这里是给图片展示用的  现在没有用
+         * @type {string}
+         */
         this.defaultImg = this.priviewImg;
+
+        /**
+         * 提示用户图片添加成功
+         */
         this.confirmServ.success({
           zIndex: 2000,
-          title: "缩略图添加成功"
-        })
+          title: '图片添加成功'
+        });
       }, (error) => {
-        this._formData.path = "";
+        /**
+         * 错误的回调函数  提示上传失败 清空
+         * @type {string}
+         */
+        this._formData.path = '';
         this.confirmServ.success({
           zIndex: 2000,
-          title: "缩略图添加失败"
-        })
+          title: '图片添加失败'
+        });
       });
     };
   }
 
   /**
-   * @param e
+   * 维护上传的状态
+   * @type {boolean}
+   */
+  uploading = false;
+
+
+  /**
+   * 维护当前选择的文件列表
+   * @type {any[]}
+   */
+  fileList = [];
+
+  /**
+   * 返回false就是取消上传
+   * @param file
+   * @returns {boolean}
+   */
+  beforeUpload(file) {
+    this.fileList.push(file);
+    console.log(file);
+    return false;
+  }
+
+  /**
+   * @param e 确认上传  这里是批量上传
+   */
+  handleUpload(e) {
+
+    if(this.fileList.length == 0){
+      this.confirmServ.error({
+        zIndex:2000,
+        title:"请先选择图片"
+      });
+      return;
+    }
+    const formData = new FormData();
+    /**
+     * 与单个上传不同的是 遍历选择的文件列表-添加  下面都一样
+     */
+    this.fileList.forEach((file: any) => {
+      console.log(file);
+      formData.append('files', file);
+    });
+    this.uploading = true;
+
+    this.http.post(api.batchUpload, formData, {
+      headers: new HttpHeaders({})
+    }).subscribe((res: any) => {
+      console.log(res);
+      let failFile = '';
+      res.msgBody.dataSend.PictureList.map((item, index) => {
+        if (item.code == 0) {
+          console.log(item.PicturePathDir);
+          failFile += item.PicturePathDir.match(/[\u4e00-\u9fa5_a-zA-Z0-9:]+[\\\/](\w+\.\w+)$/i)[1] + '、';
+        }
+      });
+      this.uploading = false;
+      this.fileList = [];
+      if (failFile.length != 0) {
+        this.confirmServ.error({
+          zIndex:3000,
+          title: '上传失败',
+          content: failFile.substring(0, failFile.length - 1) + '等,文件上传失败'
+        });
+        return;
+      }
+      this.confirmServ.success({
+        zIndex:3000,
+        content: '上传成功'
+      });
+    }, (err) => {
+      this.uploading = false;
+      this.confirmServ.error({
+        zIndex:3000,
+        content: '上传失败'
+      });
+      this.fileList = [];
+    });
+  }
+
+
+  /**
+   * @param e？？
    */
   fileChange(e) {
     console.log(e);
-    //let img = e.target.files[0];
     console.log(e.target.files[0].name);
     this.uploadImgList[0] = e.target.files[0];
     this._formData.path = e.target.files[0].name;
@@ -173,15 +298,18 @@ export class RegisterModelComponent implements OnInit {
       this.validateForm.controls[key].markAsDirty();
     }
     console.log(value);
-    /**
-     * 在这里验证字段是否通过校验
-     */
     if (!this.validateForm.valid) {
-      return;
+      /**
+       * 在这里使用表单验证 提示校验错误的信息
+       * 使用表单验证服务的valid方法  接收两个参数 第一个是表单对象  第二个参数是配置选项
+       */
+      this.customValidServ.valid(this.validateForm, validOptions);
+      // this.closeModel.emit();
+    } else {
+      /**在这里请求处理提交表单数据*/
+      this.requestData.emit(value);
+      this.validateForm.reset();
     }
-    /**在这里请求处理提交表单数据*/
-    this.requestData.emit(value);
-    this.validateForm.reset();
   }
 
   /**重置表单*/
@@ -199,13 +327,14 @@ export class RegisterModelComponent implements OnInit {
     return this.validateForm.controls[name];
   }
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private confirmServ: NzModalService) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private confirmServ: NzModalService, private customValidServ: CustomValidService) {
+     this.beforeUpload = this.beforeUpload.bind(this);
   }
 
   ngOnInit() {
     this.validateForm = this.fb.group({
       id: [''],
-      name: ['', [Validators.required]],
+      //name: ['', [Validators.required]], //不知道为什么删掉 ？？？
       seriernum: [''],
       gender: [0],
       type: [0],
