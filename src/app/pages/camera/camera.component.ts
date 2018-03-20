@@ -138,6 +138,7 @@ export class CameraComponent implements OnInit {
   /** 增加或者编辑操作后点击提交后调用的方法，请求的时候判断一下是新增还是修改，根据isEdit和isAdd的值判断
    * 添加下面的headers头部说明，前端需要接收的是json数据*/
   sendData(data) {
+    this.store.dispatch(new actions.setLoadingState(true,"正在保存中..."));
     if (this.isAdd) {
       this.http.post(api.addCamera, data, {
         headers: new HttpHeaders({
@@ -155,8 +156,10 @@ export class CameraComponent implements OnInit {
           'Content-type': 'application/json;charset=UTF-8'
         })
       }).subscribe((res) => {
+        this.store.dispatch(new actions.setLoadingState(false,"正在加载中..."));
         this.getCamera();
       }, (error) => {
+        this.store.dispatch(new actions.setLoadingState(false,"正在加载中..."));
         this.getCamera();
       });
       this.isEdit = false;
@@ -173,9 +176,7 @@ export class CameraComponent implements OnInit {
 
   /**调用查询接口，查询到结果之后将拿到的res赋值给_dataSet才能显示到table*/
   getCamera() {
-    debugger;
     this.store.dispatch(new actions.setLoadingState(true));
-    debugger;
     this.http.get(api.queryCamera).subscribe((res) => {
       console.dir(res);
       let list = <any>res;

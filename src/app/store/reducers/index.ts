@@ -3,20 +3,23 @@
  */
 import * as GloabalActions from './../actions';
 export interface State {
-  currentState: boolean
+  isLoading:boolean,
+  loadingTitle:string
 }
 
 export const INIT_LOADING_STATE: State = {
-  currentState: false
+  isLoading:false,
+  loadingTitle:"正在加载中..."
 };
 
 
-export function reducer(state: State = INIT_LOADING_STATE, {type, payload}: GloabalActions.All): State {
-
+export function reducer(state: State = INIT_LOADING_STATE, {type,payload,title}: GloabalActions.All): State {
   switch (type) {
-
     case GloabalActions.SETLOADING : {
-      return Object.assign({}, state, {currentState: payload})
+      if(!title){
+        title = "正在加载中...";
+      }
+      return Object.assign({}, state, {isLoading:payload,loadingTitle:title})
     }
 
     default : {
@@ -27,4 +30,5 @@ export function reducer(state: State = INIT_LOADING_STATE, {type, payload}: Gloa
 
 
 // SELECTORS
-export const getCurrentState = (state: State) => state.currentState;
+export const getCurrentLoading = (state: State) => state.isLoading;
+export const getCurrentLoadingTitle = (state: State) => state.loadingTitle;

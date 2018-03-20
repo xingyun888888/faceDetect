@@ -6,16 +6,16 @@ import {ActionReducerMap, createFeatureSelector, createSelector} from '@ngrx/sto
 import * as gloabalStore from './reducers';
 
 export interface State {
-  ui: gloabalStore.State
+  loading: gloabalStore.State
   // more state here
 }
 
 export const reducers: ActionReducerMap<State> = {
-  ui: gloabalStore.reducer
+  loading: gloabalStore.reducer
   // more reducers here
 };
 
 /// selectors
-export const getUiState = createFeatureSelector<gloabalStore.State>('ui');
-
-export const getCurrentState = createSelector(getUiState, gloabalStore.getCurrentState);
+export const getUiState = createFeatureSelector<gloabalStore.State>('loading');
+export const getCurrentLoading = createSelector(getUiState, gloabalStore.getCurrentLoading);
+export const getCurrentLoadingTitle = createSelector(getUiState, gloabalStore.getCurrentLoadingTitle);

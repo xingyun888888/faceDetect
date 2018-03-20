@@ -253,7 +253,6 @@ export class RegisterComponent implements OnInit {
 
   /**组件初始化的时候调用一次*/
   ngOnInit() {
-    this.isLoading$ = this.store.select(fromRoot.getCurrentState);
     this.id = this.routerInfo.snapshot.queryParams['id'];
     this.getRegister();
   }

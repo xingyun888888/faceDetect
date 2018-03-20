@@ -17,6 +17,7 @@ import api from './api';
 export class AppComponent implements OnInit{
 
   isLoading$:Observable<boolean>;
+  loadingTitle$:Observable<string>;
 
   @Input()
   _isBackGround=true;
@@ -36,7 +37,9 @@ export class AppComponent implements OnInit{
 
   }
   ngOnInit(): void {
-    this.isLoading$ = this.store.select(fromRoot.getCurrentState);
+    this.isLoading$ = this.store.select(fromRoot.getCurrentLoading);
+    this.loadingTitle$ = this.store.select(fromRoot.getCurrentLoadingTitle);
+
   }
   onSubmit(){
     let username=this.formModel.get('user').value;

@@ -8,7 +8,8 @@ export const SETLOADING = 'SETLOADING';
 
 export class setLoadingState implements Action {
   readonly type = SETLOADING;
-  constructor(public payload?: boolean) {}
+  constructor(public payload?: boolean,public title?: string) {
+  }
 }
 
 export type All = setLoadingState;
