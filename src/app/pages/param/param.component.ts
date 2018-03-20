@@ -3,6 +3,11 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../api';
 import {parseParam} from '../../utils/common';
 import {genderOptions} from '../../config/selectConf';
+import {Store} from '@ngrx/store';
+import * as fromRoot from '@app-root-store';
+import * as actions from './../../store/actions';
+import {Observable} from 'rxjs/Observable';
+
 
 @Component({
   selector: 'app-param',
@@ -144,7 +149,7 @@ export class ParamComponent implements OnInit {
     }
   }
 
-  constructor(private http: HttpClient) {
+  constructor(private store:Store<fromRoot.State>,private http: HttpClient) {
   }
 
   /**获取参数类型列表*/
@@ -163,26 +168,26 @@ export class ParamComponent implements OnInit {
 
   /**调用查询接口，查询到结果之后将拿到的res赋值给_dataSet才能显示到table*/
   getParam() {
-    this.isLoading = true;
+    this.store.dispatch(new actions.setLoadingState(true));
     this.http.get(api.queryParam).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list;
       /**关闭加载状态*/
-      this.isLoading = false;
+      this.store.dispatch(new actions.setLoadingState(false));
     });
   }
 
   /**根据条件查询方法*/
   queryParamByConditions(data) {
-    this.isLoading = true;
+    this.store.dispatch(new actions.setLoadingState(true));
     console.log(parseParam(data));
     this.http.get(api.queryParamByConditions + parseParam(data)).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list.data;
       /**关闭加载状态*/
-      this.isLoading = false;
+      this.store.dispatch(new actions.setLoadingState(false));
     }, (error) => {
     });
   }

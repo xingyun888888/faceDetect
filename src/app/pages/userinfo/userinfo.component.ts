@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient,HttpHeaders} from "@angular/common/http";
 import api from "../../api";
+import {Store} from '@ngrx/store';
+import * as fromRoot from '@app-root-store';
+import * as actions from './../../store/actions';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-userinfo',
@@ -87,10 +91,12 @@ export class UserinfoComponent implements OnInit {
 
 
   getUserInfo(){
+    this.store.dispatch(new actions.setLoadingState(true));
     this.http.get(api.queryUserInfo).subscribe((res)=>{
       console.dir(res);
       let list = <any>res;
       this._dataSet = list;
+      this.store.dispatch(new actions.setLoadingState(false));
     },(error)=>{
       let list = [{
         id:1,
@@ -102,7 +108,6 @@ export class UserinfoComponent implements OnInit {
         isEnable:1,
         state:"1"
       }]
-      debugger;
       this._dataSet = list;
     })
   }

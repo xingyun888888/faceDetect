@@ -3,7 +3,10 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../api';
 import {parseParam} from '../../utils/common';
 import {stateOptions} from '../../config/selectConf';
-
+import {Store} from '@ngrx/store';
+import * as fromRoot from '@app-root-store';
+import * as actions from './../../store/actions';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-user',
@@ -147,7 +150,7 @@ export class UserComponent implements OnInit {
     }
   }
 
-  constructor(private http: HttpClient, ) {
+  constructor(private store:Store<fromRoot.State>,private http: HttpClient, ) {
   }
 
   /**在这里调用刷新,点击刷新按钮之后就会调用这个方法,刷新就是调用一次查询接口*/
@@ -157,26 +160,26 @@ export class UserComponent implements OnInit {
 
   /**调用查询接口，查询到结果之后将拿到的res赋值给_dataSet才能显示到table*/
   getUser() {
-    this.isLoading = true;
+    this.store.dispatch(new actions.setLoadingState(true));
     this.http.get(api.queryUser).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list;
       /**关闭加载状态*/
-      this.isLoading = false;
+      this.store.dispatch(new actions.setLoadingState(false));
     });
   }
 
   /**根据条件查询方法*/
   queryUserByConditions(data) {
-    this.isLoading = true;
+    this.store.dispatch(new actions.setLoadingState(true));
     console.log(parseParam(data));
     this.http.get(api.queryUserByConditions + parseParam(data)).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list.data;
       /**关闭加载状态*/
-      this.isLoading = false;
+      this.store.dispatch(new actions.setLoadingState(false));
     }, (error) => {
     });
   }

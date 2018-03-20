@@ -2,6 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../api';
 import {parseParam} from '../../utils/common';
+import {Store} from '@ngrx/store';
+import * as fromRoot from '@app-root-store';
+import * as actions from './../../store/actions';
+import {Observable} from 'rxjs/Observable';
+
 
 @Component({
   selector: 'app-facelib',
@@ -101,6 +106,7 @@ export class FacelibComponent implements OnInit {
   /**增加或者编辑操作后点击提交后调用的方法，请求的时候判断一下是新增还是修改，根据isEdit和isAdd的值判断
    * 添加下面的headers头部说明，前端需要接收的是json数据*/
   sendData(data) {
+    this.store.dispatch(new actions.setLoadingState(true,"正在保存中..."));
     if (this.isAdd) {
       this.http.post(api.addFacelib, data, {
         headers: new HttpHeaders({
@@ -118,15 +124,17 @@ export class FacelibComponent implements OnInit {
           'Content-type': 'application/json;charset=UTF-8'
         })
       }).subscribe((res) => {
+        this.store.dispatch(new actions.setLoadingState(false)
         this.getFacelib();
       }, (error) => {
+        this.store.dispatch(new actions.setLoadingState(false)
         this.getFacelib();
       });
       this.isEdit = false;
     }
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(private store:Store<fromRoot.State>,private http: HttpClient) {}
 
   /**获取人脸库的名称列表*/
   getFacelibName() {
@@ -153,10 +161,12 @@ export class FacelibComponent implements OnInit {
 
   /**调用查询接口，查询到结果之后将拿到的res赋值给_dataSet才能显示到table*/
   getFacelib() {
+    this.store.dispatch(new actions.setLoadingState(true));
     this.http.get(api.queryFacelib).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list;
+      this.store.dispatch(new actions.setLoadingState(false));
     }, (error) => {
       const list = [
         {id: 1, name: '', path: '', createTime: '', maxNum: 3, state: 1},
@@ -168,6 +178,7 @@ export class FacelibComponent implements OnInit {
         {id: 7, name: '', path: '', createTime: '', maxNum: 3, state: 1}
       ];
       this._dataSet = list;
+      this.store.dispatch(new actions.setLoadingState(false));
     });
   }
 

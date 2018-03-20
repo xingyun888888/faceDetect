@@ -2,6 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../api';
 import {parseParam} from '../../utils/common';
+import {Store} from '@ngrx/store';
+import * as fromRoot from '@app-root-store';
+import * as actions from './../../store/actions';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-log',
@@ -69,7 +73,7 @@ export class LogComponent implements OnInit {
     });
   }
 
-  constructor(private http: HttpClient) {
+  constructor(private store:Store<fromRoot.State>,private http: HttpClient) {
 
   }
 
@@ -80,13 +84,13 @@ export class LogComponent implements OnInit {
 
   /**调用查询接口，查询到结果之后将拿到的res赋值给_dataSet才能显示到table*/
   getLog() {
-    this.isLoading = true;
+    this.store.dispatch(new actions.setLoadingState(true));
     this.http.get(api.queryLog).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list;
       /**关闭加载状态*/
-      this.isLoading = false;
+      this.store.dispatch(new actions.setLoadingState(false));
     }, (error) => {
       const list = [{
         id: 1,
@@ -95,12 +99,13 @@ export class LogComponent implements OnInit {
         moduleName: '1'
       }];
       this._dataSet = list;
+      this.store.dispatch(new actions.setLoadingState(false));
     });
   }
 
   /**根据条件查询方法*/
   queryLogByConditions(data) {
-    this.isLoading = true;
+    this.store.dispatch(new actions.setLoadingState(true));
     this.http.get(api.queryLogByConditions + parseParam(data)).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
@@ -108,6 +113,7 @@ export class LogComponent implements OnInit {
       /**关闭加载状态*/
       this.isLoading = false;
     }, (error) => {
+      this.store.dispatch(new actions.setLoadingState(false));
     });
   }
 
