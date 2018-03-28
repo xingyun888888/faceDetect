@@ -7,6 +7,7 @@ import * as fromRoot from './store/index';
 import * as actions from './store/actions'
 import {Observable} from 'rxjs/Observable'
 import api from './api';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-root',

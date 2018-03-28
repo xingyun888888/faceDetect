@@ -42,8 +42,8 @@
   <!--<router-outlet *ngIf="_routermenu"></router-outlet>-->
 </div>
 <div *ngIf="_routermenu" class="container">
-  <app-header [username]="username"></app-header>
-  <app-nav></app-nav>
+  <!--<app-header [username]="username"></app-header>-->
+  <!--<app-nav></app-nav>-->
   <nz-spin [nzTip]="loadingTitle$|async " [nzSpinning]="isLoading$|async">
       <router-outlet></router-outlet>
   </nz-spin>

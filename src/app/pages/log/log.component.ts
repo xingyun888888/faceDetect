@@ -7,6 +7,9 @@ import * as fromRoot from '@app-root-store';
 import * as actions from './../../store/actions';
 import {Observable} from 'rxjs/Observable';
 
+
+
+
 @Component({
   selector: 'app-log',
   templateUrl: './log.component.html',

@@ -350,7 +350,8 @@ export class RegisterModelComponent implements OnInit {
       zonename: [''],
       faceLibid: [''],
       dc: [0],
-      imgid: ['']
+      imgid: [''],
+      batchFacelibId:[""]
     });
   }
 }

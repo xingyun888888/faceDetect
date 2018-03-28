@@ -124,10 +124,10 @@ export class FacelibComponent implements OnInit {
           'Content-type': 'application/json;charset=UTF-8'
         })
       }).subscribe((res) => {
-        this.store.dispatch(new actions.setLoadingState(false)
+        this.store.dispatch(new actions.setLoadingState(false));
         this.getFacelib();
       }, (error) => {
-        this.store.dispatch(new actions.setLoadingState(false)
+        this.store.dispatch(new actions.setLoadingState(false));
         this.getFacelib();
       });
       this.isEdit = false;

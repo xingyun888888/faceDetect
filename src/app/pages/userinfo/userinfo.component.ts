@@ -77,8 +77,7 @@ export class UserinfoComponent implements OnInit {
 
     this.isEdit = false;
   }
-  constructor(private http: HttpClient,){
-
+  constructor(private store:Store<fromRoot.State>,private http: HttpClient,){
   }
 
   /**
