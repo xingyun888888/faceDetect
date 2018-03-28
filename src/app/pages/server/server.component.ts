@@ -3,10 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../api';
 import {parseParam} from '../../utils/common';
 import {serverTypeOptions, stateOptions} from '../../config/selectConf';
-import {Store} from '@ngrx/store';
-import * as fromRoot from '@app-root-store';
-import * as actions from './../../store/actions';
-import {Observable} from 'rxjs/Observable';
+
 @Component({
   selector: 'app-server',
   templateUrl: './server.component.html',
@@ -81,6 +78,8 @@ export class ServerComponent implements OnInit {
   /**这里存放着从服务端接收到的数据，模态框需要*/
   formData = {};
 
+  /**是否加载中,是否显示加载状态,true:代表正在加载中,false:代表加载完成*/
+  isLoading = false;
 
 
   /**这个方法是订阅的子组件传进来的事件,当子组件触发的时候就会获取到值value,判断拿出的value是否是undefined,如果是新增处理,否则编辑处理，
@@ -148,7 +147,7 @@ export class ServerComponent implements OnInit {
     }
   }
 
-  constructor(private store:Store<fromRoot.State>,private http: HttpClient,) {
+  constructor(private http: HttpClient,) {
   }
 
   /**在这里调用刷新,点击刷新按钮之后就会调用这个方法,刷新就是调用一次查询接口*/
@@ -158,21 +157,19 @@ export class ServerComponent implements OnInit {
 
   /**调用查询接口，查询到结果之后将拿到的res赋值给_dataSet才能显示到table*/
   getServer() {
-    this.store.dispatch(new actions.setLoadingState(true));
+    this.isLoading = true;
     this.http.get(api.queryServer).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list;
       /**关闭加载状态*/
-      this.store.dispatch(new actions.setLoadingState(false));
-    },(error)=>{
-      this.store.dispatch(new actions.setLoadingState(false));
+      this.isLoading = false;
     });
   }
 
   /**根据条件查询方法*/
   queryServerByConditions(data) {
-    this.store.dispatch(new actions.setLoadingState(true));
+    this.isLoading = true;
 
     console.log(parseParam(data));
     this.http.get(api.queryServerByConditions + parseParam(data)).subscribe((res) => {
@@ -180,9 +177,8 @@ export class ServerComponent implements OnInit {
       const list = <any>res;
       this._dataSet = list.data;
       /**关闭加载状态*/
-      this.store.dispatch(new actions.setLoadingState(false));
+      this.isLoading = false;
     }, (error) => {
-      this.store.dispatch(new actions.setLoadingState(false));
     });
   }
 

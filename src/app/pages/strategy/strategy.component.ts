@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../api';
-import {Store} from '@ngrx/store';
-import * as fromRoot from '@app-root-store';
-import * as actions from './../../store/actions';
-import {Observable} from 'rxjs/Observable';
-
 
 @Component({
   selector: 'app-strategy',
@@ -154,7 +149,7 @@ export class StrategyComponent implements OnInit {
     }
   }
 
-  constructor(private store:Store<fromRoot.State>,private http: HttpClient, ) {
+  constructor(private http: HttpClient, ) {
   }
 
   /**在这里调用刷新,点击刷新按钮之后就会调用这个方法,刷新就是调用一次查询接口*/
@@ -164,12 +159,10 @@ export class StrategyComponent implements OnInit {
 
   /**调用查询接口，查询到结果之后将拿到的res赋值给_dataSet才能显示到table*/
   getStrategy() {
-    this.store.dispatch(new actions.setLoadingState(true));
     this.http.get(api.queryStrategy).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list;
-      this.store.dispatch(new actions.setLoadingState(false));
     });
   }
 

@@ -1,78 +1,121 @@
-import {ChangeDetectionStrategy,Component, OnInit,Input,AfterViewInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {Store} from "@ngrx/store";
-import * as fromRoot from './store/index';
-import * as actions from './store/actions'
-import {Observable} from 'rxjs/Observable'
 import api from './api';
-import * as $ from 'jquery';
+import {Observable} from 'rxjs/Observable';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent {
 
-  isLoading$:Observable<boolean>;
-  loadingTitle$:Observable<string>;
+  title = 'app';
 
+  priceQuote: number = 0;
   @Input()
-  _isBackGround=true;
+  _isBackGround = true;
   @Input()
-  _formLogin=true;
+  _formLogin = true;
   @Input()
-  _routermenu=false;
-  username:string;
+  _routermenu = false;
+  username: string;
+  @Input()
+  pwdError: boolean = false;
+  errorInfo: string = '';
   // _isMenu = true;
   formModel: FormGroup;
-  constructor(fb: FormBuilder,private http: HttpClient,private router: Router,private store:Store<fromRoot.State>) {
+  // response:any;
+
+  public get currentUser(): Observable<User> {
+    return this.subject.asObservable();
+  }
+
+  public subject: Subject<User> = new Subject<User>();
+
+  constructor(fb: FormBuilder, private http: HttpClient, private router: Router) {
     this.formModel = fb.group(
       {
         user: [''],
         pwd: ['']
       });
+  }
+
+  priceQuoteHandler() {
 
   }
-  ngOnInit(): void {
-    this.isLoading$ = this.store.select(fromRoot.getCurrentLoading);
-    this.loadingTitle$ = this.store.select(fromRoot.getCurrentLoadingTitle);
 
-  }
-  onSubmit(){
-    let username=this.formModel.get('user').value;
-    let password=this.formModel.get('pwd').value;
+  onSubmit(event) {
+    console.log(event);
+    let username = this.formModel.get('user').value;
+    let password = this.formModel.get('pwd').value;
     // userInfo:UserInfo = new UserInfo(username,password);
-    console.log("用户名"+username+"密码"+password);
-    console.log(this.formModel.value);
-    this.username=username;
+    this.username = username;
     this.http.post(api.userLogin, this.formModel.value, {
       headers: new HttpHeaders({
         'Content-type': 'application/json;charset=UTF-8'
       })
     }).subscribe((res) => {
+      // this.response=res;
       console.dir(res);
-      if(res){
-        this._isBackGround=false;
+      if (res === 1) {
+        this._isBackGround = false;
         this._formLogin = false;
-        this._routermenu=true;
+        this._routermenu = true;
+        this.pwdError = false;
         $(document).ready(function () {
-          $(".container").attr("class", "container");
+          $('.container').attr('class', 'container');
         });
-      }else {
-        this._isBackGround=true;
+      } else if (res === 2) {
+        this._isBackGround = true;
         this._formLogin = true;
-        this._routermenu=false;
+        this._routermenu = false;
+        this.pwdError = true;
+        this.errorInfo = '用户名错误！';
+      } else if (res === 3) {
+        this._isBackGround = true;
+        this._formLogin = true;
+        this._routermenu = false;
+        this.pwdError = true;
+        this.errorInfo = '密码错误！';
+      } else if (res === 4) {
+        this._isBackGround = true;
+        this._formLogin = true;
+        this._routermenu = false;
+        this.pwdError = true;
+        this.errorInfo = '账号未启用！';
       }
       // const list = <any>res;
 
-    },(error)=>{
-      this._isBackGround=false;
+    }, (error) => {
       this._formLogin = false;
-      this._routermenu=true;
+      this._routermenu = true;
+      debugger;
+      $(document).ready(function () {
+        $('.container').attr('class', 'container');
+      });
     });
+    // if(this.response==null || undefined) {
+    //   this.pwdError = true;
+    //   this.errorInfo = '服务器无响应';
+    // }
+  }
+
+  public logout(): void {
+    localStorage.removeItem('currentUser');
+    this.subject.next(Object.assign({}));
+    this._isBackGround = true;
+    this._formLogin = true;
+    this._routermenu = false;
+    this.pwdError = false;
+  }
+}
+
+export class User {
+  constructor(public user: string,
+              public pwd: string) {
   }
 }

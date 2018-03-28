@@ -61,6 +61,7 @@ const api = {
   deleteUser: devSeverAddress + 'user/delete',
   addUser: devSeverAddress + 'user/add',
   queryUserByConditions: devSeverAddress + 'user/listByConditions',
+  checkNameIsExist: devSeverAddress + 'user/checkNameIsExist',
 
   //参数信息查询
   queryParam: devSeverAddress + 'param/list',
@@ -71,6 +72,7 @@ const api = {
   queryParamType: devSeverAddress + 'param/getAllType',
   //获取地图下拉列表
   queryMapList: devSeverAddress + 'param/getParamByType',
+  queryMapInfoList: devSeverAddress + 'mapInfo/getMapInfo',
   //导入地图
   addMap: devSeverAddress + 'param/mapUpload',
   //注册信息查询
@@ -102,6 +104,11 @@ const api = {
   getClientInfo: devSeverAddress + 'datamonitor/getClientInfo',
   //登录
   userLogin: devSeverAddress + 'user/login',
+  //分析仪设置
+  queryAnalyzer: devSeverAddress + 'analyser/list',
+  queryAnalyzerByConditions: devSeverAddress + 'analyser/listByConditions',
+  addAnalyser: devSeverAddress + 'analyser/add',
+  deleteAnalyser: devSeverAddress + 'analyser/delete',
 };
 
 export default api;

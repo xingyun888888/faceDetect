@@ -18,9 +18,20 @@ export const cameraStateOptions = [{id: 1, name: '启用', value: 1}, {id: 2, na
 export const streamTypeOptions = [{id: 1, name: 'H264', value: 1}, {id: 2, name: 'H265', value: 2}];
 
 /***********  服务器管理 服务器类型************/
-export const serverTypeOptions = [
-  {id: 1, name: '人脸检测', value: 1},
-  {id: 2, name: '人脸识别', value: 2},
-  {id: 3, name: '人型分析', value: 3},
-  {id: 4, name: '跟踪', value: 4}];
+export const serverTypeOptions = [{id: 1, name: '人脸检测', value: 1}, {id: 2, name: '人脸识别', value: 2}, {id: 3, name: '人型分析', value: 3}, {id: 4, name: '跟踪', value: 4}];
 
+/***********  人脸库状态配置  ************/
+export const faceStateOptions = [{id: 1, name: '启用', value: 1}, {id: 2, name: '未启用', value: 2}];
+
+
+/***********  分析仪状态配置  ************/
+export const analyzerStateOptions = [{id: 1, name: '启用', value: 1}, {id: 2, name: '未启用', value: 2}];
+
+/***********  来源 配置  ************/
+export const sourceOptions = [{id: 1, name: 'web', value: 1}, {id: 2, name: 'app', value: 2}, {id: 3, name: '其他', value: 3}];
+
+/***********  用户管理 是否启用 配置  ************/
+export const isEnableOptions = [{id: 1, name: '启用', value: 1}, {id: 2, name: '未启用', value: 2}];
+
+/***********  参数类型 配置  ************/
+export const paramTypeOptions = [{id: 1, name: '地图', value: 1}, {id: 2, name: 'IP地址', value: 2}, {id: 3, name: '版本', value: 3}];

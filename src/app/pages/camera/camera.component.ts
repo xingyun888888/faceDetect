@@ -3,10 +3,6 @@ import api from '../../api';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {parseParam} from '../../utils/common';
 import {cameraStateOptions, cameraTypeOptions, dangerOptions, genderOptions, streamTypeOptions} from '../../config/selectConf';
-import {Store} from '@ngrx/store';
-import * as fromRoot from '@app-root-store';
-import * as actions from './../../store/actions';
-import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-camera',
@@ -138,7 +134,6 @@ export class CameraComponent implements OnInit {
   /** 增加或者编辑操作后点击提交后调用的方法，请求的时候判断一下是新增还是修改，根据isEdit和isAdd的值判断
    * 添加下面的headers头部说明，前端需要接收的是json数据*/
   sendData(data) {
-    this.store.dispatch(new actions.setLoadingState(true,"正在保存中..."));
     if (this.isAdd) {
       this.http.post(api.addCamera, data, {
         headers: new HttpHeaders({
@@ -156,17 +151,15 @@ export class CameraComponent implements OnInit {
           'Content-type': 'application/json;charset=UTF-8'
         })
       }).subscribe((res) => {
-        this.store.dispatch(new actions.setLoadingState(false,"正在加载中..."));
         this.getCamera();
       }, (error) => {
-        this.store.dispatch(new actions.setLoadingState(false,"正在加载中..."));
         this.getCamera();
       });
       this.isEdit = false;
     }
   }
 
-  constructor(private store:Store<fromRoot.State>,private http: HttpClient) {
+  constructor(private http: HttpClient) {
   }
 
   /**在这里调用刷新,点击刷新按钮之后就会调用这个方法,刷新就是调用一次查询接口*/
@@ -176,7 +169,7 @@ export class CameraComponent implements OnInit {
 
   /**调用查询接口，查询到结果之后将拿到的res赋值给_dataSet才能显示到table*/
   getCamera() {
-    this.store.dispatch(new actions.setLoadingState(true));
+    this.isLoading = true;
     this.http.get(api.queryCamera).subscribe((res) => {
       console.dir(res);
       let list = <any>res;
@@ -187,20 +180,33 @@ export class CameraComponent implements OnInit {
       this._dataSet = list;
 
       /**关闭加载状态*/
-      this.store.dispatch(new actions.setLoadingState(false));
+      this.isLoading = false;
     }, () => {
       let list = [
+        {
+          // id: '', name: 'sdf',
+          // ip: '23', direction: '3',
+          // type: '3', serialNum: '3',
+          // zoneID: '3', a_name: '3',
+          // strategyID: '3',
+          // doorID: '3',
+          // port: '3',
+          // user: '3',
+          // pwd: '2',
+          // rtspPort: '3',
+          // rtspPath: '3',
+        }
       ];
       this._dataSet = list;
       setTimeout(() => {
-        this.store.dispatch(new actions.setLoadingState(false));
-      }, 3000);
+        this.isLoading = false;
+      }, 2000);
     });
   }
 
   /**多条件查询方法*/
   queryCameraByConditions(data) {
-    this.store.dispatch(new actions.setLoadingState(true));
+    this.isLoading = true;
     console.log(parseParam(data));
     this.http.get(api.queryCameraByConditions + parseParam(data)).subscribe((res) => {
       console.dir(res);
@@ -210,9 +216,9 @@ export class CameraComponent implements OnInit {
       });
       this._dataSet = list;
       /**关闭加载状态*/
-      this.store.dispatch(new actions.setLoadingState(false));
+      this.isLoading = false;
     }, (error) => {
-      this.store.dispatch(new actions.setLoadingState(false));
+
     });
   }
 

@@ -7,7 +7,8 @@ import {
   Validators
 } from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
-import {validOptions} from '../facelib-model/faceFormValidConf';
+import {paramTypeOptions} from '../../../config/selectConf';
+import {validOptions} from './paramFormValidConf';
 import {CustomValidService} from '../../../service/custom-valid.service';
 
 @Component({
@@ -21,6 +22,13 @@ export class ParamModelComponent implements OnInit {
    */
   @Input()
   _formData = null;
+
+  /**
+   * 参数类型
+   */
+  @Input()
+  paramTypeOptions = [];
+
   /**
    *这个是将table组件中传过来的值放入表单中
    */
@@ -64,7 +72,7 @@ export class ParamModelComponent implements OnInit {
   handleCancel = (e) => {
     this.resetForm(e);
     this.closeModel.emit();
-  }
+  };
 
   /**
    *提交表单，提交时做校验操作
@@ -87,7 +95,7 @@ export class ParamModelComponent implements OnInit {
       this.requestData.emit(value);
       this.validateForm.reset();
     }
-  }
+  };
 
   /**
    *重置表单
@@ -113,14 +121,10 @@ export class ParamModelComponent implements OnInit {
   ngOnInit() {
     this.validateForm = this.fb.group({
       id: [''],
-      name: [''],
-      value: [''],
-      description: [''],
-      createtime: [''],
-      creater: [''],
-      modifierTime: [''],
-      modifier: [''],
-      type: ['']
+      name: ['', [Validators.required, Validators.maxLength(25)]],
+      value: ['', [Validators.required, Validators.maxLength(250)]],
+      description: ['', [Validators.maxLength(25)]],
+      type: ['', [Validators.required]],
     });
   }
 

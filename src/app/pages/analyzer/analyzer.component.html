@@ -1,4 +1,8 @@
-<app-search [_searchTitle]="_searchTitle" [checkName]="checkName" (queryCondition)="queryFacelibByConditions($event)" ></app-search>
+<app-search [_searchTitle]="_searchTitle" [checkName]="checkName"
+            (queryCondition)="queryAnalyzerByConditions($event)"></app-search>
 <nz-spin [nzTip]="'正在读取数据...'" [nzSpinning]="isLoading">
-  <app-table [_titles]="_titles" [_dataSet]="_dataSet" [isShowOperate]="false" (editData)="getRowData($event)"  (deleteData)="deleteRow($event)" actionType="type3" (refresh)="refresh()"></app-table>
+  <app-table [_titles]="_titles" [_dataSet]="_dataSet" [isShowOperate]="false" (editData)="getRowData($event)"
+             (deleteData)="deleteRow($event)" actionType="type3" (refresh)="refresh()"></app-table>
 </nz-spin>
+<app-analyzer-model (closeModel)="close()" [isVisible]="isEdit||isAdd" [analyzerStateOptions]="_analyzerStateOptions"
+                    [_formData]="formData" (requestData)="sendData($event)"></app-analyzer-model>

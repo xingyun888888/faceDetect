@@ -5,10 +5,14 @@
 
 <!--<router-outlet name="aux"></router-outlet>-->
 <!--<router-outlet></router-outlet>-->
-<div *ngIf="_formLogin" class="wrapper">
-  <div *ngIf="_isBackGround" id="background" style="position:absolute;z-index:-1;width:100%;height:100vh;top:0px;left:0px;"><img src="../assets/images/u0_state0.jpg" width="100%" height="100vh" /></div>
-  <!--<img src="img/u0_state0.jpg" id="bkg_img" width="" height="">-->
-  <form *ngIf="_formLogin" [formGroup]="formModel" (submit)="onSubmit()">
+<div *ngIf="false" class="wrapper">
+<!--  <div *ngIf="_isBackGround" id="background" style="position:absolute;z-index:-1;width:100%;height:100%;top:0px;left:0px;"><img src="../assets/images/u0_state0.jpg" width="100%" height="100%" /></div>-->
+  <div *ngIf="_isBackGround" id="background" style="position:absolute;z-index:-1;width:100%;height:auto;top:0px;left:0px;">
+    <img src="../assets/images/login.jpg" style="position:absolute;width:100vw;height:auto;" />
+    <!--<img src="../assets/images/u33.png" style="position:absolute;width:20vw;height:10vh;" />-->
+    <img src="../assets/images/u39.png" style="position:absolute;width:25vw;height:10vh;" />
+  </div>
+  <form *ngIf="_formLogin" [formGroup]="formModel" (submit)="onSubmit($event)">
     <div class="loginBox">
       <div class="loginBoxCenter">
         <p><label for="text">用户名：</label></p>
@@ -28,10 +32,13 @@
             密码不能为空
           </div>
         </div>
+        <div *ngIf="pwdError" style="font-size: small;color: #FF0000">
+          {{errorInfo}}
+        </div>
         <p>
           <a class="forgetLink" href="#">忘记密码?</a>
         </p>
-        <input id="remember" type="checkbox" name="remember" />
+        <input id="remember" type="checkbox" name="remember" checked="checked"/>
         <label for="remember">记住登录状态</label>
       </div>
       <div class="loginBoxButtons">
@@ -41,12 +48,18 @@
   </form>
   <!--<router-outlet *ngIf="_routermenu"></router-outlet>-->
 </div>
-<div *ngIf="_routermenu" class="container">
-  <!--<app-header [username]="username"></app-header>-->
+<div *ngIf="true" class="container">
+  <!--<div class="userdata">-->
+    <!--<button type="button" class="close" (click)="logout()">退出</button>-->
+    <!--<app-header [username]="username"></app-header>-->
+  <!--</div>-->
   <!--<app-nav></app-nav>-->
-  <nz-spin [nzTip]="loadingTitle$|async " [nzSpinning]="isLoading$|async">
-      <router-outlet></router-outlet>
-  </nz-spin>
+  <router-outlet></router-outlet>
 </div>
+<nz-footer>
+<div *ngIf="_formLogin" class="footer" style="visibility: visible;">
+  <p><span>Copyright © 平安科技, All Rights Reserved.</span></p><p><span>Email : kaiyifan@outlook.com&nbsp; QQ: 372217158</span></p>
+</div>
+</nz-footer>
 
 

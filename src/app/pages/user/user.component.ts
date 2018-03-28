@@ -2,11 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../api';
 import {parseParam} from '../../utils/common';
-import {stateOptions} from '../../config/selectConf';
-import {Store} from '@ngrx/store';
-import * as fromRoot from '@app-root-store';
-import * as actions from './../../store/actions';
-import {Observable} from 'rxjs/Observable';
+import {isEnableOptions, stateOptions} from '../../config/selectConf';
+
 
 @Component({
   selector: 'app-user',
@@ -16,58 +13,42 @@ import {Observable} from 'rxjs/Observable';
 export class UserComponent implements OnInit {
   /**这个字段是保存着search的自定义列标签*/
   _searchTitle: Array<any> = [
-    {key: 'name', name: '姓名', type: '', nzSpan: 5},
-    {key: 'role', name: '角色', type: '', nzSpan: 5},
+    {key: 'displayName', name: '姓名', type: '', nzSpan: 5},
+    {key: 'isEnable', name: '是否启用', type: 'select', options: isEnableOptions, nzSpan: 6}
   ];
 
   /**
-   * 状态
+   * 是否启用
    */
-  _stateOptions = stateOptions;
+  _isEnableOptions = isEnableOptions;
 
   /**这个字段是保存着table的自定义列标签*/
   _titles: Array<any> = [
     {
       key: 'id',
       name: 'ID',
-       type: 'text'
+      type: 'text'
     },
     {
       key: 'name',
-      name: '姓名',
-       type: 'text'
+      name: '用户名',
+      type: 'text'
     },
     {
       key: 'displayName',
-      name: '显示名',
-       type: 'text'
+      name: '姓名',
+      type: 'text'
     },
     {
       key: 'pwd',
       name: '密码',
-       type: 'text'
-
-    },
-    {
-      key: 'module',
-      name: '模块名',
-       type: 'text'
-    },
-    {
-      key: 'role',
-      name: '角色',
-       type: 'text'
+      type: 'text'
     },
     {
       key: 'isEnable',
-      name: '是否使能',
-       type: 'text'
-    },
-    {
-      key: 'state',
-      name: '状态',
+      name: '是否启用',
       type: 'select',
-      options: this._stateOptions
+      options: this._isEnableOptions
     }
   ];
 
@@ -84,7 +65,12 @@ export class UserComponent implements OnInit {
   /**是否加载中,是否显示加载状态,true:代表正在加载中,false:代表加载完成*/
   isLoading = false;
 
-
+  /**
+   * 定义判断进入子组件是新增还是修改,用于控制子组件页面用户名是否可用效果
+   * @type {boolean}
+   * @private
+   */
+  _isModify = false;
 
   /**这个方法是订阅的子组件传进来的事件,当子组件触发的时候就会获取到值value,判断拿出的value是否是undefined,如果是新增处理,否则编辑处理，
    * 首先要把formData的脏值清空，然后将拿到的最新值赋值到formData，如果value有值那就是表明当前是编辑状态，否则说明是新增*/
@@ -94,8 +80,10 @@ export class UserComponent implements OnInit {
     this.formData = Object.assign({}, value);
     if (!value) {
       this.isAdd = true;
+      this._isModify = false;
     } else {
       this.isEdit = true;
+      this._isModify = true;
     }
   }
 
@@ -150,7 +138,7 @@ export class UserComponent implements OnInit {
     }
   }
 
-  constructor(private store:Store<fromRoot.State>,private http: HttpClient, ) {
+  constructor(private http: HttpClient) {
   }
 
   /**在这里调用刷新,点击刷新按钮之后就会调用这个方法,刷新就是调用一次查询接口*/
@@ -160,26 +148,26 @@ export class UserComponent implements OnInit {
 
   /**调用查询接口，查询到结果之后将拿到的res赋值给_dataSet才能显示到table*/
   getUser() {
-    this.store.dispatch(new actions.setLoadingState(true));
+    this.isLoading = true;
     this.http.get(api.queryUser).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list;
       /**关闭加载状态*/
-      this.store.dispatch(new actions.setLoadingState(false));
+      this.isLoading = false;
     });
   }
 
   /**根据条件查询方法*/
   queryUserByConditions(data) {
-    this.store.dispatch(new actions.setLoadingState(true));
+    this.isLoading = true;
     console.log(parseParam(data));
     this.http.get(api.queryUserByConditions + parseParam(data)).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list.data;
       /**关闭加载状态*/
-      this.store.dispatch(new actions.setLoadingState(false));
+      this.isLoading = false;
     }, (error) => {
     });
   }

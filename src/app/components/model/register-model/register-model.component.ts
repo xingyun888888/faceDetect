@@ -2,13 +2,14 @@ import {Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef} f
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {ActivatedRoute} from '@angular/router';
 import api from '../../../api';
 import {NzModalService} from 'ng-zorro-antd';
 import {CustomValidService} from '../../../service/custom-valid.service';
 import {validOptions} from '../facelib-model/faceFormValidConf';
 
 interface FileReaderEventTarget extends EventTarget {
-  result: string
+  result: string;
 }
 
 interface FileReaderEvent extends Event {
@@ -21,33 +22,32 @@ interface FileReaderEvent extends Event {
   styleUrls: ['./register-model.component.css']
 })
 export class RegisterModelComponent implements OnInit {
+
+  /**人脸库名称下拉列表*/
+  faceLibOptions = [];
+
+  /**人脸库此时还可以上传多少张照片*/
+  _faceCount: any = '';
+
   /***该输入属性，里面包含着table中的所有字段*/
   @Input()
   _formData = null;
 
-  /**
-   * 证件类型下拉内容配置项
-   */
+  /***  证件类型下拉内容配置项  ***/
   @Input()
   certTypeOptions = [];
 
-  /**
-   * 危险等级下拉内容配置项
-   */
+  /***  危险等级下拉内容配置项  ***/
   @Input()
   dangerOptions = [];
 
-  /**
-   * 性别下拉内容配置项
-   */
+  /***  性别下拉内容配置项  ***/
   @Input()
   genderOptions = [];
 
-  /**这个是将table组件中传过来的值放入表单中*/
+  /***  来源下拉内容配置项  ***/
   @Input()
-  set formData(value) {
-    this._formData = Object.assign({}, value);
-  }
+  sourceOptions = [];
 
   /**这个是获取表单的字段名*/
   get formData() {
@@ -70,7 +70,7 @@ export class RegisterModelComponent implements OnInit {
 
   @ViewChild('imgSelect', {read: ElementRef}) imgSelect: ElementRef;
 
-  priviewImg: string = '';
+  priviewImg = '';
 
   fileSelect(e) {
     this.imgSelect.nativeElement.click();
@@ -81,26 +81,19 @@ export class RegisterModelComponent implements OnInit {
    * 保存单个上传选择的文件名字
    * @type {any[]}
    */
+
   uploadImgNameList: string[] = [];
 
-  /**
-   * 保存单个上传选择的文件 之前你是
-   * @type {any[]}
-   */
+  /******  保存单个上传选择的文件  ******/
   uploadImgList: any[] = [];
 
-  /* 图片展示 需要预览时会用到 */
-  defaultImg: string = '../../../assets/images/upload-icon.png';
-
+  /******  图片展示 需要预览时会用到  ******/
+  defaultImg = '../../../assets/images/upload-icon.png';
 
 
   uploadApi = api.batchUpload;
 
-  /**
-   * 删除上传图片列表uploadImgList里面的图片
-   * @param e
-   * @param index
-   */
+  /******  删除上传图片列表uploadImgList里面的图片  ******/
   deleteImg(e, index) {
     this.uploadImgList.splice(index, 1);
     if (index > 0) {
@@ -110,19 +103,12 @@ export class RegisterModelComponent implements OnInit {
     }
   }
 
-  /**
-   * @param e 单个上传 ()
-   */
+  /****** 单个上传   ******/
   imgUploadHandler(e) {
-    /**
-     * 1.创建一个FormData表单对象 用来封装保存表单数据
-     * @type {FormData}
-     */
-    let formData = new FormData();
+    /******  创建一个FormData表单对象，用来封装保存表单数据  ******/
+    const formData = new FormData();
     console.dir(this.uploadImgList);
-    /**
-     * 2.在这里判断当前选择的文件是否为空 如果为空就提示 否则继续下一步
-     */
+    /******  在这里判断当前选择的文件是否为空，如果为空就提示，否则继续下一步  ******/
     if (this.uploadImgList.length == 0) {
       this.confirmServ.error({
         zIndex: 2000,
@@ -130,59 +116,36 @@ export class RegisterModelComponent implements OnInit {
       });
       return;
     }
-    /**
-     * 3.将选择的文件添加到创建好的表单对象中,
-     */
+    /******  将选择的文件添加到创建好的表单对象中  ******/
     formData.append('uploadFile', this.uploadImgList[0]);
 
+    /******  创建一个文件读取对象  ******/
+    const reader = new FileReader();
 
-    /**
-     * 创建一个文件读取对象
-     * @type {FileReader}
-     */
-    let reader = new FileReader();
-    /**
-     * 读取文件保存成url类型
-     */
+    /******  读取文件保存成url类型  ******/
     reader.readAsDataURL(this.uploadImgList[0]);
 
-    /**
-     * 以上两步如果前端界面不需要展示图片的话可以省略
-     * @param {FileReaderEvent} res
-     */
-
+    /******  以上两步当前端界面不需要展示图片的话可以省略  ******/
     reader.onload = (res: FileReaderEvent) => {
       this.priviewImg = res.target.result;
-      /**
-       * 请求后台地址 提交已经封装好的表单对象
-       */
+      /******  请求后台地址 提交已经封装好的表单对象  ******/
       this.http.post(api.singleUpload, formData).subscribe((res) => {
         const result = <any>res;
-        /**
-         *  请求响应200时  将返回的结果数据解析 并赋值到_formData里面
-         */
+        /****** 请求响应200时，将返回的结果数据解析，并赋值到_formData里面   ******/
         // this._formData.path = result.msgBody.dataSend.PictureList[0]&&result.msgBody.dataSend.PictureList[0].PicturePathDir;
         this._formData.feapath = result.msgBody.dataSend.PictureList[0] && result.msgBody.dataSend.PictureList[0].FeaDir;
         this._formData.path = result.msgBody.dataSend.PictureList[0] && result.msgBody.dataSend.PictureList[0].PicturePathDir;
 
-        /**
-         * 这里是给图片展示用的  现在没有用
-         * @type {string}
-         */
+        /******  这里是给图片展示用的，暂时没有用  ******/
         this.defaultImg = this.priviewImg;
 
-        /**
-         * 提示用户图片添加成功
-         */
+        /******  提示用户图片添加成功  ******/
         this.confirmServ.success({
           zIndex: 2000,
           title: '图片添加成功'
         });
       }, (error) => {
-        /**
-         * 错误的回调函数  提示上传失败 清空
-         * @type {string}
-         */
+        /******  错误的回调函数，提示上传失败 清空  ******/
         this._formData.path = '';
         this.confirmServ.success({
           zIndex: 2000,
@@ -192,50 +155,35 @@ export class RegisterModelComponent implements OnInit {
     };
   }
 
-  /**
-   * 维护上传的状态
-   * @type {boolean}
-   */
+  /******  维护上传的状态  ******/
   uploading = false;
 
-
-  /**
-   * 维护当前选择的文件列表
-   * @type {any[]}
-   */
+  /******  维护当前选择的文件列表  ******/
   fileList = [];
 
-  /**
-   * 返回false就是取消上传
-   * @param file
-   * @returns {boolean}
-   */
+  /******  返回false就是取消上传  ******/
   beforeUpload(file) {
     this.fileList.push(file);
     console.log(file);
     return false;
   }
 
-  /**
-   * @param e 确认上传  这里是批量上传
-   */
+  /******  确认批量上传  ******/
   handleUpload(e) {
-
-    if(this.fileList.length == 0){
+    if (this.fileList.length == 0) {
       this.confirmServ.error({
-        zIndex:2000,
-        title:"请先选择图片"
+        zIndex: 2000,
+        title: '请先选择图片'
       });
       return;
     }
     const formData = new FormData();
-    /**
-     * 与单个上传不同的是 遍历选择的文件列表-添加  下面都一样
-     */
+    /******  与单个上传不同的是，遍历选择的文件列表-添加  下面都一样  ******/
     this.fileList.forEach((file: any) => {
       console.log(file);
       formData.append('files', file);
     });
+    formData.append('facelibId', this._formData.batchFacelibId);
     this.uploading = true;
 
     this.http.post(api.batchUpload, formData, {
@@ -253,20 +201,20 @@ export class RegisterModelComponent implements OnInit {
       this.fileList = [];
       if (failFile.length != 0) {
         this.confirmServ.error({
-          zIndex:3000,
+          zIndex: 3000,
           title: '上传失败',
-          content: failFile.substring(0, failFile.length - 1) + '等,文件上传失败'
+          content: failFile.substring(0, failFile.length - 1) + ' 等,文件上传失败'
         });
         return;
       }
       this.confirmServ.success({
-        zIndex:3000,
+        zIndex: 3000,
         content: '上传成功'
       });
     }, (err) => {
       this.uploading = false;
       this.confirmServ.error({
-        zIndex:3000,
+        zIndex: 3000,
         content: '上传失败'
       });
       this.fileList = [];
@@ -274,9 +222,7 @@ export class RegisterModelComponent implements OnInit {
   }
 
 
-  /**
-   * @param e？？
-   */
+
   fileChange(e) {
     console.log(e);
     console.log(e.target.files[0].name);
@@ -289,9 +235,9 @@ export class RegisterModelComponent implements OnInit {
   handleCancel = (e) => {
     this.resetForm(e);
     this.closeModel.emit();
-  }
+  };
 
-  /**提交表单，提交时做校验操作*/
+  /***  提交表单，提交时做校验操作  ***/
   submitForm = ($event, value) => {
     $event.preventDefault();
     for (const key in this.validateForm.controls) {
@@ -299,18 +245,14 @@ export class RegisterModelComponent implements OnInit {
     }
     console.log(value);
     if (!this.validateForm.valid) {
-      /**
-       * 在这里使用表单验证 提示校验错误的信息
-       * 使用表单验证服务的valid方法  接收两个参数 第一个是表单对象  第二个参数是配置选项
-       */
+      /***  使用表单验证服务的valid方法，接收两个参数，第一个是表单对象，第二个参数是配置选项，提示校验错误的信息 ***/
       this.customValidServ.valid(this.validateForm, validOptions);
-      // this.closeModel.emit();
     } else {
       /**在这里请求处理提交表单数据*/
       this.requestData.emit(value);
       this.validateForm.reset();
     }
-  }
+  };
 
   /**重置表单*/
   resetForm($event: MouseEvent) {
@@ -327,31 +269,54 @@ export class RegisterModelComponent implements OnInit {
     return this.validateForm.controls[name];
   }
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private confirmServ: NzModalService, private customValidServ: CustomValidService) {
-     this.beforeUpload = this.beforeUpload.bind(this);
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private http: HttpClient, private confirmServ: NzModalService, private customValidServ: CustomValidService) {
+    this.beforeUpload = this.beforeUpload.bind(this);
+    this.getfaceLibName();
+  }
+
+  /**获取人脸库的名称下拉列表*/
+  getfaceLibName() {
+    this.http.get(api.queryFacelib).subscribe((res) => {
+      console.dir(res);
+      const list = <any>res;
+      /****  在这里list是一个数组，需要取到MaxNum和faceCount，就先遍历   ****/
+      list.map((item, index) => {
+        /****  将相减的值直接再保存到list里面   ****/
+        item._faceCount = item.maxNum - item.faceCount;
+      });
+      console.log(list);
+      this.faceLibOptions = list;
+    });
+  }
+  /****  选择不同人脸库的时候就   显示该人脸库下剩余的数量   ****/
+  batchFacelibIdChange(currentId) {
+    this.faceLibOptions.map((item, index) => {
+      if (item.id == currentId) {
+        this._faceCount = item._faceCount;
+      }
+    });
   }
 
   ngOnInit() {
     this.validateForm = this.fb.group({
       id: [''],
-      //name: ['', [Validators.required]], //不知道为什么删掉 ？？？
-      seriernum: [''],
-      gender: [0],
-      type: [0],
-      code: [''],
-      path: ['', [Validators.required]],
-      phoneno: [''],
-      md5: [''],
+      name: ['', [Validators.required, Validators.maxLength(22)]],
+      gender: ['', [Validators.required]],
+      type: ['', [Validators.required]],
+      code: ['', [Validators.required]],
+      path: ['', [Validators.maxLength(200)]],
+      phoneno: ['', [Validators.maxLength(200)]],
+      // md5: [''],
       feapath: [''],
-      time: [''],
-      address: [''],
+      // time: [''],
+      address: ['', [Validators.maxLength(100)]],
       source: [''],
-      zoneno: [''],
-      zonename: [''],
-      faceLibid: [''],
-      dc: [0],
-      imgid: [''],
-      batchFacelibId:[""]
+      // zoneno: [''],
+      // zonename: [''],
+      faceLibid: ['', [Validators.required]],
+      dc: ['', [Validators.required]],
+      batchFacelibId: ['']
+      // imgid: ['']
     });
   }
 }

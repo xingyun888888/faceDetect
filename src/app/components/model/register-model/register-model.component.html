@@ -1,230 +1,286 @@
-<nz-modal class="register-modal-container" [nzVisible]="isVisible" [nzTitle]="'注册信息'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)" [nzConfirmLoading]="isConfirmLoading" nzFooter="" >
-    <ng-template #modalContent>
-      <form nz-form [formGroup]="validateForm">
-        <div nz-form-item nz-row class="register-row">
-          <div nz-col [nzSpan]="14" style="border-right:1px solid #e5e5e5" class="register-col">
-            <input type="hidden" formControlName="id" [(ngModel)]="_formData.id"  >
-            <div nz-form-item nz-row>
-              <div nz-form-label nz-col [nzSpan]="5" >
-                <label nz-form-item-required>编号</label>
-              </div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-input formControlName="seriernum" [(ngModel)]="_formData.seriernum"  [nzPlaceHolder]="'编号'" [nzType]="'text'" [nzSize]="'large'">
-                </nz-input>
-              </div>
-              <div nz-col [nzSpan]="5" nz-form-label>
-                <label nz-form-item-required>性别</label>
-              </div>
-              <div>
-                <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                  <nz-select formControlName="gender" [(ngModel)]="_formData.gender" [nzPlaceHolder]="'-请选择-'" [nzSize]="'large'" nzAllowClear>
-                    <nz-option *ngFor="let option of genderOptions" [nzLabel]="option.name" [nzValue]="option.id">
-                      <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
-                    </nz-option>
-                  </nz-select>
-                </div>
-              </div>
+<nz-modal class="register-modal-container" [nzVisible]="isVisible" [nzTitle]="'注册信息'" [nzContent]="modalContent"
+          (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)" [nzConfirmLoading]="isConfirmLoading"
+          nzFooter="">
+  <ng-template #modalContent>
+    <form nz-form [formGroup]="validateForm">
+      <div nz-form-item nz-row class="register-row">
+        <div nz-col [nzSpan]="14" style="border-right:1px solid #aaa" class="register-col">
+          <div nz-form-item nz-row>
+            <div nz-col [nzSpan]="24" style="font-size:16px; color :black; padding-left:320px;">单张人脸注册</div>
+          </div>
+          <input type="hidden" formControlName="id" [(ngModel)]="_formData.id">
+          <div nz-form-item nz-row>
+            <div nz-form-label nz-col [nzSpan]="5">
+              <label nz-form-item-required>姓名</label>
             </div>
-            <div nz-form-item nz-row>
-              <div nz-col [nzSpan]="5" nz-form-label>
-                <label nz-form-item-required>证件类型</label>
-              </div>
-              <div>
-                <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                  <nz-select formControlName="type" [(ngModel)]="_formData.type" [nzPlaceHolder]="'-请选择-'" [nzSize]="'large'" nzAllowClear>
-                    <nz-option *ngFor="let option of certTypeOptions" [nzLabel]="option.name" [nzValue]="option.id">
-                      <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
-                    </nz-option>
-                  </nz-select>
-                </div>
-              </div>
-              <div nz-col [nzSpan]="5" nz-form-label>
-                <label nz-form-item-required>证件号</label>
-              </div>
-              <div>
-                <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                  <nz-input formControlName="code" [(ngModel)]="_formData.code" [nzPlaceHolder]="'证件号码'" [nzType]="'text'" [nzSize]="'large'">
-                  </nz-input>
-                </div>
-              </div>
+            <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+              <nz-input formControlName="name" [(ngModel)]="_formData.name" [nzPlaceHolder]="'姓名'" [nzType]="'text'"
+                        [nzSize]="'large'">
+              </nz-input>
             </div>
-            <div nz-form-item nz-row>
-              <div nz-col [nzSpan]="5" nz-form-label>
-                <label nz-form-item-required>电话</label>
-              </div>
-              <div>
-                <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                  <nz-input formControlName="phoneno" [(ngModel)]="_formData.phoneno" [nzPlaceHolder]="'电话'" [nzType]="'text'" [nzSize]="'large'">
-                  </nz-input>
-                </div>
-              </div>
-              <div nz-col [nzSpan]="5" nz-form-label>
-                <label nz-form-item-required>md5</label>
-              </div>
-              <div>
-                <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                  <nz-input formControlName="md5" [(ngModel)]="_formData.md5" [nzPlaceHolder]="'md5'" [nzType]="'text'" [nzSize]="'large'">
-                  </nz-input>
-                </div>
-              </div>
+            <div nz-col [nzSpan]="5" nz-form-label>
+              <label nz-form-item-required>性别</label>
             </div>
-            <div nz-form-item nz-row>
-              <div nz-col [nzSpan]="5" nz-form-label>
-                <label nz-form-item-required>imgid</label>
-              </div>
+            <div>
               <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-input formControlName="imgid" [(ngModel)]="_formData.imgid" [nzPlaceHolder]="'imgid'" [nzType]="'text'" [nzSize]="'large'">
-                </nz-input>
-              </div>
-              <div nz-col [nzSpan]="5" nz-form-label>
-                <label nz-form-item-required>time</label>
-              </div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-datepicker formControlName="time" [nzFormat]="'YYYY-MM-DD'"  [(ngModel)]="_formData.time" [nzPlaceHolder]="'time'" [nzType]="'date'" [nzSize]="'large'">
-                </nz-datepicker>
-              </div>
-            </div>
-            <div nz-form-item nz-row>
-              <div nz-col [nzSpan]="5" nz-form-label>
-                <label nz-form-item-required>住址</label>
-              </div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-input formControlName="address" [(ngModel)]="_formData.address" [nzPlaceHolder]="'address'" [nzType]="'text'" [nzSize]="'large'">
-                </nz-input>
-              </div>
-              <div nz-col [nzSpan]="5" nz-form-label>
-                <label nz-form-item-required>资源</label>
-              </div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-input formControlName="source" [(ngModel)]="_formData.source" [nzPlaceHolder]="'source'" [nzType]="'text'" [nzSize]="'large'">
-                </nz-input>
-              </div>
-            </div>
-            <div nz-form-item nz-row>
-              <div nz-col [nzSpan]="5" nz-form-label>
-                <label nz-form-item-required>区域号</label>
-              </div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-input formControlName="zoneno" [(ngModel)]="_formData.zoneno" [nzPlaceHolder]="'zoneno'" [nzType]="'text'" [nzSize]="'large'">
-                </nz-input>
-              </div>
-              <div nz-col [nzSpan]="5" nz-form-label>
-                <label nz-form-item-required>区域名</label>
-              </div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-input formControlName="zonename" [(ngModel)]="_formData.zonename" [nzPlaceHolder]="'zonename'" [nzType]="'text'" [nzSize]="'large'">
-                </nz-input>
-              </div>
-            </div>
-            <div nz-form-item nz-row>
-              <div nz-col [nzSpan]="5" nz-form-label>
-                <label nz-form-item-required>人脸库id</label>
-              </div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-input formControlName="faceLibid" [(ngModel)]="_formData.faceLibid" [nzPlaceHolder]="'人脸库id'" [nzType]="'text'" [nzSize]="'large'">
-                </nz-input>
-              </div>
-              <div nz-col [nzSpan]="5" nz-form-label>
-                <label nz-form-item-required>危险等级</label>
-              </div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-select style="width:120px;"  formControlName="dc" [(ngModel)]="_formData.dc" [nzPlaceHolder]="'-请选择-'" [nzSize]="'large'" nzAllowClear>
-                  <nz-option *ngFor="let option of dangerOptions" [nzLabel]="option.name" [nzValue]="option.id">
+                <nz-select formControlName="gender" [(ngModel)]="_formData.gender" [nzPlaceHolder]="'-请选择-'"
+                           [nzSize]="'large'" nzAllowClear>
+                  <nz-option *ngFor="let option of genderOptions" [nzLabel]="option.name" [nzValue]="option.id">
                     <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
                   </nz-option>
                 </nz-select>
               </div>
             </div>
-            <div nz-form-item nz-row>
-              <div nz-col [nzSpan]="5" nz-form-label>
-                <label nz-form-item-required>fea文件路径</label>
-              </div>
-              <div>
-                <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
-                  <nz-input formControlName="feapath" [nzDisabled]="true"  [(ngModel)]="_formData.feapath" [nzPlaceHolder]="'Fea文件路径'" [nzType]="'text'" [nzSize]="'large'">
-                  </nz-input>
-                </div>
-              </div>
-            </div>
-            <div  nz-form-item nz-row>
-              <div nz-col [nzSpan]="5" nz-form-label>
-                <label nz-form-item-required>图片上传</label>
-              </div>
-              <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
-                <nz-input formControlName="path" [nzDisabled]="true" (dblclick)="fileSelect($event)"  [(ngModel)]="_formData.path" [nzPlaceHolder]="'点击浏览或者双击选择文件'" [nzType]="'text'" [nzSize]="'large'">
-                </nz-input>
-              </div>
-              <div nz-col [nzSpan]="3" nz-form-label  style="margin-left:-12px;">
-                <button nz-button style="background:#e5e5e5;" [nzSize]="'large'" (click)="fileSelect($event)">
-                  <i class="anticon"></i><span>浏览</span>
-                </button>
-              </div>
-              <div nz-col [nzSpan]="4" nz-form-label style="margin-left:-12px;">
-                <button nz-button style="background:#108ee9;color:#fff;" [nzType]="'default'"  [nzSize]="'large'" (click)="imgUploadHandler($event)">
-                  <span>添加</span>
-                </button>
-              </div>
-            </div>
-            <div nz-form-item nz-row>
-              <!-- <div nz-col [nzSpan]="5" nz-form-label>
-                <label nz-form-item-required>缩略图</label>
-              </div>
-              <div nz-col [nzSpan]="4">
-               <!-- <nz-input formControlName="path" (click)="fileSelect($event)" [(ngModel)]="_formData.path" [nzPlaceHolder]="'缩略图'" [nzType]="'text'" [nzSize]="'large'">
-                </nz-input>
-                <nz-tooltip [nzTitle]="uploadImgNameList.join(',')">
-                  <button nz-tooltip nz-button [nzType]="'default'" (click)="fileSelect($event)">
-                    <i class="anticon anticon-upload"></i><span>点击添加</span>
-                  </button>
-                </nz-tooltip>
-              </div>
-              <div nz-col [nzSpan]="4">
-                <button nz-button  [nzType]="'default'" (click)="imgUploadHandler($event)"><span><i class="anticon anticon-add"></i> 上传</span></button>
-              </div> -->
-            </div>
-            <!--<div nz-form-item nz-row style="margin-bottom:5px;">
-              <div nz-col [nzSpan]="5">
-                <label></label>
-              </div>
-              <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback style="text-align:left;">
-                <ul>
-                  <li *ngFor="let item of uploadImgList;let i = index"><span style="display:inline-block;width:150px;text-align:left;margin-right:10px;">{{item}}</span><a style="float:right;" href="javascript:void(0)" (click)="deleteImg(e,i)">删除</a></li>
-                </ul>
-              </div>
-            </div>-->
-            <input type="file" #imgSelect style="visibility:hidden;"  (change)="fileChange($event)"/>
           </div>
-          <div nz-col [nzSpan]="10" class="register-col">
-            <div nz-form-item nz-row>
-              <div nz-col [nzSpan]="24" style="font-size:16px;padding-left:20px;">图片批量上传</div>
+          <div nz-form-item nz-row>
+            <div nz-col [nzSpan]="5" nz-form-label>
+              <label nz-form-item-required>证件类型</label>
             </div>
-            <div nz-form-item nz-row>
-              <div nz-col  [nzSpan]="20" nzOffset="2" nz-form-control>
-                <nz-tooltip [nzTitle]="fileList.length==0?'请选择图片':'共选择了'+fileList.length+'张图片'">
-                  <nz-upload nz-tooltip nzMultiple nzShowButton [nzAction]="mulUploadApi" [nzFileList]="fileList"  nzType="drag" (nzChange)="handleChange($event)"  [nzShowUploadList]="false"   [nzBeforeUpload]="beforeUpload">
+            <div>
+              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+                <nz-select formControlName="type" [(ngModel)]="_formData.type" [nzPlaceHolder]="'-请选择-'"
+                           [nzSize]="'large'" nzAllowClear>
+                  <nz-option *ngFor="let option of certTypeOptions" [nzLabel]="option.name" [nzValue]="option.id">
+                    <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
+                  </nz-option>
+                </nz-select>
+              </div>
+            </div>
+            <div nz-col [nzSpan]="5" nz-form-label>
+              <label nz-form-item-required>证件号码</label>
+            </div>
+            <div>
+              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+                <nz-input formControlName="code" [(ngModel)]="_formData.code" [nzPlaceHolder]="'证件号码'"
+                          [nzType]="'text'" [nzSize]="'large'">
+                </nz-input>
+              </div>
+            </div>
+          </div>
+          <div nz-form-item nz-row>
+            <div nz-col [nzSpan]="5" nz-form-label>
+              <label nz-form-item-required>危险等级</label>
+            </div>
+            <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+              <nz-select formControlName="dc" [(ngModel)]="_formData.dc"
+                         [nzPlaceHolder]="'-请选择-'" [nzSize]="'large'" nzAllowClear>
+                <nz-option *ngFor="let option of dangerOptions" [nzLabel]="option.name" [nzValue]="option.id">
+                  <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
+                </nz-option>
+              </nz-select>
+            </div>
+            <div nz-col [nzSpan]="5" nz-form-label>
+              <label>电话号码</label>
+            </div>
+            <div>
+              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+                <nz-input formControlName="phoneno" [(ngModel)]="_formData.phoneno" [nzPlaceHolder]="'电话号码'"
+                          [nzType]="'text'" [nzSize]="'large'">
+                </nz-input>
+              </div>
+            </div>
+            <!--<div nz-col [nzSpan]="5" nz-form-label>-->
+            <!--<label nz-form-item-required>md5</label>-->
+            <!--</div>-->
+            <!--<div>-->
+            <!--<div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>-->
+            <!--<nz-input formControlName="md5" [(ngModel)]="_formData.md5" [nzPlaceHolder]="'md5'" [nzType]="'text'" [nzSize]="'large'">-->
+            <!--</nz-input>-->
+            <!--</div>-->
+            <!--</div>-->
+          </div>
+          <!--<div nz-form-item nz-row>-->
+          <!--<div nz-col [nzSpan]="5" nz-form-label>-->
+          <!--<label nz-form-item-required>imgid</label>-->
+          <!--</div>-->
+          <!--<div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>-->
+          <!--<nz-input formControlName="imgid" [(ngModel)]="_formData.imgid" [nzPlaceHolder]="'imgid'" [nzType]="'text'" [nzSize]="'large'">-->
+          <!--</nz-input>-->
+          <!--</div>-->
+          <!--<div nz-col [nzSpan]="5" nz-form-label>-->
+          <!--<label nz-form-item-required>time</label>-->
+          <!--</div>-->
+          <!--<div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>-->
+          <!--<nz-datepicker formControlName="time" [nzFormat]="'YYYY-MM-DD'"  [(ngModel)]="_formData.time" [nzPlaceHolder]="'time'" [nzType]="'date'" [nzSize]="'large'">-->
+          <!--</nz-datepicker>-->
+          <!--</div>-->
+          <!--</div>-->
+          <div nz-form-item nz-row>
+            <div nz-col [nzSpan]="5" nz-form-label>
+              <label>住址</label>
+            </div>
+            <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+              <nz-input formControlName="address" [(ngModel)]="_formData.address" [nzPlaceHolder]="'地址'"
+                        [nzType]="'text'" [nzSize]="'large'">
+              </nz-input>
+            </div>
+            <div nz-col [nzSpan]="5" nz-form-label>
+              <label>来源</label>
+            </div>
+            <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+              <!--<nz-input formControlName="source" [(ngModel)]="_formData.source" [nzPlaceHolder]="'source'" [nzType]="'text'" [nzSize]="'large'">-->
+              <!--</nz-input>-->
+              <nz-select formControlName="source" [(ngModel)]="_formData.source"
+                         [nzPlaceHolder]="'-请选择-'" [nzSize]="'large'" nzAllowClear>
+                <nz-option *ngFor="let option of sourceOptions" [nzLabel]="option.name" [nzValue]="option.id">
+                  <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
+                </nz-option>
+              </nz-select>
+            </div>
+          </div>
+          <div nz-form-item nz-row>
+            <div nz-col [nzSpan]="5" nz-form-label>
+              <label nz-form-item-required>人脸库名称</label>
+            </div>
+            <div>
+              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+                <nz-select formControlName="faceLibid" [(ngModel)]="_formData.faceLibid"  [nzPlaceHolder]="'-请选择-'"
+                           [nzSize]="'large'" nzAllowClear>
+                  <nz-option *ngFor="let option of faceLibOptions" [nzLabel]="option.name" [nzValue]="option.id">
+                    <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
+                  </nz-option>
+                </nz-select>
+              </div>
+            </div>
+           </div>
+          <!--<div nz-form-item nz-row>-->
+          <!--<div nz-col [nzSpan]="5" nz-form-label>-->
+          <!--<label nz-form-item-required>区域号</label>-->
+          <!--</div>-->
+          <!--<div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>-->
+          <!--<nz-input formControlName="zoneno" [(ngModel)]="_formData.zoneno" [nzPlaceHolder]="'zoneno'" [nzType]="'text'" [nzSize]="'large'">-->
+          <!--</nz-input>-->
+          <!--</div>-->
+          <!--<div nz-col [nzSpan]="5" nz-form-label>-->
+          <!--<label nz-form-item-required>区域名</label>-->
+          <!--</div>-->
+          <!--<div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>-->
+          <!--<nz-input formControlName="zonename" [(ngModel)]="_formData.zonename" [nzPlaceHolder]="'zonename'" [nzType]="'text'" [nzSize]="'large'">-->
+          <!--</nz-input>-->
+          <!--</div>-->
+          <!--</div>-->
+          <!--<div nz-form-item nz-row>-->
+          <!--<div nz-col [nzSpan]="5" nz-form-label>-->
+          <!--<label nz-form-item-required>人脸库id</label>-->
+          <!--</div>-->
+          <!--<div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>-->
+          <!--<nz-input formControlName="faceLibid" [(ngModel)]="_formData.faceLibid" [nzPlaceHolder]="'人脸库id'" [nzType]="'text'" [nzSize]="'large'">-->
+          <!--</nz-input>-->
+          <!--</div>-->
+          <!--</div>-->
+          <div nz-form-item nz-row>
+            <div nz-col [nzSpan]="5" nz-form-label>
+              <label nz-form-item-required>图片上传</label>
+            </div>
+              <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+                <nz-input formControlName="path" [nzDisabled]="true" (dblclick)="fileSelect($event)"
+                          [(ngModel)]="_formData.path" [nzPlaceHolder]="'点击浏览或者双击选择文件'" [nzType]="'text'"
+                          [nzSize]="'large'">
+                </nz-input>
+              </div>
+            <div nz-col [nzSpan]="3" nz-form-label style="margin-left:-12px;">
+              <button nz-button style="background:#e5e5e5;" [nzSize]="'large'" (click)="fileSelect($event)">
+                <i class="anticon"></i><span>浏览</span>
+              </button>
+            </div>
+            <div nz-col [nzSpan]="4" nz-form-label style="margin-left:-12px;">
+              <button nz-button style="background:#108ee9;color:#fff;" [nzType]="'default'" [nzSize]="'large'"
+                      (click)="imgUploadHandler($event)">
+                <span>添加</span>
+              </button>
+            </div>
+          </div>
+          <div nz-form-item nz-row>
+            <div nz-col [nzSpan]="5" nz-form-label>
+              <label>fea文件路径</label>
+            </div>
+            <div>
+              <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+                <nz-input formControlName="feapath" [nzDisabled]="true" [(ngModel)]="_formData.feapath"
+                          [nzPlaceHolder]="'Fea文件路径,上传图片后自动生成'" [nzType]="'text'" [nzSize]="'large'">
+                </nz-input>
+              </div>
+            </div>
+          </div>
+          <!--<div nz-form-item nz-row>-->
+          <!-- <div nz-col [nzSpan]="5" nz-form-label>
+            <label nz-form-item-required>缩略图</label>
+          </div>
+          <div nz-col [nzSpan]="4">
+           <!-- <nz-input formControlName="path" (click)="fileSelect($event)" [(ngModel)]="_formData.path" [nzPlaceHolder]="'缩略图'" [nzType]="'text'" [nzSize]="'large'">
+            </nz-input>
+            <nz-tooltip [nzTitle]="uploadImgNameList.join(',')">
+              <button nz-tooltip nz-button [nzType]="'default'" (click)="fileSelect($event)">
+                <i class="anticon anticon-upload"></i><span>点击添加</span>
+              </button>
+            </nz-tooltip>
+          </div>
+          <div nz-col [nzSpan]="4">
+            <button nz-button  [nzType]="'default'" (click)="imgUploadHandler($event)"><span><i class="anticon anticon-add"></i> 上传</span></button>
+          </div> -->
+          <!--</div>-->
+          <!--<div nz-form-item nz-row style="margin-bottom:5px;">
+            <div nz-col [nzSpan]="5">
+              <label></label>
+            </div>
+            <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback style="text-align:left;">
+              <ul>
+                <li *ngFor="let item of uploadImgList;let i = index"><span style="display:inline-block;width:150px;text-align:left;margin-right:10px;">{{item}}</span><a style="float:right;" href="javascript:void(0)" (click)="deleteImg(e,i)">删除</a></li>
+              </ul>
+            </div>
+          </div>-->
+          <input type="file" #imgSelect style="visibility:hidden;" (change)="fileChange($event)"/>
+        </div>
+        <div nz-col [nzSpan]="10" class="register-col">
+          <div nz-form-item nz-row>
+            <div nz-col [nzSpan]="24" style="font-size:16px; color:black; padding-left:200px;">批量人脸注册</div>
+          </div>
+          <div nz-form-item nz-row>
+            <div nz-col [nzSpan]="6" nz-form-label>
+              <label  nz-form-item-required style="padding-left: 12px">请选择人脸库</label>
+            </div>
+            <div>
+              <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+                <nz-select formControlName="batchFacelibId" [(ngModel)]="_formData.batchFacelibId" (ngModelChange)="batchFacelibIdChange($event)" [nzPlaceHolder]="'-请选择-'"
+                           [nzSize]="'large'" nzAllowClear>
+                  <nz-option *ngFor="let option of faceLibOptions" [nzLabel]="option.name" [nzValue]="option.id">
+                    <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
+                  </nz-option>
+                </nz-select>
+              </div>
+            </div>
+          </div>
+          <div nz-form-item nz-row>
+            <div nz-col [nzSpan]="20" nzOffset="2" nz-form-control>
+              <nz-tooltip [nzTitle]="fileList.length==0?'请选择图片！(提示：目前最多只能选择 '+_faceCount+' 张图片)':'您一共选择了'+fileList.length+'张图片'">
+                <nz-upload nz-tooltip nzMultiple nzShowButton [nzAction]="mulUploadApi" [nzFileList]="fileList"
+                           nzType="drag" (nzChange)="handleChange($event)" [nzShowUploadList]="false"
+                           [nzBeforeUpload]="beforeUpload">
                   <p class="ant-upload-drag-icon"><i class="anticon anticon-inbox"></i></p>
                   <p class="ant-upload-text">点击或者拖拽图片上传</p>
-                  <p class="ant-upload-hint">支持单个或批量上传。严禁上传包含色情、暴力、反动等相关违法信息的文件。</p>
-                  </nz-upload>
-                </nz-tooltip>
-              </div>
+                  <p class="ant-upload-hint">支持单个或批量上传。<br/>严禁上传包含色情、暴力、反动等相关违法信息的文件。</p>
+                </nz-upload>
+              </nz-tooltip>
             </div>
-            <div nz-form-item nz-row >
-              <div nz-col  nzOffset="9"  [nzSpan]="3"  nz-form-control>
-                <button (click)="handleUpload($event)"  nz-button style="background:#108ee9;color:#fff;" [nzSize]="'large'" >确认上传</button>
-              </div>
+          </div>
+          <div nz-form-item nz-row class="register-col">
+            <div nz-col nzOffset="9" [nzSpan]="3" nz-form-control>
+              <button (click)="handleUpload($event)" nz-button style="background:#108ee9;color:#fff;"
+                      [nzSize]="'large'">确认上传
+              </button>
             </div>
           </div>
         </div>
-        <div nz-form-item nz-row class="register-modal-footer">
-          <div nz-col [nzOffset]="5" [nzSpan]="12" nz-form-control>
-            <!-- validateForm.valid 表示所有字段必须验证通过之后才能进行提交-->
-            <button nz-button [nzType]="'primary'" [nzSize]="'large'"  (click)="submitForm($event,validateForm.value)">提交</button>
-            <button nz-button [nzSize]="'large'" (click)="resetForm($event)">重置</button>
-          </div>
+      </div>
+      <div nz-form-item nz-row class="register-modal-footer">
+        <div nz-col [nzOffset]="5" [nzSpan]="12" nz-form-control>
+          <!-- validateForm.valid 表示所有字段必须验证通过之后才能进行提交-->
+          <button nz-button [nzType]="'primary'" [nzSize]="'large'"  (click)="submitForm($event,validateForm.value)">提交</button>
+          <button nz-button [nzSize]="'large'" (click)="resetForm($event)">重置</button>
         </div>
-      </form>
-    </ng-template>
+      </div>
+    </form>
+  </ng-template>
 </nz-modal>
 
 

@@ -1,11 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../api';
-import {Store} from '@ngrx/store';
-import * as fromRoot from '@app-root-store';
-import * as actions from './../../store/actions';
-import {Observable} from 'rxjs/Observable';
-
 
 @Component({
   selector: 'app-mobile',
@@ -115,7 +110,7 @@ export class MobileComponent implements OnInit {
 
   }
 
-  constructor(private store:Store<fromRoot.State>,private http: HttpClient) {
+  constructor(private http: HttpClient) {
 
   }
 
@@ -126,13 +121,13 @@ export class MobileComponent implements OnInit {
 
   /**调用查询接口，查询到结果之后将拿到的res赋值给_dataSet才能显示到table*/
   getMobile() {
-    this.store.dispatch(new actions.setLoadingState(true));
+    this.isLoading = true;
     this.http.get(api.queryMobile).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list;
       /**关闭加载状态*/
-      this.store.dispatch(new actions.setLoadingState(false));
+      this.isLoading = false;
     }, (error) => {
       const list = [{
         id: 1,
@@ -141,7 +136,6 @@ export class MobileComponent implements OnInit {
         state: '1'
       }];
       this._dataSet = list;
-      this.store.dispatch(new actions.setLoadingState(false));
     });
   }
 

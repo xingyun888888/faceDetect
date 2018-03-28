@@ -8,6 +8,11 @@ import {
 } from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
 import {CustomValidService} from '../../../service/custom-valid.service';
+import {validOptions} from './userFormValidConf';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import api from '../../../api';
+import {NzModalService} from 'ng-zorro-antd';
+import {parseParam} from '../../../utils/common';
 
 @Component({
   selector: 'app-user-model',
@@ -19,10 +24,10 @@ export class UserModelComponent implements OnInit {
   @Input()
   _formData = null;
   /**
-   * 状态下拉内容配置项
+   * 是否启用下拉内容配置项
    */
   @Input()
-  stateOptions = [];
+  isEnableOptions = [];
 
   /**这个是将table组件中传过来的值放入表单中*/
   @Input()
@@ -34,6 +39,12 @@ export class UserModelComponent implements OnInit {
   get formData() {
     return this._formData;
   }
+
+  /**
+   * 接收父组件，判断是新增还是修改，为true的时候为修改状态，否则为新增,
+   */
+  @Input()
+  isModify;
 
   /**这个是控制模态框是否弹出的状态属性*/
   @Input()
@@ -53,7 +64,7 @@ export class UserModelComponent implements OnInit {
   handleCancel = (e) => {
     this.resetForm(e);
     this.closeModel.emit();
-  }
+  };
 
   /**提交表单，提交时做校验操作*/
   submitForm = ($event, value) => {
@@ -62,12 +73,38 @@ export class UserModelComponent implements OnInit {
       this.validateForm.controls[key].markAsDirty();
     }
     console.log(value);
-  /**在这里请求处理提交表单数据*/
-    this.requestData.emit(value);
-    this.validateForm.reset();
-  }
+    if (!this.validateForm.valid) {
+      /**
+       * 在这里使用表单验证 提示校验错误的信息========
+       * 使用表单验证服务的valid方法  接收两个参数 第一个是表单对象  第二个参数是配置选项
+       */
+      this.customValidServ.valid(this.validateForm, validOptions);
+      // this.closeModel.emit();
+    } else {
+      if (!this.isModify) {
+      /**在这里请求处理提交表单 数据*/
+      this.http.get(api.checkNameIsExist + '?name=' + value.name).subscribe((res) => {
+        console.log(res);
+        let result = <any>res;
+        if (result.code == 10001) {
+          this.confirmServ.warning({
+            zIndex: 2000,
+            title: result.msg
+          });
+          this._formData.name = '';
+        } else {
+          this.requestData.emit(value);
+          this.validateForm.reset();
+        }
+      });
+      }else {
+        this.requestData.emit(value);
+        this.validateForm.reset();
+      }
+    }
+  };
 
-  /**重置表单*/
+  /**重置表单  */
   resetForm($event: MouseEvent) {
     $event.preventDefault();
     this.validateForm.reset();
@@ -81,19 +118,37 @@ export class UserModelComponent implements OnInit {
     return this.validateForm.controls[name];
   }
 
-  constructor(private fb: FormBuilder, private customValidServ: CustomValidService) {
+
+  constructor(private confirmServ: NzModalService, private fb: FormBuilder,
+              private customValidServ: CustomValidService, private http: HttpClient) {
   }
+
+
+  checkNameIsExist(e) {
+    /**
+     * 要把检查的用户名带过去给后台查询
+     */
+    this.http.get(api.checkNameIsExist + '?name=' + e.target.value).subscribe((res) => {
+      console.log(res);
+      let result = <any>res;
+      if (result.code == 10001) {
+        this.confirmServ.warning({
+          zIndex: 2000,
+          title: result.msg
+        });
+        this._formData.name = '';
+      }
+    });
+  }
+
 
   ngOnInit() {
     this.validateForm = this.fb.group({
       id: [''],
-      name: [''],
-      displayName: [''],
-      pwd: [''],
-      module: [''],
-      role: [''],
-      isEnable: [''],
-      state: [0]
+      name: ['', [Validators.required, Validators.maxLength(10)]],
+      displayName: ['', [Validators.required, Validators.maxLength(10)]],
+      pwd: ['', [Validators.required, Validators.maxLength(10)]],
+      isEnable: ['', [Validators.required]]
     });
   }
 }

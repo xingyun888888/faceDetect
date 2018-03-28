@@ -6,23 +6,13 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
-/**
- * 引入store管理页面状态
- */
-import {StoreModule,ActionReducer} from '@ngrx/store'
-
-import * as fromRoot from '@app-root-store';
-
-import { storeLogger } from 'ngrx-store-logger';
-
-
 /**
  * 引入图表库
  */
 import { NgxEchartsModule } from 'ngx-echarts';
 
-
+import {NgxCarouselModule} from 'ngx-carousel';
+import 'hammerjs';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {appRoutes} from './app.route';
@@ -65,13 +55,10 @@ import {NetmonitorComponent} from './pages/datamonitor/netmonitor/netmonitor.com
 import {ClientmonitorComponent} from './pages/datamonitor/clientmonitor/clientmonitor.component';
 import {MapmonitorComponent} from './pages/datamonitor/mapmonitor/mapmonitor.component';
 import {AnalyzerComponent} from './pages/analyzer/analyzer.component';
-import {CustomValidService} from "./service/custom-valid.service";
+import {CustomValidService} from './service/custom-valid.service';
+import {AnalyzerModelComponent} from './components/model/analyzer-model/analyzer-model.component';
+import { ImagePreviewDirective } from './directive/image-preview.directive';
 
-export function logger(reducer:ActionReducer<fromRoot.State>): any {
-  return storeLogger()(reducer);
-}
-
-export const metaReducers = [logger];
 
 @NgModule({
   entryComponents: [MapMarkComponent],
@@ -119,6 +106,8 @@ export const metaReducers = [logger];
     ClientmonitorComponent,
     AnalyzerComponent,
     MapmonitorComponent,
+    AnalyzerMode,
+    ImagePreviewDirectivelComponent,
   ],
   imports: [
     BrowserModule,
@@ -129,7 +118,7 @@ export const metaReducers = [logger];
     NgZorroAntdModule.forRoot(),
     ReactiveFormsModule,
     NgxEchartsModule,
-    StoreModule.forRoot(fromRoot.reducers,{metaReducers})
+    NgxCarouselModule
   ],
   providers: [CustomValidService],
   bootstrap: [AppComponent]

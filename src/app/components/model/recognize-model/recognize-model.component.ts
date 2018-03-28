@@ -1,5 +1,5 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-
+import {NgxCarousel} from 'ngx-carousel';
 import {
   FormBuilder,
   FormGroup,
@@ -16,6 +16,8 @@ import {validOptions} from '../facelib-model/faceFormValidConf';
   styleUrls: ['./recognize-model.component.css']
 })
 export class RecognizeModelComponent implements OnInit {
+
+  public carouselOne: NgxCarousel;
   /**该输入属性，里面包含着table中的所有字段*/
   @Input()
   _formData = null;
@@ -112,5 +114,19 @@ export class RecognizeModelComponent implements OnInit {
       mappath_new: [''],
       state: ['']
     });
+
+    this.carouselOne = {
+      grid: {xs: 1, sm: 1, md: 1, lg: 1, all: 0},
+      slide: 1,
+      speed: 400,
+      interval: 4000,
+      point: {
+        visible: true
+      },
+      load: 2,
+      touch: true,
+      loop: true,
+      custom: 'banner'
+    }
   }
 }

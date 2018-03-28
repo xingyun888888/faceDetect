@@ -175,15 +175,23 @@ export class CameraEditComponent implements OnInit {
   /**
    * 获取地图列表
    */
+  // getMapList() {
+  //   this.http.get(api.queryMapList + '?type=1').subscribe((res) => {
+  //     console.dir(res);
+  //     let list = <any>res;
+  //     this.mapOptions = list;
+  //     this.selectedMap = list[0];
+  //   });
+  // }
   getMapList() {
-    this.http.get(api.queryMapList + '?type=map').subscribe((res) => {
+    this.http.get(api.queryMapInfoList).subscribe((res) => {
+      debugger;
       console.dir(res);
       let list = <any>res;
       this.mapOptions = list;
       this.selectedMap = list[0];
     });
   }
-
   /**
    *
    * @param e

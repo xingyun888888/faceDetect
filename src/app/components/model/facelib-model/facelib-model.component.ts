@@ -19,6 +19,11 @@ export class FacelibModelComponent implements OnInit {
   @Input()
   _formData = null;
 
+  /**
+   * 状态下拉内容配置项
+   */
+  @Input()
+  faceStateOptions = [];
 
   /******  这个是获取表单的字段名  ******/
   get formData() {
@@ -44,7 +49,7 @@ export class FacelibModelComponent implements OnInit {
   handleCancel = (e) => {
     this.resetForm(e);
     this.closeModel.emit();
-  }
+  };
 
   /******  提交表单，提交时做校验操作  ******/
   submitForm = ($event, value) => {
@@ -73,11 +78,7 @@ export class FacelibModelComponent implements OnInit {
     }
   }
 
-  dateChangeHandler(time){
-    console.log(time);
-  }
-
-  /******  这个方法是获取当前表单元素绑定的值  ******//******    ******/
+  /******  这个方法是获取当前表单元素绑定的值  ******/
   getFormControl(name) {
     return this.validateForm.controls[name];
   }
@@ -88,11 +89,12 @@ export class FacelibModelComponent implements OnInit {
   ngOnInit() {
     this.validateForm = this.fb.group({
       id: [''],
-      name: ['', [Validators.required, Validators.maxLength(6)]],
-      path: ['', [Validators.required]],
-      createTime: [null],
+      name: ['', [Validators.required, Validators.maxLength(250)]],
+      path: ['', [Validators.required, Validators.maxLength(200)]],
+      createTime: ['', [Validators.required]],
       maxNum: ['', [Validators.required, Validators.pattern('[0-9]+')]],
-      state: ['']
+      state: ['', [Validators.required]],
+      isDel: [1]
     });
   }
 }

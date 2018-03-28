@@ -32,20 +32,21 @@ export class NavComponent implements OnInit {
     {name: '报表数据分析', routeName: '/reportAnalyze', icon: 'assets/images/icon/table-ana.png'},
     {name: '查询', icon: 'assets/images/icon/query.png',
       children: [{name: '抓拍查询', routeName: '/snapshot'},
-                 {name: '视频查询', routeName: '/vedio'},
+                 // {name: '视频查询', routeName: '/vedio'},
                  {name: '日志查询', routeName: '/log'},
-                 {name: '登录查询', routeName: '/user'},
+                 // {name: '登录查询', routeName: '/user'},
                  {name: '告警查询', routeName: '/recognize'}]},
     {name: '人脸库管理', icon: 'assets/images/icon/face-ma.png', routeName: '/facelib'},
     {name: '硬件管理', icon: 'assets/images/icon/hardware.png',
       children: [{name: '摄像头信息', routeName: '/camera'},
                 {name: '服务端信息', routeName: '/server'},
-                {name: '移动端硬件信息', routeName: '/mobile'}]},
+                // {name: '移动端硬件信息', routeName: '/mobile'}
+                ]},
     {name: '布控策略', icon: 'assets/images/icon/bukong.png', routeName: '/strategy'},
     {name: '地图管理', routeName: '/map', icon: 'assets/images/icon/map-ma.png'},
     {name: '系统管理', icon: 'assets/images/icon/system-set.png',
       children: [{name: '参数配置', routeName: '/param'},
-                 {name: '权限管理', routeName: '/user'},
+                 {name: '用户管理', routeName: '/user'},
                  {name: '分析仪设置', routeName: '/analyzer'}]}];
 
   showList(e, curIndex) {
@@ -63,8 +64,3 @@ export class NavComponent implements OnInit {
     this.activeSubLinkIndex = index;
   }
 }
-
-
-
-
-

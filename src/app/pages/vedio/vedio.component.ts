@@ -1,9 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {Store} from '@ngrx/store';
-import * as fromRoot from '@app-root-store';
-import * as actions from './../../store/actions';
-import {Observable} from 'rxjs/Observable';
-
 
 @Component({
   selector: 'app-vedio',

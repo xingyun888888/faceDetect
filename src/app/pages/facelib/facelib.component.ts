@@ -2,11 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../api';
 import {parseParam} from '../../utils/common';
-import {Store} from '@ngrx/store';
-import * as fromRoot from '@app-root-store';
-import * as actions from './../../store/actions';
-import {Observable} from 'rxjs/Observable';
-
+import {faceStateOptions, stateOptions} from '../../config/selectConf';
 
 @Component({
   selector: 'app-facelib',
@@ -17,7 +13,13 @@ export class FacelibComponent implements OnInit {
   /**这个字段是保存着search的自定义列标签*/
   _searchTitle: Array<any> = [
     {key: 'id', name: '人脸库名称', type: 'select', options: [], nzSpan: 7},
+    {key: 'state', name: '状态', type: 'select', options: faceStateOptions, nzSpan: 4}
   ];
+
+  /**
+   * 状态
+   */
+  _faceStateOptions = faceStateOptions;
 
   /**这个字段是保存着table的自定义列标签*/
   _titles: Array<any> = [
@@ -47,9 +49,15 @@ export class FacelibComponent implements OnInit {
       type: 'text'
     },
     {
+      key: 'faceCount',
+      name: '当前人脸数',
+      type: 'text'
+    },
+    {
       key: 'state',
       name: '状态',
-      type: 'text'
+      type: 'select',
+      options: this._faceStateOptions
     }
   ];
 
@@ -72,10 +80,10 @@ export class FacelibComponent implements OnInit {
     console.log(value);
     this.formData = {};
     if (!value) {
-      this.formData = {createTime:null};
+      this.formData = {createTime: null};
       this.isAdd = true;
     } else {
-      this.formData = Object.assign({createTime:null}, value);
+      this.formData = Object.assign({createTime: null}, value);
       this.isEdit = true;
     }
   }
@@ -106,7 +114,6 @@ export class FacelibComponent implements OnInit {
   /**增加或者编辑操作后点击提交后调用的方法，请求的时候判断一下是新增还是修改，根据isEdit和isAdd的值判断
    * 添加下面的headers头部说明，前端需要接收的是json数据*/
   sendData(data) {
-    this.store.dispatch(new actions.setLoadingState(true,"正在保存中..."));
     if (this.isAdd) {
       this.http.post(api.addFacelib, data, {
         headers: new HttpHeaders({
@@ -124,21 +131,19 @@ export class FacelibComponent implements OnInit {
           'Content-type': 'application/json;charset=UTF-8'
         })
       }).subscribe((res) => {
-        this.store.dispatch(new actions.setLoadingState(false));
         this.getFacelib();
       }, (error) => {
-        this.store.dispatch(new actions.setLoadingState(false));
         this.getFacelib();
       });
       this.isEdit = false;
     }
   }
 
-  constructor(private store:Store<fromRoot.State>,private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
   /**获取人脸库的名称列表*/
   getFacelibName() {
-    this.http.get(api.queryFacelibName).subscribe((res) => {
+    this.http.get(api.queryFacelib).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._searchTitle[0].options = list;
@@ -146,10 +151,13 @@ export class FacelibComponent implements OnInit {
   }
 
   queryFacelibByConditions(data) {
+    this.isLoading = true;
     this.http.get(api.queryFacelibByConditions + parseParam(data)).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
-      this._dataSet = list;
+      this._dataSet = list.data;
+      /**关闭加载状态*/
+      this.isLoading = false;
     });
   }
 
@@ -161,12 +169,13 @@ export class FacelibComponent implements OnInit {
 
   /**调用查询接口，查询到结果之后将拿到的res赋值给_dataSet才能显示到table*/
   getFacelib() {
-    this.store.dispatch(new actions.setLoadingState(true));
+    this.isLoading = true;
     this.http.get(api.queryFacelib).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list;
-      this.store.dispatch(new actions.setLoadingState(false));
+      /**关闭加载状态*/
+      this.isLoading = false;
     }, (error) => {
       const list = [
         {id: 1, name: '', path: '', createTime: '', maxNum: 3, state: 1},
@@ -178,7 +187,6 @@ export class FacelibComponent implements OnInit {
         {id: 7, name: '', path: '', createTime: '', maxNum: 3, state: 1}
       ];
       this._dataSet = list;
-      this.store.dispatch(new actions.setLoadingState(false));
     });
   }
 

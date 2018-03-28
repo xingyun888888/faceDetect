@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -6,13 +7,17 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./header.component.less']
 })
 export class HeaderComponent implements OnInit {
+  lastTime: Date = new Date();
 
-  lastTime:Date = new Date();
-  @Input()
-  username = "";
-  constructor() { }
-
-  ngOnInit() {
+  constructor(public router: Router) {
   }
 
+  @Input()
+  username = '';
+
+  ngOnInit() {
+    setInterval(() => {
+      this.lastTime = new Date();
+    }, 1000);
+  }
 }

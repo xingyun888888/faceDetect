@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {parseParam} from '../../utils/common';
 import api from '../../api';
+import {analyzerStateOptions, faceStateOptions} from '../../config/selectConf';
 
 @Component({
   selector: 'app-analyzer',
@@ -10,59 +11,59 @@ import api from '../../api';
 })
 export class AnalyzerComponent implements OnInit {
 
+  /**
+   * 状态
+   */
+  _analyzerStateOptions = analyzerStateOptions;
 
   /**这个字段是保存着search的自定义列标签*/
   _searchTitle: Array<any> = [
-    {key: 'name', name: '分析仪名字', type: '', nzSpan:7},
-    {key: 'id', name: '分析仪ID', type: '', nzSpan:5},
-    {key: 'ip', name: 'IP', type: '', nzSpan:2},
-    {key: 'port', name: '端口', type: '', nzSpan:4}
+    {key: 'name', name: '分析仪名字', type: '', nzSpan: 7},
+    {key: 'id', name: '分析仪ID', type: '', nzSpan: 6},
+    {key: 'ip', name: 'IP', type: '', nzSpan: 4},
+    {key: 'port', name: '端口', type: '', nzSpan: 4}
   ];
 
   /**这个字段是保存着table的自定义列标签*/
   _titles: Array<any> = [
     {
       key: 'id',
-      name: '摄像头编号',
-      type: 'text'
-    },
-    {
-      key: 'ip',
-      name: '相机IP',
-      type: 'text'
-    },
-    {
-      key: 'districtName',
-      name: '监控区域',
-      type: 'text'
-    },
-    {
-      key: 'a_name',
-      name: '对应的分析仪',
-      type: 'text'
-    },
-    {
-      key: 'serialNum',
-      name: 'SN号',
-      type: 'text'
-    },
-    {
-      key: 'direction',
-      name: '方向',
+      name: '分析仪ID',
       type: 'text'
     },
     {
       key: 'name',
-      name: '摄像机名称',
+      name: '分析仪名字',
       type: 'text'
     },
     {
-      key: 'type',
-      name: '机器型号',
+      key: 'ip',
+      name: 'IP',
       type: 'text'
+    },
+    {
+      key: 'port',
+      name: '端口',
+      type: 'text'
+    },
+    // {
+    //   key: 'cpu',
+    //   name: 'CPU使用率',
+    //   type: 'text'
+    // },
+    // {
+    //   key: 'mem',
+    //   name: '内存使用率',
+    //   type: 'text'
+    // },
+    {
+      key: 'state',
+      name: '状态',
+      type: 'select',
+      options: this._analyzerStateOptions
     }
   ];
-  checkName="检索";
+  checkName = '检索';
   /** isEdit 和 isAdd 这两个属性维护着当前模态框是编辑还是新增*/
   isEdit = false;
   isAdd = false;
@@ -101,14 +102,14 @@ export class AnalyzerComponent implements OnInit {
   /** 删除功能处理，在这里调用删除的接口，给后台发送一个ID，应该用post，只有id查询是get，其他操作都用post
    * 删除成功之后，调用查询方法，更新页面，删除失败之后，调用查询方法，更新页面*/
   deleteRow(data) {
-    this.http.post(api.deleteCamera, JSON.stringify(data), {
+    this.http.post(api.deleteAnalyser, JSON.stringify(data), {
       headers: new HttpHeaders({
         'Content-type': 'application/json;charset=UTF-8'
       })
     }).subscribe((res) => {
-      this.getCamera();
+      this.getAnalyzer();
     }, (error) => {
-      this.getCamera();
+      this.getAnalyzer();
     });
   }
 
@@ -116,14 +117,14 @@ export class AnalyzerComponent implements OnInit {
    * 添加下面的headers头部说明，前端需要接收的是json数据*/
   sendData(data) {
     if (this.isAdd) {
-      this.http.post(api.addCamera, data, {
+      this.http.post(api.addAnalyser, data, {
         headers: new HttpHeaders({
           'Content-type': 'application/json;charset=UTF-8'
         })
       }).subscribe((res) => {
-        this.getCamera();
+        this.getAnalyzer();
       }, (error) => {
-        this.getCamera();
+        this.getAnalyzer();
       });
       this.isAdd = false;
     } else if (this.isEdit) {
@@ -132,9 +133,9 @@ export class AnalyzerComponent implements OnInit {
           'Content-type': 'application/json;charset=UTF-8'
         })
       }).subscribe((res) => {
-        this.getCamera();
+        this.getAnalyzer();
       }, (error) => {
-        this.getCamera();
+        this.getAnalyzer();
       });
       this.isEdit = false;
     }
@@ -145,19 +146,21 @@ export class AnalyzerComponent implements OnInit {
 
   /**在这里调用刷新,点击刷新按钮之后就会调用这个方法,刷新就是调用一次查询接口*/
   refresh(e) {
-    this.getCamera();
+    this.getAnalyzer();
   }
 
   /**调用查询接口，查询到结果之后将拿到的res赋值给_dataSet才能显示到table*/
-  getCamera() {
+  getAnalyzer() {
     this.isLoading = true;
-    this.http.get(api.queryCamera).subscribe((res) => {
+    // debugger;
+    this.http.get(api.queryAnalyzer).subscribe((res) => {
       console.dir(res);
       let list = <any>res;
       /**拿到数据之后将analyser对象里的name拿出来，赋值给a_name，这样a_name就有值，就可以显示出来了*/
-      list.map((item, index) => {
-        Object.assign(item, {a_name: item.analyser ? item.analyser.name : '无名字'});
-      });
+      // list.map((item, index) => {
+      //   Object.assign(item, {a_name: item.analyser ? item.analyser.name : '无名字'});
+      // });
+      // debugger;
       this._dataSet = list;
 
       /**关闭加载状态*/
@@ -177,7 +180,6 @@ export class AnalyzerComponent implements OnInit {
           rtspPort: '3',
           rtspPath: '3',
         }
-
       ];
       this._dataSet = list;
       setTimeout(() => {
@@ -187,13 +189,13 @@ export class AnalyzerComponent implements OnInit {
   }
 
   /**多条件查询方法*/
-  queryCameraByConditions(data) {
+  queryAnalyzerByConditions(data) {
     console.log(parseParam(data));
-    this.http.get(api.queryCameraByConditions + parseParam(data)).subscribe((res) => {
+    this.http.get(api.queryAnalyzerByConditions + parseParam(data)).subscribe((res) => {
       console.dir(res);
       let list = <any>res;
       list.map((item, index) => {
-        Object.assign(item, {a_name: item.analyser ? item.analyser.name :'无名字'});
+        Object.assign(item, {a_name: item.analyser ? item.analyser.name : '无名字'});
       });
       this._dataSet = list;
     }, (error) => {
@@ -203,7 +205,7 @@ export class AnalyzerComponent implements OnInit {
 
   /**组件初始化的时候调用一次*/
   ngOnInit() {
-    this.getCamera();
+    this.getAnalyzer();
   }
 
 }

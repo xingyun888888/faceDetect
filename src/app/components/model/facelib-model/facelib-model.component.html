@@ -1,60 +1,69 @@
-<nz-modal [nzVisible]="isVisible" [nzTitle]="'人脸库'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)" [nzConfirmLoading]="isConfirmLoading" nzFooter="" >
+<nz-modal [nzVisible]="isVisible" [nzTitle]="'人脸库'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)"
+          (nzOnOk)="handleOk($event)" [nzConfirmLoading]="isConfirmLoading" nzFooter="">
   <ng-template #modalContent>
-    <form nz-form [formGroup]="validateForm" >
-      <input type="hidden" formControlName="id" [(ngModel)]="_formData.id" >
+    <form nz-form [formGroup]="validateForm">
+      <input type="hidden" formControlName="id" [(ngModel)]="_formData.id">
       <div nz-form-item nz-row>
-        <div nz-form-label nz-col [nzSpan]="7">
-          <label nz-form-item-required>数据库名称</label>
+        <div nz-form-label nz-col [nzSpan]="5">
+          <label nz-form-item-required>人脸库名称</label>
         </div>
         <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
-          <nz-input formControlName="name" [(ngModel)]="_formData.name"  [nzType]="'text'" [nzPlaceHolder]="'数据库名称'" [nzSize]="'large'">
+          <nz-input formControlName="name" [(ngModel)]="_formData.name" [nzType]="'text'" [nzPlaceHolder]="'人脸库名称'"
+                    [nzSize]="'large'">
           </nz-input>
         </div>
       </div>
       <div nz-form-item nz-row>
-        <div nz-form-label nz-col [nzSpan]="7">
+        <div nz-form-label nz-col [nzSpan]="5">
           <label nz-form-item-required>库路径</label>
         </div>
-        <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
-          <nz-input formControlName="path" [(ngModel)]="_formData.path"  [nzPlaceHolder]="'库路径'" [nzType]="'text'" [nzSize]="'large'">
+        <div nz-col [nzSpan]="18" nz-form-control nzHasFeedback>
+          <nz-input formControlName="path" [(ngModel)]="_formData.path" [nzPlaceHolder]="'请输入完整的服务器人脸库路径,建议从服务器复制路径到此处粘帖'" [nzType]="'text'"
+                    [nzSize]="'large'">
           </nz-input>
         </div>
       </div>
       <div nz-form-item nz-row>
-        <div nz-col [nzSpan]="7" nz-form-label>
+        <div nz-col [nzSpan]="5" nz-form-label>
           <label nz-form-item-required>创建时间</label>
         </div>
         <div>
           <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
-            <nz-datepicker formControlName="createTime" [nzPlaceHolder]="'请选择日期'" [(ngModel)]="_formData.createTime" (ngModelChange)="dateChangeHandler($event)"></nz-datepicker>
+            <nz-datepicker formControlName="createTime" [nzPlaceHolder]="'请选择日期'" [(ngModel)]="_formData.createTime"></nz-datepicker>
           </div>
         </div>
       </div>
       <div nz-form-item nz-row>
-        <div nz-col [nzSpan]="7" nz-form-label>
+        <div nz-col [nzSpan]="5" nz-form-label>
           <label nz-form-item-required>最大人脸数</label>
         </div>
         <div>
           <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
-            <nz-input formControlName="maxNum" [(ngModel)]="_formData.maxNum" [nzPlaceHolder]="'最大人脸数'" [nzType]="'text'" [nzSize]="'large'">
+            <nz-input formControlName="maxNum" [(ngModel)]="_formData.maxNum" [nzPlaceHolder]="'最大人脸数必须是数字'"
+                      [nzType]="'text'" [nzSize]="'large'">
             </nz-input>
           </div>
         </div>
       </div>
       <div nz-form-item nz-row>
-        <div nz-col [nzSpan]="7" nz-form-label>
+        <div nz-col [nzSpan]="5" nz-form-label>
           <label nz-form-item-required>状态</label>
         </div>
         <div>
           <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
-            <nz-input formControlName="state" [(ngModel)]="_formData.state" [nzPlaceHolder]="'状态'" [nzType]="'text'" [nzSize]="'large'">
-            </nz-input>
+            <nz-select formControlName="state" [(ngModel)]="_formData.state" [nzPlaceHolder]="'-请选择-'"
+                       [nzSize]="'large'" nzAllowClear>
+              <nz-option *ngFor="let option of faceStateOptions" [nzLabel]="option.name" [nzValue]="option.id">
+                <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
+              </nz-option>
+            </nz-select>
           </div>
         </div>
       </div>
       <div nz-form-item nz-row>
-        <div nz-col [nzOffset]="7" [nzSpan]="12" nz-form-control>
-          <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="submitForm($event,validateForm.value)">提交</button>
+        <div nz-col [nzOffset]="7" [nzSpan]="15" nz-form-control>
+          <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="submitForm($event,validateForm.value)">提交
+          </button>
           <button nz-button [nzSize]="'large'" (click)="resetForm($event)">重置</button>
         </div>
       </div>

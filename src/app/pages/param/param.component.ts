@@ -2,12 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../api';
 import {parseParam} from '../../utils/common';
-import {genderOptions} from '../../config/selectConf';
-import {Store} from '@ngrx/store';
-import * as fromRoot from '@app-root-store';
-import * as actions from './../../store/actions';
-import {Observable} from 'rxjs/Observable';
-
+import {genderOptions, paramTypeOptions, stateOptions} from '../../config/selectConf';
 
 @Component({
   selector: 'app-param',
@@ -18,8 +13,13 @@ export class ParamComponent implements OnInit {
   /**这个字段是保存着search的自定义列标签*/
   _searchTitle: Array<any> = [
     {key: 'name', name: '参数名', type: '', nzSpan: 6},
-    {key: 'type', name: '参数类型', type: 'select', options: [], nzSpan: 6}
+    {key: 'type', name: '参数类型', type: 'select', options: paramTypeOptions, nzSpan: 6}
   ];
+
+  /**
+   * 参数类型
+   */
+  _paramTypeOptions = paramTypeOptions;
 
   /**这个字段是保存着table的自定义列标签*/
   _titles: Array<any> = [
@@ -39,6 +39,12 @@ export class ParamComponent implements OnInit {
       type: 'text'
     },
     {
+      key: 'type',
+      name: '参数类型',
+      type: 'select',
+      options: this._paramTypeOptions
+    },
+    {
       key: 'description',
       name: '描述',
       type: 'text'
@@ -47,26 +53,6 @@ export class ParamComponent implements OnInit {
       key: 'createtime',
       name: '创建时间',
       type: 'date'
-    },
-    {
-      key: 'creater',
-      name: '创建人',
-      type: 'text'
-    },
-    {
-      key: 'modifierTime',
-      name: '修改时间',
-      type: 'date'
-    },
-    {
-      key: 'modifier',
-      name: '修改人',
-      type: 'text'
-    },
-    {
-      key: 'type',
-      name: '参数类型',
-      type: 'text'
     }
   ];
 
@@ -82,7 +68,6 @@ export class ParamComponent implements OnInit {
 
   /**是否加载中,是否显示加载状态,true:代表正在加载中,false:代表加载完成*/
   isLoading = false;
-
 
 
   /**这个方法是订阅的子组件传进来的事件,当子组件触发的时候就会获取到值value,判断拿出的value是否是undefined,如果是新增处理,否则编辑处理，
@@ -149,7 +134,7 @@ export class ParamComponent implements OnInit {
     }
   }
 
-  constructor(private store:Store<fromRoot.State>,private http: HttpClient) {
+  constructor(private http: HttpClient) {
   }
 
   /**获取参数类型列表*/
@@ -168,26 +153,26 @@ export class ParamComponent implements OnInit {
 
   /**调用查询接口，查询到结果之后将拿到的res赋值给_dataSet才能显示到table*/
   getParam() {
-    this.store.dispatch(new actions.setLoadingState(true));
+    this.isLoading = true;
     this.http.get(api.queryParam).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list;
       /**关闭加载状态*/
-      this.store.dispatch(new actions.setLoadingState(false));
+      this.isLoading = false;
     });
   }
 
   /**根据条件查询方法*/
   queryParamByConditions(data) {
-    this.store.dispatch(new actions.setLoadingState(true));
+    this.isLoading = true;
     console.log(parseParam(data));
     this.http.get(api.queryParamByConditions + parseParam(data)).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list.data;
       /**关闭加载状态*/
-      this.store.dispatch(new actions.setLoadingState(false));
+      this.isLoading = false;
     }, (error) => {
     });
   }

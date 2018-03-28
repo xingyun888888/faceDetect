@@ -1,13 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
+
 import {ActivatedRoute, Params} from '@angular/router';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../api';
 import {parseParam} from '../../utils/common';
-import {certTypeOptions, dangerOptions, genderOptions} from '../../config/selectConf';
-import {Store} from '@ngrx/store';
-import * as fromRoot from '@app-root-store';
-import * as actions from './../../store/actions';
-import {Observable} from 'rxjs/Observable';
+import {certTypeOptions, dangerOptions, genderOptions, sourceOptions} from '../../config/selectConf';
 
 @Component({
   selector: 'app-register',
@@ -21,7 +18,6 @@ export class RegisterComponent implements OnInit {
     {key: 'gender', name: '性别', type: 'select', options: genderOptions, nzSpan: 4},
     {key: 'dc', name: '危险级别', type: 'select', options: dangerOptions, nzSpan: 6},
   ];
-
 
   /**
    * 证件类型
@@ -39,6 +35,11 @@ export class RegisterComponent implements OnInit {
    * 性别
    */
   _genderOptions = genderOptions;
+
+  /**
+   * 来源
+   */
+  _sourceOptions = sourceOptions;
 
   /**这个字段是保存着table的自定义列标签*/
   _titles: Array<any> = [
@@ -83,9 +84,7 @@ export class RegisterComponent implements OnInit {
     }
   ];
 
-
   _multiUploadApi: string = api.batchUpload;
-
 
   /**isEdit 和 isAdd 这两个属性维护着当前模态框是编辑还是新增*/
   isEdit = false;
@@ -98,13 +97,7 @@ export class RegisterComponent implements OnInit {
   formData = {};
 
   /**是否加载中,是否显示加载状态,true:代表正在加载中,false:代表加载完成*/
-  isLoading$:Observable<boolean>;
-
-  /**
-   * 是否保存数据 防止重复提交
-   * @type {boolean}
-   */
-
+  isLoading = false;
 
   id: any = '';
 
@@ -113,15 +106,17 @@ export class RegisterComponent implements OnInit {
   getRowData(value) {
     console.log(value);
     this.formData = {};
-    this.formData = Object.assign({}, value);
     if (!value) {
+      /**新增的时候在这里将人脸库的id传入进去,人脸库的id是数字,在这里可以用 +this.id 将字符串id转化成数字id**/
+      this.formData = Object.assign({}, {createTime: null, faceLibid: +this.id, batchFacelibId: +this.id});
       this.isAdd = true;
     } else {
+      this.formData = Object.assign({}, {createTime: null, batchFacelibId: +this.id}, value);
       this.isEdit = true;
     }
   }
 
-  /**这里是关模态框调用的方法,关闭也有两种状态,可能是编辑或者新增*/
+  /**这里是关模态框调用的方法,关闭也有f两种状态,可能是编辑或者新增*/
   close() {
     if (this.isEdit) {
       this.isEdit = !this.isEdit;
@@ -158,6 +153,7 @@ export class RegisterComponent implements OnInit {
       }, (error) => {
         this.getRegister();
       });
+      this.isAdd = false;
     } else if (this.isEdit) {
       this.http.post(api.editRegister, data, {
         headers: new HttpHeaders({
@@ -173,7 +169,7 @@ export class RegisterComponent implements OnInit {
 
   }
 
-  constructor(private store:Store<fromRoot.State>,private routerInfo: ActivatedRoute, private http: HttpClient) {
+  constructor(private routerInfo: ActivatedRoute, private http: HttpClient) {
     routerInfo.queryParams.subscribe(queryParams => {
       console.log(queryParams);
     });
@@ -186,12 +182,13 @@ export class RegisterComponent implements OnInit {
 
   /**调用查询接口，查询到结果之后将拿到的res赋值给_dataSet才能显示到table*/
   getRegisterAll() {
-    this.store.dispatch(new actions.setLoadingState(true));
+    this.isLoading = true;
     this.http.get(api.queryRegisterAll).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list;
-
+      /**关闭加载状态*/
+      this.isLoading = false;
     }, (error) => {
       const list = [{
         id: 1,
@@ -206,19 +203,18 @@ export class RegisterComponent implements OnInit {
         faceLibid: '3'
       }];
       this._dataSet = list;
-      this.store.dispatch(new actions.setLoadingState(false));
     });
   }
 
   /**通过人脸库ID获取对应的注册信息*/
   getRegister() {
-    this.store.dispatch(new actions.setLoadingState(true));
+    this.isLoading = true;
     this.http.get(api.queryRegister + '?id=' + this.id).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list;
       /**关闭加载状态*/
-      this.store.dispatch(new actions.setLoadingState(false));
+      this.isLoading = false;
     }, (error) => {
       const list = [{
         id: 1,
@@ -233,26 +229,26 @@ export class RegisterComponent implements OnInit {
         faceLibid: ''
       }];
       this._dataSet = list;
-      this.store.dispatch(new actions.setLoadingState(false));
     });
   }
 
   /**根据条件查询方法*/
   queryRegisterByConditions(data) {
-    this.store.dispatch(new actions.setLoadingState(true));
+    this.isLoading = true;
     console.log(parseParam(data));
     this.http.get(api.queryRegisterByConditions + parseParam(data) + '&id=' + this.id).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list.data;
       /**关闭加载状态*/
-      this.store.dispatch(new actions.setLoadingState(false));
+      this.isLoading = false;
     }, (error) => {
     });
   }
 
   /**组件初始化的时候调用一次*/
   ngOnInit() {
+    /**获取到人脸库的id*/
     this.id = this.routerInfo.snapshot.queryParams['id'];
     this.getRegister();
   }
