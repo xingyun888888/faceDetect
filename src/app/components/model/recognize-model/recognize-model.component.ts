@@ -1,5 +1,6 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, ViewChild} from '@angular/core';
 import {NgxCarousel} from 'ngx-carousel';
+import {photoWidth} from '../../../config/imgConfig';
 import {
   FormBuilder,
   FormGroup,
@@ -9,6 +10,7 @@ import {
 import {Observable} from 'rxjs/Observable';
 import {CustomValidService} from '../../../service/custom-valid.service';
 import {validOptions} from '../facelib-model/faceFormValidConf';
+import {ImgPreviewService} from '../../../service/img-preview.service';
 
 @Component({
   selector: 'app-recognize-model',
@@ -16,8 +18,31 @@ import {validOptions} from '../facelib-model/faceFormValidConf';
   styleUrls: ['./recognize-model.component.css']
 })
 export class RecognizeModelComponent implements OnInit {
+  /**定义carousel配置**/
+  public carouselOne: NgxCarousel = {
+    grid: {xs: 1, sm: 1, md: 1, lg: 1, all: 0},
+    slide: 1,
+    speed: 400,
+    interval: 4000,
+    point: {
+      visible: true
+    },
+    load: 2,
+    touch: true,
+    loop: true,
+    custom: 'banner'
+  };
 
-  public carouselOne: NgxCarousel;
+  photoWidth = photoWidth;
+
+  /***  危险等级下拉内容配置项  ***/
+  @Input()
+  dangerOptions = [];
+
+  /***  性别下拉内容配置项  ***/
+  @Input()
+  genderOptions = [];
+
   /**该输入属性，里面包含着table中的所有字段*/
   @Input()
   _formData = null;
@@ -47,11 +72,21 @@ export class RecognizeModelComponent implements OnInit {
   /**定义表单*/
   validateForm: FormGroup;
 
+  @ViewChild('contentTpl')
+  previewContent;
+
+  priviewImg: string;
+
+  previewImg(e, value, width) {
+    this.priviewImg = value;
+    this.imgPreviewServ.show(this.previewContent, width);
+  }
+
   /**这个是关闭表单的方法*/
   handleCancel = (e) => {
     this.resetForm(e);
     this.closeModel.emit();
-  }
+  };
 
   /**提交表单，提交时做校验操作*/
   submitForm = ($event, value) => {
@@ -72,7 +107,7 @@ export class RecognizeModelComponent implements OnInit {
       this.requestData.emit(value);
       this.validateForm.reset();
     }
-  }
+  };
 
   /**重置表单*/
   resetForm($event: MouseEvent) {
@@ -88,7 +123,7 @@ export class RecognizeModelComponent implements OnInit {
     return this.validateForm.controls[name];
   }
 
-  constructor(private fb: FormBuilder, private customValidServ: CustomValidService) {
+  constructor(private fb: FormBuilder, private customValidServ: CustomValidService, private imgPreviewServ: ImgPreviewService) {
   }
 
   ngOnInit() {
@@ -114,19 +149,5 @@ export class RecognizeModelComponent implements OnInit {
       mappath_new: [''],
       state: ['']
     });
-
-    this.carouselOne = {
-      grid: {xs: 1, sm: 1, md: 1, lg: 1, all: 0},
-      slide: 1,
-      speed: 400,
-      interval: 4000,
-      point: {
-        visible: true
-      },
-      load: 2,
-      touch: true,
-      loop: true,
-      custom: 'banner'
-    }
   }
 }

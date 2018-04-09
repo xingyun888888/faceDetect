@@ -19,12 +19,12 @@ export class LogComponent implements OnInit {
   _titles: Array<any> = [
     {
       key: 'id',
-      name: 'id',
+      name: 'ID',
       type: 'text'
     },
     {
       key: 'userName',
-      name: '用户名',
+      name: '用户名称',
       type: 'text'
     },
     {
@@ -33,20 +33,20 @@ export class LogComponent implements OnInit {
       type: 'text'
     },
     {
-      key: 'moduleName',
-      name: '模块名',
+      key: 'operator',
+      name: '操作名称',
       type: 'text'
     },
     {
-      key: 'operator',
-      name: '操作',
+      key: 'moduleName',
+      name: '模块',
       type: 'text'
     },
     {
       key: 'time',
       name: '操作时间',
-      type: 'date'
-    }
+      type: 'datetime'
+    },
   ];
 
   /**这里存放着table需要的数据*/

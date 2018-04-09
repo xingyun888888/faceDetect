@@ -18,7 +18,11 @@ export const cameraStateOptions = [{id: 1, name: '启用', value: 1}, {id: 2, na
 export const streamTypeOptions = [{id: 1, name: 'H264', value: 1}, {id: 2, name: 'H265', value: 2}];
 
 /***********  服务器管理 服务器类型************/
-export const serverTypeOptions = [{id: 1, name: '人脸检测', value: 1}, {id: 2, name: '人脸识别', value: 2}, {id: 3, name: '人型分析', value: 3}, {id: 4, name: '跟踪', value: 4}];
+export const serverTypeOptions = [
+  {id: 1, name: '人脸检测', value: 1},
+  {id: 2, name: '人脸识别', value: 2},
+  {id: 3, name: '人型分析', value: 3},
+  {id: 4, name: '跟踪', value: 4}];
 
 /***********  人脸库状态配置  ************/
 export const faceStateOptions = [{id: 1, name: '启用', value: 1}, {id: 2, name: '未启用', value: 2}];
@@ -35,3 +39,27 @@ export const isEnableOptions = [{id: 1, name: '启用', value: 1}, {id: 2, name:
 
 /***********  参数类型 配置  ************/
 export const paramTypeOptions = [{id: 1, name: '地图', value: 1}, {id: 2, name: 'IP地址', value: 2}, {id: 3, name: '版本', value: 3}];
+
+/***********  布控策略 生效周期 以周为循环  ************/
+export class StrategyWeekOptions {
+  public data = [
+    {label: '周一', value: '1'},
+    {label: '周二', value: '2'},
+    {label: '周三', value: '3'},
+    {label: '周四', value: '4'},
+    {label: '周五', value: '5'},
+    {label: '周六', value: '6'},
+    {label: '周日', value: '7'},
+  ];
+
+  constructor() {
+  }
+}
+
+/***********  报表数据分析 查询周期 配置  ************/
+export const timeOptions = [
+  {name: '天', id: 1, value: '1'},
+  {name: '周', id: 2, value: '2'},
+  {name: '月', id: 3, value: '3'},
+  {name: '年', id: 4, value: '4'}
+];

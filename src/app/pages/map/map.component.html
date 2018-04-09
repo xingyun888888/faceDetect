@@ -24,13 +24,12 @@
             <label>地图名</label>
           </div>
           <div nz-col [nzSpan]="9" nz-form-control>
-            <nz-input id="inputValue" [nzPlaceHolder]="'请输入地图名'" [nzType]="'text'" [(ngModel)]="fileName"
+            <nz-input [nzPlaceHolder]="'请输入地图名'" [nzType]="'text'" [(ngModel)]="fileName"
                       [nzSize]="'large'">
             </nz-input>
           </div>
           <div nz-col [nzSpan]="10" nz-form-control>
-            <nz-upload
-              [nzBeforeUpload]="beforeUpload" [ngFileList]="mapFileList">
+            <nz-upload [nzBeforeUpload]="beforeUpload" [ngFileList]="mapFileList">
               <button nz-button>
                 <i class="anticon anticon-upload"></i><span>{{mapFileList.length==0?'选择地图':'重新选择'}}</span>
               </button>
@@ -54,9 +53,6 @@
             (click)="isShowUploadModal=true">
       <i class="anticon anticon-download"></i><span> 导入地图 </span>
     </button>
-    <button *ngIf="isShowUpDownModal" nz-button [nzType]="'default'" [nzSize]="large" class="map-btn1">
-      <i class="anticon anticon-download"></i><span> 导出摄像头拓扑表 </span>
-    </button>
   </div>
   <!--map-container 就是map-show的父元素-->
   <div class="map-show">
@@ -67,22 +63,21 @@
       <div class="camera-state">
         离线摄像头: <img src="../../../assets/images/map/map.png" alt="">
       </div>
-      <div>
+
         所在区域:
-      <nz-select style="width: 120px;" [(ngModel)]="selectedMap" [nzPlaceHolder]="'请选择区域'" (ngModelChange)="areaChangeHandler($event)">
-        <nz-option *ngFor="let option of mapOptions" [nzLabel]="option.areaName" [nzValue]="option">
-          <ng-template #nzOptionTemplate>{{option.areaName}}</ng-template>
-        </nz-option>
-      </nz-select>
-    </div>
-    <div>
-      楼层:
-      <nz-select style="width: 120px;" [(ngModel)]="selectedFloor" [nzPlaceHolder]="'请选择楼层'" (ngModelChange)="floorChangeHandler($event)">
-        <nz-option *ngFor="let option of selectedMap&&selectedMap.mapInfoData" [nzLabel]="option.districtName" [nzValue]="option">
-          <ng-template #nzOptionTemplate>{{option.districtName}}</ng-template>
-        </nz-option>
-      </nz-select>
-    </div>
+        <nz-select style="width: 120px;" [(ngModel)]="selectedMap" [nzPlaceHolder]="'请选择区域'" (ngModelChange)="areaChangeHandler($event)">
+          <nz-option *ngFor="let option of mapOptions" [nzLabel]="option.areaName" [nzValue]="option">
+            <ng-template #nzOptionTemplate>{{option.areaName}}</ng-template>
+          </nz-option>
+        </nz-select>
+
+      <div>
+         楼层: <nz-select style="width: 120px;" [(ngModel)]="selectedFloor"  [nzPlaceHolder]="'请选择楼层'" (ngModelChange)="floorChangeHandler($event)">
+                <nz-option *ngFor="let option of selectedMapFloor" [nzLabel]="option.districtName" [nzValue]="option">
+                  <ng-template #nzOptionTemplate>{{option.districtName}}</ng-template>
+                </nz-option>
+              </nz-select>
+      </div>
       <div class="scale-size">
         放大: <img src="../../../assets/images/map/bigger.png" alt="">
       </div>
@@ -90,9 +85,11 @@
         缩小: <img src="../../../assets/images/map/smaller.png" alt="">
       </div>
     </div>
-    <div class="map-img" *ngIf="selectedMap&&selectedMap">
-      <img [src]="selectedMap&&selectedMap" alt="" #mapImg>
+    <!--这里做一个判断 当选择楼层有地图时 才展示 否则地图隐藏-->
+    <div class="map-img" *ngIf="selectedFloor&&selectedFloor.mapUrl" >
+      <!--<img [src]="selectedMap&&selectedMap.value" alt="" #mapImg>-->
+      <!--将当前选择的楼层数据的url复制到img上面-->
+      <img [src]="selectedFloor&&selectedFloor.mapUrl" alt="" #mapImg>
     </div>
   </div>
 </div>
-

@@ -1,15 +1,29 @@
 <div class="pp-table">
   <div style="margin-bottom: 16px;">
-    <nz-button-group>
-      <button *ngIf="isCanAdd" nz-button [nzType]="'default'" [nzSize]="'large'" (click)="add()"><span><i
-        class="anticon anticon-file-add"></i> 新增</span></button>
-      <button *ngIf="isCanDelete" nz-button [nzType]="'default'" [nzSize]="'large'" (click)="_multiDelete()"><span><i
-        class="anticon anticon-delete"></i> 删除</span></button>
-      <button *ngIf="isCanRefresh" nz-button [nzType]="'default'" [nzSize]="'large'" (click)="_refreshData()"><span><i
-        class="anticon anticon-reload"></i> 刷新</span></button>
-      <button *ngIf="isCanReback" nz-button [nzType]="'default'" [nzSize]="'large'" [routerLink]="['/facelib']"><span><i
-        class="anticon anticon-reload"></i> 回退</span></button>
-    </nz-button-group>
+    <div nz-row nzAlign="middle">
+      <div nz-col nzSpan="12">
+        <nz-button-group>
+          <button *ngIf="isCanAdd" nz-button [nzType]="'default'" [nzSize]="'large'" (click)="add()"><span><i
+            class="anticon anticon-file-add"></i> 新增</span></button>
+          <button *ngIf="isCanDelete" nz-button [nzType]="'default'" [nzSize]="'large'" (click)="_multiDelete()"><span><i
+            class="anticon anticon-delete"></i> 删除</span></button>
+          <button *ngIf="isCanRefresh" nz-button [nzType]="'default'" [nzSize]="'large'" (click)="_refreshData()"><span><i
+            class="anticon anticon-reload"></i> 刷新</span></button>
+          <button *ngIf="isCanReback" nz-button [nzType]="'default'" [nzSize]="'large'" [routerLink]="['/facelib']"><span><i
+            class="anticon anticon-reload"></i> 回退</span></button>
+        </nz-button-group>
+      </div>
+      <div nz-col nzSpan="9" nzPush="7" style="margin-top: 10px">
+        <!-- table是通用的组件  最好不要把特定组件的意义赋予它 -->
+        <b style="font-size: 14px;color:#666;">{{tableTitle}}</b>
+      </div>
+    </div>
+
+
+    <!-- <div class="facelibName-action">
+      <div class="facelib-info">
+      </div>
+    </div> -->
     <!-- <div class="batch-upload-box" *ngIf="isCanBatchUpload">
       <nz-upload *ngIf="fileList.length==0" nzMultiple nzShowButton [nzAction]="mulUploadApi" [nzFileList]="fileList"   (nzChange)="handleChange($event)"  [nzShowUploadList]="false"   [nzBeforeUpload]="beforeUpload"   >
         <button nz-button>
@@ -59,6 +73,7 @@
         <span *ngIf="item.type=='gender'" style="display:-webkit-box;-webkit-line-clamp:1;overflow:hidden;-webkit-box-orient:vertical;text-overflow:ellipsis;max-width:120x; overflow:hidden;">{{data[item.key]==1?"男":"女"}}</span>
         <span *ngIf="item.type=='state'" style="display:-webkit-box;-webkit-line-clamp:1;overflow:hidden;-webkit-box-orient:vertical;text-overflow:ellipsis;max-width:120x; overflow:hidden;">{{data[item.key]==1?"启用":"未启用"}}</span>
         <span *ngIf="item.type=='date'" style="display:-webkit-box;-webkit-line-clamp:1;overflow:hidden;-webkit-box-orient:vertical;text-overflow:ellipsis;max-width:120px; overflow:hidden;">{{data[item.key] | date:'yyyy-MM-dd'}}</span>
+        <span *ngIf="item.type=='datetime'" style="display:-webkit-box;-webkit-line-clamp:1;overflow:hidden;-webkit-box-orient:vertical;text-overflow:ellipsis;max-width:120px; overflow:hidden;">{{data[item.key] | date:'yyyy-MM-dd HH:mm:ss'}}</span>
         <span *ngIf="item.type=='select'" style="display:-webkit-box;-webkit-line-clamp:1;overflow:hidden;-webkit-box-orient:vertical;text-overflow:ellipsis;max-width:120px; overflow:hidden;">{{data[item.key] | transforType:item.options}}</span>
         <img [src]="''" alt="" *ngIf="item.type=='img'">
       </td>

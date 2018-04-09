@@ -134,7 +134,7 @@
             </div>
             <div>
               <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-select formControlName="faceLibid" [(ngModel)]="_formData.faceLibid"  [nzPlaceHolder]="'-请选择-'"
+                <nz-select formControlName="faceLibid" [(ngModel)]="_formData.faceLibid" (ngModelChange)="faceLibIdChange($event)" [nzPlaceHolder]="'-请选择-'"
                            [nzSize]="'large'" nzAllowClear>
                   <nz-option *ngFor="let option of faceLibOptions" [nzLabel]="option.name" [nzValue]="option.id">
                     <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
@@ -172,22 +172,40 @@
             <div nz-col [nzSpan]="5" nz-form-label>
               <label nz-form-item-required>图片上传</label>
             </div>
-              <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
-                <nz-input formControlName="path" [nzDisabled]="true" (dblclick)="fileSelect($event)"
-                          [(ngModel)]="_formData.path" [nzPlaceHolder]="'点击浏览或者双击选择文件'" [nzType]="'text'"
+            <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+              <nz-tooltip nzPlacement="bottom">
+                <ng-template #nzTemplate>
+                  <span style="color:#e4393c;">{{fileList.length==0?'提示：该库剩余可注册人脸数为：'+_singleUploadfaceCount+'张':'您一共选择了'+uploadImgList.length+'张图片'}}</span>
+                </ng-template>
+                <nz-input nz-tooltip formControlName="path" [nzDisabled]="true" (dblclick)="fileSelect($event)"
+                          [(ngModel)]="uploadedImgNameList[0]" [nzPlaceHolder]="'点击浏览按钮选择1张图片,再点击添加按钮上传图片。'" [nzType]="'text'"
                           [nzSize]="'large'">
                 </nz-input>
-              </div>
+              </nz-tooltip>
+            </div>
             <div nz-col [nzSpan]="3" nz-form-label style="margin-left:-12px;">
               <button nz-button style="background:#e5e5e5;" [nzSize]="'large'" (click)="fileSelect($event)">
                 <i class="anticon"></i><span>浏览</span>
               </button>
             </div>
             <div nz-col [nzSpan]="4" nz-form-label style="margin-left:-12px;">
-              <button nz-button style="background:#108ee9;color:#fff;" [nzType]="'default'" [nzSize]="'large'"
+              <button [disabled]="_singleUploadfaceCount==0"   nz-button  [nzType]="'primary'"  [nzType]="'default'" [nzSize]="'large'"
                       (click)="imgUploadHandler($event)">
                 <span>添加</span>
               </button>
+            </div>
+            <div nz-col [nzSpan]="24" *ngIf="_formData.fileName">
+              <ul>
+                <li>
+                  <div nz-col [nzSpan]="5" style="padding-top:15px;" nz-form-label>
+                    <label>图片预览</label>
+                  </div>
+                  <span style="padding-left:8px;display:inline-block;width:320px;padding-top:23px;">{{_formData.fileName}}</span>
+                  <a style="margin-left:10px;" href="javascript:void(0)" (click)="deleteImg($event,{id:_formData.id,fileName:_formData.fileName})">删除</a>
+                  <!--这里是将事件对象传进去了 没有携带其他参数 所以要将当前的path传给它 就可以了 -->
+                  <a style="margin-left:10px;" href="javascript:void(0)" (click)="showImg($event,_formData.path)">查看</a>
+                </li>
+              </ul>
             </div>
           </div>
           <div nz-form-item nz-row>
@@ -202,22 +220,30 @@
               </div>
             </div>
           </div>
-          <!--<div nz-form-item nz-row>-->
-          <!-- <div nz-col [nzSpan]="5" nz-form-label>
-            <label nz-form-item-required>缩略图</label>
-          </div>
-          <div nz-col [nzSpan]="4">
-           <!-- <nz-input formControlName="path" (click)="fileSelect($event)" [(ngModel)]="_formData.path" [nzPlaceHolder]="'缩略图'" [nzType]="'text'" [nzSize]="'large'">
-            </nz-input>
-            <nz-tooltip [nzTitle]="uploadImgNameList.join(',')">
-              <button nz-tooltip nz-button [nzType]="'default'" (click)="fileSelect($event)">
-                <i class="anticon anticon-upload"></i><span>点击添加</span>
-              </button>
-            </nz-tooltip>
-          </div>
-          <div nz-col [nzSpan]="4">
-            <button nz-button  [nzType]="'default'" (click)="imgUploadHandler($event)"><span><i class="anticon anticon-add"></i> 上传</span></button>
-          </div> -->
+         <!--
+          <div nz-form-item nz-row>
+            <div nz-col [nzSpan]="5" nz-form-label>
+              <label nz-form-item-required>图片</label>
+            </div>
+            <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback style="text-align:left;">
+              <ul>
+                <li><span style="display:inline-block;width:150px;text-align:left;margin-right:10px;">{{_formData.path}}</span>
+                      <a style="margin-left:12px;" href="javascript:void(0)" (click)="deleteImg(e,i)">删除</a>
+                      <a style="margin-left:12px;" href="javascript:void(0)" (click)="showImg(e,i)">查看</a></li>
+              </ul>
+            </div>
+            <!--  <div nz-col [nzSpan]="4">
+             <!-- <nz-input formControlName="path" (click)="fileSelect($event)" [(ngModel)]="_formData.path" [nzPlaceHolder]="'缩略图'" [nzType]="'text'" [nzSize]="'large'">
+              </nz-input>
+              <nz-tooltip [nzTitle]="uploadImgNameList.join(',')">
+                <button nz-tooltip nz-button [nzType]="'default'" (click)="fileSelect($event)">
+                  <i class="anticon anticon-upload"></i><span>点击添加</span>
+                </button>
+              </nz-tooltip>
+            </div>
+            <div nz-col [nzSpan]="4">
+              <button nz-button  [nzType]="'default'" (click)="imgUploadHandler($event)"><span><i class="anticon anticon-add"></i> 上传</span></button>
+            </div> -->
           <!--</div>-->
           <!--<div nz-form-item nz-row style="margin-bottom:5px;">
             <div nz-col [nzSpan]="5">
@@ -228,7 +254,7 @@
                 <li *ngFor="let item of uploadImgList;let i = index"><span style="display:inline-block;width:150px;text-align:left;margin-right:10px;">{{item}}</span><a style="float:right;" href="javascript:void(0)" (click)="deleteImg(e,i)">删除</a></li>
               </ul>
             </div>
-          </div>-->
+          </div> -->
           <input type="file" #imgSelect style="visibility:hidden;" (change)="fileChange($event)"/>
         </div>
         <div nz-col [nzSpan]="10" class="register-col">
@@ -252,20 +278,23 @@
           </div>
           <div nz-form-item nz-row>
             <div nz-col [nzSpan]="20" nzOffset="2" nz-form-control>
-              <nz-tooltip [nzTitle]="fileList.length==0?'请选择图片！(提示：目前最多只能选择 '+_faceCount+' 张图片)':'您一共选择了'+fileList.length+'张图片'">
-                <nz-upload nz-tooltip nzMultiple nzShowButton [nzAction]="mulUploadApi" [nzFileList]="fileList"
+              <nz-tooltip [nzOverlayStyle]="{color:'#e4393c'}" nzPlacement="bottom">
+                <ng-template #nzTemplate>
+                  <span style="color:#e4393c;">{{fileList.length==0?'提示：目前最多只能选择 '+_faceCount+' 张图片!':'您一共选择了'+fileList.length+'张图片'}}</span>
+                </ng-template>
+                <nz-upload nz-tooltip nzMultiple nzShowButton   [nzAction]="mulUploadApi" [nzFileList]="fileList"
                            nzType="drag" (nzChange)="handleChange($event)" [nzShowUploadList]="false"
                            [nzBeforeUpload]="beforeUpload">
                   <p class="ant-upload-drag-icon"><i class="anticon anticon-inbox"></i></p>
                   <p class="ant-upload-text">点击或者拖拽图片上传</p>
-                  <p class="ant-upload-hint">支持单个或批量上传。<br/>严禁上传包含色情、暴力、反动等相关违法信息的文件。</p>
+                  <b class="ant-upload-hint">支持单个或批量上传。<br/>图片命名格式：姓名_员工编号_职场名称.jpg。</b>
                 </nz-upload>
               </nz-tooltip>
             </div>
           </div>
           <div nz-form-item nz-row class="register-col">
             <div nz-col nzOffset="9" [nzSpan]="3" nz-form-control>
-              <button (click)="handleUpload($event)" nz-button style="background:#108ee9;color:#fff;"
+              <button [disabled]="_faceCount==0"   (click)="handleUpload($event)" nz-button [nzType]="'primary'"
                       [nzSize]="'large'">确认上传
               </button>
             </div>
@@ -282,7 +311,9 @@
     </form>
   </ng-template>
 </nz-modal>
-
+<ng-template #contentTpl>
+  <img [src]="_formData.path" style="width:100%;" alt="">
+</ng-template>
 
 
 

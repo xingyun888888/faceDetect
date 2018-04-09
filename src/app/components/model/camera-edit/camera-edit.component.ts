@@ -21,6 +21,12 @@ import {cameraStateOptions, cameraTypeOptions} from '../../../config/selectConf'
 })
 
 export class CameraEditComponent implements OnInit {
+  // dataInfo:Array<DataTable>;
+  dataInfo:any;
+  mapUrl:any;
+  isAreaID=false;
+  isDistrictID=false;
+
   /**该输入属性，里面包含着table中的所有字段*/
   @Input()
   _formData = null;
@@ -33,7 +39,7 @@ export class CameraEditComponent implements OnInit {
 
   /**当前值select展示的值*/
   selectedMap = this.mapOptions[0];
-
+  selectedMapFloor: Array<any> = [];
   /**
    * 流媒体类型下拉框内容配置项
    */
@@ -55,6 +61,7 @@ export class CameraEditComponent implements OnInit {
   /**这个是将table组件中传过来的值放入表单中*/
   @Input()
   set formData(value) {
+    debugger;
     this._formData = Object.assign({}, value);
   }
 
@@ -78,7 +85,9 @@ export class CameraEditComponent implements OnInit {
 
    /**是否展示地图;*/
   isShowMap = false;
-
+  /**表示当前区域楼层   当seletedMap选择以后 就会动态修改**/
+  selectedFloor = this.selectedMap&&this.selectedMap.mapInfoData[0];
+  /**
   /**地图摄像头标志默认位置*/
   defaultOffsetPosition = {
     x: 0,
@@ -135,7 +144,7 @@ export class CameraEditComponent implements OnInit {
 
   /**提交表单，提交时做校验操作*/
   submitForm = ($event, value) => {
-
+    debugger;
     //阻止事件默认行为
     $event.preventDefault();
     for (const key in this.validateForm.controls) {
@@ -154,6 +163,8 @@ export class CameraEditComponent implements OnInit {
       /**在这里请求处理提交表单数据*/
       this.requestData.emit(value);
       this.validateForm.reset();
+      // this.isAreaID=false;
+      // this.isDistrictID=false;
     }
   };
 
@@ -175,23 +186,19 @@ export class CameraEditComponent implements OnInit {
   /**
    * 获取地图列表
    */
-  // getMapList() {
-  //   this.http.get(api.queryMapList + '?type=1').subscribe((res) => {
-  //     console.dir(res);
-  //     let list = <any>res;
-  //     this.mapOptions = list;
-  //     this.selectedMap = list[0];
-  //   });
-  // }
   getMapList() {
     this.http.get(api.queryMapInfoList).subscribe((res) => {
       debugger;
       console.dir(res);
       let list = <any>res;
-      this.mapOptions = list;
-      this.selectedMap = list[0];
+      // let dataInfo = (<DataTable>list);
+      this.dataInfo=(<DataTable>res);
+      this.mapOptions=this.dataInfo
+      // this.mapOptions = list;
+      this.selectedMap = this.mapOptions[0];
     });
   }
+
   /**
    *
    * @param e
@@ -214,8 +221,22 @@ export class CameraEditComponent implements OnInit {
    * 为了跟表单 地图选择下拉框关联起来 才绑定这么一个方法
    * @param e
    */
-  modalMapChangeHandle(e) {
-    this._formData.districtID = this.selectedMap.id;
+  mapAreaChangeHandle(e) {
+    debugger;
+    // this.selectedFloor=null;
+    this.selectedMapFloor = null;
+    this.selectedMap = e;
+    this.selectedMapFloor = this.selectedMap.mapInfoData;
+    // this._formData.districtID = this.selectedMap.id;
+  }
+  mapFloorChangeHandle(e) {
+    // this._formData.districtID = this.selectedMap.id;
+   debugger;
+   this._formData.areaID=e.areaID;
+   this._formData.areaName=e.areaName;
+   this._formData.districtID=e.districtID;
+   this._formData.districtName=e.districtName;
+   this.mapUrl=e.mapUrl;
   }
 
   constructor(private http: HttpClient, private fb: FormBuilder, private confirmServ: NzModalService, private customValidServ: CustomValidService) {
@@ -231,7 +252,38 @@ export class CameraEditComponent implements OnInit {
       this.options = list;
     });
   }
-
+  /*
+  确认设置
+   */
+  confirm(e) {
+    debugger;
+    this.isAreaID=true;
+    this.isDistrictID=true;
+    this.isShowMap=false;
+    this._formData.areaName=this.selectedMap.areaName;
+    this._formData.areaID=this.selectedMap.areaID;
+    this._formData.districtID=this.selectedMap.districtID;
+    this._formData.districtName=this.selectedMap.districtName;
+    const formData = new FormData();
+    formData.append("areaID",this.selectedMap.areaID);
+    formData.append("areaName",this.selectedMap.areaName);
+    formData.append("districtID",this.selectedMap.districtID);
+    formData.append("districtName",this.selectedMap.districtName);
+    formData.append("id",this._formData.id);
+    this.http.post(api.alterID, formData, {
+      headers: new HttpHeaders({})
+    }).subscribe((event: any) => {
+      this.confirmServ.success({
+        content: '保存成功'
+      });
+      this.isAreaID=false;
+      this.isDistrictID=false;
+    }, (err) => {
+      this.confirmServ.error({
+        title: '保存失败'
+      });
+    });
+  }
   ngOnInit() {
     /**响应式表单，Validators.required表示必填*/
     this.validateForm = this.fb.group({
@@ -257,11 +309,12 @@ export class CameraEditComponent implements OnInit {
       camMapY: ['', [Validators.required, Validators.maxLength(5), Validators.pattern('[0-9]+')]],
       camState: ['', [Validators.required]],
       streamType: ['', [Validators.required]],
-      districtID: ['', [Validators.maxLength(5), Validators.pattern('[0-9]+')]],
-      // districtID: [''],
+      // districtID: ['', [Validators.maxLength(5), Validators.pattern('[0-9]+')]],
+      districtID: [''],
       districtName: ['', [Validators.maxLength(22)]],
       area: ['', [Validators.required, Validators.maxLength(25)]],
-      areaID: ['', [Validators.maxLength(5), Validators.pattern('[0-9]+')]],
+      areaID: [''],
+      // areaID: ['', [Validators.maxLength(5), Validators.pattern('[0-9]+')]],
       areaName: ['', [Validators.maxLength(22)]],
       // distictUrl: ['', [Validators.maxLength(22)]],
       // img_url: ['']
@@ -269,4 +322,22 @@ export class CameraEditComponent implements OnInit {
   }
 }
 
+export class DataTable {
+
+  public areaName: string;
+
+  public mapInfoData: Array<MapInfo>;
+}
+
+export class MapInfo {
+
+  id:number;
+  areaID:number;
+  areaName:string;
+  districtID:number;
+  districtName:string;
+  mapUrl:string;
+  createTime:any;
+  modifierTime:any;
+}
 

@@ -9,8 +9,8 @@
           <div *ngIf="item.type==''"  nz-form-control nz-col [nzSpan]="16">
             <nz-input [nzSize]="'large'" [(ngModel)]="_formData[item.key]" [nzPlaceHolder]="'请输入'+item.name" [formControlName]="item.key" [nzId]=""></nz-input>
           </div>
-          <div *ngIf="item.type=='date'"   nz-form-control nz-col [nzSpan]="50">
-            <nz-datepicker style="width:150px;"  nzShowTime [nzFormat]="'YYYY-MM-DD HH:mm:ss'" [nzPlaceHolder]="item.name"></nz-datepicker>
+          <div *ngIf="item.type=='datetime'"   nz-form-control nz-col [nzSpan]="50">
+            <nz-datepicker style="width:150px;"  nzShowTime [nzFormat]="'YYYY-MM-DD HH:mm:ss'" [(ngModel)]="_formData[item.key]"  [nzPlaceHolder]="item.name" [formControlName]="item.key"></nz-datepicker>
           </div>
           <div *ngIf="item.type=='select'" nz-form-control nz-col [nzSpan]="40">
             <nz-select style="width: 150px;" nzAllowClear [formControlName]="item.key" [(ngModel)]="_formData[item.key]"  [nzPlaceHolder]="'请选择'+item.name" >

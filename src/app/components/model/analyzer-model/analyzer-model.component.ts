@@ -79,6 +79,7 @@ export class AnalyzerModelComponent implements OnInit {
    *提交表单，提交时做校验操作
    */
   submitForm = ($event, value) => {
+    debugger;
     $event.preventDefault();
     for (const key in this.validateForm.controls) {
       this.validateForm.controls[key].markAsDirty();

@@ -39,11 +39,6 @@ export class FacelibComponent implements OnInit {
       type: 'text'
     },
     {
-      key: 'createTime',
-      name: '创建时间',
-      type: 'date'
-    },
-    {
       key: 'maxNum',
       name: '最大人脸数',
       type: 'text'
@@ -52,6 +47,11 @@ export class FacelibComponent implements OnInit {
       key: 'faceCount',
       name: '当前人脸数',
       type: 'text'
+    },
+    {
+      key: 'createTime',
+      name: '创建时间',
+      type: 'date'
     },
     {
       key: 'state',

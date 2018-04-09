@@ -2,16 +2,16 @@
           (nzOnOk)="handleOk($event)" [nzConfirmLoading]="isConfirmLoading" nzFooter="">
   <ng-template #modalContent>
     <form nz-form [formGroup]="validateForm">
-      <!--<div nz-form-item nz-row>-->
-        <!--<div nz-form-label nz-col [nzSpan]="7">-->
-          <!--<label nz-form-item-required>分析仪Id</label>-->
-        <!--</div>-->
-        <!--<div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>-->
-          <!--<nz-input formControlName="id" [(ngModel)]="_formData.id" [nzType]="'text'" [nzPlaceHolder]="'分析仪Id'"-->
-                    <!--[nzSize]="'large'">-->
-          <!--</nz-input>-->
-        <!--</div>-->
-      <!--</div>-->
+      <div nz-form-item nz-row>
+        <div nz-form-label nz-col [nzSpan]="7">
+          <label nz-form-item-required>分析仪Id</label>
+        </div>
+        <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+          <nz-input [nzDisabled]="'true'" formControlName="id" [(ngModel)]="_formData.id" [nzType]="'text'" [nzPlaceHolder]="'分析仪Id'"
+                    [nzSize]="'large'">
+          </nz-input>
+        </div>
+      </div>
       <div nz-form-item nz-row>
         <div nz-form-label nz-col [nzSpan]="7">
           <label nz-form-item-required>名称</label>

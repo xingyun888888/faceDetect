@@ -33,6 +33,13 @@ export class TableComponent implements OnInit {
   mulUploadApi = '';
 
 
+  /**
+   * 这里在table上方显示标题
+   * @type {string}
+   */
+  @Input()
+  tableTitle = '';
+
   @Input()
   isCanBatchUpload = false;
 
@@ -104,7 +111,7 @@ export class TableComponent implements OnInit {
    */
   editRow = []; //可编辑的行
   tempEditObject = []; //编辑暂存区
-  pageSize = 5; //每页多少条数据
+  pageSize = 10; //每页多少条数据
   total = 0; //总条数
   currentPageIndex = 1; //当前页码
 

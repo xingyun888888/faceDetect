@@ -3,6 +3,7 @@ import * as moment from 'moment';
 import {parseParam, dateFormat} from '../../utils/common';
 import api from '../../api';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {timeOptions} from '../../config/selectConf';
 
 @Component({
   selector: 'app-report-data-analyze',
@@ -10,62 +11,49 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
   styleUrls: ['./report-data-analyze.component.less']
 })
 export class ReportDataAnalyzeComponent implements OnInit {
-  _startDate = null;
-  _endDate = null;
+
+  _startDate = null; // 开始日期
+  _endDate = null; // 结束日期
+  _stype = null; // 查询周期
+  options: any = []; // 定义空的echarts
+  legendData = ['服务器负载总和', '人脸分析次数', '网络流量总和', '报警频度', '新增人脸底图数', '摄像头在线次数']; // 定义统计的数据项
+  xAxisName = []; // 定义x轴的显示名称,按照天、周、月或者年显示
+  cameraNum = []; // 摄像头在线总次数
+  networkFlowNum = []; // 网络流量总和
+  serverLoadNum = []; // 服务器负载总和
+  registerNum = []; // 新增人脸底图数
+  recognizeNum = []; // 人脸分析次数
+  alarmNum = []; // 报警频度
 
   /**
-   * 数据结构
-   *
-   * data = [网络流量:[1,2,3,4,5,...],服务器负载:[1,2,3,4,5,...],人脸分析次数:[1,2,3,4,...]]
-   *
-   *
-   *
+   * 周期类型
    */
-
-
-  /**
-   * 定义x轴的显示名称
-   * @type {string[]}
-   */
-    //xAxisName = ['服务器负载', '人脸分析次数', '网络流量', '抓水客数', '报警频度', '人脸库底图数', '摄像头在线数'];
-
-  xAxisName = [
-    {name: '服务器负载', key: '', resourceUrl: api.queryRegisterWeekCount},
-    {name: '人脸分析次数', key: '', resourceUrl: api.queryRegisterWeekCount},
-    {name: '网络流量', key: '', resourceUrl: api.queryRegisterWeekCount},
-    {name: '抓水客数', key: '', resourceUrl: api.queryRegisterWeekCount},
-    {name: '报警频度', key: '', resourceUrl: api.queryRegisterWeekCount},
-    {name: '人脸库底图数', key: 'queryRegisterWeekCount', resourceUrl: api.queryRegisterWeekCount},
-    {name: '摄像头在线数', key: '', resourceUrl: api.queryRegisterWeekCount}
-  ];
-
-
-  timeOptions = [
-    {name: '天', id: 1, value: 'byDay'},
-    {name: '周', id: 2, value: 'byWeek'},
-    {name: '月', id: 3, value: 'byMonth'},
-    {name: '年', id: 4, value: 'byYear'}
-  ];
-
-  toggleChart(e, index) {
-    // if(!this.options.series[index]){
-    //   this.options.series.push({
-    //     name:this.xAxisName[index],
-    //     type: 'line',
-    //     stack: '总量',
-    //     itemStyle: {normal: {areaStyle: {type: 'default'}}},
-    //     data: [220, 182, 191, 234, 290, 330, 310, 342, 432]
-    //   },)
-    // }else{
-    //   this.options.series.splice(index,1);
-    // }
-  }
+  _timeOptions = timeOptions;
 
   /**
    * 查询分析数据
    * @param e
    */
-  getAnalyzeData(e, item) {
+  getAnalyzeData() {
+    const now = new Date();
+    const date = new Date();
+    /**
+     * 载入页面，自动查询本月的每日数据
+     */
+    if (this._startDate == null) {
+      date.setMonth(date.getMonth());
+      date.setDate(1);
+      date.setHours(0);
+      date.setMinutes(0);
+      date.setSeconds(0);
+      this._startDate = date;
+    }
+    if (this._endDate == null) {
+      this._endDate = now;
+    }
+    if (this._stype == null || this._stype === '') {
+      this._stype = 1;
+    }
     console.log(this._startDate);
     console.log(this._endDate);
     /**
@@ -73,23 +61,33 @@ export class ReportDataAnalyzeComponent implements OnInit {
      */
     const data = {
       startTime: dateFormat(new Date(this._startDate), 'yyyy-MM-dd hh:mm:ss'),
-      endTime: dateFormat(new Date(this._endDate), 'yyyy-MM-dd hh:mm:ss')
+      endTime: dateFormat(new Date(this._endDate), 'yyyy-MM-dd hh:mm:ss'),
+      type: this._stype
     };
-    /**
-     * 明天记得改成get方式
-     */
-    this.http.post(api.queryRegisterWeekCount + parseParam(data), data, {
-      headers: new HttpHeaders({
-        'Content-type': 'application/json;charset=UTF-8'
-      })
-    }).subscribe((res) => {
-      console.dir(res);
+    // 从接口请求数据并绑定
+    this.http.get(api.queryReportData + '?startTime=' + data.startTime + '&endTime='
+      + data.endTime + '&type=' + data.type).subscribe((res) => {
       const list = <any>res;
-      this.options.series[5] = list;
-    }, (error) => {
+      this.xAxisName = [];
+      this.cameraNum = [];
+      this.networkFlowNum = [];
+      this.serverLoadNum = [];
+      this.registerNum = [];
+      this.recognizeNum = [];
+      this.alarmNum = [];
+      list.map((it: any, index: any) => {
+        this.xAxisName.push(it.name);
+        this.cameraNum.push(it.cameraNum);
+        this.networkFlowNum.push(it.networkFlowNum);
+        this.serverLoadNum.push(it.serverLoadNum);
+        this.registerNum.push(it.registerNum);
+        this.recognizeNum.push(it.recognizeNum);
+        this.alarmNum.push(it.alarmNum);
+      });
+      console.log(this.xAxisName);
+      this.getECharts();
     });
   }
-
 
   newArray = (len) => {
     const result = [];
@@ -150,113 +148,91 @@ export class ReportDataAnalyzeComponent implements OnInit {
     };
   }
 
-  options: any = {
-    tooltip: {
-      trigger: 'axis'
-    },
-    legend: {
-      data: this.xAxisName
-    },
-    toolbox: {
-      show: true,
-      feature: {
-        mark: {show: true},
-        dataView: {show: true, readOnly: false},
-        magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
-        restore: {show: true},
-        saveAsImage: {show: true}
-      }
-    },
-    calculable: true,
-    xAxis: [
-      {
-        type: 'category',
-        boundaryGap: false,
-        data: ['01-11', '02-11', '03-11', '04-11', '05-11', '06-11', '07-11', '08-11', '09-11',]
-      }
-    ],
-    yAxis: [
-      {
-        type: 'value'
-      }
-    ],
-    series: [
-      {
-        name: '服务器负载',
-        type: 'line',
-        stack: '总量',
-        itemStyle: {normal: {areaStyle: {type: 'default'}}},
-        data: [220, 182, 191, 234, 290, 330, 310, 342, 432]
-      },
-      {
-        name: '人脸分析次数',
-        type: 'line',
-        stack: '总量',
-        itemStyle: {normal: {areaStyle: {type: 'default'}}},
-        data: [150, 232, 201, 154, 190, 330, 410, 432, 113]
-      },
-      {
-        name: '网络流量',
-        type: 'line',
-        stack: '总量',
-        itemStyle: {normal: {areaStyle: {type: 'default'}}},
-        data: [320, 332, 301, 334, 390, 330, 320, 343, 212]
-      },
-      {
-        name: '抓水客数',
-        type: 'line',
-        stack: '总量',
-        itemStyle: {normal: {areaStyle: {type: 'default'}}},
-        data: [820, 932, 901, 934, 1290, 1330, 1320, 1222, 324]
-      },
-      {
-        name: '报警频度',
-        type: 'line',
-        stack: '总量',
-        itemStyle: {normal: {areaStyle: {type: 'default'}}},
-        data: [820, 932, 901, 934, 1290, 1330, 1320, 1000, 999]
-      },
-      {
-        name: '人脸库底图数',
-        type: 'line',
-        stack: '总量',
-        itemStyle: {normal: {areaStyle: {type: 'default'}}},
-        data: [820, 932, 901, 934, 1290, 1330, 1320, 1111, 225]
-      },
-      {
-        name: '摄像头在线数',
-        type: 'line',
-        stack: '总量',
-        itemStyle: {normal: {areaStyle: {type: 'default'}}},
-        data: [820, 932, 901, 934, 1290, 1330, 1320, 999, 234]
-      },
-    ]
-  };
-
-
   /**
-   * 将数据渲染到页面上
-   * res是服务器返回的
+   * 将数据绑定到echarts
    */
-  renderData(res) {
-    this.options.xAxis.data = [];
-    this.options.series = [];
-    res.map((item, index) => {
-      this.options.xAxis.data.push(item);
-      this.options.series.push({
-        name: this.xAxisName[index],
-        type: 'line',
-        stack: '总量',
-        itemStyle: {normal: {areaStyle: {type: 'default'}}},
-        data: [820, 932, 901, 934, 1290, 1330, 1320, 1111, 225]
-      });
-    });
-  }
+  getECharts() {
+    this.options = {
+      tooltip: {
+        trigger: 'axis'
+      },
+      legend: {
+        data: this.legendData
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          mark: {show: true},
+          dataView: {show: true, readOnly: false},
+          magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+          restore: {show: true},
+          saveAsImage: {show: true}
+        }
+      },
+      calculable: true,
+      xAxis: [
+        {
+          type: 'category',
+          boundaryGap: false,
+          data: this.xAxisName
+        }
+      ],
+      yAxis: [
+        {
+          type: 'value'
+        }
+      ],
+      series: [
+        {
+          name: '服务器负载总和',
+          type: 'line',
+          stack: '总量',
+          itemStyle: {normal: {areaStyle: {type: 'default'}}},
+          data: this.serverLoadNum
+        },
+        {
+          name: '人脸分析次数',
+          type: 'line',
+          stack: '总量',
+          itemStyle: {normal: {areaStyle: {type: 'default'}}},
+          data: this.recognizeNum
+        },
+        {
+          name: '网络流量总和',
+          type: 'line',
+          stack: '总量',
+          itemStyle: {normal: {areaStyle: {type: 'default'}}},
+          data: this.networkFlowNum
+        },
+        {
+          name: '报警频度',
+          type: 'line',
+          stack: '总量',
+          itemStyle: {normal: {areaStyle: {type: 'default'}}},
+          data: this.alarmNum
+        },
+        {
+          name: '新增人脸底图数',
+          type: 'line',
+          stack: '总量',
+          itemStyle: {normal: {areaStyle: {type: 'default'}}},
+          data: this.registerNum
+        },
+        {
+          name: '摄像头在线次数',
+          type: 'line',
+          stack: '总量',
+          itemStyle: {normal: {areaStyle: {type: 'default'}}},
+          data: this.cameraNum
+        },
+      ]
+    };
+  };
 
   constructor(private http: HttpClient) {
   }
 
   ngOnInit() {
-    // this.renderData([1,2,3,4,5])
+    this.getAnalyzeData();
   }
 }

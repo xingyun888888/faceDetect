@@ -82,22 +82,22 @@ export class UserModelComponent implements OnInit {
       // this.closeModel.emit();
     } else {
       if (!this.isModify) {
-      /**在这里请求处理提交表单 数据*/
-      this.http.get(api.checkNameIsExist + '?name=' + value.name).subscribe((res) => {
-        console.log(res);
-        let result = <any>res;
-        if (result.code == 10001) {
-          this.confirmServ.warning({
-            zIndex: 2000,
-            title: result.msg
-          });
-          this._formData.name = '';
-        } else {
-          this.requestData.emit(value);
-          this.validateForm.reset();
-        }
-      });
-      }else {
+        /**在这里请求处理提交表单 数据*/
+        this.http.get(api.checkNameIsExist + '?name=' + value.name).subscribe((res) => {
+          console.log(res);
+          let result = <any>res;
+          if (result.code == 10001) {
+            this.confirmServ.warning({
+              zIndex: 2000,
+              title: result.msg
+            });
+            this._formData.name = '';
+          } else {
+            this.requestData.emit(value);
+            this.validateForm.reset();
+          }
+        });
+      } else {
         this.requestData.emit(value);
         this.validateForm.reset();
       }
@@ -145,7 +145,7 @@ export class UserModelComponent implements OnInit {
   ngOnInit() {
     this.validateForm = this.fb.group({
       id: [''],
-      name: ['', [Validators.required, Validators.maxLength(10)]],
+      name: ['', [Validators.required, Validators.maxLength(10), Validators.pattern('^[0-9a-zA_Z]+$')]],
       displayName: ['', [Validators.required, Validators.maxLength(10)]],
       pwd: ['', [Validators.required, Validators.maxLength(10)]],
       isEnable: ['', [Validators.required]]

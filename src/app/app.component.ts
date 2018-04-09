@@ -1,17 +1,31 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input,OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
 import api from './api';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
-
+import * as $ from 'jquery';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
+  ngOnInit(): void {
+    let isLogin = sessionStorage.getItem("isLogin");
+    if(isLogin == "true"){
+      this._isBackGround = false;
+      this._formLogin = false;
+      this._routermenu = true;
+      this.pwdError = false;
+    }else if(isLogin =="false"){
+      this._isBackGround = true;
+      this._formLogin = true;
+      this._routermenu = false;
+      this.pwdError = true;
+    }
+  }
 
   title = 'app';
 
@@ -28,14 +42,10 @@ export class AppComponent {
   errorInfo: string = '';
   // _isMenu = true;
   formModel: FormGroup;
-  // response:any;
-
   public get currentUser(): Observable<User> {
     return this.subject.asObservable();
   }
-
   public subject: Subject<User> = new Subject<User>();
-
   constructor(fb: FormBuilder, private http: HttpClient, private router: Router) {
     this.formModel = fb.group(
       {
@@ -48,8 +58,8 @@ export class AppComponent {
 
   }
 
-  onSubmit(event) {
-    console.log(event);
+  onSubmit() {
+
     let username = this.formModel.get('user').value;
     let password = this.formModel.get('pwd').value;
     // userInfo:UserInfo = new UserInfo(username,password);
@@ -59,13 +69,15 @@ export class AppComponent {
         'Content-type': 'application/json;charset=UTF-8'
       })
     }).subscribe((res) => {
-      // this.response=res;
       console.dir(res);
-      if (res === 1) {
+      let result = <any>res;
+      if (result.code == 1) {
         this._isBackGround = false;
         this._formLogin = false;
         this._routermenu = true;
         this.pwdError = false;
+        window.localStorage.setItem("token",result.msg);
+        sessionStorage.setItem("isLogin","true");
         $(document).ready(function () {
           $('.container').attr('class', 'container');
         });
@@ -81,7 +93,7 @@ export class AppComponent {
         this._routermenu = false;
         this.pwdError = true;
         this.errorInfo = '密码错误！';
-      } else if (res === 4) {
+      }else if (res === 4) {
         this._isBackGround = true;
         this._formLogin = true;
         this._routermenu = false;
@@ -91,19 +103,11 @@ export class AppComponent {
       // const list = <any>res;
 
     }, (error) => {
-      this._formLogin = false;
-      this._routermenu = true;
-      debugger;
-      $(document).ready(function () {
-        $('.container').attr('class', 'container');
-      });
+      this._isBackGround = true;
+      this._formLogin = true;
+      this._routermenu = false;
     });
-    // if(this.response==null || undefined) {
-    //   this.pwdError = true;
-    //   this.errorInfo = '服务器无响应';
-    // }
   }
-
   public logout(): void {
     localStorage.removeItem('currentUser');
     this.subject.next(Object.assign({}));
@@ -113,7 +117,6 @@ export class AppComponent {
     this.pwdError = false;
   }
 }
-
 export class User {
   constructor(public user: string,
               public pwd: string) {

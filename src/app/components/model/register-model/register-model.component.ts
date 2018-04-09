@@ -7,6 +7,9 @@ import api from '../../../api';
 import {NzModalService} from 'ng-zorro-antd';
 import {CustomValidService} from '../../../service/custom-valid.service';
 import {validOptions} from '../facelib-model/faceFormValidConf';
+import {ImgPreviewService} from '../../../service/img-preview.service';
+import {getFileName, parseParam} from '../../../utils/common';
+import {LoadingService} from '../../../service/loading.service';
 
 interface FileReaderEventTarget extends EventTarget {
   result: string;
@@ -23,11 +26,18 @@ interface FileReaderEvent extends Event {
 })
 export class RegisterModelComponent implements OnInit {
 
+  /**引用模板**/
+  @ViewChild("contentTpl")
+    previewContent;
+
   /**人脸库名称下拉列表*/
   faceLibOptions = [];
 
   /**人脸库此时还可以上传多少张照片*/
   _faceCount: any = '';
+
+  /**表单里面这人脸库此时还可以上传多少张照片*/
+  _singleUploadfaceCount = '';
 
   /***该输入属性，里面包含着table中的所有字段*/
   @Input()
@@ -77,12 +87,14 @@ export class RegisterModelComponent implements OnInit {
     console.log(this.imgSelect);
   }
 
+  @Output()
+  getFacelibNames = new EventEmitter(); //将facelib查出的人脸库信息发送给父组件使用
+
   /**
-   * 保存单个上传选择的文件名字
+   * 保存已经上传的图片名称
    * @type {any[]}
    */
-
-  uploadImgNameList: string[] = [];
+  uploadedImgNameList: string[] = [];
 
   /******  保存单个上传选择的文件  ******/
   uploadImgList: any[] = [];
@@ -94,13 +106,35 @@ export class RegisterModelComponent implements OnInit {
   uploadApi = api.batchUpload;
 
   /******  删除上传图片列表uploadImgList里面的图片  ******/
-  deleteImg(e, index) {
-    this.uploadImgList.splice(index, 1);
-    if (index > 0) {
-      this._formData.path = this.uploadImgList[index - 1];
-    } else {
-      this._formData.path = this.uploadImgList[this.uploadImgList.length - 1];
-    }
+  deleteImg(e,data) {
+    /**  this.uploadImgList.splice(index, 1);
+     if (index > 0) {
+        this._formData.path = this.uploadImgList[index - 1];
+      } else {
+        this._formData.path = this.uploadImgList[this.uploadImgList.length - 1];
+      }**/
+
+    //先在这里模拟删除成功  在这里写请求
+    this.http.post(api.deleteRegisterImage, data ).subscribe((res)=>{
+       let result  = <any>res;
+       if(result.code == '10000'){
+         this.confirmServ.success({
+           zIndex: 3000,
+           title: "删除成功"
+         })
+         this._formData.fileName  = null;
+         this.uploadImgList[0] = null;
+       }else{
+         this.confirmServ.error({
+           zIndex: 3000,
+           title: "删除失败"
+         })
+       }
+    })
+  }
+  /**预览图片**/
+  showImg(e, path) {
+    this.imgPreviewServ.show(this.previewContent);
   }
 
   /****** 单个上传   ******/
@@ -118,41 +152,36 @@ export class RegisterModelComponent implements OnInit {
     }
     /******  将选择的文件添加到创建好的表单对象中  ******/
     formData.append('uploadFile', this.uploadImgList[0]);
+    /******  请求后台地址 提交已经封装好的表单对象  ******/
+    this.loadingServ.isLoading.emit(true);
+    this.http.post(api.singleUpload, formData).subscribe((res) => {
+      const result = <any>res;
+      /****** 请求响应200时，将返回的结果数据解析，并赋值到_formData里面   ******/
+      // this._formData.path = result.msgBody.dataSend.PictureList[0]&&result.msgBody.dataSend.PictureList[0].PicturePathDir;
+      this._formData.feapath = result.msgBody.dataSend.PictureList[0] && result.msgBody.dataSend.PictureList[0].FeaDir;
+      this._formData.path = result.msgBody.dataSend.PictureList[0] && result.msgBody.dataSend.PictureList[0].PicturePathDir;
+      /**截取取出图片名称**/
+      this._formData.fileName = getFileName(this._formData.path);
+      /******  这里是给图片展示用的，暂时没有用  ******/
+      this.defaultImg = this.priviewImg;
 
-    /******  创建一个文件读取对象  ******/
-    const reader = new FileReader();
-
-    /******  读取文件保存成url类型  ******/
-    reader.readAsDataURL(this.uploadImgList[0]);
-
-    /******  以上两步当前端界面不需要展示图片的话可以省略  ******/
-    reader.onload = (res: FileReaderEvent) => {
-      this.priviewImg = res.target.result;
-      /******  请求后台地址 提交已经封装好的表单对象  ******/
-      this.http.post(api.singleUpload, formData).subscribe((res) => {
-        const result = <any>res;
-        /****** 请求响应200时，将返回的结果数据解析，并赋值到_formData里面   ******/
-        // this._formData.path = result.msgBody.dataSend.PictureList[0]&&result.msgBody.dataSend.PictureList[0].PicturePathDir;
-        this._formData.feapath = result.msgBody.dataSend.PictureList[0] && result.msgBody.dataSend.PictureList[0].FeaDir;
-        this._formData.path = result.msgBody.dataSend.PictureList[0] && result.msgBody.dataSend.PictureList[0].PicturePathDir;
-
-        /******  这里是给图片展示用的，暂时没有用  ******/
-        this.defaultImg = this.priviewImg;
-
-        /******  提示用户图片添加成功  ******/
-        this.confirmServ.success({
-          zIndex: 2000,
-          title: '图片添加成功'
-        });
-      }, (error) => {
-        /******  错误的回调函数，提示上传失败 清空  ******/
-        this._formData.path = '';
-        this.confirmServ.success({
-          zIndex: 2000,
-          title: '图片添加失败'
-        });
+      this._formData.fileName = this.uploadedImgNameList[0];   //因为只上传一张 所以都维护到这个fileName字段里面
+     this.uploadedImgNameList[0] = null;
+      /******  提示用户图片添加成功  ******/
+      this.confirmServ.success({
+        zIndex: 2000,
+        title: '图片添加成功'
       });
-    };
+      this.loadingServ.isLoading.emit(false);
+    }, (error) => {
+      /******  错误的回调函数，提示上传失败 清空  ******/
+      this._formData.path = '';
+      this.confirmServ.success({
+        zIndex: 2000,
+        title: '图片添加失败'
+      });
+      this.loadingServ.isLoading.emit(false)
+    });
   }
 
   /******  维护上传的状态  ******/
@@ -163,10 +192,28 @@ export class RegisterModelComponent implements OnInit {
 
   /******  返回false就是取消上传  ******/
   beforeUpload(file) {
-    this.fileList.push(file);
+    if (!this.validFileType(file.name, 'jpg')) {
+      this.confirmServ.warning({
+        zIndex: 2000,
+        title: '请选择jpg类型的图片上传'
+      });
+    } else {
+      this.fileList.push(file);
+    }
     console.log(file);
     return false;
   }
+
+  /*校验上传文件类型*/
+  validFileType(fileName, type) {
+    let reg = new RegExp('\\.' + type + '$');
+    if (reg.test(fileName)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 
   /******  确认批量上传  ******/
   handleUpload(e) {
@@ -186,20 +233,22 @@ export class RegisterModelComponent implements OnInit {
     formData.append('facelibId', this._formData.batchFacelibId);
     this.uploading = true;
 
+    this.loadingServ.isLoading.emit(true);
     this.http.post(api.batchUpload, formData, {
       headers: new HttpHeaders({})
     }).subscribe((res: any) => {
       console.log(res);
       let failFile = '';
       res.msgBody.dataSend.PictureList.map((item, index) => {
-        if (item.code == 0) {
+        if (item.code == 1) {
           console.log(item.PicturePathDir);
-          failFile += item.PicturePathDir.match(/[\u4e00-\u9fa5_a-zA-Z0-9:]+[\\\/](\w+\.\w+)$/i)[1] + '、';
+          failFile += getFileName(item.PicturePathDir) + '、';
         }
       });
       this.uploading = false;
       this.fileList = [];
       if (failFile.length != 0) {
+        this.loadingServ.isLoading.emit(false);
         this.confirmServ.error({
           zIndex: 3000,
           title: '上传失败',
@@ -207,12 +256,14 @@ export class RegisterModelComponent implements OnInit {
         });
         return;
       }
+      this.loadingServ.isLoading.emit(false);
       this.confirmServ.success({
         zIndex: 3000,
         content: '上传成功'
       });
     }, (err) => {
       this.uploading = false;
+      this.loadingServ.isLoading.emit(false);
       this.confirmServ.error({
         zIndex: 3000,
         content: '上传失败'
@@ -221,14 +272,40 @@ export class RegisterModelComponent implements OnInit {
     });
   }
 
-
-
   fileChange(e) {
-    console.log(e);
+    /**在这里加一个判断  如果当前已经上传了图片 那么需要先删除旧的 在上传新的 **/
+    if(this._formData.fileName){
+      this.confirmServ.warning({
+        zIndex: 2000,
+        title: '请先将下面的图片删除，再进行添加'
+      });
+      return;
+    }
+    if (!this.validFileType(e.target.files[0].name, 'jpg')) {
+      this.confirmServ.warning({
+        zIndex: 2000,
+        title: '请选择jpg类型的图片上传'
+      });
+      return;
+    }
     console.log(e.target.files[0].name);
     this.uploadImgList[0] = e.target.files[0];
-    this._formData.path = e.target.files[0].name;
-    this.uploadImgNameList.push(e.target.files[0].name);
+    let fileName = getFileName(e.target.files[0].name);
+    this.uploadedImgNameList[0] = fileName;
+
+    /** 下面这几步都是图片预览的功能 **/
+
+    /******  创建一个文件读取对象  ******/
+    const reader = new FileReader();
+
+    /******  读取文件保存成url类型  ******/
+    reader.readAsDataURL(this.uploadImgList[0]);
+
+    /******  以上两步当前端界面不需要展示图片的话可以省略  ******/
+    reader.onload = (res: FileReaderEvent) => {
+      /**将读取到的图片base64位数据保存起来 **/
+      this.priviewImg = reader.result;
+    };
   }
 
   /**这个是关闭表单的方法*/
@@ -269,7 +346,8 @@ export class RegisterModelComponent implements OnInit {
     return this.validateForm.controls[name];
   }
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, private http: HttpClient, private confirmServ: NzModalService, private customValidServ: CustomValidService) {
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private http: HttpClient, private confirmServ: NzModalService, private customValidServ: CustomValidService,
+              private imgPreviewServ:ImgPreviewService,private loadingServ:LoadingService) {
     this.beforeUpload = this.beforeUpload.bind(this);
     this.getfaceLibName();
   }
@@ -279,6 +357,9 @@ export class RegisterModelComponent implements OnInit {
     this.http.get(api.queryFacelib).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
+      //将查出结果传给给b父组件register.comonent使用
+      this.getFacelibNames.emit(list);
+
       /****  在这里list是一个数组，需要取到MaxNum和faceCount，就先遍历   ****/
       list.map((item, index) => {
         /****  将相减的值直接再保存到list里面   ****/
@@ -288,11 +369,20 @@ export class RegisterModelComponent implements OnInit {
       this.faceLibOptions = list;
     });
   }
+
   /****  选择不同人脸库的时候就   显示该人脸库下剩余的数量   ****/
   batchFacelibIdChange(currentId) {
     this.faceLibOptions.map((item, index) => {
       if (item.id == currentId) {
         this._faceCount = item._faceCount;
+      }
+    });
+  }
+
+  faceLibIdChange(currentId) {
+    this.faceLibOptions.map((item, index) => {
+      if (item.id == currentId) {
+        this._singleUploadfaceCount = item._faceCount;
       }
     });
   }
@@ -305,6 +395,7 @@ export class RegisterModelComponent implements OnInit {
       type: ['', [Validators.required]],
       code: ['', [Validators.required]],
       path: ['', [Validators.maxLength(200)]],
+      fileName: [''], /**---这里维护一个状态字段 用来保存照片的名字---**/
       phoneno: ['', [Validators.maxLength(200)]],
       // md5: [''],
       feapath: [''],

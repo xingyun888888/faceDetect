@@ -73,8 +73,8 @@ export class SearchComponent implements OnInit, OnChanges{
     }
     /**
      * 表单提交之后 清空表单为初始值
-     */
-    this.validateForm.reset();
+
+    this.validateForm.reset();*/
   }
 
   ngOnInit() {

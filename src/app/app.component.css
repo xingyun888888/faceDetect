@@ -1,12 +1,12 @@
-.container {
-  width: 100%;
-  margin: 0 auto;
+.container{
+  width:100%;
+  margin:0 auto;
 }
 
 .wrapper {
   margin: 140px 0 140px auto;
   /*width: 884px;*/
-  width: 100%;
+  width:100%;
   /*margin:0 auto;*/
 }
 
@@ -44,8 +44,13 @@
   filter: alpha(Opacity=80);
   -moz-opacity: 0.5;
   opacity: 0.5;
+  outline: none;
 }
-
+.loginBox .loginBtn:hover {
+ /*background: #FF0000;*/
+  /*background-image: -moz-linear-gradient(to top, blue, #85CFEE);*/
+  background-color: #1597c2;
+}
 .loginBox .loginInput {
   border: 1px solid #D2D9dC;
   border-radius: 2px;
@@ -62,12 +67,14 @@
 }
 
 .loginBox .loginBtn {
-  background-image: -moz-linear-gradient(to bottom, blue, #85CFEE);
+  /*background-image: -moz-linear-gradient(to bottom, blue, #85CFEE);*/
+  background-color: #22a6d2;
   border: 1px solid #98CCE7;
   border-radius: 20px;
   box-shadow: inset rgba(255, 255, 255, 0.6) 0 1px 1px, rgba(0, 0, 0, 0.1) 0 1px 1px;
-  color: #444;
+  /*color: #444;*/
   /*登录*/
+  color: #fff;
   cursor: pointer;
   float: right;
   font: bold 13px Arial;
@@ -75,9 +82,6 @@
   outline: none;
 }
 
-.loginBox .loginBtn:HOVER {
-  background-image: -moz-linear-gradient(to top, blue, #85CFEE);
-}
 
 .loginBox a.forgetLink {
   color: #ABABAB;
@@ -102,23 +106,22 @@
 .loginBox label[for="remember"] {
   font: 11px Arial;
 }
-
 /*.close {*/
-/*!* still bad on picking color *!*/
-/*background: orange;*/
-/*color: red;*/
-/*!* make a round button *!*/
-/*border-radius: 12px;*/
-/*!* center text *!*/
-/*line-height: 20px;*/
-/*text-align: center;*/
-/*height: 25px;*/
-/*width: 45px;*/
-/*font-size: 15px;*/
-/*padding: 1px;*/
-/*float: right;*/
-/*position: relative;*/
-/*outline: none;*/
+  /*!* still bad on picking color *!*/
+  /*background: orange;*/
+  /*color: red;*/
+  /*!* make a round button *!*/
+  /*border-radius: 12px;*/
+  /*!* center text *!*/
+  /*line-height: 20px;*/
+  /*text-align: center;*/
+  /*height: 25px;*/
+  /*width: 45px;*/
+  /*font-size: 15px;*/
+  /*padding: 1px;*/
+  /*float: right;*/
+  /*position: relative;*/
+  /*outline: none;*/
 /*}*/
 .close {
   position: absolute;
@@ -132,17 +135,6 @@
   cursor: pointer;
   outline: none;
 }
-
-/*.u38 {*/
-/*position: absolute;*/
-/*left: 2px;*/
-/*top: 26px;*/
-/*width: 100%;*/
-/*word-wrap: break-word;*/
-/*text-align: center;*/
-/*margin: 50px 0;*/
-/*font: normal 14px/24px 'MicroSoft YaHei';*/
-/*}*/
 .footer {
   background-repeat: repeat-x;
   clear: both;

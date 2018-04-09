@@ -1,9 +1,11 @@
-const devSeverAddress = 'http://localhost:8080/faceDetect/';
+const devSeverAddress = 'http://localhost:8080/';
 
 //192.168.1.200 部署之后的web接口
 //const devSeverAddress = 'http://192.168.1.200:8088/faceDetect/';
 
 //const devServerAddress = "http://www.adding360.com:8080/bioauth/"
+//192.168.1.200 凯强的web接口
+//const devSeverAddress = 'http://192.168.7.48:8080/faceDetect/';
 
 const api = {
   //日志信息查询
@@ -12,6 +14,7 @@ const api = {
   queryLogByConditions: devSeverAddress + 'log/listByConditions',
   //策略信息查询
   queryStrategy: devSeverAddress + 'strategy/list',
+  queryStrategyByConditions: devSeverAddress + 'strategy/listByConditions',
   editStrategy: devSeverAddress + 'strategy/update',
   deleteStrategy: devSeverAddress + 'strategy/delete',
   addStrategy: devSeverAddress + 'strategy/add',
@@ -26,8 +29,11 @@ const api = {
   deleteCamera: devSeverAddress + 'camera/delete',
   addCamera: devSeverAddress + 'camera/add',
   queryCameraByConditions: devSeverAddress + 'camera/listByConditions',
+  getCameraByStrategy: devSeverAddress + 'camera/getCameraByStrategy',//布控测量中获取相机列表
+  alterID: devSeverAddress + 'camera/alterID',
   //据地图id查询对应的摄像头列表
   getCameraOnMap: devSeverAddress + 'camera/getCameraByDistrictID',
+  queryMaqipInfoList: devSeverAddress + 'mapInfo/getMapInfo',
   //分析仪名称查询
   queryAnalyserName: devSeverAddress + 'analyser/getNameList',
   //服务端信息查询
@@ -55,6 +61,12 @@ const api = {
   deleteRecognize: devSeverAddress + 'recognize/delete',
   addRecognize: devSeverAddress + 'recognize/add',
   queryRecognizeByConditions: devSeverAddress + 'recognize/listByConditions',
+  //抓拍查询
+  querySnapshot: devSeverAddress + 'snapshot/list',
+  editSnapshot: devSeverAddress + 'snapshot/update',
+  deleteSnapshot: devSeverAddress + 'snapshot/delete',
+  addSnapshot: devSeverAddress + 'snapshot/add',
+  querySnapshotByConditions: devSeverAddress + 'snapshot/listByConditions',
   //user权限信息查询
   queryUser: devSeverAddress + 'user/list',
   editUser: devSeverAddress + 'user/update',
@@ -74,7 +86,9 @@ const api = {
   queryMapList: devSeverAddress + 'param/getParamByType',
   queryMapInfoList: devSeverAddress + 'mapInfo/getMapInfo',
   //导入地图
-  addMap: devSeverAddress + 'param/mapUpload',
+  // addMap: devSeverAddress + 'param/mapUpload',
+  addMap: devSeverAddress + 'mapInfo/mapUpload',
+
   //注册信息查询
   queryRegister: devSeverAddress + 'register/listById',
   queryRegisterAll: devSeverAddress + 'register/list',
@@ -83,7 +97,7 @@ const api = {
   addRegister: devSeverAddress + 'register/add',
   singleUpload: devSeverAddress + 'register/singleUpload',
   batchUpload: devSeverAddress + 'register/batchUpload',
-
+  deleteRegisterImage: devSeverAddress + 'register/deleteRegisterImage',
   queryRegisterByConditions: devSeverAddress + 'register/listByConditions',
   //注册信息数据报表分析
   queryRegisterDayCount: devSeverAddress + 'register/listByDay',
@@ -98,6 +112,9 @@ const api = {
   queryRecognizeWeekCount: devSeverAddress + 'recognize/listByWeek',
   queryRecognizeMonthCount: devSeverAddress + 'recognize/listByMonth',
 
+  // 报表数据分析
+  queryReportData: devSeverAddress + 'reportData/listByReportData',
+
   //数据监控页面接口
   getServerInfo: devSeverAddress + 'datamonitor/getServerInfo',
   getServerListInfo: devSeverAddress + 'datamonitor/getServerListInfo',
@@ -108,6 +125,7 @@ const api = {
   queryAnalyzer: devSeverAddress + 'analyser/list',
   queryAnalyzerByConditions: devSeverAddress + 'analyser/listByConditions',
   addAnalyser: devSeverAddress + 'analyser/add',
+  editAnalyser: devSeverAddress + 'analyser/update',
   deleteAnalyser: devSeverAddress + 'analyser/delete',
 };
 

@@ -1,23 +1,27 @@
-<nz-modal class="recognize-modal-container" [nzVisible]="isVisible" [nzTitle]="'人脸库'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)" [nzConfirmLoading]="isConfirmLoading" nzFooter="" >
+<nz-modal class="recognize-modal-container" [nzWidth]="1000" [nzVisible]="isVisible" [nzTitle]="'告警信息'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)" [nzConfirmLoading]="isConfirmLoading" nzFooter="" >
   <ng-template #modalContent >
    <div nz-row>
-      <div class="left-content" nz-col [nzSpan]="14" >
+      <div class="left-content" nz-col [nzSpan]="15" >
+
          <dl>
             <dt>
-              <!--<nz-carousel  [nzEffect]="fade">-->
-                <!--<div nz-carousel-content *ngFor="let index of [1,2,3]">-->
-                  <!--<img src="http://img1.3lian.com/2015/a1/95/d/105.jpg">-->
-                <!--</div>-->
-              <!--</nz-carousel>-->
-              <ngx-carousel class="banner"  [inputs]="carouselOne">
-                <ngx-item NgxCarouselItem>
-                  <img src="http://img1.3lian.com/2015/a1/95/d/105.jpg">
+              <ngx-carousel [inputs]="carouselOne">
+                <ngx-item NgxCarouselItem class="bannerStyle" *ngFor="let item of [_formData.snapPath]" (click)="previewImg($event,item,500)">
+                  <img [src]="_formData.snapPath" [ngStyle]="{width:photoWidth}">
                 </ngx-item>
-                <ngx-item NgxCarouselItem>
-                  <img src="http://img1.3lian.com/2015/a1/95/d/105.jpg">
-                </ngx-item>
-                <ngx-item NgxCarouselItem>
-                  <img src="http://img1.3lian.com/2015/a1/95/d/105.jpg">
+                <button NgxCarouselPrev class='leftRs' style="position:absolute;visibility: hidden;left:0;">&lt;</button>
+                <button NgxCarouselNext class='rightRs' style="position:absolute;visibility: hidden;left:0;">&gt;</button>
+              </ngx-carousel>
+            </dt>
+            <dd>
+              抓拍图
+            </dd>
+         </dl>
+         <dl>
+            <dt>
+              <ngx-carousel [inputs]="carouselOne">
+                <ngx-item NgxCarouselItem class="bannerStyle" *ngFor="let item of [_formData.basepath]" (click)="previewImg($event,item,500)">
+                  <img [src]="_formData.basepath" [ngStyle]="{width:photoWidth}">
                 </ngx-item>
                 <button NgxCarouselPrev class='leftRs' style="position:absolute;visibility: hidden;left:0;">&lt;</button>
                 <button NgxCarouselNext class='rightRs' style="position:absolute;visibility: hidden;left:0;">&gt;</button>
@@ -29,49 +33,9 @@
          </dl>
          <dl>
            <dt>
-             <!--<nz-carousel  [nzEffect]="fade">-->
-             <!--<div nz-carousel-content *ngFor="let index of [1,2,3]">-->
-             <!--<img src="http://img1.3lian.com/2015/a1/95/d/105.jpg">-->
-             <!--</div>-->
-             <!--</nz-carousel>-->
-             <ngx-carousel class="banner"  [inputs]="carouselOne">
-               <ngx-item NgxCarouselItem>
-                 <img src="http://img1.3lian.com/2015/a1/95/d/105.jpg">
-               </ngx-item>
-               <ngx-item NgxCarouselItem>
-                 <img src="http://img1.3lian.com/2015/a1/95/d/105.jpg">
-               </ngx-item>
-               <ngx-item NgxCarouselItem>
-                 <img src="http://img1.3lian.com/2015/a1/95/d/105.jpg">
-               </ngx-item>
-               <button NgxCarouselPrev class='leftRs' style="position:absolute;visibility: hidden;left:0;">&lt;</button>
-               <button NgxCarouselNext class='rightRs' style="position:absolute;visibility: hidden;left:0;">&gt;</button>
-             </ngx-carousel>
-           </dt>
-           <dd>
-             底图
-           </dd>
-         </dl>
-         <dl>
-           <dt>
-             <ngx-carousel class="banner"  [inputs]="carouselOne">
-               <ngx-item NgxCarouselItem>
-                 <video id="my-video" class="video-js" controls preload="auto" width="640" height="264"
-                        poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
-                   <!--<source src="//vjs.zencdn.net/v/oceans.mp4" type="video/mp4">-->
-                   <source src="http://peipei521.oss-cn-shenzhen.aliyuncs.com/20180113.mp4" type="video/mp4">
-                 </video>
-               </ngx-item>
-               <ngx-item NgxCarouselItem>
-                 <video id="my-video" class="video-js" controls preload="auto" width="640" height="264"
-                        poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
-                   <!--<source src="//vjs.zencdn.net/v/oceans.mp4" type="video/mp4">-->
-                   <source src="http://peipei521.oss-cn-shenzhen.aliyuncs.com/20180113.mp4" type="video/mp4">
-                 </video>
-               </ngx-item>
-               <ngx-item NgxCarouselItem>
-                 <video id="my-video" class="video-js" controls preload="auto" width="640" height="264"
-                        poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
+             <ngx-carousel [inputs]="carouselOne">
+               <ngx-item NgxCarouselItem class="bannerStyle" *ngFor="let index of [1,2,3]">
+                 <video id="my-video" class="video-js" controls preload="auto" width="600" height="264" data-setup="{}">
                    <!--<source src="//vjs.zencdn.net/v/oceans.mp4" type="video/mp4">-->
                    <source src="http://peipei521.oss-cn-shenzhen.aliyuncs.com/20180113.mp4" type="video/mp4">
                  </video>
@@ -84,174 +48,181 @@
          </dl>
          <dl>
             <dt>
-              <img src="http://img1.3lian.com/2015/a1/95/d/105.jpg">
+
+              <ngx-carousel [inputs]="carouselOne">
+                <ngx-item NgxCarouselItem >
+                  <img [src]="_formData.mappath"  (click)="previewImg($event,_formData.mappath,1000)">
+                </ngx-item>
+                <button NgxCarouselPrev class='leftRs' style="position:absolute;visibility: hidden;left:0;">&lt;</button>
+                <button NgxCarouselNext class='rightRs' style="position:absolute;visibility: hidden;left:0;">&gt;</button>
+              </ngx-carousel>
             </dt>
             <dd>
-              底图
+              地图
             </dd>
          </dl>
       </div>
-      <!-- 右边的表单 -->
-      <div class="right-content" nz-col [nzSpan]="10">
+      <!-- 右边的表单  nzPush 是向右偏移多少个格子 恩 -->
+      <div class="right-content" nz-col [nzSpan]="9" [nzPush]="1">
         <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">
           <input type="hidden" formControlName="id" [(ngModel)]="_formData.id"  >
           <div nz-form-item nz-row>
               <div nz-form-label nz-col [nzSpan]="5">
-                <label nz-form-item-required>用户名</label>
+                <label>姓名</label>
               </div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-input formControlName="name" [(ngModel)]="_formData.name"  [nzType]="'text'" [nzPlaceHolder]="'用户姓名'" [nzSize]="'large'">
-                </nz-input>
-              </div>
-            <div nz-col [nzSpan]="5" nz-form-label>
-              <label nz-form-item-required>状态</label>
-            </div>
-            <div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-input formControlName="state" [(ngModel)]="_formData.state" [nzPlaceHolder]="'state'" [nzType]="'text'" [nzSize]="'large'">
-                </nz-input>
-              </div>
-            </div>
-          </div>
-          <div nz-form-item nz-row>
-              <div nz-form-label nz-col [nzSpan]="5">
-                <label nz-form-item-required>personid</label>
-              </div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-input formControlName="personid" [(ngModel)]="_formData.personid"  [nzType]="'text'" [nzPlaceHolder]="'personid'" [nzSize]="'large'">
-                </nz-input>
-              </div>
-              <div nz-form-label nz-col [nzSpan]="5">
-                <label nz-form-item-required>编号</label>
-              </div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-input formControlName="serialNum" [(ngModel)]="_formData.serialNum"  [nzPlaceHolder]="'编号'" [nzType]="'text'" [nzSize]="'large'">
+              <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+                <nz-input formControlName="name" [nzReadonly]="true" [(ngModel)]="_formData.name"  [nzType]="'text'" [nzPlaceHolder]="'用户姓名'" [nzSize]="'large'">
                 </nz-input>
               </div>
           </div>
           <div nz-form-item nz-row>
             <div nz-col [nzSpan]="5" nz-form-label>
-              <label nz-form-item-required>性别</label>
+              <label>性别</label>
             </div>
             <div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-input formControlName="gender" [(ngModel)]="_formData.gender" [nzPlaceHolder]="'性别'" [nzType]="'text'" [nzSize]="'large'">
-                </nz-input>
-              </div>
-            </div>
-            <div nz-col [nzSpan]="5" nz-form-label>
-              <label nz-form-item-required>区域编码</label>
-            </div>
-            <div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-input formControlName="zoneNum" [(ngModel)]="_formData.zoneNum" [nzPlaceHolder]="'区域编码'" [nzType]="'text'" [nzSize]="'large'">
+              <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+                <nz-input formControlName="gender" [nzReadonly]="true"  [(ngModel)]="_formData.gender" [nzPlaceHolder]="'性别'" [nzType]="'text'" [nzSize]="'large'">
                 </nz-input>
               </div>
             </div>
           </div>
+
           <div nz-form-item nz-row>
             <div nz-col [nzSpan]="5" nz-form-label>
-              <label nz-form-item-required>摄像头ID</label>
+              <label>相似度</label>
             </div>
             <div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-input formControlName="camId" [(ngModel)]="_formData.camId" [nzPlaceHolder]="'摄像头ID'" [nzType]="'text'" [nzSize]="'large'">
+              <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+                <nz-input formControlName="similarDegree" [nzReadonly]="true"  [(ngModel)]="_formData.similarDegree" [nzPlaceHolder]="'相似度'" [nzType]="'text'" [nzSize]="'large'">
                 </nz-input>
               </div>
             </div>
+          </div>
+
+          <div nz-form-item nz-row>
             <div nz-col [nzSpan]="5" nz-form-label>
-              <label nz-form-item-required>方向</label>
+              <label>危险等级</label>
             </div>
             <div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-input formControlName="direction" [(ngModel)]="_formData.direction" [nzPlaceHolder]="'方向'" [nzType]="'text'" [nzSize]="'large'">
+              <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+                <nz-input formControlName="dc"  [nzReadonly]="true"  [(ngModel)]="_formData.dc" [nzPlaceHolder]="'危险等级'" [nzType]="'text'" [nzSize]="'large'">
+                </nz-input>
+              </div>
+            </div>
+          </div>
+          <!--<div nz-form-item nz-row>
+            <div nz-col [nzSpan]="5" nz-form-label>
+              <label>区域编码</label>
+            </div>
+            <div>
+              <div nz-col [nzSpan]="10" nz-form-control nzHasFeedback>
+                <nz-input formControlName="zoneNum" [nzReadonly]="true"  [(ngModel)]="_formData.zoneNum" [nzPlaceHolder]="'区域编码'" [nzType]="'text'" [nzSize]="'large'">
+                </nz-input>
+              </div>
+            </div>
+          </div>-->
+          <div nz-form-item nz-row>
+            <div nz-col [nzSpan]="5" nz-form-label>
+              <label>摄像头ID</label>
+            </div>
+            <div>
+              <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+                <nz-input formControlName="camId" [nzReadonly]="true"  [(ngModel)]="_formData.camId" [nzPlaceHolder]="'摄像头ID'" [nzType]="'text'" [nzSize]="'large'">
                 </nz-input>
               </div>
             </div>
           </div>
           <div nz-form-item nz-row>
             <div nz-col [nzSpan]="5" nz-form-label>
-              <label nz-form-item-required>相似度</label>
+              <label>方向</label>
             </div>
             <div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-input formControlName="similarDegree" [(ngModel)]="_formData.similarDegree" [nzPlaceHolder]="'相似度'" [nzType]="'text'" [nzSize]="'large'">
-                </nz-input>
-              </div>
-            </div>
-            <div nz-col [nzSpan]="5" nz-form-label>
-              <label nz-form-item-required>时间</label>
-            </div>
-            <div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-input formControlName="time" [(ngModel)]="_formData.time" [nzPlaceHolder]="'时间'" [nzType]="'text'" [nzSize]="'large'">
+              <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+                <nz-input formControlName="direction" [nzReadonly]="true"  [(ngModel)]="_formData.direction" [nzPlaceHolder]="'方向'" [nzType]="'text'" [nzSize]="'large'">
                 </nz-input>
               </div>
             </div>
           </div>
           <div nz-form-item nz-row>
             <div nz-col [nzSpan]="5" nz-form-label>
-              <label nz-form-item-required>危险等级</label>
+              <label>状态</label>
             </div>
             <div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-input formControlName="dc" [(ngModel)]="_formData.dc" [nzPlaceHolder]="'危险等级'" [nzType]="'text'" [nzSize]="'large'">
-                </nz-input>
-              </div>
-            </div>
-            <div nz-col [nzSpan]="5" nz-form-label>
-              <label nz-form-item-required>类型</label>
-            </div>
-            <div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-input formControlName="type" [(ngModel)]="_formData.type" [nzPlaceHolder]="'type'" [nzType]="'text'" [nzSize]="'large'">
+              <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+                <nz-input formControlName="state"  [nzReadonly]="true"  [(ngModel)]="_formData.state" [nzPlaceHolder]="'state'" [nzType]="'text'" [nzSize]="'large'">
                 </nz-input>
               </div>
             </div>
           </div>
           <div nz-form-item nz-row>
             <div nz-col [nzSpan]="5" nz-form-label>
-              <label nz-form-item-required>身份证号码</label>
+              <label>证件类型</label>
             </div>
             <div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-input formControlName="card" [(ngModel)]="_formData.card" [nzPlaceHolder]="'card'" [nzType]="'text'" [nzSize]="'large'">
+              <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+                <nz-input formControlName="type"  [nzReadonly]="true"   [(ngModel)]="_formData.type" [nzPlaceHolder]="'type'" [nzType]="'text'" [nzSize]="'large'">
                 </nz-input>
               </div>
             </div>
+          </div>
+            <!--<div nz-form-label nz-col [nzSpan]="5">
+              <label nz-form-item-required>personid</label>
+            </div>
+            <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+              <nz-input formControlName="personid" [(ngModel)]="_formData.personid"  [nzType]="'text'" [nzPlaceHolder]="'personid'" [nzSize]="'large'">
+              </nz-input>
+            </div>
+            <div nz-form-label nz-col [nzSpan]="5">
+              <label nz-form-item-required>编号</label>
+            </div>
+            <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
+              <nz-input formControlName="serialNum" [(ngModel)]="_formData.serialNum"  [nzPlaceHolder]="'编号'" [nzType]="'text'" [nzSize]="'large'">
+              </nz-input>
+            </div>-->
+          <div nz-form-item nz-row>
             <div nz-col [nzSpan]="5" nz-form-label>
-              <label nz-form-item-required>basepath</label>
+              <label>证件号码</label>
             </div>
             <div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-input formControlName="basepath" [(ngModel)]="_formData.basepath" [nzPlaceHolder]="'basepath'" [nzType]="'text'" [nzSize]="'large'">
+              <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+                <nz-input formControlName="card" [nzReadonly]="true"  [(ngModel)]="_formData.card" [nzPlaceHolder]="'card'" [nzType]="'hidden'" [nzSize]="'large'">
                 </nz-input>
+                <span>{{_formData.card}}</span>
               </div>
             </div>
           </div>
           <div nz-form-item nz-row>
             <div nz-col [nzSpan]="5" nz-form-label>
-              <label nz-form-item-required>mappath_new</label>
+              <label>时间</label>
             </div>
             <div>
-              <div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>
-                <nz-input formControlName="mappath_new" [(ngModel)]="_formData.mappath_new" [nzPlaceHolder]="'mappath_new'" [nzType]="'text'" [nzSize]="'large'">
+              <div nz-col [nzSpan]="12" nz-form-control nzHasFeedback>
+                <nz-input formControlName="time"  [nzReadonly]="true"  [(ngModel)]="_formData.time" [nzPlaceHolder]="'时间'" [nzType]="'text'" [nzSize]="'large'">
                 </nz-input>
               </div>
             </div>
           </div>
-          <div nz-form-item nz-row>
+         <!-- <div nz-form-item nz-row>
             <div nz-col [nzOffset]="7" [nzSpan]="12" nz-form-control>
               <button nz-button [nzType]="'primary'" [nzSize]="'large'" [disabled]="!validateForm.valid">提交</button>
               <button nz-button [nzSize]="'large'" (click)="resetForm($event)">重置</button>
             </div>
-          </div>
+          </div>-->
         </form>
       </div>
    </div>
   </ng-template>
 </nz-modal>
-
+<ng-template #contentTpl>
+  <ngx-carousel [inputs]="carouselOne">
+    <ngx-item NgxCarouselItem >
+      <img [src]="priviewImg" style="width:100%;" alt="">
+      <!--<img [src]="_formData.mappath"  (click)="previewImg($event,_formData.mappath)"> -->
+    </ngx-item>
+    <button NgxCarouselPrev class='leftRs' style="position:absolute;visibility: hidden;left:0;">&lt;</button>
+    <button NgxCarouselNext class='rightRs' style="position:absolute;visibility: hidden;left:0;">&gt;</button>
+  </ngx-carousel>
+</ng-template>
 
 
 

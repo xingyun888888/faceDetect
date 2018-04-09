@@ -128,7 +128,7 @@ export class AnalyzerComponent implements OnInit {
       });
       this.isAdd = false;
     } else if (this.isEdit) {
-      this.http.post(api.editCamera, data, {
+      this.http.post(api.editAnalyser, data, {
         headers: new HttpHeaders({
           'Content-type': 'application/json;charset=UTF-8'
         })

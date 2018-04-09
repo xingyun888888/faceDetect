@@ -1,6 +1,6 @@
 /**人脸库管理/地图管理默认样式 */
 .ant-modal{
-  min-width:620px !important;
+  /**min-width:620px;**/
   /**
    checked-box的样式
   */
@@ -14,7 +14,7 @@
     padding-left:0;
     padding-right:16px;
     display:inline-block;
-    min-width:100px;
+    //min-width:100px;
   }
 }
 
@@ -47,6 +47,17 @@
 }
 
 /**
+  布控策略界面周期选择model
+ */
+.week-select-model{
+  position:relative;
+  z-index:2000;
+  .ant-modal-footer{
+    display:block;
+  }
+}
+
+/**
   摄像头管理界面modal
  */
 .camera-modal-container{
@@ -61,7 +72,7 @@
  */
 .recognize-modal-container{
   .ant-modal{
-    min-width:1200px !important;
+    min-width:1000px !important;
   }
   .ant-modal-body{
     overflow:hidden;
@@ -76,12 +87,18 @@
         font-size:16px;
         text-align:center;
       }
+      dt{
+        .ngxcarousel > .ngxcarousel-inner > .ngxcarousel-items > .item{
+          text-align:center !important;
+        }
+      }
       img{
-        height:200px;
+        width:100%;
+        height:230px;
       }
       .video-js{
         width:100%;
-        height:200px;
+        height:220px;
         .vjs-big-play-button{
           left:50%;
           top:50%;
@@ -89,11 +106,56 @@
         }
       }
     }
-
   }
   .right-content{
+    margin:20px 0;
   }
 }
+
+/**
+  抓拍管理界面modal 抓拍查询
+ */
+.snapshot-modal-container{
+  .ant-modal{
+    min-width:800px !important;
+  }
+  .ant-modal-body{
+    overflow:hidden;
+  }
+  .left-content{
+    &>dl{
+      float:left;
+      width:80%;
+      margin:15px 40px;
+      padding:0 8px;
+      dd{
+        font-size:16px;
+        text-align:center;
+      }
+      img{
+        height:350px;
+        width:100%;
+      }
+    }
+  }
+  .right-content{
+    &>dl{
+      width:80%;
+      margin:15px 40px;
+      padding:0 8px;
+      dd{
+        font-size:16px;
+        text-align:center;
+      }
+      img{
+        height:350px;
+        width:100%;
+      }
+    }
+  }
+}
+
+
 /**
   注册管理界面modal
  */

@@ -11,24 +11,50 @@ import {FormBuilder, FormGroup} from '@angular/forms';
   styleUrls: ['./map.component.less']
 })
 export class MapComponent implements OnInit {
+  /**
+   * 是否展示上传地图模态框
+   * @type {boolean}
+   */
   isShowUploadModal: boolean = false;
   @Input()
   isShowUpDownModal = true;
   fileName: string="";
+/**
+   * 地图上传模态框点击确定的回调
+   * @param e
+   */
   handleMapUploadOk = (e) => {
     this.isShowUploadModal = false;
   }
+ /**
+   * 地图上传模态框点击取消的回调
+   * @param e
+   */
   handleMapUploadCancel = (e) => {
     console.log(e);
     this.isShowUploadModal = false;
   }
+ /**用来存储楼层的集合*/
   mapOptions = [];
+ /**
+   * 保存准备上传到服务的地图文件
+   * @type {Array}
+   */
   mapFileList: Array<any> = [];
+  /**
+   * 保存地图的名字
+   * @type {string}
+   */
   mapName: string = '';
   districtID: any = '';
   areaName:string='';
   districtName:string ='';
   formModel: FormGroup;
+ /**
+   * 返回false就是取消上传
+   * @param file
+   * @returns {boolean}
+   */
   beforeUpload(file) {
     debugger;
     this.mapFileList.push(file);
@@ -82,6 +108,11 @@ export class MapComponent implements OnInit {
       });
     });
   }
+
+  /**
+   * 取消上传地图的操作
+   * @param e
+   */
   cancalMapUpload(e) {
     this.mapFileList = [];
     this.mapName = '';
@@ -95,8 +126,9 @@ export class MapComponent implements OnInit {
 
   /**表示当前选择的floor-map*/
   selectedMap = this.mapOptions[0];
-  // selectedMapData=this.mapOptions[0].get
+  /**表示当前区域楼层   当seletedMap选择以后 就会动态修改**/
   selectedFloor = this.selectedMap&&this.selectedMap.mapInfoData[0];
+  selectedMapFloor: Array<any> = [];
   /**
    * 用来存放当前地图上面生成的坐标组件的集合
    * @type {Array}
@@ -118,93 +150,57 @@ export class MapComponent implements OnInit {
       this.allCameraImgNodes.push(component);
     });
   }
-  areaChangeHandler(e){
-    this.selectedFloor = null;
+
+  /**
+   * 当选择区域改变时 会调用这个函数  --并清空楼层选择选项
+   * @param e
+   */
+  areaChangeHandler(e) {
+    debugger;
+    // this.selectedMapFloor = null;
+    this.selectedMap = e;
+    this.selectedMapFloor = this.selectedMap.mapInfoData;
   }
+  /**floor切换的时调用 -- 清除页面脏数据,更新当前map上所有camera位置*/
   floorChangeHandler(e) {
+
+    /**
+     * 当我切换地图时，然后发出一个请求  带着这个map的id作为参数,然后去后台查询camera表里面满足条件的摄像头;
+     *  返回回来
+     */
+    debugger;
     console.log(this.selectedMap);
+    this.allCameraImgNodes.map((item, index) => {
+      item.destroy();
+    });
+    this.allCameraImgNodes = [];
+    this.selectedFloor = e;
     this.getCameraOnMap();
   }
+
+ /**
+   * 在这里获取所有地图
+   * @param {ViewContainerRef} vcr
+   * @param {HttpClient} http
+   * @param {ComponentFactoryResolver} resolver
+   */
   getMapList() {
     this.http.get(api.queryMapInfoList).subscribe((res) => {
       debugger;
       console.dir(res);
       const list = <any>res;
       // this.mapOptions = list.parseJSON(list);
-      let x = (<DataTable>list);
+      let dataInfo = (<DataTable>list);
       this.mapOptions = list;
+      // this.selectedMap = list[0];
+      // this.mapOptions = dataInfo[0];
       this.selectedMap = list[0];
       this.getCameraOnMap();
-    },(error)=>{
-      const list = [
-        {
-          "areaName": "平安大厦",
-          "mapInfoData": [
-            {
-              "areaID": 1,
-              "areaName": "平安大厦",
-              "createTime": 1521993600000,
-              "districtID": 1,
-              "districtName": "一楼",
-              "id": 1,
-              "mapUrl": "http://192.168.7.48/imageserver/map1.jpg",
-              "modifierTime": 1521993600000
-            },
-            {
-              "areaID": 2,
-              "areaName": "平安大厦",
-              "createTime": 1521993600000,
-              "districtID": 2,
-              "districtName": "二楼",
-              "id": 2,
-              "mapUrl": "http://192.168.7.48/imageserver/map2.jpg",
-              "modifierTime": 1521993600000
-            }
-          ]
-        },
-        {
-          "areaName": "平安金融大厦",
-          "mapInfoData": [
-            {
-              "areaID": 3,
-              "areaName": "平安金融大厦",
-              "createTime": 1521993600000,
-              "districtID": 3,
-              "districtName": "二楼",
-              "id": 3,
-              "mapUrl": "http://192.168.7.48/imageserver/map1.jpg",
-              "modifierTime": 1521993600000
-            },
-            {
-              "areaID": 4,
-              "areaName": "平安金融大厦",
-              "createTime": 1521993600000,
-              "districtID": 4,
-              "districtName": "一楼",
-              "id": 4,
-              "mapUrl": "http://192.168.7.48/imageserver/map3.jpg",
-              "modifierTime": 1521993600000
-            },
-            {
-              "areaID": 5,
-              "areaName": "平安金融大厦",
-              "createTime": 1522080000000,
-              "districtID": 5,
-              "districtName": "三楼",
-              "id": 5,
-              "mapUrl": "http://192.168.7.48/imageserver/map3.jpg",
-              "modifierTime": 1522080000000
-            }
-          ]
-        }
-      ]
-      this.mapOptions = list;
-      this.selectedMap = list[0];
-      //this.getCameraOnMap();
     });
   }
   getCameraOnMap() {
-    this.http.get(api.getCameraOnMap + '?districtID=' + this.selectedMap.mapInfoData[0].districtID).subscribe((res) => {
+    this.http.get(api.getCameraOnMap + '?districtID=' + this.selectedFloor.districtID).subscribe((res) => {
+      debugger;
       const list = <any>res;
       console.log(list);
       this.initCurrentMapOnlineCamera(list);
@@ -212,14 +208,14 @@ export class MapComponent implements OnInit {
     });
   }
 }
-export interface DataTable {
+export class DataTable {
 
-  areaName: string;
+  public areaName: string;
 
-  mapInfoData: Array<MapInfo>;
+  public mapInfoData: Array<MapInfo>;
 }
 
-export interface MapInfo {
+export class MapInfo {
 
   id:number;
   areaID:number;

@@ -3,7 +3,7 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../api';
 import {parseParam} from '../../utils/common';
-import {NgxCarousel} from 'ngx-carousel';
+import {dangerOptions, genderOptions} from '../../config/selectConf';
 
 @Component({
   selector: 'app-recognize',
@@ -11,18 +11,30 @@ import {NgxCarousel} from 'ngx-carousel';
   styleUrls: ['./recognize.component.css']
 })
 export class RecognizeComponent implements OnInit {
-
-  public carouselOne: NgxCarousel;
-
   /**这个字段是保存着search的自定义列标签*/
   _searchTitle: Array<any> = [
     {key: 'name', name: '姓名', type: '', nzSpan: 4},
-    {key: 'gender', name: '性别', type: 'select', options: [{id: 1, name: '男'}, {id: 2, name: '女'}], nzSpan: 4},
-    {key: 'dc', name: '危险级别', type: 'select', options: [{id: 1, name: '1'}, {id: 2, name: '2'}, {id: 1, name: '3'}, {id: 2, name: '4'}], nzSpan: 6}
+    {key: 'gender', name: '性别', type: 'select', options: genderOptions, nzSpan: 4},
+    {key: 'dc', name: '危险级别', type: 'select', options: dangerOptions, nzSpan: 6}
   ];
+
+  /**
+   * 危险等级
+   */
+  _dangerOptions = dangerOptions;
+
+  /**
+   * 性别
+   */
+  _genderOptions = genderOptions;
 
   /**这个字段是保存着table的自定义列标签*/
   _titles: Array<any> = [
+    {
+      key: 'state',
+      name: '时间',
+      type: 'datetime'
+    },
     {
       key: 'name',
       name: '姓名',
@@ -31,21 +43,23 @@ export class RecognizeComponent implements OnInit {
     {
       key: 'gender',
       name: '性别',
-      type: 'gender'
+      type: 'select',
+      options: genderOptions
+    },
+    {
+      key: 'personid',
+      name: '注册编号',
+      type: 'text'
     },
     {
       key: 'dc',
       name: '危险等级',
-      type: 'text'
+      type: 'select',
+      options:  dangerOptions
     },
     {
-      key: 'time',
-      name: '时间',
-      type: 'date'
-    },
-    {
-      key: 'zoneNum',
-      name: '区域编码',
+      key: 'similarDegree',
+      name: '相似度',
       type: 'text'
     }
   ];
@@ -143,7 +157,6 @@ export class RecognizeComponent implements OnInit {
       this._dataSet = list;
       this.isLoading = false;
     }, (error) => {
-      this.isLoading = false;
       const list = [{name: '23', gender: 2, dc: 2, time: 23, zoneNum: 2}];
       this._dataSet = list;
     });
@@ -153,10 +166,6 @@ export class RecognizeComponent implements OnInit {
   queryRecognizeByConditions(data) {
     this.isLoading = true;
     console.log(data);
-    if(data.gender){
-      data.gender = (data.gender == '男' ? "1" : "2");
-    }
-
     console.log(parseParam(data));
     this.http.get(api.queryRecognizeByConditions + parseParam(data)).subscribe((res) => {
       console.dir(res);
@@ -165,28 +174,12 @@ export class RecognizeComponent implements OnInit {
       /**关闭加载状态*/
       this.isLoading = false;
     }, (error) => {
-      this.isLoading = false;
-      const list = [{name: '23', gender: 2, dc: 2, time: 23, zoneNum: 2}];
-      this._dataSet = list;
     });
   }
 
   /**组件初始化的时候调用一次*/
   ngOnInit() {
     this.getRecognize();
-    this.carouselOne = {
-      grid: {xs: 1, sm: 1, md: 1, lg: 1, all: 0},
-      slide: 1,
-      speed: 400,
-      interval: 4000,
-      point: {
-        visible: true
-      },
-      load: 2,
-      touch: true,
-      loop: true,
-      custom: 'banner'
-    }
   }
 }
 

@@ -2,7 +2,7 @@ import {AfterViewChecked, Component, Input, OnInit, Output} from '@angular/core'
 import {HttpClient} from '@angular/common/http';
 import api from '../../../api';
 import {parseParam} from '../../../utils/common';
-import 'rxjs/Rx';
+import "rxjs/Rx";
 import {forEach} from '@angular/router/src/utils/collection';
 
 @Component({

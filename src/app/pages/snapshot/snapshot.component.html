@@ -1,4 +1,5 @@
-<app-search [upOrDown]="true" [_searchTitle]="_searchTitle"></app-search>
+<app-search [upOrDown]="true" [_searchTitle]="_searchTitle" (queryCondition)="querySnapshotByConditions($event)"></app-search>
 <nz-spin [nzTip]="'正在读取数据...'" [nzSpinning]="isLoading">
-  <app-table [isCanAdd]="false" [_titles]="_titles" [_dataSet]="_dataSet" (editData)="getRowData($event)" (deleteData)="deleteRow($event)" (refresh)="refresh()" actionType="type4"></app-table>
+  <app-table [isCanAdd]="false" [canDblClick]="false" [_titles]="_titles" [_dataSet]="_dataSet" (editData)="getRowData($event)"  actionType="type5" (deleteData)="deleteRow($event)" (refresh)="refresh()"></app-table>
 </nz-spin>
+<app-snapshot-model (closeModel)="close()" [isVisible]="isEdit||isAdd" [_formData]="formData" (requestData)="sendData($event)"></app-snapshot-model>

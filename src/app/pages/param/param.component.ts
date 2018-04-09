@@ -52,7 +52,7 @@ export class ParamComponent implements OnInit {
     {
       key: 'createtime',
       name: '创建时间',
-      type: 'date'
+      type: 'datetime'
     }
   ];
 

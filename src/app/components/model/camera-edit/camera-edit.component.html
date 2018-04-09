@@ -112,15 +112,6 @@
         </div>
       </div>
       <div nz-form-item nz-row>
-        <!--<div nz-col [nzSpan]="5" nz-form-label>-->
-        <!--<label>门禁ID</label>-->
-        <!--</div>-->
-        <!--<div>-->
-        <!--<div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>-->
-        <!--<nz-input formControlName="doorID" [(ngModel)]="_formData.doorID" [nzPlaceHolder]="'门禁ID'" [nzType]="'text'" [nzSize]="'large'">-->
-        <!--</nz-input>-->
-        <!--</div>-->
-        <!--</div>-->
         <div nz-col [nzSpan]="5" nz-form-label>
           <label nz-form-item-required>用户名</label>
         </div>
@@ -142,16 +133,6 @@
           </div>
         </div>
       </div>
-      <!--<div nz-form-item nz-row>-->
-
-      <!--<div nz-col [nzSpan]="5" nz-form-label>-->
-      <!--<label nz-form-item-required>rtsp端口</label>-->
-      <!--</div>-->
-      <!--<div nz-col [nzSpan]="6" nz-form-control>-->
-      <!--<nz-input formControlName="rtspPort"  [(ngModel)]="_formData.rtspPort"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'tsp端口'" [nzSize]="'large'">-->
-      <!--</nz-input>-->
-      <!--</div>-->
-      <!--</div>-->
       <div nz-form-item nz-row>
         <div nz-col [nzSpan]="5" nz-form-label>
           <label nz-form-item-required>rtsp路径</label>
@@ -161,13 +142,6 @@
                     [nzPlaceHolder]="'移动端使用,请输入完整的rtsp路径'" [nzSize]="'large'">
           </nz-input>
         </div>
-        <!--<div nz-col [nzSpan]="5" nz-form-label>-->
-        <!--<label nz-form-item-required>img_url</label>-->
-        <!--</div>-->
-        <!--<div nz-col [nzSpan]="6" nz-form-control>-->
-        <!--<nz-input formControlName="截图地址"  [(ngModel)]="_formData.img_url"  [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'截图地址'" [nzSize]="'large'">-->
-        <!--</nz-input>-->
-        <!--</div>-->
       </div>
       <div nz-form-item nz-row>
         <div nz-col [nzSpan]="5" nz-form-label>
@@ -189,43 +163,47 @@
           </nz-input>
         </div>
       </div>
-      <!--<div nz-form-item nz-row>-->
-      <!--<div nz-col [nzSpan]="5" nz-form-label>-->
-      <!--<label>区域ID</label>-->
-      <!--</div>-->
-      <!--<div>-->
-      <!--<div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>-->
-      <!--<nz-input formControlName="zoneID" [(ngModel)]="_formData.zoneID" [nzPlaceHolder]="'区域ID'" [nzType]="'text'" [nzSize]="'large'">-->
-      <!--</nz-input>-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--<div nz-col [nzSpan]="5" nz-form-label>-->
-      <!--<label>策略ID</label>-->
-      <!--</div>-->
-      <!--<div>-->
-      <!--<div nz-col [nzSpan]="6" nz-form-control nzHasFeedback>-->
-      <!--<nz-input formControlName="strategyID" [(ngModel)]="_formData.strategyID" [nzPlaceHolder]="'策略ID'" [nzType]="'text'" [nzSize]="'large'">-->
-      <!--</nz-input>-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--</div>-->
 
       <div nz-form-item nz-row>
         <div nz-col [nzSpan]="5" nz-form-label>
-          <label nz-form-item-required>选择地图</label>
+          <label nz-form-item-required>位置</label>
         </div>
 
+        <!--<div nz-col [nzSpan]="3" nz-form-control>-->
+          <!--<nz-select style="width: 120px;" formControlName="districtID" [(ngModel)]="_formData.districtID"-->
+                     <!--(ngModelChange)="mapSelectHandler($event)" [nzPlaceHolder]="'选择地图'">-->
+            <!--<nz-option *ngFor="let option of mapOptions" [nzLabel]="option.name" [nzValue]="option.id">-->
+              <!--<ng-template #nzOptionTemplate>{{option.name}}</ng-template>-->
+            <!--</nz-option>-->
+          <!--</nz-select>-->
+        <!--</div>-->
+        <!--<div nz-col [nzSpan]="3" nz-form-control>-->
+          <!--<nz-select style="width: 120px;" formControlName="districtID" [(ngModel)]="_formData.districtID"-->
+                     <!--(ngModelChange)="mapSelectHandler($event)" [nzPlaceHolder]="'选择地图'">-->
+            <!--<nz-option *ngFor="let option of mapOptions" [nzLabel]="option.name" [nzValue]="option.id">-->
+              <!--<ng-template #nzOptionTemplate>{{option.name}}</ng-template>-->
+            <!--</nz-option>-->
+          <!--</nz-select>-->
+        <!--</div>-->
+
         <div nz-col [nzSpan]="3" nz-form-control>
-          <nz-select style="width: 120px;" formControlName="districtID" [(ngModel)]="_formData.districtID"
-                     (ngModelChange)="mapSelectHandler($event)" [nzPlaceHolder]="'选择地图'">
-            <nz-option *ngFor="let option of mapOptions" [nzLabel]="option.name" [nzValue]="option.id">
-              <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
-            </nz-option>
-          </nz-select>
-        </div>
-        <div nz-col [nzSpan]="3" nz-form-control>
+          <nz-input *ngIf="isAreaID" formControlName="areaID" [nzDisabled]="'true'" [(ngModel)]="_formData.areaID"
+                    [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'areaID'" [nzSize]="'large'">
+          </nz-input>
+          <!--<nz-spin formControlName="areaID" [ [(ngModel)]="_formData.areaID"></nz-spin>-->
+          <!--<div formControlName="areaID" [ [(ngModel)]="_formData.areaID">-->
+          <!--</div>-->
+          <nz-input formControlName="areaName" [nzDisabled]="'true'" [(ngModel)]="_formData.areaName"
+                    [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'区域'" [nzSize]="'large'">
+          </nz-input>
+          <!--<nz-spin formControlName="districtID" [(ngModel)]="_formData.districtID"></nz-spin>-->
+          <!--<div formControlName="districtID" [(ngModel)]="_formData.districtID">-->
+          <!--</div>-->
+          <nz-input *ngIf="isDistrictID" formControlName="districtID" [nzDisabled]="'true'" [(ngModel)]="_formData.districtID"
+                    [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'districtID'" [nzSize]="'large'">
+          </nz-input>
           <nz-input formControlName="districtName" [nzDisabled]="'true'" [(ngModel)]="_formData.districtName"
-                    [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'地图名称'" [nzSize]="'large'">
+                    [nzRows]="2" [nzType]="'text'" [nzPlaceHolder]="'楼层'" [nzSize]="'large'">
           </nz-input>
         </div>
 
@@ -266,34 +244,6 @@
         </div>
       </div>
 
-      <!--<div nz-form-item nz-row>        -->
-      <!--<div nz-col [nzSpan]="5" nz-form-label>-->
-      <!--<label nz-form-item-required>地图路径</label>-->
-      <!--</div>-->
-      <!--<div nz-col [nzSpan]="6" nz-form-control>-->
-      <!--<nz-input formControlName="distictUrl" [(ngModel)]="_formData.distictUrl" [nzRows]="2" [nzType]="'text'"-->
-      <!--[nzPlaceHolder]="'地图路径'" [nzSize]="'large'">-->
-      <!--</nz-input>-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--<div nz-form-item nz-row>-->
-      <!--<div nz-col [nzSpan]="5" nz-form-label>-->
-      <!--<label nz-form-item-required>一级区域ID</label>-->
-      <!--</div>-->
-      <!--<div nz-col [nzSpan]="6" nz-form-control>-->
-      <!--<nz-input formControlName="areaID" [(ngModel)]="_formData.areaID" [nzRows]="2" [nzType]="'text'"-->
-      <!--[nzPlaceHolder]="'一级区域ID'" [nzSize]="'large'">-->
-      <!--</nz-input>-->
-      <!--</div>-->
-      <!--<div nz-col [nzSpan]="5" nz-form-label>-->
-      <!--<label nz-form-item-required>一级区域名称</label>-->
-      <!--</div>-->
-      <!--<div nz-col [nzSpan]="6" nz-form-control>-->
-      <!--<nz-input formControlName="areaName" [(ngModel)]="_formData.areaName" [nzRows]="2" [nzType]="'text'"-->
-      <!--[nzPlaceHolder]="'一级区域名称'" [nzSize]="'large'">-->
-      <!--</nz-input>-->
-      <!--</div>-->
-      <!--</div>-->
       <div nz-form-item nz-row>
         <div nz-col [nzOffset]="10" [nzSpan]="22" nz-form-control>
           <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="submitForm($event,validateForm.value)">提交
@@ -312,20 +262,29 @@
     <div class="map-img">
       <img class="camera" src="../../../../assets/images/map/camera-device.png" alt="" #camera
            (dragstart)="dragStartHandler($event)">
-      <img class="map" [src]="selectedMap&&selectedMap.value" alt="" (dragover)="dragoverHandler($event)"
+      <img class="map" [src]="mapUrl" alt="" (dragover)="dragoverHandler($event)"
            (drop)="dropHandler($event)">
     </div>
     <div class="map-action">
+      <div class="area-select">
+        区域:
+        <nz-select style="width: 120px;" [(ngModel)]="selectedMap" (ngModelChange)="mapAreaChangeHandle($event)">
+          <nz-option *ngFor="let option of dataInfo" [nzLabel]="option.areaName" [nzValue]="option">
+            <ng-template #nzOptionTemplate>{{option.areaName}}</ng-template>
+          </nz-option>
+        </nz-select>
+      </div>
+
       <div class="floor-select">
         楼层:
-        <nz-select style="width: 120px;" [(ngModel)]="selectedMap" (ngModelChange)="modalMapChangeHandle($event)">
-          <nz-option *ngFor="let option of mapOptions" [nzLabel]="option.name" [nzValue]="option">
-            <ng-template #nzOptionTemplate>{{option.name}}</ng-template>
+        <nz-select style="width: 120px;" [(ngModel)]="selectedMap" (ngModelChange)="mapFloorChangeHandle($event)">
+          <nz-option *ngFor="let option of selectedMapFloor" [nzLabel]="option.districtName" [nzPlaceHolder]="'请选择楼层'" [nzValue]="option">
+            <ng-template #nzOptionTemplate>{{option.districtName}}</ng-template>
           </nz-option>
         </nz-select>
       </div>
       <div class="confirm-btn">
-        <button nz-button (click)="isShowMap=false;">
+        <button nz-button (click)="confirm($event)">
           <span>确定设置</span>
         </button>
       </div>

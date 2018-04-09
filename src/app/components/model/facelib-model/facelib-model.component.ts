@@ -91,7 +91,7 @@ export class FacelibModelComponent implements OnInit {
       id: [''],
       name: ['', [Validators.required, Validators.maxLength(250)]],
       path: ['', [Validators.required, Validators.maxLength(200)]],
-      createTime: ['', [Validators.required]],
+      createTime: [''],
       maxNum: ['', [Validators.required, Validators.pattern('[0-9]+')]],
       state: ['', [Validators.required]],
       isDel: [1]

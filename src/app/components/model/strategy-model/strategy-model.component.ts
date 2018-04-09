@@ -1,7 +1,15 @@
 import {Component, EventEmitter, ElementRef, ViewChild, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CustomValidService} from '../../../service/custom-valid.service';
-import {validOptions} from '../facelib-model/faceFormValidConf';
+import api from '../../../api';
+import {HttpClient} from '@angular/common/http';
+import {validOptions} from './strategyFormValidConf';
+import {forEach} from '@angular/router/src/utils/collection';
+import {NzModalService} from 'ng-zorro-antd';
+import {parseParam} from '../../../utils/common';
+import {StrategyWeekOptions} from '../../../config/selectConf';
+
+// import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Component({
   selector: 'app-strategy-model',
@@ -10,83 +18,38 @@ import {validOptions} from '../facelib-model/faceFormValidConf';
 })
 export class StrategyModelComponent implements OnInit {
 
-
-  /**
-   * 开始结束时间拉下选择框
-   * @type {[{value: string; label: string},{value: string; label: string},{value: string; label: string},{value: string; label: string},{value: string; label: string},{value: string; label: string},{value: string; label: string},{value: string; label: string}]}
-   */
-  dateOptions = [
-    { value: 'android', label: 'android'},
-    { value: 'apple', label: 'apple'},
-    { value: 'windows', label: 'windows'},
-    { value: 'ie', label: 'ie' },
-    { value: 'chrome', label: 'chrome'},
-    { value: 'github', label: 'github'},
-    { value: 'aliwangwang', label: 'aliwangwang'},
-    { value: 'dingding', label: 'dingding'},
-  ];
-  /**
-   * 开始时间
-   */
-  selectedStartDate = this.dateOptions[0];
-
-
-  /**
-   * 结束时间
-   */
-  selectedEndDate  =  this.dateOptions[0];
-
-
   /**
    * 摄像头选择模态框是否展示
    * @type {boolean}
    */
   cameraSelectIsShow = false;
 
-   selectDeviceOperateOptions = [
-    { label: '接受所有视频流', value: '接受所有视频流', checked: true},
-    { label: '广播所有视频流', value: '广播所有视频流' },
-    { label: '人脸分析', value: '人脸分析' },
-    { label: '人脸检测', value: '人脸检测' },
-    { label: '形体分析', value: '形体分析' },
-    { label: '跟踪', value: '跟踪' },
-    { label: '存储所有视频', value: '存储所有视频' },
-    { label: '告警', value: '告警' },
-   ];
-
-   thisSystemOperateOptions = [
-     { label: '存储视频', value: '存储视频', checked: true},
-     { label: '告警', value: '告警' },
-     { label: '人脸分析', value: '人脸分析' },
-     { label: '人脸检测', value: '人脸检测' },
-     { label: '形体分析', value: '形体分析' },
-     { label: '跟踪', value: '跟踪' },
-   ];
-
-
-  @ViewChild('thisSystem') thisSystem: ElementRef;
-
-  @ViewChild('selectDevice')  selectDevice: ElementRef;
+  /**
+   * 周期选择模态框是否展示
+   * @type {boolean}
+   */
+  weekSelectIsShow = false;
 
   /**
-   * 表示当前哪张表单激活状态
-   * @type {string}
+   * 生效周期
    */
-  currentActiveForm = 'thisSystem';
+  strategyWeekOptions = [];
 
+  cameraOptionsBack = null;
+
+
+  /**
+   * 摄像头集合
+   * @type {any[]}
+   */
+  cameraOptions;
 
   /**
    *该输入属性，里面包含着table中的所有字段
    */
   @Input()
-  _formData =  null;
-  /**
-   *这个是将table组件中传过来的值放入表单中
-   */
-  @Input()
-  set formData(value) {
-    this._formData = Object.assign({}, value);
-  }
+  _formData = null;
+
 
   /**
    *这个是获取表单的字段名
@@ -123,6 +86,44 @@ export class StrategyModelComponent implements OnInit {
   handleCancel = (e) => {
     this.resetForm(e);
     this.closeModel.emit();
+  };
+
+  sTimeChangeHandler(e) {
+    console.log(e);
+  }
+
+  eTimeChangeHandler(e) {
+    console.log(e);
+  }
+
+  weekChange(val) {
+    console.log(val);
+  }
+
+  /**
+   * 根据策略ID获取摄像头列表
+   */
+  getCameraList(ShowOrHide) {
+    this.cameraSelectIsShow = ShowOrHide;
+    let strategyId: number = 0;
+    if (this._formData.id !== undefined && this._formData.id !== null) {
+      strategyId = this._formData.id;
+    }
+    console.log('发送的ID是：' + strategyId);
+    // 从接口拿到所有的摄像头并绑定选中
+    this.http.get(api.getCameraByStrategy + '?strategyId=' + strategyId).subscribe((res) => {
+      const list = <any>res;
+      console.log(list);
+      let cameraOptions = [];
+      list.map((item, index) => {
+        if (item.type === '1') {
+          cameraOptions.push({label: item.name, value: item.id, checked: true});
+        } else {
+          cameraOptions.push({label: item.name, value: item.id, checked: false});
+        }
+      });
+      this.cameraOptions = cameraOptions;
+    });
   }
 
   /**
@@ -134,19 +135,43 @@ export class StrategyModelComponent implements OnInit {
       this.validateForm.controls[key].markAsDirty();
     }
     console.log(value);
+
     if (!this.validateForm.valid) {
       /**
        * 在这里使用表单验证 提示校验错误的信息
        * 使用表单验证服务的valid方法  接收两个参数 第一个是表单对象  第二个参数是配置选项
        */
       this.customValidServ.valid(this.validateForm, validOptions);
-      // this.closeModel.emit();
+      /**
+       * 判断checkbox是否选中,先注释,因为采用了radio进行判断
+       */
+      // if (count === 0) {
+      //   this.confirmServ.warning({
+      //     zIndex: 2000,
+      //     title: '策略生效周期必须选择'
+      //   });
+      // }
+      if (value.ckWeek === undefined) {
+        this.confirmServ.warning({
+          zIndex: 2000,
+          title: '策略生效周期必须选择'
+        });
+        return;
+      }
+      if (value.ckType === undefined) {
+        this.confirmServ.warning({
+          zIndex: 2000,
+          title: '生效摄像头必须选择'
+        });
+        return;
+      }
     } else {
-      /**在这里请求处理提交表单数据*/
+      value.camera = this.cameraOptions;
       this.requestData.emit(value);
-      this.validateForm.reset();
+      this.resetForm($event);
     }
-  }
+  };
+
 
   /**
    *重置表单
@@ -154,6 +179,8 @@ export class StrategyModelComponent implements OnInit {
   resetForm($event: MouseEvent) {
     $event.preventDefault();
     this.validateForm.reset();
+    this._formData.week = Object.assign({}, (new StrategyWeekOptions)).data;
+    // this.validateForm.controls["week"].setValue(Object.assign({},(new StrategyWeekOptions)).data);
     for (const key in this.validateForm.controls) {
       this.validateForm.controls[key].markAsPristine();
     }
@@ -166,39 +193,61 @@ export class StrategyModelComponent implements OnInit {
     return this.validateForm.controls[name];
   }
 
-
   /**
    * 摄像头选择取消事件
    */
-  cameraSelectCancel(e){
-     this.cameraSelectIsShow = false;
+  cameraSelectCancel(e) {
+    this.cameraSelectIsShow = false;
   }
 
   /**
    * 摄像头选择确认事件
    * @param e
    */
-  cameraSelectConfirm(e){
+  cameraSelectConfirm(e) {
     this.cameraSelectIsShow = false;
-
   }
-  constructor(private fb: FormBuilder, private customValidServ: CustomValidService) {
+
+  /**
+   * 周期选择取消事件
+   */
+  weekSelectCancel(e) {
+    this.weekSelectIsShow = false;
+  }
+
+  /**
+   * 周期选择确认事件
+   * @param e
+   */
+  weekSelectConfirm(e) {
+    this.weekSelectIsShow = false;
+  }
+
+  constructor(private http: HttpClient, private fb: FormBuilder,
+              private customValidServ: CustomValidService, private confirmServ: NzModalService) {
   }
 
   ngOnInit() {
     this.validateForm = this.fb.group({
       id: [''],
-      name: [''],
+      checkCamera: [-1],
+      name: ['', [Validators.required, Validators.maxLength(22)]],
+      sTime: ['', [Validators.required]],
+      eTime: ['', [Validators.required]],
+      week: [null],
+      description: ['', [Validators.maxLength(22)]],
+      minAlarmThreshold: ['', [Validators.required, Validators.pattern('[0-9]+')]],
+      minPixel: ['', [Validators.required, Validators.pattern('[0-9]+')]],
+      pQ: ['', [Validators.required, Validators.pattern('[0-9]+')]],
+      ckType: ['', []],
+      ckWeek: ['', []],
+      camera: [null],
+      timeSlotId: [''],
+      timeSchedule: [''],
       type: [''],
-      operateType: [''],
-      description: [''],
-      createTime: [''],
-      creater: [''],
-      modifier: [''],
-      minPixel: [''],
-      pQ: [''],
-      timeSlotId: ['']
+      operateType: ['']
     });
+
   }
 
 }

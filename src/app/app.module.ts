@@ -1,18 +1,17 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AppComponent } from './app.component';
-import { HttpClientModule} from '@angular/common/http';
-import { NgZorroAntdModule } from 'ng-zorro-antd';
-
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule,HTTP_INTERCEPTORS} from '@angular/common/http';
+import { NgZorroAntdModule} from 'ng-zorro-antd';
+import {InterceptorService} from './service/interceptor-service.service'
+import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 /**
  * 引入图表库
  */
 import { NgxEchartsModule } from 'ngx-echarts';
 
-import {NgxCarouselModule} from 'ngx-carousel';
-import 'hammerjs';
+
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {appRoutes} from './app.route';
@@ -57,7 +56,15 @@ import {MapmonitorComponent} from './pages/datamonitor/mapmonitor/mapmonitor.com
 import {AnalyzerComponent} from './pages/analyzer/analyzer.component';
 import {CustomValidService} from './service/custom-valid.service';
 import {AnalyzerModelComponent} from './components/model/analyzer-model/analyzer-model.component';
-import { ImagePreviewDirective } from './directive/image-preview.directive';
+import { SnapshotModelComponent } from './components/model/snapshot-model/snapshot-model.component';
+
+
+/**导入carousel相关资源**/
+import {NgxCarouselModule} from 'ngx-carousel';
+import { ImagePriviewDirective } from './directive/image-priview.directive';
+import 'hammerjs';
+import {ImgPreviewService} from './service/img-preview.service';
+import {LoadingService} from './service/loading.service';
 
 
 @NgModule({
@@ -106,8 +113,10 @@ import { ImagePreviewDirective } from './directive/image-preview.directive';
     ClientmonitorComponent,
     AnalyzerComponent,
     MapmonitorComponent,
-    AnalyzerMode,
-    ImagePreviewDirectivelComponent,
+    AnalyzerModelComponent,
+    SnapshotModelComponent,
+    ImagePriviewDirective
+
   ],
   imports: [
     BrowserModule,
@@ -120,7 +129,7 @@ import { ImagePreviewDirective } from './directive/image-preview.directive';
     NgxEchartsModule,
     NgxCarouselModule
   ],
-  providers: [CustomValidService],
+  providers: [CustomValidService, ImgPreviewService, LoadingService,{provide:HTTP_INTERCEPTORS,useClass:InterceptorService,multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

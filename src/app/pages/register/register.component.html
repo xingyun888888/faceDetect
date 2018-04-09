@@ -1,13 +1,14 @@
+<nz-spin [nzTip]="loadingText" [nzSpinning]="isLoading">
 <app-search [upOrDown]="true" [_searchTitle]="_searchTitle"
             (queryCondition)="queryRegisterByConditions($event)"></app-search>
-<nz-spin [nzTip]="'正在读取数据...'" [nzSpinning]="isLoading">
-  <app-table [isCanReback]="true" [_multiUploadApi]="_multiUploadApi" [isCanBatchUpload]="true" [_titles]="_titles"
+  <app-table [isCanReback]="true"  [tableTitle]="_tableTitle" [_multiUploadApi]="_multiUploadApi" [isCanBatchUpload]="true" [_titles]="_titles"
              [_dataSet]="_dataSet" (editData)="getRowData($event)" (deleteData)="deleteRow($event)"
              (refresh)="refresh()"></app-table>
-</nz-spin>
-<app-register-model (closeModel)="close()" [certTypeOptions]="_certTypeOptions" [genderOptions]="_genderOptions"
+<app-register-model (closeModel)="close()" (getFacelibNames)="getFacelibNames($event)"  [certTypeOptions]="_certTypeOptions" [genderOptions]="_genderOptions"
                     [dangerOptions]="_dangerOptions" [sourceOptions]="_sourceOptions" [isVisible]="isEdit||isAdd"
                     [_formData]="formData" (requestData)="sendData($event)"></app-register-model>
+</nz-spin>
+
 
 
 

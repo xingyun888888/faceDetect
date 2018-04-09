@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../api';
+import {StrategyWeekOptions} from '../../config/selectConf';
+import {parseParam} from '../../utils/common';
 
 @Component({
   selector: 'app-strategy',
@@ -11,10 +13,13 @@ export class StrategyComponent implements OnInit {
 
   /**这个字段是保存着search的自定义列标签*/
   _searchTitle: Array<any> = [
-    {key: 'username', name: '搜索', type: '', nzSpan: 5},
-    {key: 'time', name: '开始时间', type: 'date', nzSpan: 10},
-    {key: 'time', name: '结束时间', type: 'date', nzSpan: 10}
+    {key: 'name', name: '策略名称', type: '', nzSpan: 7}
   ];
+
+  /**
+   布控策略 生效周期
+   */
+  _strategyWeekOptions = null;
 
   /**这个字段是保存着table的自定义列标签*/
   _titles: Array<any> = [
@@ -25,37 +30,12 @@ export class StrategyComponent implements OnInit {
     },
     {
       key: 'name',
-      name: '参数名',
+      name: '策略名称',
       type: 'text'
     },
     {
-      key: 'type',
-      name: '参数类型',
-      type: 'text'
-    },
-    {
-      key: 'operateType',
-      name: '操作类型',
-      type: 'text'
-    },
-    {
-      key: 'description',
-      name: '描述',
-      type: 'text'
-    },
-    {
-      key: 'createTime',
-      name: '创建时间',
-      type: 'date'
-    },
-    {
-      key: 'creater',
-      name: '创建人',
-      type: 'text'
-    },
-    {
-      key: 'modifier',
-      name: '修改人',
+      key: 'minAlarmThreshold',
+      name: '最小识别阀值',
       type: 'text'
     },
     {
@@ -69,9 +49,14 @@ export class StrategyComponent implements OnInit {
       type: 'text'
     },
     {
-      key: 'timeSlotId',
-      name: '时间段id',
+      key: 'description',
+      name: '描述',
       type: 'text'
+    },
+    {
+      key: 'createTime',
+      name: '创建时间',
+      type: 'date'
     }
   ];
 
@@ -85,15 +70,39 @@ export class StrategyComponent implements OnInit {
   /**这里存放着从服务端接收到的数据，模态框需要*/
   formData = {};
 
+  /**是否加载中,是否显示加载状态,true:代表正在加载中,false:代表加载完成*/
+  isLoading = false;
+
+  /**时间转换成日期**/
+  time2Date(time) {
+    if (time !== undefined && time.length === 5) {
+      time = time.split(':');
+      const date = new Date();
+      date.setHours(time[0]);
+      date.setMinutes(time[1]);
+      return date;
+    } else {
+      return time;
+    }
+  }
+
   /**这个方法是订阅的子组件传进来的事件,当子组件触发的时候就会获取到值value,判断拿出的value是否是undefined,如果是新增处理,否则编辑处理，
    * 首先要把formData的脏值清空，然后将拿到的最新值赋值到formData，如果value有值那就是表明当前是编辑状态，否则说明是新增*/
   getRowData(value) {
     console.log(value);
+    this._strategyWeekOptions = Object.assign({}, new StrategyWeekOptions()).data;
+
     this.formData = {};
     this.formData = Object.assign({}, value);
     if (!value) {
+      this.returnDataTransfer('0000000');
+      this.formData = Object.assign({}, {sTime: null, eTime: null, week: this._strategyWeekOptions, checkCamera: -1});
       this.isAdd = true;
     } else {
+      this.returnDataTransfer(value.timeSchedule);
+      value.sTime = this.time2Date(value.sTime);
+      value.eTime = this.time2Date(value.eTime);
+      this.formData = Object.assign({}, value, {week: this._strategyWeekOptions, checkCamera: value.operateType == 0 ? 1 : 2});
       this.isEdit = true;
     }
   }
@@ -110,7 +119,7 @@ export class StrategyComponent implements OnInit {
   /**删除功能处理，在这里调用删除的接口，给后台发送一个ID，应该用post，只有id查询是get，其他操作都用post
    * 删除成功之后，调用查询方法，更新页面，删除失败之后，调用查询方法，更新页面*/
   deleteRow(data) {
-    this.http.post(api.deleteStrategy, JSON.stringify(data),{
+    this.http.post(api.deleteStrategy, JSON.stringify(data), {
       headers: new HttpHeaders({
         'Content-type': 'application/json;charset=UTF-8'
       })
@@ -121,9 +130,26 @@ export class StrategyComponent implements OnInit {
     });
   }
 
+  sendDataTransfer(data: any) {
+    let str = '';
+    data.map((item: any, index: any) => {
+      if (item.checked) {
+        str += 1;
+      } else {
+        str += 0;
+      }
+    });
+    return str;
+  }
+
   /**增加或者编辑操作后点击提交后调用的方法，请求的时候判断一下是新增还是修改，根据isEdit和isAdd的值判断
    * 添加下面的headers头部说明，前端需要接收的是json数据*/
   sendData(data) {
+    data.timeSchedule = this.sendDataTransfer(data.camera);
+    data.operateType = this.sendDataTransfer(data.week);
+    this._strategyWeekOptions = [];
+    console.log(data);
+
     if (this.isAdd) {
       this.http.post(api.addStrategy, data, {
         headers: new HttpHeaders({
@@ -149,7 +175,7 @@ export class StrategyComponent implements OnInit {
     }
   }
 
-  constructor(private http: HttpClient, ) {
+  constructor(private http: HttpClient) {
   }
 
   /**在这里调用刷新,点击刷新按钮之后就会调用这个方法,刷新就是调用一次查询接口*/
@@ -157,12 +183,45 @@ export class StrategyComponent implements OnInit {
     this.getStrategy();
   }
 
+  returnDataTransfer(str: string) {
+    let list = str.split('');
+    let newList = [];
+    for (let i = list.length - 1; i >= 0; i--) {
+      newList.push(list[i]);
+    }
+    this._strategyWeekOptions.map((item, index) => {
+      if (newList[index] == '1') {
+        item.checked = true;
+      } else if (newList[index] == '0') {
+        item.checked = false;
+      }
+    });
+  }
+
+
   /**调用查询接口，查询到结果之后将拿到的res赋值给_dataSet才能显示到table*/
   getStrategy() {
+    this.isLoading = true;
     this.http.get(api.queryStrategy).subscribe((res) => {
       console.dir(res);
       const list = <any>res;
       this._dataSet = list;
+      /**关闭加载状态*/
+      this.isLoading = false;
+    });
+  }
+
+  /**根据条件查询方法*/
+  queryStrategyByConditions(data) {
+    this.isLoading = true;
+    console.log(parseParam(data));
+    this.http.get(api.queryStrategyByConditions + parseParam(data)).subscribe((res) => {
+      console.dir(res);
+      const list = <any>res;
+      this._dataSet = list.data;
+      /**关闭加载状态*/
+      this.isLoading = false;
+    }, (error) => {
     });
   }
 
@@ -172,5 +231,4 @@ export class StrategyComponent implements OnInit {
   ngOnInit() {
     this.getStrategy();
   }
-
 }

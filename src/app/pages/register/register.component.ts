@@ -3,8 +3,9 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import api from '../../api';
-import {parseParam} from '../../utils/common';
+import {parseParam,getFileName} from '../../utils/common';
 import {certTypeOptions, dangerOptions, genderOptions, sourceOptions} from '../../config/selectConf';
+import {LoadingService} from '../../service/loading.service';
 
 @Component({
   selector: 'app-register',
@@ -99,7 +100,28 @@ export class RegisterComponent implements OnInit {
   /**是否加载中,是否显示加载状态,true:代表正在加载中,false:代表加载完成*/
   isLoading = false;
 
+  loadingText:string = "正在读取数据...";
+
   id: any = '';
+
+  facelibNames = null;
+
+  //保存table展示的标题
+  _tableTitle = '';
+
+  /**
+   * 订阅子组件传来的faceNames信息
+   * @param faceNames
+   */
+  getFacelibNames(faceNames) {
+    console.warn(faceNames);
+    this.facelibNames = faceNames;
+    faceNames.map((item, index) => {
+      if (item.id == this.id) {
+        this._tableTitle = '您好，欢迎进入' + item.name;
+      }
+    });
+  }
 
   /**这个方法是订阅的子组件传进来的事件,当子组件触发的时候就会获取到值value,判断拿出的value是否是undefined,如果是新增处理,否则编辑处理，
    * 首先要把formData的脏值清空，然后将拿到的最新值赋值到formData，如果value有值那就是表明当前是编辑状态，否则说明是新增*/
@@ -111,7 +133,7 @@ export class RegisterComponent implements OnInit {
       this.formData = Object.assign({}, {createTime: null, faceLibid: +this.id, batchFacelibId: +this.id});
       this.isAdd = true;
     } else {
-      this.formData = Object.assign({}, {createTime: null, batchFacelibId: +this.id}, value);
+      this.formData = Object.assign({},  value,{createTime: null, fileName: value.path ? getFileName (value.path) : "", batchFacelibId: +this.id});
       this.isEdit = true;
     }
   }
@@ -169,10 +191,19 @@ export class RegisterComponent implements OnInit {
 
   }
 
-  constructor(private routerInfo: ActivatedRoute, private http: HttpClient) {
+  constructor(private routerInfo: ActivatedRoute, private http: HttpClient, private loadingServ: LoadingService) {
     routerInfo.queryParams.subscribe(queryParams => {
       console.log(queryParams);
     });
+    this.loadingServ.isLoading.subscribe((value:any)=>{
+       if(value){
+         this.isLoading = true;
+         this.loadingText = "正在上传中..." ;
+       }else{
+         this.isLoading = false;
+         this.loadingText = "正在读取数据..." ;
+       }
+    })
   }
 
   /**在这里调用刷新,点击刷新按钮之后就会调用这个方法,刷新就是调用一次查询接口*/

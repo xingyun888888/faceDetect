@@ -1,143 +1,159 @@
-
 <!--布控策略编辑模态框-->
-<nz-modal class="strategy-modal-container" [maskClosable]="false" [nzVisible]="isVisible" [nzTitle]="'布控策略'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)" [nzConfirmLoading]="isConfirmLoading" nzFooter="" >
+<nz-modal class="strategy-modal-container" [maskClosable]="false" [nzVisible]="isVisible" [nzTitle]="'布控策略'"
+          [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)"
+          [nzConfirmLoading]="isConfirmLoading" nzFooter="">
   <ng-template #modalContent>
-    <div class="strategy-modal-content">
-      <div class="this-system" #thisSystem   (click)="currentActiveForm = 'thisSystem'">
-        <div class="form-mark-layer" [ngStyle]="{'display':currentActiveForm=='thisSystem'?'none':'block'}"></div>
-        <h2>本系统</h2>
-        <form nz-form [formGroup]="validateForm" >
-          <div nz-form-item nz-row>
-            <div nz-form-label nz-col [nzSpan]="5">
-              <label nz-form-item-required>选择时间段</label>
-            </div>
-            <div nz-col [nzSpan]="10" nz-form-control >
-              <nz-select style="width: 120px;"  formControlName="type"  [(ngModel)]="selectedStartDate" >
-                <nz-option *ngFor="let option of dateOptions" [nzLabel]="option.label" [nzValue]="option">
-                  <ng-template #nzOptionTemplate>{{option.label}}</ng-template>
-                </nz-option>
-              </nz-select>
-            </div>
-          </div>
-          <div nz-form-item nz-row>
-            <div nz-form-label nz-col [nzSpan]="5">
-              <label nz-form-item-required>操作</label>
-            </div>
-
-            <div nz-col [nzSpan]="17" nz-form-control >
-              <nz-checkbox-group formControlName="operateType" [(ngModel)]="thisSystemOperateOptions"></nz-checkbox-group>
-            </div>
-          </div>
-          <div nz-form-item nz-row>
-            <div nz-form-label nz-col [nzSpan]="5">
-              <label nz-form-item-required>命名</label>
-            </div>
-            <div nz-col [nzSpan]="6" nz-form-control >
-              <nz-input formControlName="name" [nzType]="'text'" [nzPlaceHolder]="'命名'" [nzSize]="'large'">
-              </nz-input>
-            </div>
-          </div>
-          <div nz-form-item nz-row *ngIf="currentActiveForm=='thisSystem'">
-            <div nz-col [nzOffset]="7" [nzSpan]="12" nz-form-control>
-              <button nz-button [nzType]="'primary'" [nzSize]="'large'" [disabled]="!validateForm.valid"  (click)="submitForm($event,validateForm.value)">提交</button>
-              <button nz-button [nzSize]="'large'" >重置</button>
-            </div>
-          </div>
-        </form>
+    <form nz-form [formGroup]="validateForm" style="margin-top: 10px;padding-bottom: 10px;">
+      <input type="hidden" formControlName="id" [(ngModel)]="_formData.id">
+      <input type="hidden" formControlName="timeSlotId" [(ngModel)]="_formData.timeSlotId">
+      <div nz-form-item nz-row>
+        <div nz-form-label nz-col [nzSpan]="7">
+          <label nz-form-item-required>策略名称</label>
+        </div>
+        <div nz-col [nzSpan]="10" nz-form-control>
+          <nz-input formControlName="name" [(ngModel)]="_formData.name" [nzType]="'text'" [nzPlaceHolder]="'策略名称'"
+                    [nzSize]="'large'">
+          </nz-input>
+        </div>
       </div>
-      <div class="select-device" (click)="currentActiveForm = 'selectDevice'" #selectDevice>
-        <div class="form-mark-layer" [ngStyle]="{'display':currentActiveForm=='selectDevice'?'none':'block'}"></div>
-        <h2>选择设备</h2>
-        <form nz-form [formGroup]="validateForm" >
-          <div nz-form-item nz-row>
-            <div nz-form-label nz-col [nzSpan]="2">
-            </div>
-            <div nz-col [nzSpan]="6" >
-              <button style="margin-left:60px;background:#108ee9;color:#fff;" nz-button (click)="cameraSelectIsShow=true">摄像头选择</button>
-            </div>
-          </div>
-          <div nz-form-item nz-row>
-            <div nz-form-label nz-col [nzSpan]="5">
-              <label nz-form-item-required>选择时间段</label>
-            </div>
-            <div nz-col [nzSpan]="10" nz-form-control >
-              <nz-select style="width: 120px;"  formControlName="type"  [(ngModel)]="selectedStartDate" >
-                <nz-option *ngFor="let option of dateOptions" [nzLabel]="option.label" [nzValue]="option">
-                  <ng-template #nzOptionTemplate>{{option.label}}</ng-template>
-                </nz-option>
-              </nz-select>
-            </div>
-          </div>
-          <div nz-form-item nz-row>
-            <div nz-form-label nz-col [nzSpan]="5">
-              <label nz-form-item-required>操作</label>
-            </div>
-            <div nz-col [nzSpan]="17" nz-form-control >
-              <nz-checkbox-group formControlName="operateType" [(ngModel)]="selectDeviceOperateOptions"></nz-checkbox-group>
-            </div>
-          </div>
-          <div nz-form-item nz-row>
-            <div nz-form-label nz-col [nzSpan]="5">
-              <label nz-form-item-required>人脸尺寸</label>
-            </div>
-            <div nz-col [nzSpan]="6" nz-form-control >
-              <nz-select style="width: 120px;"  formControlName="minPixel"  [(ngModel)]="_formData.minPixel" >
-                <nz-option *ngFor="let option of dateOptions" [nzLabel]="option.label" [nzValue]="option">
-                  <ng-template #nzOptionTemplate>{{option.label}}</ng-template>
-                </nz-option>
-              </nz-select>
-            </div>
-          </div>
-          <div nz-form-item nz-row>
-            <div nz-form-label nz-col [nzSpan]="5">
-              <label nz-form-item-required>人脸质量</label>
-            </div>
-            <div nz-col [nzSpan]="6" nz-form-control >
-              <nz-select style="width: 120px;"  formControlName="pQ"  [(ngModel)]="_formData.pQ" >
-                <nz-option *ngFor="let option of dateOptions" [nzLabel]="option.label" [nzValue]="option">
-                  <ng-template #nzOptionTemplate>{{option.label}}</ng-template>
-                </nz-option>
-              </nz-select>
-            </div>
-          </div>
-          <div nz-form-item nz-row>
-            <div nz-form-label nz-col [nzSpan]="5">
-              <label nz-form-item-required>命名</label>
-            </div>
-            <div nz-col [nzSpan]="6" nz-form-control >
-              <nz-input formControlName="name" [nzType]="'text'" [nzPlaceHolder]="'命名'" [nzSize]="'large'">
-              </nz-input>
-            </div>
-          </div>
-          <div nz-form-item nz-row *ngIf="currentActiveForm=='selectDevice'">
-            <div nz-col [nzOffset]="7" [nzSpan]="12" nz-form-control>
-              <button nz-button [nzType]="'primary'" [nzSize]="'large'" [disabled]="!validateForm.valid"  (click)="submitForm($event,validateForm.value)">提交</button>
-              <button nz-button [nzSize]="'large'" >重置</button>
-            </div>
-          </div>
-        </form>
+      <div nz-form-item nz-row>
+        <div nz-form-label nz-col [nzSpan]="7">
+          <label nz-form-item-required>策略生效时间段</label>
+        </div>
+        <div nz-col [nzSpan]="10" nz-form-control>
+          <nz-timepicker formControlName="sTime" [(ngModel)]="_formData.sTime" [nzFormat]="'HH:mm'"
+                         [nzPlaceHolder]="'开始时间'"></nz-timepicker>
+          -
+          <nz-timepicker formControlName="eTime" [(ngModel)]="_formData.eTime" [nzFormat]="'HH:mm'"
+                         [nzPlaceHolder]="'结束时间'"></nz-timepicker>
+        </div>
       </div>
-    </div>
+      <div nz-form-item nz-row>
+        <div nz-form-label nz-col [nzSpan]="7">
+          <label nz-form-item-required>策略生效周期</label>
+        </div>
+        <div nz-col [nzSpan]="17" nz-form-control>
+          <div nz-col [nzSpan]="17" style="line-height: 32px">
+            <!-- <nz-radio-group formControlName="ckWeek" [(ngModel)]="_formData.checkWeek">
+              <label nz-radio [nzValue]="1" [nzChecked]="radioWeek1">
+                <span>每天</span>
+              </label>
+              <label nz-radio [nzValue]="2" [nzChecked]="radioWeek2"
+                     (click)="getWeekList()">
+                <span>自定义</span>
+              </label>
+              </nz-radio-group> -->
+            <nz-checkbox-group [(ngModel)]="_formData.week" (ngModelChange)="weekChange($event)" formControlName="week">
+            </nz-checkbox-group>
+          </div>
+        </div>
+      </div>
+      <!--<div nz-form-item nz-row>-->
+      <!--<div nz-form-label nz-col [nzSpan]="7">-->
+      <!--<label nz-form-item-required>策略生效周期</label>-->
+      <!--</div>-->
+      <!--<div nz-col [nzSpan]="12" nz-form-control>-->
+      <!--<nz-checkbox-group formControlName="week" [(ngModel)]="strategyWeekOptions">-->
+      <!--</nz-checkbox-group>-->
+      <!--</div>-->
+      <!--</div>-->
+      <div nz-form-item nz-row>
+        <div nz-form-label nz-col [nzSpan]="7">
+          <label nz-form-item-required>最小识别阀值</label>
+        </div>
+        <div nz-col [nzSpan]="6" nz-form-control>
+          <nz-input formControlName="minAlarmThreshold" [(ngModel)]="_formData.minAlarmThreshold" [nzType]="'text'"
+                    [nzPlaceHolder]="'最小识别阀值'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-form-label nz-col [nzSpan]="7">
+          <label nz-form-item-required>最小像素大小</label>
+        </div>
+        <div nz-col [nzSpan]="6" nz-form-control>
+          <nz-input formControlName="minPixel" [(ngModel)]="_formData.minPixel" [nzType]="'text'"
+                    [nzPlaceHolder]="'最小像素大小'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-form-label nz-col [nzSpan]="7">
+          <label nz-form-item-required>人脸图像质量</label>
+        </div>
+        <div nz-col [nzSpan]="6" nz-form-control>
+          <nz-input formControlName="pQ" [(ngModel)]="_formData.pQ" [nzType]="'text'" [nzPlaceHolder]="'人脸图像质量'"
+                    [nzSize]="'large'">
+          </nz-input>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-form-label nz-col [nzSpan]="7">
+          <label nz-form-item-required>生效摄像头</label>
+        </div>
+        <div nz-col [nzSpan]="17" style="line-height: 32px">
+           <nz-radio-group formControlName="ckType" [(ngModel)]="_formData.checkCamera">
+            <label nz-radio [nzValue]="1" (click)="getCameraList(false)">
+              <span>全部</span>
+            </label>
+            <label nz-radio [nzValue]="2" (click)="getCameraList(true)">
+              <span>自定义</span>
+            </label>
+          </nz-radio-group>
+          <!-- <nz-checkbox-group [(ngModel)]="cameraOptions" formControlName="camera">
+          </nz-checkbox-group> -->
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-form-label nz-col [nzSpan]="7">
+          <label>策略描述</label>
+        </div>
+        <div nz-col [nzSpan]="10" nz-form-control>
+          <nz-input formControlName="description" [(ngModel)]="_formData.description" [nzType]="'text'"
+                    [nzPlaceHolder]="'策略描述'" [nzSize]="'large'">
+          </nz-input>
+        </div>
+      </div>
+      <div nz-form-item nz-row>
+        <div nz-col [nzOffset]="7" [nzSpan]="10" nz-form-control>
+          <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="submitForm($event,validateForm.value)">提交
+          </button>
+          <button nz-button [nzSize]="'large'" (click)="resetForm($event)">重置</button>
+        </div>
+      </div>
+    </form>
   </ng-template>
 </nz-modal>
 
 <!--摄像头选择模态框-->
-<nz-modal class="camera-select-model" nzFooter [maskClosable]="false"  [nzVisible]="cameraSelectIsShow" [nzTitle]="'摄像头选择'" [nzContent]="cameraSelectContent" (nzOnCancel)="cameraSelectCancel($event)" (nzOnOk)="cameraSelectConfirm($event)">
+<nz-modal class="camera-select-model" nzFooter [maskClosable]="false" [nzVisible]="cameraSelectIsShow"
+          [nzTitle]="'选择摄像头'" [nzContent]="cameraSelectContent" (nzOnCancel)="cameraSelectCancel($event)"
+          (nzOnOk)="cameraSelectConfirm($event)">
   <ng-template #cameraSelectContent>
-    <ul>
-      <li class="checked-item" *ngFor="let item of [1,2,3];let i = index">
-        <div class="checked-item-title">
-          <h3 style="color:#666;margin:10px 0;">{{i}}号区域</h3>
-        </div>
-        <div class="checked-children" style="padding-left:25px;">
-          <nz-checkbox-group [(ngModel)]="thisSystemOperateOptions" ></nz-checkbox-group>
-        </div>
-      </li>
-    </ul>
+    <!--<ul>-->
+    <!--<li class="checked-item" *ngFor="let item of [1,2,3];let i = index">-->
+    <!--<div class="checked-item-title">-->
+    <!--<h3 style="color:#666;margin:10px 0;">{{i}}号区域</h3>-->
+    <!--</div>-->
+    <!--<div class="checked-children" style="padding-left:25px;">-->
+    <nz-checkbox-group [(ngModel)]="cameraOptions">
+    </nz-checkbox-group>
+
+    <!--</div>-->
+    <!--</li>-->
+    <!--</ul>-->
   </ng-template>
 </nz-modal>
 
-
+<!--周期选择模态框-->
+<nz-modal class="week-select-model" nzFooter [maskClosable]="false" [nzVisible]="weekSelectIsShow"
+          [nzTitle]="'选择生效周期'" [nzContent]="weekSelectContent" (nzOnCancel)="weekSelectCancel($event)"
+          (nzOnOk)="weekSelectConfirm($event)">
+  <ng-template #weekSelectContent>
+    <nz-checkbox-group [(ngModel)]="strategyWeekOptions">
+    </nz-checkbox-group>
+  </ng-template>
+</nz-modal>
 
 
 

@@ -170,7 +170,8 @@ export class CameraComponent implements OnInit {
   /**调用查询接口，查询到结果之后将拿到的res赋值给_dataSet才能显示到table*/
   getCamera() {
     this.isLoading = true;
-    this.http.get(api.queryCamera).subscribe((res) => {
+    const headers = new HttpHeaders().set("Authorization","Bearer "+window.localStorage.getItem("token"));
+    this.http.get(api.queryCamera,{headers}).subscribe((res) => {
       console.dir(res);
       let list = <any>res;
       /**拿到数据之后将analyser对象里的name拿出来，赋值给a_name，这样a_name就有值，就可以显示出来了*/

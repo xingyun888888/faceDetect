@@ -9,6 +9,7 @@ export const validOptions = [
     fieldName: 'name',
     options: [
       {validCondition: 'required', info: '用户名不能为空'},
+      {validCondition: 'pattern', info: '用户名只能是字母或数字'},
       {validCondition: 'maxlength', info: '用户名长度不能大10'}
     ]
   },
